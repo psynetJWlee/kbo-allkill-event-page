@@ -1,8 +1,24 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MemberList from '@/components/MemberList';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Index = () => {
+  const [currentDay, setCurrentDay] = useState(26);
+  const REAL_TODAY = 26; // Constant to track the actual today's date
+
+  const handlePrevDate = () => {
+    setCurrentDay(currentDay - 1);
+  };
+
+  const handleNextDate = () => {
+    setCurrentDay(currentDay + 1);
+  };
+
+  const handleDateClick = (day: number) => {
+    setCurrentDay(day);
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
       <div className="w-[353px] mx-auto">
@@ -39,7 +55,46 @@ const Index = () => {
         </section>
 
         {/* 3. KBO Team Selection Section */}
-        <section className="h-[912px] w-full bg-white">
+        <section className="h-[912px] w-full bg-[#121212]">
+          <div className="flex items-center justify-between px-[21px] py-[21px] text-white">
+            <div 
+              className="flex items-center cursor-pointer" 
+              onClick={handlePrevDate}
+            >
+              <div className="w-6 h-6 flex items-center justify-center">
+                <div className="w-0 h-0 border-y-[6px] border-y-transparent border-r-[8px] border-r-white"></div>
+              </div>
+              <span 
+                className="text-[16px] ml-[18px]"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDateClick(currentDay - 1);
+                }}
+              >
+                {currentDay - 1}
+              </span>
+            </div>
+            <span className="text-[16px] font-bold">
+              {currentDay === REAL_TODAY ? 'Today' : currentDay}
+            </span>
+            <div 
+              className="flex items-center cursor-pointer"
+              onClick={handleNextDate}
+            >
+              <span 
+                className="text-[16px] mr-[18px]"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDateClick(currentDay + 1);
+                }}
+              >
+                {currentDay + 1}
+              </span>
+              <div className="w-6 h-6 flex items-center justify-center">
+                <div className="w-0 h-0 border-y-[6px] border-y-transparent border-l-[8px] border-l-white"></div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* 4. My Prize Section */}

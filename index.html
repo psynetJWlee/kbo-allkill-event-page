@@ -428,7 +428,7 @@
       <!-- 3. KBO Team Selection Section -->
       <section class="team-selection-section">
         <div class="date-navigation">
-          <div class="date-nav-item">
+          <div class="date-nav-item" onclick="changeDate('prev')">
             <div class="date-nav-left">
               <div class="arrow-icon">
                 <div class="polygon-icon polygon-left"></div>
@@ -437,7 +437,7 @@
             </div>
           </div>
           <span class="date-current" id="currentDate">Today</span>
-          <div class="date-nav-item">
+          <div class="date-nav-item" onclick="changeDate('next')">
             <div class="date-nav-right">
               <span class="date-number" id="nextDate">27</span>
               <div class="arrow-icon">
@@ -502,11 +502,23 @@
       function changeDate(direction) {
         if (direction === 'prev') {
           today--;
-        } else {
+        } else if (direction === 'next') {
           today++;
+        } else {
+          // Direct click on a date number
+          today = parseInt(direction);
         }
         updateDateDisplay();
       }
+
+      // Add click handlers for date numbers
+      document.getElementById('prevDate').addEventListener('click', function() {
+        changeDate(today - 1);
+      });
+      
+      document.getElementById('nextDate').addEventListener('click', function() {
+        changeDate(today + 1);
+      });
 
       // Initialize date display
       updateDateDisplay();
