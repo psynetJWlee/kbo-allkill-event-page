@@ -29,7 +29,7 @@ const MemberList = () => {
       {members.map((member) => (
         <div 
           key={member.id}
-          className="h-[48px] w-[333px] bg-[#003C5A] border border-[#FFFFFF] border-[0.5px] flex items-center"
+          className="h-[48px] w-[333px] bg-[#003C5A] border border-[#FFFFFF] border-[0.5px] flex items-center rounded-[5px]"
         >
           <div className="ml-[9px]">
             <Avatar className="h-8 w-8">
@@ -52,3 +52,4 @@ const MemberList = () => {
 };
 
 export default MemberList;
+
