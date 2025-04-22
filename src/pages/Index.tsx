@@ -1,4 +1,3 @@
-
 const Index = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
@@ -13,7 +12,7 @@ const Index = () => {
           <img 
             src="https://file.notion.so/f/f/be7923ea-7295-4bae-81fe-374b30bc08e7/43c0d002-c34b-4959-bc1b-a8284ad96b6f/14_1_emoticon_3.gif?table=block&id=1dc1fb14-0fbe-805c-960c-dd787453dff9&spaceId=be7923ea-7295-4bae-81fe-374b30bc08e7&expirationTimestamp=1745323200000&signature=DnYgj3g2c85sNevBG2EDC6Bx2zqJ9lBsx0peHA-Sr3M&downloadName=14_1_emoticon+3.gif"
             alt="Event Emoticon"
-            className="absolute left-[58px] top-0"
+            className="absolute left-[58px] top-0 w-[238px] h-[238px]"
           />
         </section>
 
@@ -42,4 +41,3 @@ const Index = () => {
 };
 
 export default Index;
-
