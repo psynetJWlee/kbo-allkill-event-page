@@ -29,7 +29,7 @@ const MemberList = () => {
       {members.map((member) => (
         <div 
           key={member.id}
-          className="h-[48px] w-[333px] bg-[#003C5A] border border-[#FFFFFF] border-[0.5px] flex items-center rounded-[5px]"
+          className="h-[48px] w-[333px] bg-[#003C5A] border border-[#FFFFFF] border-[0.5px] flex items-center rounded-[12px]"
         >
           <div className="ml-[9px]">
             <Avatar className="h-8 w-8">
@@ -42,7 +42,7 @@ const MemberList = () => {
           <span className="ml-[12px] text-[20px] text-white">
             {member.nickname}
           </span>
-          <span className="ml-auto mr-[9px] text-[30px] text-[#FFC736]">
+          <span className="ml-auto mr-[9px] text-[30px] text-[#FFC736] font-bold">
             {member.amount.toLocaleString()} 원
           </span>
         </div>
@@ -52,4 +52,3 @@ const MemberList = () => {
 };
 
 export default MemberList;
-
