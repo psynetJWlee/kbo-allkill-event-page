@@ -13,10 +13,306 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: Arial, sans-serif;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+      
+      .container {
+        width: 353px;
+        margin: 0 auto;
+      }
+      
+      /* Event Title Section */
+      .event-title-section {
+        height: 382px;
+        width: 100%;
+        background-color: #0072A7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      
+      .logo {
+        position: absolute;
+        top: 6px;
+        left: 7px;
+        z-index: 20;
+      }
+      
+      .event-title {
+        position: absolute;
+        top: 106px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+      
+      .event-emoticon {
+        position: absolute;
+        left: 58px;
+        top: 0;
+        width: 238px;
+        height: 238px;
+      }
+      
+      /* Today's Winners Section */
+      .winners-section {
+        height: 777px;
+        width: 100%;
+        background-color: #004B70;
+        position: relative;
+      }
+      
+      .winners-title {
+        position: absolute;
+        left: 2px;
+        top: 18px;
+      }
+      
+      .winners-count {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 78px;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+      }
+      
+      .member-list {
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-top: 15px;
+        position: absolute;
+        top: 100px;
+      }
+      
+      .member-card {
+        height: 48px;
+        width: 333px;
+        background-color: #003C5A;
+        border: 0.5px solid #FFFFFF;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      
+      .profile-image-container {
+        margin-left: 9px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #003C5A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      
+      .profile-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .profile-fallback {
+        color: white;
+        font-size: 20px;
+      }
+      
+      .nickname {
+        margin-left: 12px;
+        font-size: 20px;
+        color: #FFFFFF;
+      }
+      
+      .amount {
+        margin-left: auto;
+        margin-right: 9px;
+        font-size: 30px;
+        color: #FFC736;
+      }
+      
+      /* Other Sections */
+      .team-selection-section {
+        height: 912px;
+        width: 100%;
+        background-color: white;
+      }
+      
+      .prize-section {
+        height: 576px;
+        width: 100%;
+        background-color: white;
+      }
+      
+      .ranking-section {
+        height: 1028px;
+        width: 100%;
+        background-color: white;
+      }
+      
+      .description-section {
+        height: 363px;
+        width: 100%;
+        background-color: white;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div class="container">
+      <!-- 1. Event Title Section -->
+      <section class="event-title-section">
+        <img 
+          src="/lovable-uploads/238a9ac4-eb4e-4505-a699-a85abc7f50c4.png" 
+          alt="LIVE Score Logo"
+          class="logo"
+        />
+        <img 
+          src="/lovable-uploads/c80cf187-d9ab-4ccd-a210-ab2049d9a23a.png" 
+          alt="KBO 올킬 이벤트"
+          class="event-title"
+        />
+        <img 
+          src="https://file.notion.so/f/f/be7923ea-7295-4bae-81fe-374b30bc08e7/43c0d002-c34b-4959-bc1b-a8284ad96b6f/14_1_emoticon_3.gif?table=block&id=1dc1fb14-0fbe-805c-960c-dd787453dff9&spaceId=be7923ea-7295-4bae-81fe-374b30bc08e7&expirationTimestamp=1745323200000&signature=DnYgj3g2c85sNevBG2EDC6Bx2zqJ9lBsx0peHA-Sr3M&downloadName=14_1_emoticon+3.gif"
+          alt="Event Emoticon"
+          class="event-emoticon"
+        />
+      </section>
+
+      <!-- 2. Today's Winners Section -->
+      <section class="winners-section">
+        <img 
+          src="/lovable-uploads/2b49ee10-7baf-4d97-bde0-342af5344c35.png" 
+          alt="오늘의 당첨자"
+          class="winners-title"
+        />
+        <p class="winners-count">총 20명</p>
+        
+        <div class="member-list">
+          <div class="member-card">
+            <div class="profile-image-container">
+              <img 
+                src="/lovable-uploads/85ed9ad3-9c97-4322-9410-b661d4cafb48.png" 
+                alt="고량뉴스" 
+                class="profile-image"
+              />
+            </div>
+            <span class="nickname">고량뉴스</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">컴오라파</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">홈런왕김탁구</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">엘지트윈스</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <img 
+                src="/placeholder.svg" 
+                alt="두산베어준" 
+                class="profile-image"
+              />
+            </div>
+            <span class="nickname">두산베어준</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">라스돌해라</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <img 
+                src="/placeholder.svg" 
+                alt="다이노스" 
+                class="profile-image"
+              />
+            </div>
+            <span class="nickname">다이노스</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">래랜라</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">하이고</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">올림픽ㄱㄱ</span>
+            <span class="amount">50,000 원</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. KBO Team Selection Section -->
+      <section class="team-selection-section">
+      </section>
+
+      <!-- 4. My Prize Section -->
+      <section class="prize-section">
+      </section>
+
+      <!-- 5. Prize Ranking Section -->
+      <section class="ranking-section">
+      </section>
+
+      <!-- 6. Event Description Section -->
+      <section class="description-section">
+      </section>
+    </div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
