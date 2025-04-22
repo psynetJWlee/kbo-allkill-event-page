@@ -153,7 +153,40 @@
         width: 100%;
         background-color: #121212;
       }
-      
+
+      /* Date Navigation Styles */
+      .date-navigation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 21px;
+        color: #FFFFFF;
+      }
+
+      .date-nav-item {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .date-number {
+        font-size: 16px;
+        margin: 0 18.5px;
+      }
+
+      .date-current {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .arrow-icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
       .prize-section {
         height: 576px;
         width: 100%;
@@ -380,6 +413,17 @@
 
       <!-- 3. KBO Team Selection Section -->
       <section class="team-selection-section">
+        <div class="date-navigation">
+          <div class="date-nav-item" onclick="changeDate('prev')">
+            <div class="arrow-icon">&lt;</div>
+            <span class="date-number" id="prevDate">25</span>
+          </div>
+          <span class="date-current" id="currentDate">Today</span>
+          <div class="date-nav-item" onclick="changeDate('next')">
+            <span class="date-number" id="nextDate">27</span>
+            <div class="arrow-icon">&gt;</div>
+          </div>
+        </div>
       </section>
 
       <!-- 4. My Prize Section -->
@@ -398,7 +442,8 @@
     <script>
       let currentPage = 1;
       const totalPages = 2;
-
+      let today = 26; // Assuming today is 26
+      
       function changePage(page) {
         const prevPage = currentPage;
         
@@ -422,6 +467,24 @@
             list.classList.toggle('active', pageNum === currentPage);
           });
         }
+      }
+
+      function updateDateDisplay() {
+        document.getElementById('prevDate').textContent = today - 1;
+        document.getElementById('currentDate').textContent = 
+          document.getElementById('currentDate').textContent === 'Today' && today === 26 
+            ? 'Today' 
+            : today;
+        document.getElementById('nextDate').textContent = today + 1;
+      }
+
+      function changeDate(direction) {
+        if (direction === 'prev') {
+          today--;
+        } else {
+          today++;
+        }
+        updateDateDisplay();
       }
     </script>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
