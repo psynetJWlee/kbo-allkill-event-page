@@ -1,13 +1,14 @@
+
 const Index = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
       <div className="w-[353px] mx-auto">
         {/* 1. Event Title Section */}
-        <section className="h-[382px] w-full bg-white flex items-center justify-center relative">
+        <section className="h-[382px] w-full bg-[#0072A7] flex items-center justify-center relative">
           <img 
-            src="/lovable-uploads/85ed9ad3-9c97-4322-9410-b661d4cafb48.png" 
+            src="/lovable-uploads/c80cf187-d9ab-4ccd-a210-ab2049d9a23a.png" 
             alt="KBO 올킬 이벤트"
-            className="w-full h-full object-contain"
+            className="absolute top-[106px] left-1/2 transform -translate-x-1/2 z-10"
           />
           <img 
             src="https://file.notion.so/f/f/be7923ea-7295-4bae-81fe-374b30bc08e7/43c0d002-c34b-4959-bc1b-a8284ad96b6f/14_1_emoticon_3.gif?table=block&id=1dc1fb14-0fbe-805c-960c-dd787453dff9&spaceId=be7923ea-7295-4bae-81fe-374b30bc08e7&expirationTimestamp=1745323200000&signature=DnYgj3g2c85sNevBG2EDC6Bx2zqJ9lBsx0peHA-Sr3M&downloadName=14_1_emoticon+3.gif"
