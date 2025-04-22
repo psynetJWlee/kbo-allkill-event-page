@@ -1,4 +1,6 @@
 
+import React from 'react';
+
 const Index = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
@@ -23,7 +25,15 @@ const Index = () => {
         </section>
 
         {/* 2. Today's Winners Section */}
-        <section className="h-[777px] w-full bg-white">
+        <section className="h-[777px] w-full bg-[#004B70] relative">
+          <img 
+            src="/lovable-uploads/2b49ee10-7baf-4d97-bde0-342af5344c35.png" 
+            alt="오늘의 당첨자"
+            className="absolute left-[2px] top-[18px]"
+          />
+          <p className="absolute left-[2px] top-[33px] text-[20px] text-white">
+            총 20명
+          </p>
         </section>
 
         {/* 3. KBO Team Selection Section */}
