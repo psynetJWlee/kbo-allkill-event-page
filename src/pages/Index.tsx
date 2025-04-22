@@ -56,13 +56,13 @@ const Index = () => {
 
         {/* 3. KBO Team Selection Section */}
         <section className="h-[912px] w-full bg-[#121212]">
-          <div className="flex items-center justify-between px-[21px] py-[21px] text-white">
+          <div className="flex items-center justify-between px-[21px] h-[50px] text-white">
             <div 
               className="flex items-center cursor-pointer" 
               onClick={handlePrevDate}
             >
               <div className="w-6 h-6 flex items-center justify-center">
-                <div className="w-0 h-0 border-y-[6px] border-y-transparent border-r-[8px] border-r-white"></div>
+                <div className="w-[15px] h-[15px] border-y-[7.5px] border-y-transparent border-r-[10px] border-r-white"></div>
               </div>
               <span 
                 className="text-[16px] ml-[18px]"
@@ -91,7 +91,7 @@ const Index = () => {
                 {currentDay + 1}
               </span>
               <div className="w-6 h-6 flex items-center justify-center">
-                <div className="w-0 h-0 border-y-[6px] border-y-transparent border-l-[8px] border-l-white"></div>
+                <div className="w-[15px] h-[15px] border-y-[7.5px] border-y-transparent border-l-[10px] border-l-white"></div>
               </div>
             </div>
           </div>
