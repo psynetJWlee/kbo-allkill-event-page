@@ -171,6 +171,53 @@
         width: 100%;
         background-color: #00283F;
       }
+      
+      /* Pagination Styles */
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        position: absolute;
+        bottom: 34px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .pagination-item {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #FFFFFF;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .pagination-arrow {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      .pagination-number {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      .pagination-number.active {
+        background-color: #FFFFFF;
+        color: #000000;
+        border: none;
+      }
+
+      /* Additional member list styles for pagination */
+      .member-list[data-page="2"] {
+        display: none;
+      }
+
+      .member-list.active {
+        display: block;
+      }
     </style>
   </head>
   <body>
@@ -203,7 +250,7 @@
         />
         <p class="winners-count">총 20명</p>
         
-        <div class="member-list">
+        <div class="member-list active" data-page="1">
           <div class="member-card">
             <div class="profile-image-container">
               <img 
@@ -296,6 +343,39 @@
             <span class="amount">50,000 원</span>
           </div>
         </div>
+
+        <div class="member-list" data-page="2">
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">베이스볼팬</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">야구의신</span>
+            <span class="amount">50,000 원</span>
+          </div>
+          
+          <div class="member-card">
+            <div class="profile-image-container">
+              <span class="profile-fallback">👤</span>
+            </div>
+            <span class="nickname">홈런타자</span>
+            <span class="amount">50,000 원</span>
+          </div>
+        </div>
+
+        <div class="pagination-container">
+          <div class="pagination-item pagination-arrow" onclick="changePage('prev')">&lt;</div>
+          <div class="pagination-item pagination-number active" onclick="changePage(1)">1</div>
+          <div class="pagination-item pagination-number" onclick="changePage(2)">2</div>
+          <div class="pagination-item pagination-arrow" onclick="changePage('next')">&gt;</div>
+        </div>
       </section>
 
       <!-- 3. KBO Team Selection Section -->
@@ -314,6 +394,36 @@
       <section class="description-section">
       </section>
     </div>
+
+    <script>
+      let currentPage = 1;
+      const totalPages = 2;
+
+      function changePage(page) {
+        const prevPage = currentPage;
+        
+        if (page === 'prev') {
+          if (currentPage > 1) currentPage--;
+        } else if (page === 'next') {
+          if (currentPage < totalPages) currentPage++;
+        } else {
+          currentPage = page;
+        }
+
+        if (prevPage !== currentPage) {
+          // Update page numbers active state
+          document.querySelectorAll('.pagination-number').forEach((item, index) => {
+            item.classList.toggle('active', index + 1 === currentPage);
+          });
+
+          // Update member lists visibility
+          document.querySelectorAll('.member-list').forEach((list) => {
+            const pageNum = parseInt(list.dataset.page);
+            list.classList.toggle('active', pageNum === currentPage);
+          });
+        }
+      }
+    </script>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </body>
 </html>
