@@ -6,6 +6,11 @@ const Index = () => {
         {/* 1. Event Title Section */}
         <section className="h-[382px] w-full bg-[#0072A7] flex items-center justify-center relative">
           <img 
+            src="/lovable-uploads/238a9ac4-eb4e-4505-a699-a85abc7f50c4.png" 
+            alt="LIVE Score Logo"
+            className="absolute top-[6px] left-[7px] z-20"
+          />
+          <img 
             src="/lovable-uploads/c80cf187-d9ab-4ccd-a210-ab2049d9a23a.png" 
             alt="KBO 올킬 이벤트"
             className="absolute top-[106px] left-1/2 transform -translate-x-1/2 z-10"
