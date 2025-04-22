@@ -1,14 +1,7 @@
 
 import React from 'react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { UserRound } from 'lucide-react';
-
-type Member = {
-  id: number;
-  nickname: string;
-  profileImage?: string;
-  amount: number;
-};
+import MemberCard from './members/MemberCard';
+import type { Member } from '@/types/member';
 
 const members: Member[] = [
   { id: 1, nickname: "고량뉴스", profileImage: "/lovable-uploads/85ed9ad3-9c97-4322-9410-b661d4cafb48.png", amount: 50000 },
@@ -27,25 +20,12 @@ const MemberList = () => {
   return (
     <div className="px-3 mt-[15px] space-y-[10px]">
       {members.map((member) => (
-        <div 
+        <MemberCard
           key={member.id}
-          className="h-[48px] w-[333px] bg-[#003C5A] border border-[#FFFFFF] border-[0.5px] flex items-center rounded-[12px]"
-        >
-          <div className="ml-[9px]">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={member.profileImage} />
-              <AvatarFallback>
-                <UserRound className="h-6 w-6 text-white" />
-              </AvatarFallback>
-            </Avatar>
-          </div>
-          <span className="ml-[12px] text-[20px] text-white">
-            {member.nickname}
-          </span>
-          <span className="ml-auto mr-[9px] text-[30px] text-[#FFC736] font-bold">
-            {member.amount.toLocaleString()} 원
-          </span>
-        </div>
+          nickname={member.nickname}
+          profileImage={member.profileImage}
+          amount={member.amount}
+        />
       ))}
     </div>
   );
