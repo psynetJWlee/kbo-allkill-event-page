@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -147,7 +148,7 @@
         font-weight: bold;
       }
       
-      /* Other Sections */
+      /* KBO Team Selection Section */
       .team-selection-section {
         height: 912px;
         width: 100%;
@@ -159,7 +160,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 21px;
+        padding: 0 21px;
+        height: 50px;
         color: #FFFFFF;
       }
 
@@ -207,16 +209,37 @@
       .polygon-icon {
         width: 0;
         height: 0;
-        border-top: 6px solid transparent;
-        border-bottom: 6px solid transparent;
+        border-top: 7.5px solid transparent;
+        border-bottom: 7.5px solid transparent;
       }
 
       .polygon-left {
-        border-right: 8px solid #FFFFFF;
+        border-right: 10px solid #FFFFFF;
       }
 
       .polygon-right {
-        border-left: 8px solid #FFFFFF;
+        border-left: 10px solid #FFFFFF;
+      }
+
+      /* My Prize Section */
+      .prize-section {
+        height: 576px;
+        width: 100%;
+        background-color: white;
+      }
+
+      /* Prize Ranking Section */
+      .ranking-section {
+        height: 1028px;
+        width: 100%;
+        background-color: white;
+      }
+
+      /* Event Description Section */
+      .description-section {
+        height: 363px;
+        width: 100%;
+        background-color: white;
       }
 
       /* Pagination Styles */
@@ -450,22 +473,25 @@
 
       <!-- 4. My Prize Section -->
       <section class="prize-section">
+        <!-- 내 상금 섹션 내용이 여기에 들어갑니다 -->
       </section>
 
       <!-- 5. Prize Ranking Section -->
       <section class="ranking-section">
+        <!-- 상금 랭킹 섹션 내용이 여기에 들어갑니다 -->
       </section>
 
       <!-- 6. Event Description Section -->
       <section class="description-section">
+        <!-- 이벤트 설명 섹션 내용이 여기에 들어갑니다 -->
       </section>
     </div>
 
     <script>
       let currentPage = 1;
       const totalPages = 2;
-      let today = 26; // Assuming today is 26
-      const REAL_TODAY = 26; // Constant to track the actual today's date
+      let today = 26; // 오늘은 26일이라고 가정
+      const REAL_TODAY = 26; // 실제 오늘 날짜를 추적하기 위한 상수
 
       function changePage(page) {
         const prevPage = currentPage;
@@ -479,12 +505,12 @@
         }
 
         if (prevPage !== currentPage) {
-          // Update page numbers active state
+          // 페이지 번호 활성 상태 업데이트
           document.querySelectorAll('.pagination-number').forEach((item, index) => {
             item.classList.toggle('active', index + 1 === currentPage);
           });
 
-          // Update member lists visibility
+          // 회원 목록 가시성 업데이트
           document.querySelectorAll('.member-list').forEach((list) => {
             const pageNum = parseInt(list.dataset.page);
             list.classList.toggle('active', pageNum === currentPage);
@@ -505,24 +531,27 @@
         } else if (direction === 'next') {
           today++;
         } else {
-          // Direct click on a date number
+          // 날짜 번호 직접 클릭
           today = parseInt(direction);
         }
         updateDateDisplay();
       }
 
-      // Add click handlers for date numbers
-      document.getElementById('prevDate').addEventListener('click', function() {
-        changeDate(today - 1);
-      });
-      
-      document.getElementById('nextDate').addEventListener('click', function() {
-        changeDate(today + 1);
-      });
+      // 날짜 번호에 대한 클릭 핸들러 추가
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('prevDate').addEventListener('click', function(e) {
+          e.stopPropagation();
+          changeDate(today - 1);
+        });
+        
+        document.getElementById('nextDate').addEventListener('click', function(e) {
+          e.stopPropagation();
+          changeDate(today + 1);
+        });
 
-      // Initialize date display
-      updateDateDisplay();
+        // 날짜 표시 초기화
+        updateDateDisplay();
+      });
     </script>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </body>
 </html>
