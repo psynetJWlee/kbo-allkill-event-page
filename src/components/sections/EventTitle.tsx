@@ -1,0 +1,24 @@
+
+import React from 'react';
+
+export const EventTitle: React.FC = () => {
+  return (
+    <section className="h-[382px] w-full bg-[#0072A7] flex items-center justify-center relative">
+      <img 
+        src="/lovable-uploads/238a9ac4-eb4e-4505-a699-a85abc7f50c4.png" 
+        alt="LIVE Score Logo"
+        className="absolute top-[6px] left-[7px] z-20"
+      />
+      <img 
+        src="/lovable-uploads/c80cf187-d9ab-4ccd-a210-ab2049d9a23a.png" 
+        alt="KBO 올킬 이벤트"
+        className="absolute top-[106px] left-1/2 transform -translate-x-1/2 z-10"
+      />
+      <img 
+        src="https://file.notion.so/f/f/be7923ea-7295-4bae-81fe-374b30bc08e7/43c0d002-c34b-4959-bc1b-a8284ad96b6f/14_1_emoticon_3.gif?table=block&id=1dc1fb14-0fbe-805c-960c-dd787453dff9&spaceId=be7923ea-7295-4bae-81fe-374b30bc08e7&expirationTimestamp=1745323200000&signature=DnYgj3g2c85sNevBG2EDC6Bx2zqJ9lBsx0peHA-Sr3M&downloadName=14_1_emoticon+3.gif"
+        alt="Event Emoticon"
+        className="absolute left-[58px] top-0 w-[238px] h-[238px]"
+      />
+    </section>
+  );
+};
