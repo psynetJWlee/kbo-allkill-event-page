@@ -175,6 +175,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin: 0;
       }
 
       .team-box {
@@ -217,7 +218,7 @@
 
       .vote-count {
         font-size: 15px;
-        margin-top: 5px;
+        margin-top: 10px;
         text-align: center;
       }
 
@@ -232,6 +233,13 @@
 
       .game-status {
         text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .game-status.team-selected .voting-text,
+      .game-status.team-selected .game-time {
+        color: #FFFFFF;
+        opacity: 1;
       }
 
       .voting-text {
@@ -245,6 +253,26 @@
         font-size: 14px;
         font-weight: bold;
         color: rgba(255, 255, 255, 0.7);
+      }
+
+      .submit-button {
+        width: 284px;
+        height: 68px;
+        background-color: #FFD700;
+        border: none;
+        border-radius: 10px;
+        color: #000000;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 20px auto;
+        display: block;
+        cursor: pointer;
+        opacity: 0.3;
+        transition: opacity 0.3s ease;
+      }
+
+      .submit-button.active {
+        opacity: 1;
       }
 
       /* Date Navigation Styles */
@@ -630,6 +658,8 @@
             </div>
           </div>
         </div>
+
+        <button class="submit-button">올킬 제출</button>
       </section>
 
       <!-- 4. My Prize Section -->
@@ -718,25 +748,47 @@
       const selectedTeams = new Array(5).fill({ home: false, away: false });
 
       function selectTeam(gameIndex, side) {
-        const oppositeTeams = document.querySelectorAll(`.game-item:nth-child(${gameIndex + 1}) .team-box`);
+        const gameItem = document.querySelectorAll('.game-item')[gameIndex];
+        const oppositeTeams = gameItem.querySelectorAll('.team-box');
         const selectedTeam = oppositeTeams[side === 'home' ? 0 : 1];
         const otherTeam = oppositeTeams[side === 'home' ? 1 : 0];
+        const gameStatus = gameItem.querySelector('.game-status');
         
-        // Toggle selection
-        selectedTeams[gameIndex][side] = !selectedTeams[gameIndex][side];
+        // Remove selection from other team
+        otherTeam.classList.remove(side === 'home' ? 'selected-away' : 'selected-home');
         
-        // Update UI
-        if (selectedTeams[gameIndex][side]) {
-          selectedTeam.classList.add(side === 'home' ? 'selected-home' : 'selected-away');
+        // Toggle selection for clicked team
+        selectedTeam.classList.toggle(side === 'home' ? 'selected-home' : 'selected-away');
+        
+        // Remove both-selected class from both teams
+        oppositeTeams.forEach(team => team.classList.remove('both-selected'));
+        
+        // Update game status styling
+        const isAnyTeamSelected = 
+          selectedTeam.classList.contains('selected-home') || 
+          selectedTeam.classList.contains('selected-away');
+        
+        if (isAnyTeamSelected) {
+          gameStatus.classList.add('team-selected');
         } else {
-          selectedTeam.classList.remove(side === 'home' ? 'selected-home' : 'selected-away');
+          gameStatus.classList.remove('team-selected');
         }
         
-        // Check if both teams are selected
-        if (selectedTeams[gameIndex].home && selectedTeams[gameIndex].away) {
-          oppositeTeams.forEach(team => team.classList.add('both-selected'));
+        // Check if all games have a selection
+        const allGamesSelected = Array.from(document.querySelectorAll('.game-item')).every(game => {
+          const teams = game.querySelectorAll('.team-box');
+          return Array.from(teams).some(team => 
+            team.classList.contains('selected-home') || 
+            team.classList.contains('selected-away')
+          );
+        });
+        
+        // Update submit button state
+        const submitButton = document.querySelector('.submit-button');
+        if (allGamesSelected) {
+          submitButton.classList.add('active');
         } else {
-          oppositeTeams.forEach(team => team.classList.remove('both-selected'));
+          submitButton.classList.remove('active');
         }
       }
     </script>
