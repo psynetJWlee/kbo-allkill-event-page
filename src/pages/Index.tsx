@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MemberList from '@/components/MemberList';
 import { EventTitle } from '@/components/sections/EventTitle';
 import { WinnersSection } from '@/components/sections/WinnersSection';
@@ -7,7 +7,6 @@ import { DateNavigation } from '@/components/DateNavigation';
 import { MyPrizeSection } from '@/components/sections/MyPrizeSection';
 import { PrizeRankingSection } from '@/components/sections/PrizeRankingSection';
 import { EventDescriptionSection } from '@/components/sections/EventDescriptionSection';
-import { GameSelectionArea } from '@/components/sections/GameSelectionArea';
 
 const Index = () => {
   const [currentDay, setCurrentDay] = useState(26);
@@ -43,7 +42,6 @@ const Index = () => {
             onNextDate={handleNextDate}
             onDateClick={handleDateClick}
           />
-          <GameSelectionArea />
         </section>
 
         {/* 4. My Prize Section */}
