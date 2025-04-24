@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -153,6 +152,99 @@
         height: 912px;
         width: 100%;
         background-color: #121212;
+      }
+
+      .team-selection-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        color: #FFFFFF;
+        padding-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      .game-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 0 16px;
+      }
+
+      .game-item {
+        height: 130px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .team-box {
+        width: 90px;
+        height: 80px;
+        border: 1px solid #545454;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .team-box.selected-home {
+        background-color: #C13D3D;
+      }
+
+      .team-box.selected-away {
+        background-color: #047DBF;
+      }
+
+      .team-box.selected-home.both-selected,
+      .team-box.selected-away.both-selected {
+        border: 3px solid #FFFFFF;
+      }
+
+      .team-logo {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+      }
+
+      .team-name {
+        color: #FFFFFF;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .vote-count {
+        font-size: 15px;
+        margin-top: 5px;
+        text-align: center;
+      }
+
+      .vote-count.higher {
+        color: #FFC736;
+        font-weight: bold;
+      }
+
+      .vote-count.lower {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .game-status {
+        text-align: center;
+      }
+
+      .voting-text {
+        font-size: 15px;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 5px;
+      }
+
+      .game-time {
+        font-size: 14px;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.7);
       }
 
       /* Date Navigation Styles */
@@ -393,7 +485,7 @@
             <div class="profile-image-container">
               <span class="profile-fallback">👤</span>
             </div>
-            <span class="nickname">래랜라</span>
+            <span class="nickname">래��라</span>
             <span class="amount">50,000 원</span>
           </div>
           
@@ -450,22 +542,91 @@
 
       <!-- 3. KBO Team Selection Section -->
       <section class="team-selection-section">
-        <div class="date-navigation">
-          <div class="date-nav-item" onclick="changeDate('prev')">
-            <div class="date-nav-left">
-              <div class="arrow-icon">
-                <div class="polygon-icon polygon-left"></div>
-              </div>
-              <span class="date-number" id="prevDate">25</span>
+        <h2 class="team-selection-title">올킬 도전!</h2>
+        
+        <div class="game-list">
+          <div class="game-item">
+            <div class="team-box" data-team="home" onclick="selectTeam(0, 'home')">
+              <img src="https://i.namu.wiki/i/oBeeNjwnmWwfmQIVYLOMNprU2uRBNkrDFPUijjme-tifWUeeE0D8P652TlU8V7w7peExR5E-_lwv7jf0IGUKuw.svg" alt="KT" class="team-logo">
+              <div class="team-name">KT</div>
+              <div class="vote-count lower">1,941</div>
+            </div>
+            <div class="game-status">
+              <div class="voting-text">투표 중</div>
+              <div class="game-time">18:00</div>
+            </div>
+            <div class="team-box" data-team="away" onclick="selectTeam(0, 'away')">
+              <img src="https://i.namu.wiki/i/LxXhJtRrfucU3cBPgVME5T6MT6vjFCXGCMgLXkNv2AyAJTEP_zI9E1quP_IG2052hqxSgqD6qYMn_9rMCsTyiP5TqUG7IYjkllXSiywzU8ukzKRI954tqCDD0SQ-eZXKKcgOhqFD02PIYHAhWs5gxg.svg" alt="LG" class="team-logo">
+              <div class="team-name">LG</div>
+              <div class="vote-count higher">3,304</div>
             </div>
           </div>
-          <span class="date-current" id="currentDate">Today</span>
-          <div class="date-nav-item" onclick="changeDate('next')">
-            <div class="date-nav-right">
-              <span class="date-number" id="nextDate">27</span>
-              <div class="arrow-icon">
-                <div class="polygon-icon polygon-right"></div>
-              </div>
+
+          <div class="game-item">
+            <div class="team-box" data-team="home" onclick="selectTeam(1, 'home')">
+              <img src="https://i.namu.wiki/i/8pj9ZIy7Q8FnbR4hLnZ7nkC7S8vVl5q32HRIBMZDimKTvYzwRYt_UEi-UYPG-wfQY5BjuAirfqG01clbziAQJw.svg" alt="한화" class="team-logo">
+              <div class="team-name">한화</div>
+              <div class="vote-count higher">4,720</div>
+            </div>
+            <div class="game-status">
+              <div class="voting-text">투표 중</div>
+              <div class="game-time">18:00</div>
+            </div>
+            <div class="team-box" data-team="away" onclick="selectTeam(1, 'away')">
+              <img src="https://i.namu.wiki/i/N235-wD7Qzau4r3dfNwgqhqN1-4AEBCQey4tS-vqDgZuhLa_16KiGqbCHd-IWjrcDn2NtvZN7iT7X5eC9xekk7q5gYoJkxZ7pLoUBK8nGXGnfRE1UaP0QrxjCsoaKSOndKRyV1vhqHD0LLivZFM7wQ.svg" alt="NC" class="team-logo">
+              <div class="team-name">NC</div>
+              <div class="vote-count lower">524</div>
+            </div>
+          </div>
+
+          <div class="game-item">
+            <div class="team-box" data-team="home" onclick="selectTeam(2, 'home')">
+              <img src="https://i.namu.wiki/i/SM6pQeZzyF0Rf0mbz5gJ91IhCMRAvh2J-wcJfmVwMhqN_PhIB5swVLSeQdnf-zTtKRi5OuoMf1h4cUGuJObRaS6s9pFkfd7QPZX7SHgBjQrNoApf46RgfGWhf3q57yC6AH3GTDwTFdzT1gNOgd76VA.svg" alt="두산" class="team-logo">
+              <div class="team-name">두산</div>
+              <div class="vote-count lower">0</div>
+            </div>
+            <div class="game-status">
+              <div class="voting-text">투표 중</div>
+              <div class="game-time">18:00</div>
+            </div>
+            <div class="team-box" data-team="away" onclick="selectTeam(2, 'away')">
+              <img src="https://i.namu.wiki/i/oV_2e6_8-vFepLD0dHLsenkQEo0aj4nleb3xcilEZwi2Cfhr6jZMUZFb503MAlLmfapeHzMMR7DCEi3OJECz9LnJzb-Eic1W_-rNin-im1XlNDjGjbZsmQTmBueDFUvttyLHB2FA4QXIaDD9g0LeMw.svg" alt="삼성" class="team-logo">
+              <div class="team-name">삼성</div>
+              <div class="vote-count higher">5,245</div>
+            </div>
+          </div>
+
+          <div class="game-item">
+            <div class="team-box" data-team="home" onclick="selectTeam(3, 'home')">
+              <img src="https://i.namu.wiki/i/zWuonkrdoxBaxY6oe9RGf6u-YL0YJRUp3th5-fNkKGk7RqgNESeCtcbGl3HeR0LMP3SZ9IlYAsP3kSIjZhJgWUabnZCI4PwazHMbgxczAxOVJ_qZdcvxrOrITwsmnMQvUTTtIzPBfL9QX56ht0FPFQ.svg" alt="KIA" class="team-logo">
+              <div class="team-name">KIA</div>
+              <div class="vote-count higher">4,458</div>
+            </div>
+            <div class="game-status">
+              <div class="voting-text">투표 중</div>
+              <div class="game-time">18:00</div>
+            </div>
+            <div class="team-box" data-team="away" onclick="selectTeam(3, 'away')">
+              <img src="https://i.namu.wiki/i/TV5apmiATJX1d8xGgk6PtBctZeKxFCMZpUmFPaMcDkC36k1maJJokJ0Gpkuocah54nbKIQOAZUgyD9Ow-3512VLBwtDYyAN0Jm8JEe6_j-r534KUAVoCZ46NkOeJmI8y77ukV48NxCnbQ6KenB0UmQ.svg" alt="SSG" class="team-logo">
+              <div class="team-name">SSG</div>
+              <div class="vote-count lower">787</div>
+            </div>
+          </div>
+
+          <div class="game-item">
+            <div class="team-box" data-team="home" onclick="selectTeam(4, 'home')">
+              <img src="https://i.namu.wiki/i/iYY2lyEZKY3EpAtu2yUy9b1hDvQ3ijc8ivfkk6fBltP-LpJtQtudzC_LtkXfEKBBogFRAU4ETVrctfuN1UIt-5FaAcqvpMgKAbOTOFGxXB-XQ6wP_NqGndl5ChTxyqSzlJ6P9RWe6RkmM5ieuOXWbw.svg" alt="키움" class="team-logo">
+              <div class="team-name">키움</div>
+              <div class="vote-count lower">787</div>
+            </div>
+            <div class="game-status">
+              <div class="voting-text">투표 중</div>
+              <div class="game-time">18:00</div>
+            </div>
+            <div class="team-box" data-team="away" onclick="selectTeam(4, 'away')">
+              <img src="https://i.namu.wiki/i/cFb8Ykp4kxvpk-foBdgeGyj3d2TGfYSW41KZ-k9SjjVsFSFgJnvAthnIjAND2AE____xihT73odP_H3LTi1UOjvyw5raOqh1biiza57RlobyEzf-ItioBNQEl8rtdqyY0Vw9hsk1CmUx7kNp3oddWw.svg" alt="롯데" class="team-logo">
+              <div class="team-name">롯데</div>
+              <div class="vote-count higher">4,458</div>
             </div>
           </div>
         </div>
@@ -552,6 +713,32 @@
         // 날짜 표시 초기화
         updateDateDisplay();
       });
+
+      // Team selection functionality
+      const selectedTeams = new Array(5).fill({ home: false, away: false });
+
+      function selectTeam(gameIndex, side) {
+        const oppositeTeams = document.querySelectorAll(`.game-item:nth-child(${gameIndex + 1}) .team-box`);
+        const selectedTeam = oppositeTeams[side === 'home' ? 0 : 1];
+        const otherTeam = oppositeTeams[side === 'home' ? 1 : 0];
+        
+        // Toggle selection
+        selectedTeams[gameIndex][side] = !selectedTeams[gameIndex][side];
+        
+        // Update UI
+        if (selectedTeams[gameIndex][side]) {
+          selectedTeam.classList.add(side === 'home' ? 'selected-home' : 'selected-away');
+        } else {
+          selectedTeam.classList.remove(side === 'home' ? 'selected-home' : 'selected-away');
+        }
+        
+        // Check if both teams are selected
+        if (selectedTeams[gameIndex].home && selectedTeams[gameIndex].away) {
+          oppositeTeams.forEach(team => team.classList.add('both-selected'));
+        } else {
+          oppositeTeams.forEach(team => team.classList.remove('both-selected'));
+        }
+      }
     </script>
   </body>
 </html>
