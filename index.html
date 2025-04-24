@@ -542,6 +542,25 @@
 
       <!-- 3. KBO Team Selection Section -->
       <section class="team-selection-section">
+        <div class="date-navigation">
+          <div class="date-nav-item" onclick="changeDate('prev')">
+            <div class="date-nav-left">
+              <div class="arrow-icon">
+                <div class="polygon-icon polygon-left"></div>
+              </div>
+              <span class="date-number" id="prevDate">25</span>
+            </div>
+          </div>
+          <span class="date-current" id="currentDate">Today</span>
+          <div class="date-nav-item" onclick="changeDate('next')">
+            <div class="date-nav-right">
+              <span class="date-number" id="nextDate">27</span>
+              <div class="arrow-icon">
+                <div class="polygon-icon polygon-right"></div>
+              </div>
+            </div>
+          </div>
+        </div>
         <h2 class="team-selection-title">올킬 도전!</h2>
         
         <div class="game-list">
