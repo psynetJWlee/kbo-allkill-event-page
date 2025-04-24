@@ -17,17 +17,37 @@ export const TEAM_LOGOS = {
 export const MOCK_GAMES: Game[] = [
   {
     id: 1,
-    homeTeam: { id: "KT", name: "KT", logo: TEAM_LOGOS["KT"], voteCount: 2345 },
-    awayTeam: { id: "LG", name: "LG", logo: TEAM_LOGOS["LG"], voteCount: 1234 },
+    homeTeam: { id: "KT", name: "KT", logo: TEAM_LOGOS["KT"], voteCount: 1941 },
+    awayTeam: { id: "LG", name: "LG", logo: TEAM_LOGOS["LG"], voteCount: 3304 },
     status: "투표중",
-    time: "18:30",
+    time: "18:00",
   },
   {
     id: 2,
-    homeTeam: { id: "한화", name: "한화", logo: TEAM_LOGOS["한화"], voteCount: 890 },
-    awayTeam: { id: "두산", name: "두산", logo: TEAM_LOGOS["두산"], voteCount: 756 },
-    status: "경기중",
-    score: "2:1",
+    homeTeam: { id: "한화", name: "한화", logo: TEAM_LOGOS["한화"], voteCount: 4720 },
+    awayTeam: { id: "NC", name: "NC", logo: TEAM_LOGOS["NC"], voteCount: 524 },
+    status: "투표중",
+    time: "18:00",
   },
-  // ... Add more mock games
+  {
+    id: 3,
+    homeTeam: { id: "두산", name: "두산", logo: TEAM_LOGOS["두산"], voteCount: 0 },
+    awayTeam: { id: "삼성", name: "삼성", logo: TEAM_LOGOS["삼성"], voteCount: 5245 },
+    status: "투표중",
+    time: "18:00",
+  },
+  {
+    id: 4,
+    homeTeam: { id: "KIA", name: "KIA", logo: TEAM_LOGOS["KIA"], voteCount: 4458 },
+    awayTeam: { id: "SSG", name: "SSG", logo: TEAM_LOGOS["SSG"], voteCount: 787 },
+    status: "투표중",
+    time: "18:00",
+  },
+  {
+    id: 5,
+    homeTeam: { id: "키움", name: "키움", logo: TEAM_LOGOS["키움"], voteCount: 787 },
+    awayTeam: { id: "롯데", name: "롯데", logo: TEAM_LOGOS["롯데"], voteCount: 4458 },
+    status: "투표중",
+    time: "18:00",
+  },
 ];
