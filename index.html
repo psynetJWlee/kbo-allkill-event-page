@@ -170,13 +170,6 @@
         padding: 0 16px;
       }
 
-      .game-item {
-        height: 130px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
       .team-column {
         display: flex;
         flex-direction: column;
@@ -186,11 +179,13 @@
       }
 
       .team-box {
-        width: 100%;
+        width: 90px;
+        height: 80px;
+        box-sizing: border-box;
+        padding: 8px;
         background: #1f1f1f;
         border: 1px solid #444;
         border-radius: 8px;
-        padding: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -198,9 +193,8 @@
         transition: border-color .2s;
       }
 
-      .team-box.selected-home,
-      .team-box.selected-away {
-        border-color: #b4900f;
+      .team-box.selected {
+        border: 3px solid #FFFFFF;
       }
 
       .team-logo {
@@ -224,12 +218,6 @@
       }
 
       .vote-count.higher {
-        color: #b4900f;
-        font-weight: bold;
-      }
-
-      .team-box.selected-home + .vote-count,
-      .team-box.selected-away + .vote-count {
         color: #b4900f;
         font-weight: bold;
       }
@@ -761,29 +749,11 @@
       });
 
       // Team selection functionality
-      const selectedTeams = new Array(5).fill({ home: false, away: false });
-
-      function selectTeam(gameIndex, side) {
-        const oppositeTeams = document.querySelectorAll(`.game-item:nth-child(${gameIndex + 1}) .team-box`);
-        const selectedTeam = oppositeTeams[side === 'home' ? 0 : 1];
-        const otherTeam = oppositeTeams[side === 'home' ? 1 : 0];
-        
-        // Toggle selection
-        selectedTeams[gameIndex][side] = !selectedTeams[gameIndex][side];
-        
-        // Update UI
-        if (selectedTeams[gameIndex][side]) {
-          selectedTeam.classList.add(side === 'home' ? 'selected-home' : 'selected-away');
-        } else {
-          selectedTeam.classList.remove(side === 'home' ? 'selected-home' : 'selected-away');
-        }
-        
-        // Check if both teams are selected
-        if (selectedTeams[gameIndex].home && selectedTeams[gameIndex].away) {
-          oppositeTeams.forEach(team => team.classList.add('both-selected'));
-        } else {
-          oppositeTeams.forEach(team => team.classList.remove('both-selected'));
-        }
+      function selectTeam(matchIdx, side) {
+        const item = document.querySelectorAll('.game-item')[matchIdx];
+        item.querySelectorAll('.team-box').forEach(b => b.classList.remove('selected'));
+        const clicked = item.querySelector(`.team-box[data-team="${side}"]`);
+        clicked.classList.add('selected');
       }
     </script>
   </body>
