@@ -120,7 +120,7 @@ export const TeamSelectionSection: React.FC = () => {
   };
 
   return (
-    <section className="h-[912px] w-full bg-[#121212]">
+    <div className="h-full w-full bg-[#121212]">
       <h2 className="team-selection-title">올킬 도전!</h2>
       <div className="game-list">
         {games.map((game, index) => {
@@ -147,6 +147,6 @@ export const TeamSelectionSection: React.FC = () => {
           );
         })}
       </div>
-    </section>
+    </div>
   );
 };
