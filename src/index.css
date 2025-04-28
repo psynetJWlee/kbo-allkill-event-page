@@ -178,12 +178,15 @@
 }
 
 .game-status {
-  width: 60px;
-  text-align: center;
+  min-width: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  color: #aaa;
+  white-space: nowrap;
 }
 
 /* Add this to properly style the team selection title */
