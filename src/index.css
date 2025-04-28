@@ -110,10 +110,11 @@
 .game-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   height: 120px;
-  padding: 0 16px;
+  gap: 20px;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -178,7 +179,7 @@
 }
 
 .game-status {
-  min-width: 60px;
+  width: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
