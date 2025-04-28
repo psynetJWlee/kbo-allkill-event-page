@@ -92,11 +92,12 @@ const TeamBox: React.FC<{
   isSelected: boolean;
   onSelect: () => void;
   isHigherVotes: boolean;
-}> = ({ team, isSelected, onSelect, isHigherVotes }) => {
+  isHome: boolean;
+}> = ({ team, isSelected, onSelect, isHigherVotes, isHome }) => {
   return (
     <div className="team-column">
       <div 
-        className={`team-box ${isSelected ? 'selected' : ''}`}
+        className={`team-box ${isSelected ? (isHome ? 'selected-home' : 'selected-away') : ''}`}
         onClick={onSelect}
       >
         <img src={team.logo} alt={team.name} className="team-logo" />
@@ -132,6 +133,7 @@ export const TeamSelectionSection: React.FC = () => {
                 isSelected={selectedTeams[index] === 'home'}
                 onSelect={() => handleSelectTeam(index, 'home')}
                 isHigherVotes={homeHigherVotes}
+                isHome={true}
               />
               <div className="game-status">
                 <div className="voting-text">{game.status}</div>
@@ -142,6 +144,7 @@ export const TeamSelectionSection: React.FC = () => {
                 isSelected={selectedTeams[index] === 'away'}
                 onSelect={() => handleSelectTeam(index, 'away')}
                 isHigherVotes={!homeHigherVotes}
+                isHome={false}
               />
             </div>
           );

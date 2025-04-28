@@ -142,8 +142,14 @@
   transition: border 0.2s;
 }
 
-.team-box.selected {
-  border: 3px solid #fff;
+.team-box.selected-home {
+  background-color: #C13D3D;
+  border: 3px solid #FFFFFF;
+}
+
+.team-box.selected-away {
+  background-color: #047DBF;
+  border: 3px solid #FFFFFF;
 }
 
 .team-logo {
