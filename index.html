@@ -166,7 +166,7 @@
       .game-list {
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 0; /* Changed from 16px to 0 */
         padding: 0 16px;
       }
 
@@ -189,7 +189,7 @@
         justify-content: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        margin-bottom: 0;
+        margin-bottom: 0; /* Ensure no extra spacing */
       }
 
       .team-box.selected-home {
@@ -219,9 +219,9 @@
 
       .vote-count {
         font-size: 15px;
-        margin-top: 10px;
+        margin-top: 10px; /* This creates separation from the team box */
         text-align: center;
-        align-self: center;
+        align-self: center; /* Center horizontally */
       }
 
       .vote-count.higher {
@@ -783,20 +783,4 @@
         // Check if all games have a selection
         const allGamesSelected = Array.from(document.querySelectorAll('.game-item')).every(game => {
           const teams = game.querySelectorAll('.team-box');
-          return Array.from(teams).some(team => 
-            team.classList.contains('selected-home') || 
-            team.classList.contains('selected-away')
-          );
-        });
-        
-        // Update submit button state
-        const submitButton = document.querySelector('.submit-button');
-        if (allGamesSelected) {
-          submitButton.classList.add('active');
-        } else {
-          submitButton.classList.remove('active');
-        }
-      }
-    </script>
-  </body>
-</html>
+          return Array.from(teams).some(team =>
