@@ -17,9 +17,9 @@ export const DateNavigation: React.FC<DateNavigationProps> = ({
   onDateClick
 }) => {
   return (
-    <div className="flex items-center justify-between px-[21px] h-[50px] text-white">
+    <div className="flex items-center justify-between px-[21px] h-[50px] text-white" id="date-navigation">
       <div 
-        className="flex items-center cursor-pointer" 
+        className="flex items-center cursor-pointer date-nav-prev" 
         onClick={onPrevDate}
       >
         <div className="w-6 h-6 flex items-center justify-center">
@@ -27,6 +27,7 @@ export const DateNavigation: React.FC<DateNavigationProps> = ({
         </div>
         <span 
           className="text-[16px] ml-[18px]"
+          id="prev-day"
           onClick={(e) => {
             e.stopPropagation();
             onDateClick(currentDay - 1);
@@ -35,15 +36,16 @@ export const DateNavigation: React.FC<DateNavigationProps> = ({
           {currentDay - 1}
         </span>
       </div>
-      <span className="text-[16px] font-bold">
+      <span className="text-[16px] font-bold" id="current-day">
         {currentDay === realToday ? 'Today' : currentDay}
       </span>
       <div 
-        className="flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer date-nav-next"
         onClick={onNextDate}
       >
         <span 
           className="text-[16px] mr-[18px]"
+          id="next-day"
           onClick={(e) => {
             e.stopPropagation();
             onDateClick(currentDay + 1);

@@ -4,7 +4,7 @@ import MemberList from '@/components/MemberList';
 
 export const WinnersSection: React.FC = () => {
   return (
-    <section className="w-full bg-[#004B70] flex flex-col items-center py-6">
+    <section className="w-full bg-[#004B70] flex flex-col items-center py-6" id="winners-section">
       <div className="w-full flex flex-col items-center relative">
         <img 
           src="/lovable-uploads/2b49ee10-7baf-4d97-bde0-342af5344c35.png" 

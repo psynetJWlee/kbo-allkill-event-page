@@ -70,9 +70,9 @@ const TeamSelectionSection: React.FC = () => {
   const isAllSelected = Object.keys(selected).length === 5;
 
   return (
-    <section className="team-selection-section">
+    <section className="team-selection-section" id="team-selection-section">
       <h2 className="team-selection-title">올킬 도전!</h2>
-      <div className="game-list">
+      <div className="game-list" id="game-list">
         {kboGames.map(game => (
           <GameItem
             key={game.id}
@@ -85,6 +85,7 @@ const TeamSelectionSection: React.FC = () => {
       <Button 
         className={`submit-btn ${isAllSelected ? 'enabled' : ''}`} 
         disabled={!isAllSelected}
+        id="submit-allkill-btn"
       >
         올킬 제출
       </Button>
