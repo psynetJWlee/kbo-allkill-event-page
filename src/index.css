@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -98,4 +99,130 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* KBO Team Selection Styles */
+.team-selection-section {
+  margin: 0;
+  padding: 0;
+  background: #121212;
+}
+
+.team-selection-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #FFFFFF;
+  padding-top: 20px;
+  margin-bottom: 16px;
+}
+
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 16px;
+}
+
+.game-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.team-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-box {
+  width: 90px;
+  height: 80px;
+  background: #1f1f1f;
+  border: 1px solid #545454;
+  border-radius: 5px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.team-box.selected-home {
+  background-color: #C13D3D;
+  border: 3px solid #FFFFFF;
+}
+
+.team-box.selected-away {
+  background-color: #047DBF;
+  border: 3px solid #FFFFFF;
+}
+
+.team-logo {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+
+.team-name {
+  font-size: 14px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.vote-count {
+  font-size: 14px;
+}
+
+.vote-count.higher {
+  color: #FFC736;
+  font-weight: bold;
+}
+
+.vote-count.lower {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.team-box.selected .vote-count.lower {
+  color: #FFFFFF;
+}
+
+.game-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.voting-text {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.game-time {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.submit-btn {
+  display: block;
+  width: calc(100% - 70px);
+  max-width: 400px;
+  margin: 32px auto 0;
+  height: 50px;
+  font-size: 24px;
+  color: #121212;
+  background-color: rgba(255, 215, 0, 0.3);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.submit-btn.enabled {
+  background-color: rgba(255, 215, 0, 1);
 }

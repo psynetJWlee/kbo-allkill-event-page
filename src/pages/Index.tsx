@@ -7,6 +7,7 @@ import { DateNavigation } from '@/components/DateNavigation';
 import { MyPrizeSection } from '@/components/sections/MyPrizeSection';
 import { PrizeRankingSection } from '@/components/sections/PrizeRankingSection';
 import { EventDescriptionSection } from '@/components/sections/EventDescriptionSection';
+import TeamSelectionSection from '@/components/sections/TeamSelectionSection';
 
 const Index = () => {
   const [currentDay, setCurrentDay] = useState(26);
@@ -42,6 +43,9 @@ const Index = () => {
             onNextDate={handleNextDate}
             onDateClick={handleDateClick}
           />
+          
+          {/* Add the Team Selection Section below the Date Navigation */}
+          <TeamSelectionSection />
         </section>
 
         {/* 4. My Prize Section */}
