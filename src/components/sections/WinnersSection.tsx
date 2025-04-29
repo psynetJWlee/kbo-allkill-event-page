@@ -4,16 +4,20 @@ import MemberList from '@/components/MemberList';
 
 export const WinnersSection: React.FC = () => {
   return (
-    <section className="h-[777px] w-full bg-[#004B70] relative">
-      <img 
-        src="/lovable-uploads/2b49ee10-7baf-4d97-bde0-342af5344c35.png" 
-        alt="오늘의 당첨자"
-        className="absolute left-[2px] top-[18px]"
-      />
-      <p className="absolute left-1/2 transform -translate-x-1/2 top-[78px] text-[20px] text-white font-bold">
-        총 20명
-      </p>
-      <MemberList />
+    <section className="w-full bg-[#004B70] flex flex-col items-center py-6">
+      <div className="w-full flex flex-col items-center relative">
+        <img 
+          src="/lovable-uploads/2b49ee10-7baf-4d97-bde0-342af5344c35.png" 
+          alt="오늘의 당첨자"
+          className="mb-4"
+        />
+        <p className="text-[20px] text-white font-bold mb-6">
+          총 20명
+        </p>
+      </div>
+      <div className="w-full">
+        <MemberList />
+      </div>
     </section>
   );
 };
