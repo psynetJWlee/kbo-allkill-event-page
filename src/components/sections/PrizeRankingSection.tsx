@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { PersonStanding } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export const PrizeRankingSection: React.FC = () => {
@@ -30,9 +29,13 @@ export const PrizeRankingSection: React.FC = () => {
       <div className="flex flex-col items-center">
         <h2 className="inline-block text-[30px] font-bold text-white relative after:content-[''] after:block after:w-full after:h-[1.5px] after:bg-[#FFC736] after:mt-[5px]">상금 랭킹</h2>
         
-        <p className="text-[16px] text-white opacity-70 mt-[8px]">
-          내 랭킹 6위 / 5,345 
-          <PersonStanding className="inline-block ml-[8px] w-[10px] h-[12px]" />
+        <p className="text-[16px] text-white mt-[8px]">
+          내 랭킹 <span className="text-white">6위 / 5,345</span>
+          <img 
+            src="/lovable-uploads/46e10f18-b741-49e5-809e-500ae37ffbd7.png" 
+            alt="User icon" 
+            className="inline-block ml-[8px] w-[10px] h-[12px]" 
+          />
         </p>
       </div>
 
@@ -87,3 +90,4 @@ export const PrizeRankingSection: React.FC = () => {
     </section>
   );
 };
+
