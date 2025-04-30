@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
 import GameItem from '@/components/GameItem';
@@ -60,6 +60,15 @@ const kboGames: GameType[] = [
 const TeamSelectionSection: React.FC = () => {
   const [selected, setSelected] = useState<Record<number, string>>({});
 
+  // Effect to ensure button is ready for vanilla JS to find
+  useEffect(() => {
+    // Signal to vanilla JS that React has rendered the button
+    const button = document.getElementById('submit-allkill-btn');
+    if (button) {
+      button.dataset.reactRendered = 'true';
+    }
+  }, []);
+
   const handleTeamSelect = (gameId: number, team: 'home' | 'away') => {
     setSelected(prev => ({
       ...prev,
@@ -88,6 +97,7 @@ const TeamSelectionSection: React.FC = () => {
           className={`submit-btn ${isAllSelected ? 'enabled' : ''}`} 
           disabled={!isAllSelected}
           id="submit-allkill-btn"
+          data-rendered-by="react"
           style={{ 
             backgroundColor: isAllSelected ? 'rgba(255, 215, 0, 1)' : 'rgba(255, 215, 0, 0.3)',
             color: '#121212',

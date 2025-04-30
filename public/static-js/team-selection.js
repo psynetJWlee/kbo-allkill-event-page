@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
   // KBO team logo URLs
   const teamLogos = {
@@ -80,15 +79,19 @@ document.addEventListener('DOMContentLoaded', function() {
     updateSubmitButton();
   }
   
-  // 제출 버튼 상태 업데이트 함수
+  // 제출 버튼 상태 업데이트 함수 - 에러 해결을 위해 수정
   function updateSubmitButton() {
     const submitButton = document.getElementById('submit-allkill-btn');
-    // Check if the button exists before trying to access its classList
+    
+    // Check if button exists - this fixes the null error
     if (!submitButton) {
-      console.warn('Submit button not found in DOM');
+      console.warn('Submit button not found in DOM yet - will try again later');
+      // Schedule another attempt after a delay
+      setTimeout(updateSubmitButton, 100);
       return;
     }
     
+    // Now we can safely use the button since we know it exists
     const isAllSelected = Object.keys(selectedTeams).length === 5;
     
     if (isAllSelected) {
@@ -98,6 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
       submitButton.classList.remove('enabled');
       submitButton.disabled = true;
     }
+    
+    console.log('Submit button updated successfully');
   }
   
   // 초기 게임 목록 렌더링
@@ -105,6 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameListElement = document.getElementById('game-list');
     if (!gameListElement) {
       console.warn('Game list element not found in DOM');
+      // Schedule another attempt after a delay
+      setTimeout(renderGameList, 100);
       return;
     }
     
@@ -181,15 +188,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Add submit button event listener
+    setupSubmitButtonListener();
+  }
+
+  // Setup the event listener for the submit button
+  function setupSubmitButtonListener() {
     const submitButton = document.getElementById('submit-allkill-btn');
     if (submitButton) {
-      submitButton.addEventListener('click', function() {
-        if (Object.keys(selectedTeams).length === 5) {
-          alert('올킬 투표가 제출되었습니다!');
-        }
-      });
+      // Check if we've already set up the listener to avoid duplicates
+      if (!submitButton.dataset.listenerAdded) {
+        submitButton.addEventListener('click', function() {
+          if (Object.keys(selectedTeams).length === 5) {
+            alert('올킬 투표가 제출되었습니다!');
+          }
+        });
+        // Mark that we've added the listener
+        submitButton.dataset.listenerAdded = 'true';
+        console.log('Submit button listener added successfully');
+      }
     } else {
-      console.warn('Submit button not found for event listener');
+      // Try again later if button not found
+      setTimeout(setupSubmitButtonListener, 100);
     }
   }
   
@@ -197,20 +216,27 @@ document.addEventListener('DOMContentLoaded', function() {
   function initDateNavigation() {
     const prevDateBtn = document.querySelector('.date-nav-prev');
     const nextDateBtn = document.querySelector('.date-nav-next');
+    
+    if (!prevDateBtn || !nextDateBtn) {
+      console.warn('Date navigation buttons not found - will try again later');
+      setTimeout(initDateNavigation, 100);
+      return;
+    }
+    
     let currentDay = 26; // 현재 날짜 설정
     const REAL_TODAY = 26; // 실제 오늘 날짜
     
-    if (prevDateBtn && nextDateBtn) {
-      prevDateBtn.addEventListener('click', function() {
-        currentDay--;
-        updateDateDisplay(currentDay, REAL_TODAY);
-      });
-      
-      nextDateBtn.addEventListener('click', function() {
-        currentDay++;
-        updateDateDisplay(currentDay, REAL_TODAY);
-      });
-    }
+    prevDateBtn.addEventListener('click', function() {
+      currentDay--;
+      updateDateDisplay(currentDay, REAL_TODAY);
+    });
+    
+    nextDateBtn.addEventListener('click', function() {
+      currentDay++;
+      updateDateDisplay(currentDay, REAL_TODAY);
+    });
+    
+    console.log('Date navigation initialized successfully');
   }
   
   function updateDateDisplay(day, realToday) {
@@ -231,12 +257,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Wait a bit longer for the React components to render
-  setTimeout(() => {
-    // 초기화 함수 실행
-    renderGameList();
-    initDateNavigation();
-    // After everything is rendered, try to update the submit button
-    setTimeout(updateSubmitButton, 500);
-  }, 500);
+  // Let's implement a function to check if React has already rendered elements
+  function checkReactRendered() {
+    const reactButton = document.getElementById('submit-allkill-btn');
+    // If React hasn't rendered the button yet or if vanilla JS has already taken over
+    if (!reactButton) {
+      console.log('Waiting for React to render elements...');
+      setTimeout(checkReactRendered, 300);
+      return false;
+    }
+    
+    return true;
+  }
+  
+  // Main initialization function with better error handling
+  function initializeApp() {
+    console.log('Initializing vanilla JS app...');
+    if (checkReactRendered()) {
+      console.log('React has rendered the UI, proceeding with vanilla JS initialization');
+      renderGameList();
+      initDateNavigation();
+      setupSubmitButtonListener();
+    } else {
+      // Try again after a delay
+      setTimeout(initializeApp, 300);
+    }
+  }
+  
+  // Start the initialization with a delay to allow React to render first
+  setTimeout(initializeApp, 500);
 });
