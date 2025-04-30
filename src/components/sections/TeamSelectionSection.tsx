@@ -82,24 +82,26 @@ const TeamSelectionSection: React.FC = () => {
           />
         ))}
       </div>
-      <Button 
-        className={`submit-btn ${isAllSelected ? 'enabled' : ''}`} 
-        disabled={!isAllSelected}
-        id="submit-allkill-btn"
-        style={{ 
-          backgroundColor: isAllSelected ? 'rgba(255, 215, 0, 1)' : 'rgba(255, 215, 0, 0.3)',
-          color: '#121212',
-          fontSize: '24px',
-          fontWeight: 'bold',
-          height: '50px',
-          width: 'calc(100% - 70px)',
-          maxWidth: '400px',
-          margin: '32px auto 0',
-          borderRadius: '4px'
-        }}
-      >
-        올킬 제출
-      </Button>
+      <div className="flex justify-center w-full">
+        <Button 
+          className={`submit-btn ${isAllSelected ? 'enabled' : ''}`} 
+          disabled={!isAllSelected}
+          id="submit-allkill-btn"
+          style={{ 
+            backgroundColor: isAllSelected ? 'rgba(255, 215, 0, 1)' : 'rgba(255, 215, 0, 0.3)',
+            color: '#121212',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            height: '50px',
+            width: 'calc(100% - 70px)',
+            maxWidth: '400px',
+            margin: '32px auto 0',
+            borderRadius: '4px'
+          }}
+        >
+          올킬 제출
+        </Button>
+      </div>
     </section>
   );
 };
