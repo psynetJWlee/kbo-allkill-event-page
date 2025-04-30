@@ -52,16 +52,14 @@ export const MyPrizeSection: React.FC = () => {
   return (
     <section className="w-full bg-[#003B5D] py-[20px]">
       <div className="mx-[24px]">
-        {/* Title Section - Updated with 5px spacing and centered underline */}
+        {/* Title Section - Using the new CSS class */}
         <div className="flex flex-col items-center">
-          <h2 className="text-[30px] text-white font-bold">
+          <h2 className="my-prize-title">
             My 상금
           </h2>
-          {/* Underline now matches text width with 5px spacing */}
-          <div className="mt-[5px] border-0 border-t-[2px] border-[#FFC736] mb-[30px]" style={{ width: 'fit-content' }}></div>
         </div>
         
-        {/* Prize Group - Updated with new background color */}
+        {/* Prize Group - With background color */}
         <div className="flex flex-col border border-white rounded-[5px] px-[16px] py-[12px] mb-[27px] bg-[#00283C]">
           {/* Member Info - Horizontal layout with precise spacing */}
           <div className="member-info flex flex-row items-center mb-[10px]">

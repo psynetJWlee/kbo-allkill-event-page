@@ -214,3 +214,20 @@
 .submit-btn.enabled {
   /* 이제 인라인 스타일로 처리됨 */
 }
+
+/* My Prize Title Styles */
+.my-prize-title {
+  display: inline-block;                /* 너비 측정이 정확히 되도록 */
+  font-size: 30px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-top: 20px;                     /* 팀 선택 섹션 아래에서 20px */
+}
+.my-prize-title::after {
+  content: '';
+  display: block;
+  width: 100%;                          /* 텍스트 너비에 딱 맞춰 */
+  height: 2px;
+  background-color: #FFC736;
+  margin-top: 5px;                      /* 텍스트와 5px 떨어지도록 */
+}
