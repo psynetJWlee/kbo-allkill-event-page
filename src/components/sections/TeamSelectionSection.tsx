@@ -73,12 +73,13 @@ const TeamSelectionSection: React.FC = () => {
     <section className="team-selection-section" id="team-selection-section">
       <h2 className="team-selection-title">올킬 도전!</h2>
       <div className="game-list" id="game-list">
-        {kboGames.map(game => (
+        {kboGames.map((game, index) => (
           <GameItem
             key={game.id}
             game={game}
             selectedSide={selected[game.id]}
             onTeamSelect={handleTeamSelect}
+            index={index}
           />
         ))}
       </div>

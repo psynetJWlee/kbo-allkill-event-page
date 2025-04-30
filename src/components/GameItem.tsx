@@ -7,13 +7,20 @@ interface GameItemProps {
   game: GameType;
   selectedSide?: string;
   onTeamSelect: (gameId: number, team: 'home' | 'away') => void;
+  index: number; // Add index prop to track position in the list
 }
 
-const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect }) => {
+const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect, index }) => {
   const { id, homeTeam, awayTeam, time, status } = game;
   
+  // Apply alternate background color for 1st, 3rd, and 5th games (0-based index: 0, 2, 4)
+  const isAlternateBackground = index % 2 === 0;
+  
   return (
-    <div className="game-item" data-index={id}>
+    <div 
+      className={`game-item ${isAlternateBackground ? 'alternate-bg' : ''}`} 
+      data-index={id}
+    >
       <div className="team-column">
         <TeamBox 
           team={homeTeam} 
