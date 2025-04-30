@@ -1,39 +1,10 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { PersonStanding } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export const PrizeRankingSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'weekly' | 'all'>('weekly');
-
-  useEffect(() => {
-    // Initialize tab switching logic
-    const initTabs = () => {
-      const tabs = document.querySelectorAll('.ranking-tabs .tab');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // Remove active class from all tabs
-          tabs.forEach(t => t.classList.remove('active'));
-          // Add active class to clicked tab
-          tab.classList.add('active');
-          
-          // Update the active tab state
-          const tabType = tab.getAttribute('data-tab-type') as 'weekly' | 'all';
-          setActiveTab(tabType);
-        });
-      });
-    };
-    
-    // Initialize the tabs once the component is mounted
-    initTabs();
-    
-    // Cleanup event listeners on unmount
-    return () => {
-      const tabs = document.querySelectorAll('.ranking-tabs .tab');
-      tabs.forEach(tab => {
-        tab.removeEventListener('click', () => {});
-      });
-    };
-  }, []);
 
   // Mock data for ranking list
   const rankingData = [
@@ -63,22 +34,29 @@ export const PrizeRankingSection: React.FC = () => {
         <PersonStanding className="inline-block ml-[8px] w-[10px] h-[12px]" />
       </p>
 
-      {/* 2. 랭킹 산정 기준 - 중앙 정렬 적용 */}
+      {/* 2. 랭킹 산정 기준 - shadcn Tabs 컴포넌트 사용 */}
       <div className="flex justify-center mt-[16px]">
-        <div className="inline-flex border border-white/30 rounded-full overflow-hidden">
-          <button 
-            data-tab-type="weekly"
-            className={`tab ${activeTab === 'weekly' ? 'active bg-white text-[#00283F]' : 'bg-[#00283F] text-white'} text-[16px] px-[24px] py-[8px] cursor-pointer mx-[4px]`}
-          >
-            주간
-          </button>
-          <button 
-            data-tab-type="all"
-            className={`tab ${activeTab === 'all' ? 'active bg-white text-[#00283F]' : 'bg-[#00283F] text-white'} text-[16px] px-[24px] py-[8px] cursor-pointer mx-[4px]`}
-          >
-            전체
-          </button>
-        </div>
+        <Tabs 
+          defaultValue="weekly" 
+          value={activeTab} 
+          onValueChange={(value) => setActiveTab(value as 'weekly' | 'all')}
+          className="w-auto"
+        >
+          <TabsList className="bg-transparent border border-white/30 rounded-full h-auto p-[4px]">
+            <TabsTrigger 
+              value="weekly" 
+              className={`text-[16px] px-[24px] py-[8px] data-[state=active]:bg-white data-[state=active]:text-[#00283F] data-[state=inactive]:bg-transparent data-[state=inactive]:text-white rounded-full`}
+            >
+              주간
+            </TabsTrigger>
+            <TabsTrigger 
+              value="all" 
+              className={`text-[16px] px-[24px] py-[8px] data-[state=active]:bg-white data-[state=active]:text-[#00283F] data-[state=inactive]:bg-transparent data-[state=inactive]:text-white rounded-full`}
+            >
+              전체
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
       <p className="text-center mt-[8px] text-[14px] text-white opacity-70">3월 20일 ~ 3월 26일 기준</p>
 
