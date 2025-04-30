@@ -222,6 +222,7 @@
   font-weight: bold;
   color: #FFFFFF;
   margin-top: 20px;                     /* 팀 선택 섹션 아래에서 20px */
+  margin-bottom: 30px;                  /* 보유 상금 그룹과 30px 간격 확보 */
 }
 .my-prize-title::after {
   content: '';
