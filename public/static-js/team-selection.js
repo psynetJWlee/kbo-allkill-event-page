@@ -69,13 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // 새 선택 추가
-    if (gameElement) {
-      const teamBox = gameElement.querySelector(`.team-box[data-team="${teamSide}"]`);
-      if (teamBox) {
-        teamBox.classList.add('selected');
-        teamBox.classList.add(`selected-${teamSide}`);
-        selectedTeams[gameId] = teamSide;
-      }
+    const teamBox = gameElement.querySelector(`.team-box[data-team="${teamSide}"]`);
+    if (teamBox) {
+      teamBox.classList.add('selected');
+      teamBox.classList.add(`selected-${teamSide}`);
+      selectedTeams[gameId] = teamSide;
     }
     
     // 제출 버튼 상태 업데이트
@@ -85,11 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // 제출 버튼 상태 업데이트 함수
   function updateSubmitButton() {
     const submitButton = document.getElementById('submit-allkill-btn');
-    if (!submitButton) {
-      console.log('Submit button not found');
-      return; // Exit if the button doesn't exist
-    }
-    
     const isAllSelected = Object.keys(selectedTeams).length === 5;
     
     if (isAllSelected) {
@@ -104,10 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // 초기 게임 목록 렌더링
   function renderGameList() {
     const gameListElement = document.getElementById('game-list');
-    if (!gameListElement) {
-      console.log('Game list element not found');
-      return;
-    }
+    if (!gameListElement) return;
     
     kboGames.forEach(game => {
       const gameItemElement = document.createElement('div');
@@ -178,31 +168,13 @@ document.addEventListener('DOMContentLoaded', function() {
       gameListElement.appendChild(gameItemElement);
     });
     
-    // Add submit button if it doesn't exist
-    let submitButton = document.getElementById('submit-allkill-btn');
-    if (!submitButton) {
-      submitButton = document.createElement('button');
-      submitButton.id = 'submit-allkill-btn';
-      submitButton.className = 'submit-btn';
-      submitButton.textContent = '올킬 제출';
-      submitButton.disabled = true;
-      
-      const gameListParent = gameListElement.parentNode;
-      if (gameListParent) {
-        gameListParent.appendChild(submitButton);
-      } else if (gameListElement) {
-        // If no parent, add it after gameListElement
-        gameListElement.insertAdjacentElement('afterend', submitButton);
+    // Add submit button
+    const submitButton = document.getElementById('submit-allkill-btn');
+    submitButton.addEventListener('click', function() {
+      if (Object.keys(selectedTeams).length === 5) {
+        alert('올킬 투표가 제출되었습니다!');
       }
-    }
-    
-    if (submitButton) {
-      submitButton.addEventListener('click', function() {
-        if (Object.keys(selectedTeams).length === 5) {
-          alert('올킬 투표가 제출되었습니다!');
-        }
-      });
-    }
+    });
   }
   
   // 날짜 네비게이션 초기화
@@ -243,24 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Check if the DOM is fully loaded before initializing
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      // Wait a little bit to ensure React components are mounted
-      setTimeout(() => {
-        renderGameList();
-        initDateNavigation();
-        updateSubmitButton();
-        console.log('Team selection script initialized with delay');
-      }, 500);
-    });
-  } else {
-    // DOM is already loaded, initialize with a delay
-    setTimeout(() => {
-      renderGameList();
-      initDateNavigation();
-      updateSubmitButton();
-      console.log('Team selection script initialized immediately with delay');
-    }, 500);
-  }
+  // 초기화 함수 실행
+  renderGameList();
+  initDateNavigation();
+  updateSubmitButton();
 });
