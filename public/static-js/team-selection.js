@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     currentDay: 26,
     realToday: 26,
     gameElements: [],
-    domReady: false
+    domReady: false,
+    buttonInitialized: false
   };
   
   // DOM element references
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Make multiple attempts to initialize elements
     let initAttempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 20; // Increase max attempts
     
     const attemptInit = () => {
       initAttempts++;
@@ -40,12 +41,12 @@ document.addEventListener('DOMContentLoaded', function() {
         renderGameList();
         initDateNavigation();
         setupSubmitButtonListener();
-        updateSubmitButton();
         state.domReady = true;
       } else if (initAttempts < maxAttempts) {
-        // If we haven't reached max attempts, try again in 300ms
-        console.log('Elements not ready, retrying initialization...');
-        setTimeout(attemptInit, 300);
+        // If we haven't reached max attempts, try again with increasing delays
+        const delay = Math.min(500, 100 * initAttempts);
+        console.log(`Elements not ready, retrying initialization in ${delay}ms...`);
+        setTimeout(attemptInit, delay);
       } else {
         console.warn('Failed to initialize after maximum attempts');
       }
@@ -53,20 +54,45 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start the first attempt
     attemptInit();
+    
+    // Also listen for React's custom event to know when the button is definitely available
+    document.addEventListener('react-rendered', function(event) {
+      console.log('Vanilla JS: React rendered event received', event.detail);
+      if (event.detail && event.detail.elementId === 'submit-allkill-btn') {
+        // React has rendered the button, we can safely initialize it now
+        initializeElements();
+        setupSubmitButtonListener();
+        updateSubmitButton();
+      }
+    });
   }
   
   function initializeElements() {
-    elements.gameList = document.getElementById('game-list');
-    elements.submitButton = document.getElementById('submit-allkill-btn');
-    
-    // Check if elements are available
-    if (!elements.gameList || !elements.submitButton) {
-      console.log('Elements not found yet, retrying in 100ms');
+    try {
+      elements.gameList = document.getElementById('game-list');
+      elements.submitButton = document.getElementById('submit-allkill-btn');
+      
+      // Check if elements are available
+      let allReady = true;
+      
+      if (!elements.gameList) {
+        console.log('Game list element not found yet');
+        allReady = false;
+      }
+      
+      if (!elements.submitButton) {
+        console.log('Submit button element not found yet');
+        allReady = false;
+      } else if (!state.buttonInitialized) {
+        console.log('Submit button found, marking as initialized');
+        state.buttonInitialized = true;
+      }
+      
+      return allReady;
+    } catch (error) {
+      console.error('Error during element initialization:', error);
       return false;
     }
-    
-    console.log('Elements initialized successfully');
-    return true;
   }
   
   // ====== DATA CREATION FUNCTIONS ======
@@ -134,10 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function renderGameList() {
     if (!elements.gameList) {
-      if (!initializeElements()) {
-        console.warn('Game list element not found in DOM');
-        return;
-      }
+      console.warn('Game list element not available for rendering');
+      return;
     }
     
     // Clear existing content
@@ -217,10 +241,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function handleTeamSelect(gameId, teamSide) {
     // Game list check
     if (!elements.gameList) {
-      if (!initializeElements()) {
-        console.warn('Game list not ready yet, cannot select team');
-        return;
-      }
+      console.warn('Game list not available for team selection');
+      return;
     }
     
     // Find the game element
@@ -261,58 +283,62 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function updateSubmitButton() {
-    // Button check
-    if (!elements.submitButton) {
-      if (!initializeElements()) {
-        console.warn('올킬 제출 버튼을 찾을 수 없습니다.');
+    try {
+      // Re-initialize elements if needed
+      if (!elements.submitButton) {
+        if (!initializeElements()) {
+          console.warn('올킬 제출 버튼을 찾을 수 없습니다.');
+          return;
+        }
+      }
+      
+      // If button is still not available, exit function
+      if (!elements.submitButton) {
+        console.warn('올킬 제출 버튼을 초기화할 수 없습니다.');
         return;
       }
+      
+      const isAllSelected = Object.keys(state.selectedTeams).length === 5;
+      
+      // Update button attributes safely
+      elements.submitButton.disabled = !isAllSelected;
+      
+      if (elements.submitButton.style) {
+        elements.submitButton.style.opacity = isAllSelected ? '1' : '0.3';
+        elements.submitButton.style.color = isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
+      }
+      
+      console.log('Submit button updated successfully. All selected:', isAllSelected);
+    } catch (error) {
+      console.error('Error in updateSubmitButton:', error);
     }
-    
-    // If button is still not available, exit function
-    if (!elements.submitButton) {
-      console.warn('올킬 제출 버튼을 초기화할 수 없습니다.');
-      return;
-    }
-    
-    const isAllSelected = Object.keys(state.selectedTeams).length === 5;
-    
-    // Update button attributes safely
-    elements.submitButton.disabled = !isAllSelected;
-    
-    if (elements.submitButton.style) {
-      elements.submitButton.style.opacity = isAllSelected ? '1' : '0.3';
-      elements.submitButton.style.color = isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
-    }
-    
-    console.log('Submit button updated successfully. All selected:', isAllSelected);
   }
   
   function setupSubmitButtonListener() {
-    // First make sure the button is available
-    if (!elements.submitButton) {
-      if (!initializeElements()) {
+    try {
+      // First make sure the button is available
+      if (!elements.submitButton) {
         console.log('Submit button not available yet for listener setup');
-        return;
+        return false;
       }
-    }
-    
-    // If still not available after init attempt, return
-    if (!elements.submitButton) {
-      console.warn('Cannot set up listener for submit button - element not found');
-      return;
-    }
-    
-    // Check if we've already set up the listener to avoid duplicates
-    if (!elements.submitButton.dataset.listenerAdded) {
-      elements.submitButton.addEventListener('click', function() {
-        if (Object.keys(state.selectedTeams).length === 5) {
-          alert('올킬 투표가 제출되었습니다!');
-        }
-      });
-      // Mark that we've added the listener
-      elements.submitButton.dataset.listenerAdded = 'true';
-      console.log('Submit button listener added successfully');
+      
+      // Check if we've already set up the listener to avoid duplicates
+      if (!elements.submitButton.dataset.listenerAdded) {
+        elements.submitButton.addEventListener('click', function() {
+          if (Object.keys(state.selectedTeams).length === 5) {
+            alert('올킬 투표가 제출되었습니다!');
+          }
+        });
+        // Mark that we've added the listener
+        elements.submitButton.dataset.listenerAdded = 'true';
+        console.log('Submit button listener added successfully');
+        return true;
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Error in setupSubmitButtonListener:', error);
+      return false;
     }
   }
   
@@ -324,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!prevDateBtn || !nextDateBtn) {
       console.warn('Date navigation buttons not found - will try again later');
-      setTimeout(initDateNavigation, 100);
+      setTimeout(initDateNavigation, 500);
       return;
     }
     
@@ -361,19 +387,4 @@ document.addEventListener('DOMContentLoaded', function() {
       nextDayElement.textContent = state.currentDay + 1;
     }
   }
-  
-  // ====== REACT INTEGRATION ======
-  
-  // Listen for React rendering completion
-  document.addEventListener('react-rendered', function(event) {
-    console.log('React rendered notification received:', event.detail);
-    if (event.detail && event.detail.elementId === 'submit-allkill-btn') {
-      console.log('Submit button has been rendered by React');
-      if (initializeElements()) {
-        setupSubmitButtonListener();
-        updateSubmitButton();
-      }
-    }
-  });
 });
-

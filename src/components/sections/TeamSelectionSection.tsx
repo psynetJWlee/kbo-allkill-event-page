@@ -59,6 +59,7 @@ const kboGames: GameType[] = [
 
 const TeamSelectionSection: React.FC = () => {
   const [selected, setSelected] = useState<Record<number, string>>({});
+  const [buttonRendered, setButtonRendered] = useState(false);
 
   // Effect to ensure button is ready for vanilla JS to find
   useEffect(() => {
@@ -66,10 +67,13 @@ const TeamSelectionSection: React.FC = () => {
     const button = document.getElementById('submit-allkill-btn');
     if (button) {
       button.dataset.reactRendered = 'true';
+      setButtonRendered(true);
       
       // Create a custom event to notify vanilla JS that React has rendered the button
       const event = new CustomEvent('react-rendered', { detail: { elementId: 'submit-allkill-btn' } });
       document.dispatchEvent(event);
+      
+      console.log('React: Submit button rendered and event dispatched');
     }
   }, []);
 
@@ -103,6 +107,7 @@ const TeamSelectionSection: React.FC = () => {
           disabled={!isAllSelected}
           id="submit-allkill-btn"
           data-rendered-by="react"
+          data-ready={buttonRendered.toString()}
           style={{ 
             backgroundColor: '#FFD700',
             opacity: isAllSelected ? 1 : 0.3,
