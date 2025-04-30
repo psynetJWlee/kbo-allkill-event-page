@@ -35,23 +35,23 @@ export const PrizeRankingSection: React.FC = () => {
       </p>
 
       {/* 2. 랭킹 산정 기준 - shadcn Tabs 컴포넌트 사용 */}
-      <div className="flex justify-center mt-[16px]">
+      <div className="flex justify-center mt-[16px] w-full">
         <Tabs 
           defaultValue="weekly" 
           value={activeTab} 
           onValueChange={(value) => setActiveTab(value as 'weekly' | 'all')}
-          className="w-auto"
+          className="w-full"
         >
-          <TabsList className="bg-transparent border border-white/30 rounded-full h-auto p-[4px]">
+          <TabsList className="bg-transparent border border-white/30 rounded-full h-auto p-[4px] w-full">
             <TabsTrigger 
               value="weekly" 
-              className={`text-[16px] px-[24px] py-[8px] data-[state=active]:bg-white data-[state=active]:text-[#00283F] data-[state=inactive]:bg-transparent data-[state=inactive]:text-white rounded-full`}
+              className="flex-1 text-[16px] px-[24px] py-[8px] data-[state=active]:bg-white data-[state=active]:text-[#00283F] data-[state=inactive]:bg-transparent data-[state=inactive]:text-white rounded-full"
             >
               주간
             </TabsTrigger>
             <TabsTrigger 
               value="all" 
-              className={`text-[16px] px-[24px] py-[8px] data-[state=active]:bg-white data-[state=active]:text-[#00283F] data-[state=inactive]:bg-transparent data-[state=inactive]:text-white rounded-full`}
+              className="flex-1 text-[16px] px-[24px] py-[8px] data-[state=active]:bg-white data-[state=active]:text-[#00283F] data-[state=inactive]:bg-transparent data-[state=inactive]:text-white rounded-full"
             >
               전체
             </TabsTrigger>
