@@ -3,7 +3,7 @@ import React from 'react';
 
 export const EventDescriptionSection: React.FC = () => {
   return (
-    <section className="bg-[#00283F]">
+    <section className="bg-[#00283F] mx-[20px] my-[27px]">
       {/* 1. 상금 지급 안내 제목 */}
       <div className="flex items-center gap-2 mb-[15px]">
         <div className="flex justify-center items-center bg-gray-400/30 w-[24px] h-[24px] rounded-full">
