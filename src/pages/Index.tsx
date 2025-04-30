@@ -27,12 +27,6 @@ const Index = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-white" id="main-container">
-      {/* Animation Container */}
-      <div className="animation-wrapper" id="animation-wrapper">
-        <div className="close-button" aria-label="닫기">✕</div>
-        <div id="confetti-container"></div>
-      </div>
-
       <div className="w-[353px] mx-auto">
         {/* 1. Event Title Section */}
         <EventTitle />

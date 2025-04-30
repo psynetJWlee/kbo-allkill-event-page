@@ -6,45 +6,6 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KBO 올킬 이벤트</title>
-    <style>
-      * {
-        margin: 0; padding: 0; box-sizing: border-box;
-        font-family: 'Spoqa Han Sans Neo', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-      }
-
-      /* wrapper fixed to container bounds */
-      #animation-wrapper {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        min-height: 800px;
-        background-color: transparent;
-      }
-      .close-button {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        width: 30px; height: 30px;
-        display: flex; align-items: center; justify-content: center;
-        color: white; font-size: 24px; cursor: pointer; z-index: 10;
-      }
-      .confetti, .star {
-        position: absolute;
-        opacity: 0;
-        animation: fall linear infinite;
-      }
-      .confetti {
-        width: 10px; height: 10px; transform: rotate(45deg);
-      }
-      .star {
-        font-size: 20px;
-      }
-      @keyframes fall {
-        0%   { opacity: 0; transform: translateY(-50px) rotate(0deg); }
-        10%  { opacity: 1; }
-        100% { opacity: 0; transform: translateY(800px) rotate(360deg); }
-      }
-    </style>
   </head>
   <body>
     <div id="root"></div>
@@ -52,42 +13,6 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <!-- Static JS for vanilla implementation -->
     <script src="/static-js/team-selection.js"></script>
-    <script>
-      window.onload = function() {
-        const container = document.getElementById('animation-wrapper');
-        if (container) {
-          for (let i = 0; i < 30; i++) createConfetti(container);
-          for (let i = 0; i < 15; i++) createStar(container);
-          document.querySelector('#animation-wrapper .close-button')
-                  .onclick = () => container.style.display = 'none';
-        }
-      };
-
-      function createConfetti(container) {
-        const c = document.createElement('div');
-        c.className = 'confetti';
-        const size = Math.random()*8 + 5;
-        c.style.width = c.style.height = `${size}px`;
-        c.style.left = `${Math.random()*container.offsetWidth}px`;
-        c.style.animationDuration = `${Math.random()*5 + 3}s`;
-        c.style.animationDelay = `${Math.random()*5}s`;
-        c.style.backgroundColor = ['#FF4500','#FFD700','#FF0000','#FFFFFF','#3498db'][Math.floor(Math.random()*5)];
-        container.appendChild(c);
-      }
-
-      function createStar(container) {
-        const s = document.createElement('div');
-        s.className = 'star';
-        s.textContent = '★';
-        const size = Math.random()*15 + 10;
-        s.style.fontSize = `${size}px`;
-        s.style.left = `${Math.random()*container.offsetWidth}px`;
-        s.style.animationDuration = `${Math.random()*8 + 5}s`;
-        s.style.animationDelay = `${Math.random()*5}s`;
-        s.style.color = ['#FFD700','#FFFFFF','#FFA500'][Math.floor(Math.random()*3)];
-        container.appendChild(s);
-      }
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
