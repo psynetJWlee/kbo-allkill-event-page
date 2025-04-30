@@ -7,7 +7,11 @@ export const EventDescriptionSection: React.FC = () => {
       {/* 1. 상금 지급 안내 제목 */}
       <div className="flex items-center gap-2 mb-[15px]">
         <div className="flex justify-center items-center bg-gray-400/30 w-[24px] h-[24px] rounded-full">
-          <span className="text-[13px] text-white font-bold">i</span>
+          <img 
+            src="/lovable-uploads/a9f0ccb5-f9ae-4444-9be4-2597208cc0d7.png" 
+            alt="Info icon" 
+            className="w-[16px] h-[16px]"
+          />
         </div>
         <h3 className="text-[13px] text-white font-medium">상금 지급 안내</h3>
       </div>
@@ -41,7 +45,9 @@ export const EventDescriptionSection: React.FC = () => {
         rel="noopener noreferrer"
         className="flex justify-center items-center h-[87px] bg-[#1A5F7A] text-[25px] text-white opacity-90 font-bold rounded-full hover:bg-[#1d6e8c] transition-colors"
       >
-        LIVE 스코어<br />다운 받기
+        <div className="text-center">
+          LIVE 스코어<br />다운 받기
+        </div>
       </a>
     </div>
   );
