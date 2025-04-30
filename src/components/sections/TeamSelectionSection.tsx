@@ -94,13 +94,14 @@ const TeamSelectionSection: React.FC = () => {
       </div>
       <div className="flex justify-center w-full">
         <Button 
-          className={`submit-btn ${isAllSelected ? 'enabled' : ''}`} 
+          className="submit-btn" 
           disabled={!isAllSelected}
           id="submit-allkill-btn"
           data-rendered-by="react"
           style={{ 
-            backgroundColor: isAllSelected ? 'rgba(255, 215, 0, 1)' : 'rgba(255, 215, 0, 0.3)',
-            color: '#121212',
+            backgroundColor: '#FFD700',
+            opacity: isAllSelected ? 1 : 0.3,
+            color: isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)',
             fontSize: '24px',
             fontWeight: 'bold',
             height: '50px',
