@@ -1,8 +1,10 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PersonStanding } from "lucide-react";
 
 export const PrizeRankingSection: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'weekly' | 'all'>('weekly');
+
   useEffect(() => {
     // Initialize tab switching logic
     const initTabs = () => {
@@ -14,8 +16,9 @@ export const PrizeRankingSection: React.FC = () => {
           // Add active class to clicked tab
           tab.classList.add('active');
           
-          // Here you would typically update the ranking list based on the selected tab
-          // For now, we're just switching the active state
+          // Update the active tab state
+          const tabType = tab.getAttribute('data-tab-type') as 'weekly' | 'all';
+          setActiveTab(tabType);
         });
       });
     };
@@ -51,44 +54,54 @@ export const PrizeRankingSection: React.FC = () => {
   };
 
   return (
-    <section className="prize-ranking-section">
-      <div className="ranking-container">
-        {/* 1. 타이틀 영역 */}
-        <div className="ranking-header">
-          <h2 className="title">상금 랭킹</h2>
-          <div className="my-ranking">
-            <span className="label">내 랭킹</span>
-            <span className="rank">6위 / 5,345</span>
-            <PersonStanding className="icon" size={12} />
+    <section className="bg-[#00283F] mx-[10px] py-[30px] px-[16px]">
+      <div className="max-w-[600px] mx-auto">
+        {/* 1. 타이틀 영역 - 두 줄 레이아웃으로 변경 */}
+        <h2 className="inline-block text-[30px] font-bold text-white relative after:content-[''] after:block after:w-full after:h-[1.5px] after:bg-[#FFC736] after:mt-[5px]">상금 랭킹</h2>
+        
+        <p className="text-[16px] text-white opacity-70 mt-[8px]">
+          내 랭킹 6위 / 5,345 
+          <PersonStanding className="inline-block ml-[8px] w-[10px] h-[12px]" />
+        </p>
+
+        {/* 2. 랭킹 산정 기준 - 중앙 정렬 적용 */}
+        <div className="flex justify-center mt-[16px]">
+          <div className="inline-flex border border-white/30 rounded-full overflow-hidden">
+            <button 
+              data-tab-type="weekly"
+              className={`tab ${activeTab === 'weekly' ? 'active bg-white text-[#00283F]' : 'bg-[#00283F] text-white'} text-[16px] px-[24px] py-[8px] cursor-pointer mx-[4px]`}
+            >
+              주간
+            </button>
+            <button 
+              data-tab-type="all"
+              className={`tab ${activeTab === 'all' ? 'active bg-white text-[#00283F]' : 'bg-[#00283F] text-white'} text-[16px] px-[24px] py-[8px] cursor-pointer mx-[4px]`}
+            >
+              전체
+            </button>
           </div>
         </div>
-
-        {/* 2. 랭킹 산정 기준 */}
-        <div className="ranking-tabs">
-          <button className="tab active">주간</button>
-          <button className="tab">전체</button>
-        </div>
-        <p className="date-range">3월 20일 ~ 3월 26일 기준</p>
+        <p className="text-center mt-[8px] text-[14px] text-white opacity-70">3월 20일 ~ 3월 26일 기준</p>
 
         {/* 3. 랭킹 리스트 */}
-        <ul className="ranking-list">
+        <ul className="mt-[16px]">
           {rankingData.map((item) => (
-            <li key={item.rank} className={`item ${item.isMe ? 'is-me' : ''}`}>
-              <div className={`rank-number ${item.rank <= 3 ? 'top-rank' : ''}`}>
+            <li key={item.rank} className={`flex items-center bg-black/20 rounded-[8px] mt-[8px] p-[12px] ${item.isMe ? 'border-[3px] border-white' : ''}`}>
+              <div className={`w-[32px] text-center ${item.rank <= 3 ? 'text-[20px] text-[#FFC700]' : 'text-[16px] text-white opacity-70'}`}>
                 {item.rank}
               </div>
-              <img src={item.profileImg} alt={`${item.name}의 프로필`} className="profile-img" />
-              <div className="info">
-                <span className="nickname">{item.name}</span>
-                <span className="streak">올킬 {item.streak}회</span>
+              <img src={item.profileImg} alt={`${item.name}의 프로필`} className="w-[38px] h-[38px] rounded-full ml-[13px] object-cover" />
+              <div className="flex flex-col ml-[7px] flex-1">
+                <span className="text-[15px] text-white">{item.name}</span>
+                <span className="text-[14px] text-[#FFC736] opacity-90 mt-[2px]">올킬 {item.streak}회</span>
               </div>
-              <div className="prize">{formatPrize(item.prize)}</div>
+              <div className="text-[15px] text-[#FFC736] text-right ml-auto">{formatPrize(item.prize)}</div>
             </li>
           ))}
         </ul>
 
         {/* 4. 랭킹 선정 안내문구 */}
-        <div className="ranking-note">
+        <div className="text-[12px] text-white opacity-70 text-center mt-[16px]">
           * 랭킹은 매일 오전 9시에 업데이트<br/>
           * 동일한 적중 횟수일 경우 먼저 달성한 사용자가 우선 순위
         </div>
