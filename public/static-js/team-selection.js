@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
   // Data objects
   const teamData = createTeamData();
@@ -30,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Make multiple attempts to initialize elements
     let initAttempts = 0;
-    const maxAttempts = 20; // Increase max attempts
+    const maxAttempts = 20;
     
     const attemptInit = () => {
       initAttempts++;
@@ -41,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderGameList();
         initDateNavigation();
         setupSubmitButtonListener();
+        updateSubmitButton(); // Initial update after setup
         state.domReady = true;
       } else if (initAttempts < maxAttempts) {
         // If we haven't reached max attempts, try again with increasing delays
@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('react-rendered', function(event) {
       console.log('Vanilla JS: React rendered event received', event.detail);
       if (event.detail && event.detail.elementId === 'submit-allkill-btn') {
-        // React has rendered the button, we can safely initialize it now
         initializeElements();
         setupSubmitButtonListener();
         updateSubmitButton();
@@ -284,31 +283,22 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function updateSubmitButton() {
     try {
-      // Re-initialize elements if needed
-      if (!elements.submitButton) {
-        if (!initializeElements()) {
-          console.warn('올킬 제출 버튼을 찾을 수 없습니다.');
-          return;
-        }
-      }
-      
-      // If button is still not available, exit function
-      if (!elements.submitButton) {
-        console.warn('올킬 제출 버튼을 초기화할 수 없습니다.');
+      // First check if submitButton exists
+      const submitBtn = document.getElementById('submit-allkill-btn');
+      if (!submitBtn) {
+        console.warn('submit-allkill-btn 요소를 찾을 수 없습니다.');
         return;
       }
       
-      const isAllSelected = Object.keys(state.selectedTeams).length === 5;
+      // Check if all games have a selection
+      const allSelected = Object.keys(state.selectedTeams).length === 5;
       
-      // Update button attributes safely
-      elements.submitButton.disabled = !isAllSelected;
+      // Update button attributes using style directly instead of classList
+      submitBtn.disabled = !allSelected;
+      submitBtn.style.opacity = allSelected ? '1' : '0.3';
+      submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
       
-      if (elements.submitButton.style) {
-        elements.submitButton.style.opacity = isAllSelected ? '1' : '0.3';
-        elements.submitButton.style.color = isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
-      }
-      
-      console.log('Submit button updated successfully. All selected:', isAllSelected);
+      console.log('Submit button updated successfully. All selected:', allSelected);
     } catch (error) {
       console.error('Error in updateSubmitButton:', error);
     }
@@ -316,21 +306,22 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function setupSubmitButtonListener() {
     try {
-      // First make sure the button is available
-      if (!elements.submitButton) {
-        console.log('Submit button not available yet for listener setup');
+      // First check if button exists
+      const submitBtn = document.getElementById('submit-allkill-btn');
+      if (!submitBtn) {
+        console.warn('submit-allkill-btn 요소를 찾을 수 없습니다.');
         return false;
       }
       
-      // Check if we've already set up the listener to avoid duplicates
-      if (!elements.submitButton.dataset.listenerAdded) {
-        elements.submitButton.addEventListener('click', function() {
+      // Check if we've already set up the listener
+      if (!submitBtn.dataset.listenerAdded) {
+        submitBtn.addEventListener('click', function() {
           if (Object.keys(state.selectedTeams).length === 5) {
             alert('올킬 투표가 제출되었습니다!');
           }
         });
         // Mark that we've added the listener
-        elements.submitButton.dataset.listenerAdded = 'true';
+        submitBtn.dataset.listenerAdded = 'true';
         console.log('Submit button listener added successfully');
         return true;
       }
