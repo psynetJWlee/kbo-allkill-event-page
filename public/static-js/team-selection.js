@@ -167,34 +167,11 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    // Remove previous selection
-    removeTeamSelection(gameElement);
-    
-    // Add new selection
-    addTeamSelection(gameElement, teamSide, gameId);
+    // Update state
+    state.selectedTeams[gameId] = teamSide;
     
     // Update submit button state
     updateSubmitButton();
-  }
-  
-  function removeTeamSelection(gameElement) {
-    const previousSelected = gameElement.querySelector('.team-box.selected');
-    if (previousSelected) {
-      previousSelected.classList.remove('selected');
-      previousSelected.classList.remove(`selected-${previousSelected.getAttribute('data-team')}`);
-    }
-  }
-  
-  function addTeamSelection(gameElement, teamSide, gameId) {
-    const teamBox = gameElement.querySelector(`.team-box[data-team="${teamSide}"]`);
-    if (!teamBox) {
-      console.log(`Team box for ${teamSide} in game ${gameId} not found`);
-      return;
-    }
-    
-    teamBox.classList.add('selected');
-    teamBox.classList.add(`selected-${teamSide}`);
-    state.selectedTeams[gameId] = teamSide;
   }
   
   function updateSubmitButton() {
