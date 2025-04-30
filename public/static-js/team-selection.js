@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
   // KBO team logo URLs
   const teamLogos = {
@@ -55,6 +56,27 @@ document.addEventListener('DOMContentLoaded', function() {
   // 현재 선택된 팀을 저장
   const selectedTeams = {};
   
+  // 게임 리스트와 버튼 요소 가져오기
+  let gameListElement;
+  let submitButton;
+  let gameElements = [];
+  
+  // 초기화 함수
+  function initializeElements() {
+    gameListElement = document.getElementById('game-list');
+    submitButton = document.getElementById('submit-allkill-btn');
+    
+    // 요소가 아직 로드되지 않았으면 잠시 후 다시 시도
+    if (!gameListElement || !submitButton) {
+      console.log('Elements not found yet, retrying in 100ms');
+      setTimeout(initializeElements, 100);
+      return false;
+    }
+    
+    console.log('Elements initialized successfully');
+    return true;
+  }
+  
   // 팀 선택 핸들러 함수
   function handleTeamSelect(gameId, teamSide) {
     // 이전 선택 제거
@@ -79,43 +101,36 @@ document.addEventListener('DOMContentLoaded', function() {
     updateSubmitButton();
   }
   
-  // 제출 버튼 상태 업데이트 함수 - 에러 해결을 위해 수정
+  // 제출 버튼 상태 업데이트 함수
   function updateSubmitButton() {
-    const submitButton = document.getElementById('submit-allkill-btn');
-    
-    // Check if button exists - this fixes the null error
     if (!submitButton) {
-      console.warn('Submit button not found in DOM yet - will try again later');
-      // Schedule another attempt after a delay
-      setTimeout(updateSubmitButton, 100);
+      console.warn('Submit button not found when updating button state');
       return;
     }
     
-    // Now we can safely use the button since we know it exists
     const isAllSelected = Object.keys(selectedTeams).length === 5;
     
+    // 버튼 상태 업데이트
+    submitButton.disabled = !isAllSelected;
+    submitButton.style.opacity = isAllSelected ? '1' : '0.3';
+    
     if (isAllSelected) {
-      submitButton.classList.add('enabled');
-      submitButton.disabled = false;
+      submitButton.style.color = '#121212';
     } else {
-      submitButton.classList.remove('enabled');
-      submitButton.disabled = true;
+      submitButton.style.color = 'rgba(18, 18, 18, 0.7)';
     }
     
-    console.log('Submit button updated successfully');
+    console.log('Submit button updated successfully. All selected:', isAllSelected);
   }
   
   // 초기 게임 목록 렌더링
   function renderGameList() {
-    const gameListElement = document.getElementById('game-list');
     if (!gameListElement) {
       console.warn('Game list element not found in DOM');
-      // Schedule another attempt after a delay
-      setTimeout(renderGameList, 100);
       return;
     }
     
-    // Clear existing content to prevent duplication when React and vanilla JS both render
+    // Clear existing content
     gameListElement.innerHTML = '';
     
     kboGames.forEach((game, index) => {
@@ -185,15 +200,14 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Append game item to the game list
       gameListElement.appendChild(gameItemElement);
+      
+      // Store reference to game element
+      gameElements.push(gameItemElement);
     });
-    
-    // Add submit button event listener
-    setupSubmitButtonListener();
   }
 
   // Setup the event listener for the submit button
   function setupSubmitButtonListener() {
-    const submitButton = document.getElementById('submit-allkill-btn');
     if (submitButton) {
       // Check if we've already set up the listener to avoid duplicates
       if (!submitButton.dataset.listenerAdded) {
@@ -206,9 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.dataset.listenerAdded = 'true';
         console.log('Submit button listener added successfully');
       }
-    } else {
-      // Try again later if button not found
-      setTimeout(setupSubmitButtonListener, 100);
     }
   }
   
@@ -257,31 +268,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Let's implement a function to check if React has already rendered elements
-  function checkReactRendered() {
-    const reactButton = document.getElementById('submit-allkill-btn');
-    // If React hasn't rendered the button yet or if vanilla JS has already taken over
-    if (!reactButton) {
-      console.log('Waiting for React to render elements...');
-      setTimeout(checkReactRendered, 300);
-      return false;
-    }
-    
-    return true;
-  }
-  
-  // Main initialization function with better error handling
+  // Main initialization function
   function initializeApp() {
     console.log('Initializing vanilla JS app...');
-    if (checkReactRendered()) {
-      console.log('React has rendered the UI, proceeding with vanilla JS initialization');
-      renderGameList();
-      initDateNavigation();
-      setupSubmitButtonListener();
-    } else {
-      // Try again after a delay
-      setTimeout(initializeApp, 300);
+    
+    // 필요한 DOM 요소들 초기화
+    if (!initializeElements()) {
+      return; // 요소들이 준비되지 않았으면 함수 종료
     }
+    
+    console.log('React has rendered the UI, proceeding with vanilla JS initialization');
+    renderGameList();
+    initDateNavigation();
+    setupSubmitButtonListener();
+    
+    // 페이지 로드시 제출 버튼 상태 초기화
+    updateSubmitButton();
   }
   
   // Start the initialization with a delay to allow React to render first
