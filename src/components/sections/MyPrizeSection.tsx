@@ -8,6 +8,7 @@ import {
   PaginationItem, 
   PaginationLink 
 } from '@/components/ui/pagination';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PrizeHistory {
   date: string;
@@ -31,6 +32,18 @@ export const MyPrizeSection: React.FC = () => {
     setCurrentPage(page);
   };
   
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  
   // Format number with commas
   const formatNumber = (num: number) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -39,16 +52,16 @@ export const MyPrizeSection: React.FC = () => {
   return (
     <section className="w-full bg-[#003B5D] py-[20px]">
       <div className="mx-[24px]">
-        {/* Title Section */}
-        <h2 className="text-[30px] text-white text-center mb-[30px]">
+        {/* Title Section - Added font-bold */}
+        <h2 className="text-[30px] text-white text-center mb-[30px] font-bold">
           My 상금
         </h2>
         <hr className="border-0 border-t-[2px] border-[#FFC736] mb-[30px]" />
         
-        {/* Prize Group */}
-        <div className="flex items-center justify-between border border-white rounded-[5px] pl-[16px] mb-[27px]">
-          {/* Profile Info */}
-          <div className="flex items-center">
+        {/* Prize Group - Changed to flex-col */}
+        <div className="flex flex-col border border-white rounded-[5px] px-[16px] py-[12px] mb-[27px]">
+          {/* Profile Info - Grouped into member-info container */}
+          <div className="member-info flex items-center mb-[10px]">
             <Avatar className="h-[32px] w-[32px] mr-[10px]">
               <AvatarImage src="/placeholder.svg" />
               <AvatarFallback>사용자</AvatarFallback>
@@ -59,38 +72,52 @@ export const MyPrizeSection: React.FC = () => {
             </div>
           </div>
           
-          {/* Amount */}
-          <p className="text-[30px] text-white ml-[8px]">{formatNumber(totalAmount)}</p>
+          {/* Amount - Added class and margin */}
+          <p className="prize-amount text-[30px] text-white mb-[10px]">{formatNumber(totalAmount)}</p>
           
-          {/* Request Button */}
+          {/* Request Button - Added font-bold to text */}
           <Button 
-            className="bg-[#FFD700] text-[#121212] text-[24px] rounded-[5px] px-4 py-2 hover:bg-[#FFD700]/90"
+            className="bg-[#FFD700] text-[#121212] text-[24px] rounded-[5px] px-4 py-2 hover:bg-[#FFD700]/90 self-center"
           >
-            상금 지급 신청
+            <span className="font-bold">상금 지급 신청</span>
           </Button>
         </div>
         
         {/* Prize History */}
         <div className="prize-history">
-          {/* Summary */}
+          {/* Summary - Added font-bold and (₩) text */}
           <div className="flex justify-between mb-[10px]">
-            <p className="text-[16px] text-white">상금 획득 내역</p>
-            <p className="text-[20px] text-[#FFD700]">누적 {formatNumber(totalAmount)}</p>
+            <p className="text-[16px] text-white font-bold">상금 획득 내역 (₩)</p>
+            <p className="total-prize text-[20px] text-[#FFD700] font-bold">누적 {formatNumber(totalAmount)}</p>
           </div>
           
-          {/* List */}
+          {/* List - Added daily-prize class with font-bold */}
           <div className="mb-[46px]">
             {prizeHistory.map((item, index) => (
               <div key={index} className="flex justify-between mb-4">
                 <p className="text-[14px] text-white opacity-70">{item.date}</p>
-                <p className="text-[20px] text-[#FFD700]">{formatNumber(item.amount)}</p>
+                <p className="daily-prize text-[20px] text-[#FFD700] font-bold">{formatNumber(item.amount)}</p>
               </div>
             ))}
           </div>
           
-          {/* Pagination */}
+          {/* Pagination - Added previous/next buttons */}
           <Pagination>
             <PaginationContent>
+              {/* Previous button */}
+              <PaginationItem>
+                <PaginationLink
+                  onClick={handlePrevPage}
+                  className={`w-[30px] h-[30px] rounded-[5px] text-[14px] flex items-center justify-center
+                    ${currentPage === 1 
+                      ? 'bg-black/20 border border-white/20 text-white/50 pointer-events-none' 
+                      : 'bg-black/20 border border-white/20 text-white'}`}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </PaginationLink>
+              </PaginationItem>
+              
+              {/* Page number buttons */}
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <PaginationItem key={page}>
                   <PaginationLink
@@ -106,6 +133,19 @@ export const MyPrizeSection: React.FC = () => {
                   </PaginationLink>
                 </PaginationItem>
               ))}
+              
+              {/* Next button */}
+              <PaginationItem>
+                <PaginationLink
+                  onClick={handleNextPage}
+                  className={`w-[30px] h-[30px] rounded-[5px] text-[14px] flex items-center justify-center
+                    ${currentPage === totalPages 
+                      ? 'bg-black/20 border border-white/20 text-white/50 pointer-events-none' 
+                      : 'bg-black/20 border border-white/20 text-white'}`}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </PaginationLink>
+              </PaginationItem>
             </PaginationContent>
           </Pagination>
         </div>
