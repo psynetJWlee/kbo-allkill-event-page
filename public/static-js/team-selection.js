@@ -1,4 +1,8 @@
+
+// Wrap everything in DOMContentLoaded to ensure DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM fully loaded and parsed');
+  
   // Data objects
   const teamData = createTeamData();
   const gameData = createGameData(teamData.teamLogos);
@@ -13,13 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     buttonInitialized: false
   };
   
-  // DOM element references
-  const elements = {
-    gameList: null,
-    submitButton: null
-  };
-  
-  // Initialize the application
+  // Initial setup
   initializeApp();
   
   // ====== CORE INITIALIZATION FUNCTIONS ======
@@ -27,70 +25,62 @@ document.addEventListener('DOMContentLoaded', function() {
   function initializeApp() {
     console.log('Initializing vanilla JS app...');
     
-    // Make multiple attempts to initialize elements
-    let initAttempts = 0;
-    const maxAttempts = 20;
+    // Check if the submit button exists
+    const submitBtn = document.getElementById('submit-allkill-btn');
+    if (!submitBtn) {
+      console.warn('submit-allkill-btn 요소를 찾을 수 없습니다.');
+      // Retry after a short delay
+      setTimeout(initializeApp, 500);
+      return;
+    }
     
-    const attemptInit = () => {
-      initAttempts++;
-      console.log(`Initialization attempt ${initAttempts}/${maxAttempts}`);
-      
-      if (initializeElements()) {
-        console.log('Elements initialized, proceeding with app setup');
-        renderGameList();
-        initDateNavigation();
-        setupSubmitButtonListener();
-        updateSubmitButton(); // Initial update after setup
-        state.domReady = true;
-      } else if (initAttempts < maxAttempts) {
-        // If we haven't reached max attempts, try again with increasing delays
-        const delay = Math.min(500, 100 * initAttempts);
-        console.log(`Elements not ready, retrying initialization in ${delay}ms...`);
-        setTimeout(attemptInit, delay);
-      } else {
-        console.warn('Failed to initialize after maximum attempts');
-      }
-    };
+    // Setup the submit button
+    setupSubmitButtonListener();
     
-    // Start the first attempt
-    attemptInit();
+    // Initialize other elements
+    initializeElements();
     
-    // Also listen for React's custom event to know when the button is definitely available
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Update submit button state initially
+    updateSubmitButton();
+  }
+  
+  function initializeElements() {
+    // Get game list element
+    elements.gameList = document.getElementById('game-list');
+    if (!elements.gameList) {
+      console.warn('Game list element not found');
+      return false;
+    }
+    
+    // Set the button reference
+    elements.submitButton = document.getElementById('submit-allkill-btn');
+    if (!elements.submitButton) {
+      console.warn('Submit button element not found');
+      return false;
+    }
+    
+    // Mark as ready
+    state.domReady = true;
+    return true;
+  }
+  
+  function setupEventListeners() {
+    // Listen for React's custom event
     document.addEventListener('react-rendered', function(event) {
       console.log('Vanilla JS: React rendered event received', event.detail);
       if (event.detail && event.detail.elementId === 'submit-allkill-btn') {
-        initializeElements();
         setupSubmitButtonListener();
         updateSubmitButton();
       }
     });
-  }
-  
-  function initializeElements() {
-    try {
-      elements.gameList = document.getElementById('game-list');
-      elements.submitButton = document.getElementById('submit-allkill-btn');
-      
-      // Check if elements are available
-      let allReady = true;
-      
-      if (!elements.gameList) {
-        console.log('Game list element not found yet');
-        allReady = false;
-      }
-      
-      if (!elements.submitButton) {
-        console.log('Submit button element not found yet');
-        allReady = false;
-      } else if (!state.buttonInitialized) {
-        console.log('Submit button found, marking as initialized');
-        state.buttonInitialized = true;
-      }
-      
-      return allReady;
-    } catch (error) {
-      console.error('Error during element initialization:', error);
-      return false;
+    
+    // Set up date navigation if available
+    const dateNavigation = document.querySelector('.date-navigation');
+    if (dateNavigation) {
+      initDateNavigation();
     }
   }
   
@@ -155,85 +145,11 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
   }
   
-  // ====== UI RENDERING FUNCTIONS ======
-  
-  function renderGameList() {
-    if (!elements.gameList) {
-      console.warn('Game list element not available for rendering');
-      return;
-    }
-    
-    // Clear existing content
-    elements.gameList.innerHTML = '';
-    state.gameElements = [];
-    
-    gameData.forEach((game, index) => {
-      const gameElement = createGameElement(game, index);
-      elements.gameList.appendChild(gameElement);
-      state.gameElements.push(gameElement);
-    });
-  }
-  
-  function createGameElement(game, index) {
-    const gameItemElement = document.createElement('div');
-    gameItemElement.className = index % 2 === 0 ? 'game-item alternate-bg' : 'game-item';
-    gameItemElement.setAttribute('data-index', game.id);
-    
-    // Add home team column
-    gameItemElement.appendChild(createTeamColumn(game, 'home'));
-    
-    // Add game status column
-    gameItemElement.appendChild(createGameStatusColumn(game));
-    
-    // Add away team column
-    gameItemElement.appendChild(createTeamColumn(game, 'away'));
-    
-    return gameItemElement;
-  }
-  
-  function createTeamColumn(game, side) {
-    const team = side === 'home' ? game.homeTeam : game.awayTeam;
-    const oppositeTeam = side === 'home' ? game.awayTeam : game.homeTeam;
-    
-    const teamColumn = document.createElement('div');
-    teamColumn.className = 'team-column';
-    
-    const teamBox = document.createElement('button');
-    teamBox.className = 'team-box';
-    teamBox.setAttribute('data-team', side);
-    teamBox.innerHTML = `
-      <img class="team-logo" src="${team.logo}" alt="${team.name} 로고">
-      <span class="team-name">${team.name}</span>
-    `;
-    teamBox.addEventListener('click', () => handleTeamSelect(game.id, side));
-    
-    const voteCount = document.createElement('div');
-    voteCount.className = `vote-count ${team.votes >= oppositeTeam.votes ? 'higher' : 'lower'}`;
-    voteCount.textContent = team.votes.toLocaleString();
-    
-    teamColumn.appendChild(teamBox);
-    teamColumn.appendChild(voteCount);
-    
-    return teamColumn;
-  }
-  
-  function createGameStatusColumn(game) {
-    const gameStatus = document.createElement('div');
-    gameStatus.className = 'game-status';
-    
-    const votingText = document.createElement('div');
-    votingText.className = 'voting-text';
-    votingText.textContent = game.status;
-    
-    const gameTime = document.createElement('div');
-    gameTime.className = 'game-time';
-    gameTime.textContent = game.time;
-    
-    gameStatus.appendChild(votingText);
-    gameStatus.appendChild(gameTime);
-    
-    return gameStatus;
-  }
+  // DOM element references initialized outside DOMContentLoaded for wider scope
+  const elements = {
+    gameList: null,
+    submitButton: null
+  };
   
   // ====== EVENT HANDLER FUNCTIONS ======
   
@@ -293,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Check if all games have a selection
       const allSelected = Object.keys(state.selectedTeams).length === 5;
       
-      // Update button attributes using style directly instead of classList
+      // Update button attributes using style directly
       submitBtn.disabled = !allSelected;
       submitBtn.style.opacity = allSelected ? '1' : '0.3';
       submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';

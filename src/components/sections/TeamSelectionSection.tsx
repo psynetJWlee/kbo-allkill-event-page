@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -99,7 +100,6 @@ const TeamSelectionSection: React.FC = () => {
           />
         ))}
       </div>
-      {/* Updated wrapper div with Tailwind classes for horizontal centering */}
       <div className="w-full flex justify-center">
         <Button 
           className="submit-btn mx-auto" 
