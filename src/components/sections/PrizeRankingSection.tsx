@@ -54,7 +54,7 @@ export const PrizeRankingSection: React.FC = () => {
   };
 
   return (
-    <section className="bg-[#00283F] mx-[10px] py-[30px] px-[16px]">
+    <section className="w-full bg-[#00283F] py-[30px] px-[16px]">
       {/* 1. 타이틀 영역 - 두 줄 레이아웃으로 변경 */}
       <h2 className="inline-block text-[30px] font-bold text-white relative after:content-[''] after:block after:w-full after:h-[1.5px] after:bg-[#FFC736] after:mt-[5px]">상금 랭킹</h2>
       
