@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -92,9 +91,10 @@ const TeamSelectionSection: React.FC = () => {
           />
         ))}
       </div>
-      <div className="flex justify-center w-full">
+      {/* Updated wrapper div with Tailwind classes for horizontal centering */}
+      <div className="w-full flex justify-center">
         <Button 
-          className="submit-btn" 
+          className="submit-btn mx-auto" 
           disabled={!isAllSelected}
           id="submit-allkill-btn"
           data-rendered-by="react"
@@ -104,14 +104,11 @@ const TeamSelectionSection: React.FC = () => {
             color: isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)',
             fontSize: '24px',
             fontWeight: 'bold',
-            height: '68px', // Updated height to 68px
+            height: '68px',
             width: 'calc(100% - 70px)',
             maxWidth: '400px',
             margin: '32px auto 0',
-            borderRadius: '50px', // Updated to 50px corner rounding
-            position: 'relative', // Added for better positioning
-            left: '50%', // Center horizontally
-            transform: 'translateX(-50%)' // Fix the centering calculation
+            borderRadius: '50px'
           }}
         >
           올킬 제출
