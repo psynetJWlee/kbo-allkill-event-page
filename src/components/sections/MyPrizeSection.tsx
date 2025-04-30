@@ -52,23 +52,26 @@ export const MyPrizeSection: React.FC = () => {
   return (
     <section className="w-full bg-[#003B5D] py-[20px]">
       <div className="mx-[24px]">
-        {/* Title Section */}
-        <h2 className="text-[30px] text-white text-center mb-[30px] font-bold">
-          My 상금
-        </h2>
-        <hr className="border-0 border-t-[2px] border-[#FFC736] mb-[30px]" />
+        {/* Title Section - Updated with 5px spacing and centered underline */}
+        <div className="flex flex-col items-center">
+          <h2 className="text-[30px] text-white font-bold">
+            My 상금
+          </h2>
+          {/* Underline now matches text width with 5px spacing */}
+          <div className="mt-[5px] border-0 border-t-[2px] border-[#FFC736] mb-[30px]" style={{ width: 'fit-content' }}></div>
+        </div>
         
-        {/* Prize Group - Updated layout */}
-        <div className="flex flex-col border border-white rounded-[5px] px-[16px] py-[12px] mb-[27px]">
-          {/* Member Info - Horizontal layout */}
+        {/* Prize Group - Updated with new background color */}
+        <div className="flex flex-col border border-white rounded-[5px] px-[16px] py-[12px] mb-[27px] bg-[#00283C]">
+          {/* Member Info - Horizontal layout with precise spacing */}
           <div className="member-info flex flex-row items-center mb-[10px]">
-            <Avatar className="h-[32px] w-[32px] mr-[10px]">
+            <Avatar className="h-[32px] w-[32px]">
               <AvatarImage src="/placeholder.svg" />
               <AvatarFallback>사용자</AvatarFallback>
             </Avatar>
-            <div>
-              <p className="text-[20px] text-white">{nickname}</p>
-              <p className="text-[14px] text-white mt-[5px]">님 보유상금</p>
+            <div className="flex flex-row items-center">
+              <p className="text-[20px] text-white ml-[10px]">{nickname}</p>
+              <p className="text-[14px] text-white ml-[5px]">님 보유상금</p>
             </div>
           </div>
           
