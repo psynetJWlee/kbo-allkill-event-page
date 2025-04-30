@@ -35,7 +35,7 @@ const Index = () => {
         <WinnersSection />
 
         {/* 3. KBO Team Selection Section */}
-        <section className="h-[912px] w-full bg-[#121212]" id="kbo-selection-container">
+        <section className="h-[950px] w-full bg-[#121212]" id="kbo-selection-container">
           <DateNavigation 
             currentDay={currentDay}
             realToday={REAL_TODAY}
