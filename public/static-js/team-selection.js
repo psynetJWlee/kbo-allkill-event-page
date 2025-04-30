@@ -83,6 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // 제출 버튼 상태 업데이트 함수
   function updateSubmitButton() {
     const submitButton = document.getElementById('submit-allkill-btn');
+    // Check if the button exists before trying to access its classList
+    if (!submitButton) {
+      console.warn('Submit button not found in DOM');
+      return;
+    }
+    
     const isAllSelected = Object.keys(selectedTeams).length === 5;
     
     if (isAllSelected) {
@@ -97,7 +103,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // 초기 게임 목록 렌더링
   function renderGameList() {
     const gameListElement = document.getElementById('game-list');
-    if (!gameListElement) return;
+    if (!gameListElement) {
+      console.warn('Game list element not found in DOM');
+      return;
+    }
     
     kboGames.forEach(game => {
       const gameItemElement = document.createElement('div');
@@ -168,13 +177,17 @@ document.addEventListener('DOMContentLoaded', function() {
       gameListElement.appendChild(gameItemElement);
     });
     
-    // Add submit button
+    // Add submit button event listener
     const submitButton = document.getElementById('submit-allkill-btn');
-    submitButton.addEventListener('click', function() {
-      if (Object.keys(selectedTeams).length === 5) {
-        alert('올킬 투표가 제출되었습니다!');
-      }
-    });
+    if (submitButton) {
+      submitButton.addEventListener('click', function() {
+        if (Object.keys(selectedTeams).length === 5) {
+          alert('올킬 투표가 제출되었습니다!');
+        }
+      });
+    } else {
+      console.warn('Submit button not found for event listener');
+    }
   }
   
   // 날짜 네비게이션 초기화
@@ -218,5 +231,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // 초기화 함수 실행
   renderGameList();
   initDateNavigation();
-  updateSubmitButton();
+  // Only call updateSubmitButton after a slight delay to ensure DOM is ready
+  setTimeout(updateSubmitButton, 100);
 });
