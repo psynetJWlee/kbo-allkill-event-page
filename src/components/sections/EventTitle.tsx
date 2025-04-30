@@ -1,9 +1,52 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { startAnimation, createConfetti, createStar } from '../../utils/animationUtils';
+import '../../styles/animations.css';
 
 export const EventTitle: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    // Only run on the client side
+    if (typeof window !== 'undefined' && sectionRef.current) {
+      const container = sectionRef.current;
+      
+      // Initial animation
+      for (let i = 0; i < 30; i++) {
+        createConfetti(container);
+      }
+      
+      for (let i = 0; i < 15; i++) {
+        createStar(container);
+      }
+      
+      // Continuous animation
+      let animationInterval: number;
+      const startContinuousAnimation = () => {
+        let counter = 0;
+        animationInterval = window.setInterval(() => {
+          createConfetti(container);
+          counter++;
+          if (counter % 2 === 0) {
+            createStar(container);
+          }
+        }, 300);
+      };
+      
+      startContinuousAnimation();
+      
+      // Cleanup interval on unmount
+      return () => {
+        window.clearInterval(animationInterval);
+      };
+    }
+  }, []);
+
   return (
-    <section className="h-[382px] w-full bg-[#0072A7] flex items-center justify-center relative">
+    <section 
+      ref={sectionRef}
+      className="h-[382px] w-full bg-[#0072A7] flex items-center justify-center relative overflow-hidden"
+    >
       <img 
         src="/lovable-uploads/238a9ac4-eb4e-4505-a699-a85abc7f50c4.png" 
         alt="LIVE Score Logo"
