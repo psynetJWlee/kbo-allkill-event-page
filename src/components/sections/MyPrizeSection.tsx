@@ -73,8 +73,8 @@ export const MyPrizeSection: React.FC = () => {
             </div>
           </div>
           
-          {/* Amount */}
-          <p className="prize-amount text-[30px] text-white mb-[10px]">{formatNumber(totalAmount)} 원</p>
+          {/* Amount - Added font-bold to make totalAmount bold */}
+          <p className="prize-amount text-[30px] text-white mb-[10px] font-bold">{formatNumber(totalAmount)} 원</p>
           
           {/* Request Button - Full width with increased border radius */}
           <Button 
