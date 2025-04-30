@@ -82,6 +82,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (dateNavigation) {
       initDateNavigation();
     }
+    
+    // Set up event listeners for game selection
+    const matchContainers = document.querySelectorAll('.match') || [];
+    matchContainers.forEach(match => {
+      const opts = match.querySelectorAll('input[type="radio"], .team-option') || [];
+      opts.forEach(opt => {
+        opt.addEventListener('change', updateSubmitButton);
+        opt.addEventListener('click', updateSubmitButton);
+      });
+    });
   }
   
   // ====== DATA CREATION FUNCTIONS ======
@@ -175,26 +185,22 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function updateSubmitButton() {
-    try {
-      // First check if submitButton exists
-      const submitBtn = document.getElementById('submit-allkill-btn');
-      if (!submitBtn) {
-        console.warn('submit-allkill-btn 요소를 찾을 수 없습니다.');
-        return;
-      }
-      
-      // Check if all games have a selection
-      const allSelected = Object.keys(state.selectedTeams).length === 5;
-      
-      // Update button attributes using style directly
-      submitBtn.disabled = !allSelected;
-      submitBtn.style.opacity = allSelected ? '1' : '0.3';
-      submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
-      
-      console.log('Submit button updated successfully. All selected:', allSelected);
-    } catch (error) {
-      console.error('Error in updateSubmitButton:', error);
+    // 3-1. 버튼 엘리먼트 안전하게 가져오기
+    const submitBtn = document.getElementById('submit-allkill-btn');
+    if (!submitBtn) {
+      console.warn('submit-allkill-btn not found');
+      return;
     }
+    
+    // 3-2. 모든 경기에 선택된 옵션이 있는지 검사
+    const allSelected = Object.keys(state.selectedTeams).length === 5;
+    
+    // 3-3. classList 사용 제거 → style과 disabled로 제어
+    submitBtn.disabled = !allSelected;
+    submitBtn.style.opacity = allSelected ? '1' : '0.3';
+    submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
+    
+    console.log('Submit button updated. All selected:', allSelected);
   }
   
   function setupSubmitButtonListener() {
@@ -272,3 +278,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+
