@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // 요소가 아직 로드되지 않았으면 잠시 후 다시 시도
     if (!gameListElement || !submitButton) {
       console.log('Elements not found yet, retrying in 100ms');
-      setTimeout(initializeElements, 100);
       return false;
     }
     
@@ -79,6 +78,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 팀 선택 핸들러 함수
   function handleTeamSelect(gameId, teamSide) {
+    // 게임 리스트가 준비되지 않았으면 초기화 시도
+    if (!gameListElement) {
+      if (!initializeElements()) {
+        console.warn('Game list not ready yet, cannot select team');
+        return;
+      }
+    }
+    
     // 이전 선택 제거
     const gameElement = document.querySelector(`.game-item[data-index="${gameId}"]`);
     if (!gameElement) {
@@ -109,15 +116,23 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 제출 버튼 상태 업데이트 함수
   function updateSubmitButton() {
-    // Safely check if submitButton exists before attempting to access properties
+    // 버튼이 없으면 초기화 시도
     if (!submitButton) {
-      console.log('Submit button not found when updating button state');
+      if (!initializeElements()) {
+        console.warn('올킬 제출 버튼을 찾을 수 없습니다.');
+        return;
+      }
+    }
+    
+    // 여전히 버튼이 없으면 함수 종료
+    if (!submitButton) {
+      console.warn('올킬 제출 버튼을 초기화할 수 없습니다.');
       return;
     }
     
     const isAllSelected = Object.keys(selectedTeams).length === 5;
     
-    // Safely update the button properties
+    // 버튼 속성 안전하게 업데이트
     submitButton.disabled = !isAllSelected;
     
     if (submitButton.style) {
@@ -131,8 +146,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // 초기 게임 목록 렌더링
   function renderGameList() {
     if (!gameListElement) {
-      console.warn('Game list element not found in DOM');
-      return;
+      if (!initializeElements()) {
+        console.warn('Game list element not found in DOM');
+        return;
+      }
     }
     
     // Clear existing content
@@ -215,7 +232,15 @@ document.addEventListener('DOMContentLoaded', function() {
   function setupSubmitButtonListener() {
     // First make sure the button is available
     if (!submitButton) {
-      console.log('Submit button not available yet for listener setup');
+      if (!initializeElements()) {
+        console.log('Submit button not available yet for listener setup');
+        return;
+      }
+    }
+    
+    // If still not available after init attempt, return
+    if (!submitButton) {
+      console.warn('Cannot set up listener for submit button - element not found');
       return;
     }
     
@@ -282,44 +307,44 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('React rendered notification received:', event.detail);
     if (event.detail && event.detail.elementId === 'submit-allkill-btn') {
       console.log('Submit button has been rendered by React');
-      initializeElements();
+      if (initializeElements()) {
+        setupSubmitButtonListener();
+        updateSubmitButton();
+      }
     }
   });
   
-  // Main initialization function with improved init sequence
+  // Main initialization function
   function initializeApp() {
     console.log('Initializing vanilla JS app...');
     
-    // Make sure we wait for React components to be fully rendered
-    const checkReactRendered = () => {
-      const reactRoot = document.getElementById('root');
-      const submitBtnPresent = document.getElementById('submit-allkill-btn');
+    // Make multiple attempts to initialize elements
+    let initAttempts = 0;
+    const maxAttempts = 10;
+    
+    const attemptInit = () => {
+      initAttempts++;
+      console.log(`Initialization attempt ${initAttempts}/${maxAttempts}`);
       
-      if (!reactRoot || !reactRoot.children.length || !submitBtnPresent) {
-        console.log('React components not fully rendered, waiting...');
-        setTimeout(checkReactRendered, 300);
-        return;
+      if (initializeElements()) {
+        console.log('Elements initialized, proceeding with app setup');
+        renderGameList();
+        initDateNavigation();
+        setupSubmitButtonListener();
+        updateSubmitButton();
+      } else if (initAttempts < maxAttempts) {
+        // If we haven't reached max attempts, try again in 300ms
+        console.log('Elements not ready, retrying initialization...');
+        setTimeout(attemptInit, 300);
+      } else {
+        console.warn('Failed to initialize after maximum attempts');
       }
-      
-      console.log('React has rendered the UI, proceeding with vanilla JS initialization');
-      
-      // 필요한 DOM 요소들 초기화
-      if (!initializeElements()) {
-        return; // 요소들이 준비되지 않았으면 함수 종료
-      }
-      
-      renderGameList();
-      initDateNavigation();
-      setupSubmitButtonListener();
-      
-      // 페이지 로드시 제출 버튼 상태 초기화
-      updateSubmitButton();
     };
     
-    // Start checking for React rendering completion
-    checkReactRendered();
+    // Start the first attempt
+    attemptInit();
   }
   
-  // Start the initialization immediately, but with better checks
+  // Start the app initialization
   initializeApp();
 });
