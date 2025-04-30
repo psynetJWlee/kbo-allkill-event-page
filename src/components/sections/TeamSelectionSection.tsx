@@ -104,11 +104,14 @@ const TeamSelectionSection: React.FC = () => {
             color: isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)',
             fontSize: '24px',
             fontWeight: 'bold',
-            height: '50px',
+            height: '68px', // Updated height to 68px
             width: 'calc(100% - 70px)',
             maxWidth: '400px',
             margin: '32px auto 0',
-            borderRadius: '4px'
+            borderRadius: '50px', // Updated to 50px corner rounding
+            position: 'relative', // Added for better positioning
+            left: '50%', // Center horizontally
+            transform: 'translateX(-50%)' // Fix the centering calculation
           }}
         >
           올킬 제출
