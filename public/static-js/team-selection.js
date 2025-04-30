@@ -103,8 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 제출 버튼 상태 업데이트 함수
   function updateSubmitButton() {
+    // 버튼이 존재하는지 확인 후 상태 업데이트
     if (!submitButton) {
-      console.warn('Submit button not found when updating button state');
+      console.log('Submit button not found when updating button state');
       return;
     }
     
@@ -208,18 +209,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Setup the event listener for the submit button
   function setupSubmitButtonListener() {
-    if (submitButton) {
-      // Check if we've already set up the listener to avoid duplicates
-      if (!submitButton.dataset.listenerAdded) {
-        submitButton.addEventListener('click', function() {
-          if (Object.keys(selectedTeams).length === 5) {
-            alert('올킬 투표가 제출되었습니다!');
-          }
-        });
-        // Mark that we've added the listener
-        submitButton.dataset.listenerAdded = 'true';
-        console.log('Submit button listener added successfully');
-      }
+    // First make sure the button is available
+    if (!submitButton) {
+      console.log('Submit button not available yet for listener setup');
+      return;
+    }
+    
+    // Check if we've already set up the listener to avoid duplicates
+    if (!submitButton.dataset.listenerAdded) {
+      submitButton.addEventListener('click', function() {
+        if (Object.keys(selectedTeams).length === 5) {
+          alert('올킬 투표가 제출되었습니다!');
+        }
+      });
+      // Mark that we've added the listener
+      submitButton.dataset.listenerAdded = 'true';
+      console.log('Submit button listener added successfully');
     }
   }
   
@@ -268,24 +273,40 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Main initialization function
+  // Main initialization function with improved init sequence
   function initializeApp() {
     console.log('Initializing vanilla JS app...');
     
-    // 필요한 DOM 요소들 초기화
-    if (!initializeElements()) {
-      return; // 요소들이 준비되지 않았으면 함수 종료
-    }
+    // Make sure we wait for React components to be fully rendered
+    const checkReactRendered = () => {
+      const reactRoot = document.getElementById('root');
+      const submitBtnPresent = document.getElementById('submit-allkill-btn');
+      
+      if (!reactRoot || !reactRoot.children.length || !submitBtnPresent) {
+        console.log('React components not fully rendered, waiting...');
+        setTimeout(checkReactRendered, 300);
+        return;
+      }
+      
+      console.log('React has rendered the UI, proceeding with vanilla JS initialization');
+      
+      // 필요한 DOM 요소들 초기화
+      if (!initializeElements()) {
+        return; // 요소들이 준비되지 않았으면 함수 종료
+      }
+      
+      renderGameList();
+      initDateNavigation();
+      setupSubmitButtonListener();
+      
+      // 페이지 로드시 제출 버튼 상태 초기화
+      updateSubmitButton();
+    };
     
-    console.log('React has rendered the UI, proceeding with vanilla JS initialization');
-    renderGameList();
-    initDateNavigation();
-    setupSubmitButtonListener();
-    
-    // 페이지 로드시 제출 버튼 상태 초기화
-    updateSubmitButton();
+    // Start checking for React rendering completion
+    checkReactRendered();
   }
   
   // Start the initialization with a delay to allow React to render first
-  setTimeout(initializeApp, 500);
+  initializeApp();
 });
