@@ -11,12 +11,14 @@
         margin: 0; padding: 0; box-sizing: border-box;
         font-family: 'Spoqa Han Sans Neo', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       }
-      .title-page {
+
+      /* wrapper fixed to container bounds */
+      #animation-wrapper {
         position: relative;
         overflow: hidden;
-        background-color: #0072A7;
         width: 100%;
         min-height: 800px;
+        background-color: transparent;
       }
       .close-button {
         position: absolute;
@@ -32,8 +34,7 @@
         animation: fall linear infinite;
       }
       .confetti {
-        width: 10px; height: 10px;
-        transform: rotate(45deg);
+        width: 10px; height: 10px; transform: rotate(45deg);
       }
       .star {
         font-size: 20px;
@@ -46,10 +47,6 @@
     </style>
   </head>
   <body>
-    <div class="title-page" id="title-page">
-      <div class="close-button" aria-label="닫기">✕</div>
-      <div id="confetti-container"></div>
-    </div>
     <div id="root"></div>
     <!-- GPT Engineer script for the "Select" feature -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
@@ -57,21 +54,24 @@
     <script src="/static-js/team-selection.js"></script>
     <script>
       window.onload = function() {
-        const container = document.getElementById('title-page');
-        for (let i = 0; i < 30; i++) createConfetti(container);
-        for (let i = 0; i < 15; i++) createStar(container);
-        document.querySelector('.close-button').onclick = () => container.style.display = 'none';
+        const container = document.getElementById('animation-wrapper');
+        if (container) {
+          for (let i = 0; i < 30; i++) createConfetti(container);
+          for (let i = 0; i < 15; i++) createStar(container);
+          document.querySelector('#animation-wrapper .close-button')
+                  .onclick = () => container.style.display = 'none';
+        }
       };
 
       function createConfetti(container) {
         const c = document.createElement('div');
         c.className = 'confetti';
-        const size = Math.random() * 8 + 5;
+        const size = Math.random()*8 + 5;
         c.style.width = c.style.height = `${size}px`;
-        c.style.left = `${Math.random() * window.innerWidth}px`;
-        c.style.animationDuration = `${Math.random() * 5 + 3}s`;
-        c.style.animationDelay = `${Math.random() * 5}s`;
-        c.style.backgroundColor = ['#FF4500','#FFD700','#FF0000','#FFFFFF','#3498db'][Math.floor(Math.random() * 5)];
+        c.style.left = `${Math.random()*container.offsetWidth}px`;
+        c.style.animationDuration = `${Math.random()*5 + 3}s`;
+        c.style.animationDelay = `${Math.random()*5}s`;
+        c.style.backgroundColor = ['#FF4500','#FFD700','#FF0000','#FFFFFF','#3498db'][Math.floor(Math.random()*5)];
         container.appendChild(c);
       }
 
@@ -79,12 +79,12 @@
         const s = document.createElement('div');
         s.className = 'star';
         s.textContent = '★';
-        const size = Math.random() * 15 + 10;
+        const size = Math.random()*15 + 10;
         s.style.fontSize = `${size}px`;
-        s.style.left = `${Math.random() * window.innerWidth}px`;
-        s.style.animationDuration = `${Math.random() * 8 + 5}s`;
-        s.style.animationDelay = `${Math.random() * 5}s`;
-        s.style.color = ['#FFD700','#FFFFFF','#FFA500'][Math.floor(Math.random() * 3)];
+        s.style.left = `${Math.random()*container.offsetWidth}px`;
+        s.style.animationDuration = `${Math.random()*8 + 5}s`;
+        s.style.animationDelay = `${Math.random()*5}s`;
+        s.style.color = ['#FFD700','#FFFFFF','#FFA500'][Math.floor(Math.random()*3)];
         container.appendChild(s);
       }
     </script>
