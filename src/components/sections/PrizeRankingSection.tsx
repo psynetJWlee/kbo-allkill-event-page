@@ -26,13 +26,15 @@ export const PrizeRankingSection: React.FC = () => {
 
   return (
     <section className="w-full bg-[#00283F] py-[30px] px-[16px]">
-      {/* 1. 타이틀 영역 - 두 줄 레이아웃으로 변경 */}
-      <h2 className="inline-block text-[30px] font-bold text-white relative after:content-[''] after:block after:w-full after:h-[1.5px] after:bg-[#FFC736] after:mt-[5px]">상금 랭킹</h2>
-      
-      <p className="text-[16px] text-white opacity-70 mt-[8px]">
-        내 랭킹 6위 / 5,345 
-        <PersonStanding className="inline-block ml-[8px] w-[10px] h-[12px]" />
-      </p>
+      {/* 1. 타이틀 영역 - 중앙 정렬로 변경 */}
+      <div className="flex flex-col items-center">
+        <h2 className="inline-block text-[30px] font-bold text-white relative after:content-[''] after:block after:w-full after:h-[1.5px] after:bg-[#FFC736] after:mt-[5px]">상금 랭킹</h2>
+        
+        <p className="text-[16px] text-white opacity-70 mt-[8px]">
+          내 랭킹 6위 / 5,345 
+          <PersonStanding className="inline-block ml-[8px] w-[10px] h-[12px]" />
+        </p>
+      </div>
 
       {/* 2. 랭킹 산정 기준 - shadcn Tabs 컴포넌트 사용 */}
       <div className="flex justify-center mt-[16px] w-full">
