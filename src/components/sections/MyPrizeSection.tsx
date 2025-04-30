@@ -52,16 +52,16 @@ export const MyPrizeSection: React.FC = () => {
   return (
     <section className="w-full bg-[#003B5D] py-[20px]">
       <div className="mx-[24px]">
-        {/* Title Section - Added font-bold */}
+        {/* Title Section */}
         <h2 className="text-[30px] text-white text-center mb-[30px] font-bold">
           My 상금
         </h2>
         <hr className="border-0 border-t-[2px] border-[#FFC736] mb-[30px]" />
         
-        {/* Prize Group - Changed to flex-col */}
+        {/* Prize Group - Updated layout */}
         <div className="flex flex-col border border-white rounded-[5px] px-[16px] py-[12px] mb-[27px]">
-          {/* Profile Info - Grouped into member-info container */}
-          <div className="member-info flex items-center mb-[10px]">
+          {/* Member Info - Horizontal layout */}
+          <div className="member-info flex flex-row items-center mb-[10px]">
             <Avatar className="h-[32px] w-[32px] mr-[10px]">
               <AvatarImage src="/placeholder.svg" />
               <AvatarFallback>사용자</AvatarFallback>
@@ -72,12 +72,12 @@ export const MyPrizeSection: React.FC = () => {
             </div>
           </div>
           
-          {/* Amount - Added class and margin */}
-          <p className="prize-amount text-[30px] text-white mb-[10px]">{formatNumber(totalAmount)}</p>
+          {/* Amount */}
+          <p className="prize-amount text-[30px] text-white mb-[10px]">{formatNumber(totalAmount)} 원</p>
           
-          {/* Request Button - Added font-bold to text */}
+          {/* Request Button - Full width with increased border radius */}
           <Button 
-            className="bg-[#FFD700] text-[#121212] text-[24px] rounded-[5px] px-4 py-2 hover:bg-[#FFD700]/90 self-center"
+            className="bg-[#FFD700] text-[#121212] text-[24px] w-full rounded-[20px] px-4 py-2 hover:bg-[#FFD700]/90"
           >
             <span className="font-bold">상금 지급 신청</span>
           </Button>
@@ -85,13 +85,13 @@ export const MyPrizeSection: React.FC = () => {
         
         {/* Prize History */}
         <div className="prize-history">
-          {/* Summary - Added font-bold and (₩) text */}
+          {/* Summary */}
           <div className="flex justify-between mb-[10px]">
             <p className="text-[16px] text-white font-bold">상금 획득 내역 (₩)</p>
             <p className="total-prize text-[20px] text-[#FFD700] font-bold">누적 {formatNumber(totalAmount)}</p>
           </div>
           
-          {/* List - Added daily-prize class with font-bold */}
+          {/* List */}
           <div className="mb-[46px]">
             {prizeHistory.map((item, index) => (
               <div key={index} className="flex justify-between mb-4">
@@ -101,7 +101,7 @@ export const MyPrizeSection: React.FC = () => {
             ))}
           </div>
           
-          {/* Pagination - Added previous/next buttons */}
+          {/* Pagination */}
           <Pagination>
             <PaginationContent>
               {/* Previous button */}
