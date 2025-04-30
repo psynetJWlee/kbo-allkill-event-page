@@ -108,9 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    kboGames.forEach(game => {
+    // Clear existing content to prevent duplication when React and vanilla JS both render
+    gameListElement.innerHTML = '';
+    
+    kboGames.forEach((game, index) => {
       const gameItemElement = document.createElement('div');
-      gameItemElement.className = 'game-item';
+      gameItemElement.className = index % 2 === 0 ? 'game-item alternate-bg' : 'game-item';
       gameItemElement.setAttribute('data-index', game.id);
       
       // Home Team Column
@@ -228,9 +231,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // 초기화 함수 실행
-  renderGameList();
-  initDateNavigation();
-  // Only call updateSubmitButton after a slight delay to ensure DOM is ready
-  setTimeout(updateSubmitButton, 100);
+  // Wait a bit longer for the React components to render
+  setTimeout(() => {
+    // 초기화 함수 실행
+    renderGameList();
+    initDateNavigation();
+    // After everything is rendered, try to update the submit button
+    setTimeout(updateSubmitButton, 500);
+  }, 500);
 });
