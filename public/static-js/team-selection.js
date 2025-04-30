@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const selectedTeams = {};
   
   // 게임 리스트와 버튼 요소 가져오기
-  let gameListElement;
-  let submitButton;
+  let gameListElement = null;
+  let submitButton = null;
   let gameElements = [];
   
   // 초기화 함수
@@ -81,21 +81,27 @@ document.addEventListener('DOMContentLoaded', function() {
   function handleTeamSelect(gameId, teamSide) {
     // 이전 선택 제거
     const gameElement = document.querySelector(`.game-item[data-index="${gameId}"]`);
-    if (gameElement) {
-      const previousSelected = gameElement.querySelector('.team-box.selected');
-      if (previousSelected) {
-        previousSelected.classList.remove('selected');
-        previousSelected.classList.remove(`selected-${previousSelected.getAttribute('data-team')}`);
-      }
+    if (!gameElement) {
+      console.log(`Game element with ID ${gameId} not found`);
+      return;
+    }
+    
+    const previousSelected = gameElement.querySelector('.team-box.selected');
+    if (previousSelected) {
+      previousSelected.classList.remove('selected');
+      previousSelected.classList.remove(`selected-${previousSelected.getAttribute('data-team')}`);
     }
     
     // 새 선택 추가
     const teamBox = gameElement.querySelector(`.team-box[data-team="${teamSide}"]`);
-    if (teamBox) {
-      teamBox.classList.add('selected');
-      teamBox.classList.add(`selected-${teamSide}`);
-      selectedTeams[gameId] = teamSide;
+    if (!teamBox) {
+      console.log(`Team box for ${teamSide} in game ${gameId} not found`);
+      return;
     }
+    
+    teamBox.classList.add('selected');
+    teamBox.classList.add(`selected-${teamSide}`);
+    selectedTeams[gameId] = teamSide;
     
     // 제출 버튼 상태 업데이트
     updateSubmitButton();
@@ -103,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 제출 버튼 상태 업데이트 함수
   function updateSubmitButton() {
-    // 버튼이 존재하는지 확인 후 상태 업데이트
+    // Safely check if submitButton exists before attempting to access properties
     if (!submitButton) {
       console.log('Submit button not found when updating button state');
       return;
@@ -111,14 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const isAllSelected = Object.keys(selectedTeams).length === 5;
     
-    // 버튼 상태 업데이트
+    // Safely update the button properties
     submitButton.disabled = !isAllSelected;
-    submitButton.style.opacity = isAllSelected ? '1' : '0.3';
     
-    if (isAllSelected) {
-      submitButton.style.color = '#121212';
-    } else {
-      submitButton.style.color = 'rgba(18, 18, 18, 0.7)';
+    if (submitButton.style) {
+      submitButton.style.opacity = isAllSelected ? '1' : '0.3';
+      submitButton.style.color = isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
     }
     
     console.log('Submit button updated successfully. All selected:', isAllSelected);
@@ -273,6 +277,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  // Listen for React rendering completion
+  document.addEventListener('react-rendered', function(event) {
+    console.log('React rendered notification received:', event.detail);
+    if (event.detail && event.detail.elementId === 'submit-allkill-btn') {
+      console.log('Submit button has been rendered by React');
+      initializeElements();
+    }
+  });
+  
   // Main initialization function with improved init sequence
   function initializeApp() {
     console.log('Initializing vanilla JS app...');
@@ -307,6 +320,6 @@ document.addEventListener('DOMContentLoaded', function() {
     checkReactRendered();
   }
   
-  // Start the initialization with a delay to allow React to render first
+  // Start the initialization immediately, but with better checks
   initializeApp();
 });

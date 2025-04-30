@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -65,6 +66,10 @@ const TeamSelectionSection: React.FC = () => {
     const button = document.getElementById('submit-allkill-btn');
     if (button) {
       button.dataset.reactRendered = 'true';
+      
+      // Create a custom event to notify vanilla JS that React has rendered the button
+      const event = new CustomEvent('react-rendered', { detail: { elementId: 'submit-allkill-btn' } });
+      document.dispatchEvent(event);
     }
   }, []);
 
