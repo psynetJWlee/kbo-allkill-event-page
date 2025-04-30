@@ -79,9 +79,11 @@ export function startAnimation(sectionSelector: string): void {
   }
   
   // Continuous animation
+  let counter = 0;
   setInterval(() => {
     createConfetti(container);
-    if (i % 2 === 0) {
+    counter++;
+    if (counter % 2 === 0) {
       createStar(container);
     }
   }, 300);
