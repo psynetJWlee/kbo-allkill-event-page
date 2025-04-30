@@ -3,7 +3,7 @@ import React from 'react';
 
 export const EventDescriptionSection: React.FC = () => {
   return (
-    <section className="bg-[#00283F] mx-[20px] my-[27px] p-[20px] rounded-[10px]">
+    <section className="bg-[#00283F]">
       {/* 1. 상금 지급 안내 제목 */}
       <div className="flex items-center gap-2 mb-[15px]">
         <div className="flex justify-center items-center bg-gray-400/30 w-[24px] h-[24px] rounded-full">
@@ -39,7 +39,7 @@ export const EventDescriptionSection: React.FC = () => {
         href="https://home.psynet.co.kr/livescore" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="flex justify-center items-center h-[87px] bg-[#1A5F7A] rounded-[50px] text-[25px] text-white text-opacity-90 hover:bg-[#1d6e8c] transition-colors"
+        className="flex justify-center items-center h-[87px] bg-[#1A5F7A] text-[25px] text-white text-opacity-90 hover:bg-[#1d6e8c] transition-colors"
       >
         LIVE 스코어<br />다운 받기
       </a>
