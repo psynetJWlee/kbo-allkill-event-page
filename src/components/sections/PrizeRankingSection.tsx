@@ -59,7 +59,7 @@ export const PrizeRankingSection: React.FC = () => {
           <div className="my-ranking">
             <span className="label">내 랭킹</span>
             <span className="rank">6위 / 5,345</span>
-            <PersonStanding className="icon" />
+            <PersonStanding className="icon" size={12} />
           </div>
         </div>
 
@@ -93,6 +93,190 @@ export const PrizeRankingSection: React.FC = () => {
           * 동일한 적중 횟수일 경우 먼저 달성한 사용자가 우선 순위
         </div>
       </div>
+
+      <style jsx>{`
+        .prize-ranking-section {
+          background-color: #00283F;
+          margin: 0 10px;
+          border-radius: 12px;
+          padding: 30px 16px;
+        }
+        
+        .ranking-container {
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        
+        .ranking-header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+        }
+        
+        .ranking-header .title {
+          display: inline-block;
+          font-size: 30px;
+          font-weight: bold;
+          color: #FFFFFF;
+          position: relative;
+          margin-right: 30px;
+        }
+        
+        .ranking-header .title::after {
+          content: '';
+          display: block;
+          width: 100%;
+          height: 1.5px;
+          background: #FFC736;
+          margin: 5px 0;
+        }
+        
+        .my-ranking {
+          display: flex;
+          align-items: center;
+          margin-left: auto;
+        }
+        
+        .my-ranking .label {
+          font-size: 16px;
+          color: #FFFFFF;
+          opacity: 0.7;
+          margin-right: 8px;
+        }
+        
+        .my-ranking .rank {
+          font-size: 16px;
+          color: #FFFFFF;
+          margin-right: 8px;
+        }
+        
+        .my-ranking .icon {
+          width: 10px;
+          height: 12px;
+          color: #FFFFFF;
+        }
+        
+        .ranking-tabs {
+          display: inline-flex;
+          border-radius: 9999px;
+          overflow: hidden;
+          margin-top: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .ranking-tabs .tab {
+          font-size: 16px;
+          padding: 8px 20px;
+          transition: background 0.2s;
+          cursor: pointer;
+        }
+        
+        .ranking-tabs .tab.active {
+          background: #FFFFFF;
+          color: #00283F;
+        }
+        
+        .ranking-tabs .tab:not(.active) {
+          background: #00283F;
+          color: #FFFFFF;
+        }
+        
+        .date-range {
+          font-size: 14px;
+          color: #FFFFFF;
+          opacity: 0.7;
+          margin-top: 8px;
+        }
+        
+        .ranking-list {
+          margin-top: 16px;
+        }
+        
+        .ranking-list .item {
+          display: flex;
+          align-items: center;
+          background: rgba(0,0,0,0.2);
+          border-radius: 8px;
+          margin-top: 8px;
+          padding: 12px;
+        }
+        
+        .ranking-list .item.is-me {
+          border: 3px solid #FFFFFF;
+        }
+        
+        .rank-number {
+          width: 32px;
+          text-align: center;
+          font-size: 16px;
+          color: #FFFFFF;
+          opacity: 0.7;
+        }
+        
+        .rank-number.top-rank {
+          font-size: 20px;
+          color: #FFC700;
+          opacity: 1;
+        }
+        
+        .profile-img {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          margin-left: 13px;
+          object-fit: cover;
+        }
+        
+        .info {
+          display: flex;
+          flex-direction: column;
+          margin-left: 7px;
+          flex: 1;
+        }
+        
+        .nickname {
+          font-size: 15px;
+          color: #FFFFFF;
+        }
+        
+        .streak {
+          font-size: 14px;
+          color: #FFC736;
+          opacity: 0.9;
+          margin-top: 2px;
+        }
+        
+        .prize {
+          font-size: 15px;
+          color: #FFC736;
+          text-align: right;
+          margin-left: auto;
+        }
+        
+        .ranking-note {
+          font-size: 12px;
+          color: #FFFFFF;
+          opacity: 0.7;
+          text-align: center;
+          margin-top: 16px;
+          margin-bottom: 0;
+          line-height: 1.4;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+          .ranking-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          
+          .my-ranking {
+            margin-left: 0;
+            margin-top: 10px;
+          }
+        }
+      `}</style>
     </section>
   );
 };
+
