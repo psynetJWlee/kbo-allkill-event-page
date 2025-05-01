@@ -18,10 +18,10 @@ const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect, i
   
   return (
     <div 
-      className={`game-item flex-1 ${isAlternateBackground ? 'alternate-bg' : ''}`} 
+      className={`game-item flex-1 px-4 ${isAlternateBackground ? 'alternate-bg' : ''}`} 
       data-index={id}
     >
-      <div className="team-column">
+      <div className="team-column flex justify-start">
         <TeamBox 
           team={homeTeam} 
           side="home" 
@@ -38,7 +38,7 @@ const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect, i
         <div className="game-time">{time}</div>
       </div>
       
-      <div className="team-column">
+      <div className="team-column flex justify-end">
         <TeamBox 
           team={awayTeam} 
           side="away" 
