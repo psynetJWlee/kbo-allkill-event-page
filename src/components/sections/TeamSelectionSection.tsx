@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -137,7 +138,7 @@ const TeamSelectionSection: React.FC = () => {
   return (
     <>
       {/* Today's Team Selection Section */}
-      <section className="team-selection-section" id="team-selection-section">
+      <section className="team-selection-section flex flex-col gap-4" id="team-selection-section">
         <h2 className="team-selection-title">올킬 도전!</h2>
         <div className="game-list w-full flex flex-wrap gap-2" id="game-list">
           {kboGames.map((game, index) => (
@@ -150,7 +151,7 @@ const TeamSelectionSection: React.FC = () => {
             />
           ))}
         </div>
-        <div className="w-full flex justify-center mt-[30px]">
+        <div className="w-full flex justify-center mt-[50px]">
           <Button 
             className="submit-btn mx-auto" 
             disabled={!isAllSelected}
@@ -166,7 +167,6 @@ const TeamSelectionSection: React.FC = () => {
               height: '68px',
               width: 'calc(100% - 70px)',
               maxWidth: '400px',
-              
               borderRadius: '50px'
             }}
           >
@@ -175,8 +175,8 @@ const TeamSelectionSection: React.FC = () => {
         </div>
       </section>
       
-      {/* Yesterday's Result Section */}
-      <section className="state-yesterday" id="state-yesterday">
+      {/* Yesterday's Result Section - Updated to match Today's layout */}
+      <section className="team-selection-section flex flex-col gap-4" id="state-yesterday">
         <h2 className="team-selection-title">올킬 결과</h2>
         <div className="game-list w-full flex flex-wrap gap-2" id="yesterday-game-list">
           {yesterdayResults.map((result, index) => (
@@ -214,27 +214,31 @@ const TeamSelectionSection: React.FC = () => {
                 <img
                   src="https://drive.google.com/drive-viewer/AKGpihY6GXHjBvFEohaA0_swoa2JMoqUFZj__hDIlSnZ9UuTIAOYbsIZ4hs-QUWvgZzPkA0LY7XbmYA28qdHs7utdClvtMdKjhqvzMk=w1920-h911"
                   alt="정답 동그라미"
-                  className="correct-circle"
+                  className="correct-circle absolute w-[125px] h-[130px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                 />
               )}
             </div>
           ))}
         </div>
         
-        <div className="yesterday-footer relative">
+        <div className="w-full flex justify-center mt-[50px] relative">
           <img
             src="https://drive.google.com/drive-viewer/AKGpiha1qvAUHn91M3Aw05FgKItLa7Il5pIHp-xVxp0jON2OGCIDz5zb4wXgA5e0h_J4hYPp1E4nCzo9N0lBoDP_AzKhKDOtHgy0xsU=w1920-h911"
             alt="올킬 도장"
-            className="stamp-image"
+            className="stamp-image absolute w-[338px] h-[290px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
           />
           <Button 
-            className="yesterday-btn" 
+            className="submit-btn mx-auto" 
             id="yesterday-allkill-btn"
             style={{ 
               backgroundColor: '#FFD700',
               color: '#121212',
               fontSize: '24px',
               fontWeight: 'bold',
+              height: '68px',
+              width: 'calc(100% - 70px)',
+              maxWidth: '400px',
+              borderRadius: '50px'
             }}
           >
             올킬 성공!
