@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     selectedTeams: {},
     currentDay: 26,
     realToday: 26,
+    yesterdayDay: 25,
     gameElements: [],
     domReady: false,
     buttonInitialized: false
@@ -76,6 +77,13 @@ document.addEventListener('DOMContentLoaded', function() {
       return false;
     }
     
+    // Get the yesterday state section
+    elements.stateYesterday = document.getElementById('state-yesterday');
+    if (!elements.stateYesterday) {
+      console.warn('Yesterday state section not found');
+      return false;
+    }
+    
     // Mark as ready
     state.domReady = true;
     return true;
@@ -97,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (event.detail) {
         state.currentDay = event.detail.currentDay;
         state.realToday = event.detail.realToday;
-        toggleTeamSelectionSection(state.currentDay);
+        toggleSections(state.currentDay);
       }
     });
     
@@ -199,7 +207,8 @@ document.addEventListener('DOMContentLoaded', function() {
     gameList: null,
     submitButton: null,
     teamSelectionSection: null,
-    teamSelectionPlaceholder: null
+    teamSelectionPlaceholder: null,
+    stateYesterday: null
   };
   
   // ====== EVENT HANDLER FUNCTIONS ======
@@ -297,14 +306,14 @@ document.addEventListener('DOMContentLoaded', function() {
     prevDateBtn.addEventListener('click', function() {
       state.currentDay--;
       updateDateDisplay();
-      toggleTeamSelectionSection(state.currentDay);
+      toggleSections(state.currentDay);
     });
     
     // Add click event for next date button
     nextDateBtn.addEventListener('click', function() {
       state.currentDay++;
       updateDateDisplay();
-      toggleTeamSelectionSection(state.currentDay);
+      toggleSections(state.currentDay);
     });
     
     // Add click event for date numbers
@@ -314,18 +323,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if (prevDayElement) {
       prevDayElement.addEventListener('click', function(e) {
         e.stopPropagation();
-        state.currentDay--;
+        state.currentDay = Number(prevDayElement.textContent);
         updateDateDisplay();
-        toggleTeamSelectionSection(state.currentDay);
+        toggleSections(state.currentDay);
       });
     }
     
     if (nextDayElement) {
       nextDayElement.addEventListener('click', function(e) {
         e.stopPropagation();
-        state.currentDay++;
+        state.currentDay = Number(nextDayElement.textContent);
         updateDateDisplay();
-        toggleTeamSelectionSection(state.currentDay);
+        toggleSections(state.currentDay);
       });
     }
     
@@ -352,22 +361,33 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // ====== TEAM SELECTION TOGGLE FUNCTIONS ======
   
-  function toggleTeamSelectionSection(day) {
-    if (!elements.teamSelectionSection || !elements.teamSelectionPlaceholder) {
+  function toggleSections(day) {
+    if (!elements.teamSelectionSection || !elements.teamSelectionPlaceholder || !elements.stateYesterday) {
       console.warn('Team selection elements not found');
       return;
     }
     
-    console.log(`Toggling team selection for day ${day}, realToday: ${state.realToday}`);
+    console.log(`Toggling team selection for day ${day}, realToday: ${state.realToday}, yesterdayDay: ${state.yesterdayDay}`);
     
-    if (day === state.realToday || day > state.realToday) {
-      // Today or future date: Show team selection, hide placeholder
+    // Hide all sections first
+    elements.teamSelectionSection.style.display = 'none';
+    elements.teamSelectionPlaceholder.style.display = 'none';
+    elements.stateYesterday.style.display = 'none';
+    
+    if (day === state.realToday) {
+      // Today: Show team selection section
       elements.teamSelectionSection.style.display = 'block';
-      elements.teamSelectionPlaceholder.style.display = 'none';
-      console.log('Showing team selection section (Today or Future)');
+      console.log('Showing team selection section (Today)');
+    } else if (day === state.yesterdayDay) {
+      // Yesterday: Show yesterday state
+      elements.stateYesterday.style.display = 'block';
+      console.log('Showing yesterday state section');
+    } else if (day > state.realToday) {
+      // Future: Show team selection section (for future days)
+      elements.teamSelectionSection.style.display = 'block';
+      console.log('Showing team selection section (Future)');
     } else {
-      // Past date: Hide team selection, show placeholder
-      elements.teamSelectionSection.style.display = 'none';
+      // Past before yesterday: Show placeholder
       elements.teamSelectionPlaceholder.style.display = 'block';
       console.log('Showing team selection placeholder (Past)');
     }
