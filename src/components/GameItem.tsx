@@ -18,7 +18,7 @@ const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect, i
   
   return (
     <div 
-      className={`game-item ${isAlternateBackground ? 'alternate-bg' : ''}`} 
+      className={`game-item w-full ${isAlternateBackground ? 'alternate-bg' : ''}`} 
       data-index={id}
     >
       <div className="team-column">
