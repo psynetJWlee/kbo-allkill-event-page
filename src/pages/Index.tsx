@@ -13,6 +13,12 @@ const Index = () => {
   const [currentDay, setCurrentDay] = useState(26);
   const REAL_TODAY = 26; // Constant to track the actual today's date
 
+  useEffect(() => {
+    // Dispatch event when current day changes for vanilla JS to pick up
+    const event = new CustomEvent('day-changed', { detail: { currentDay } });
+    document.dispatchEvent(event);
+  }, [currentDay]);
+
   const handlePrevDate = () => {
     setCurrentDay(currentDay - 1);
   };

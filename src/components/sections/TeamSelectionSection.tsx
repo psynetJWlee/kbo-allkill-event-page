@@ -57,6 +57,40 @@ const kboGames: GameType[] = [
   }
 ];
 
+// Game results data for yesterday and today views
+const gameResults = [
+  {
+    homeTeam: { name: "KT", logo: teamLogos.KT, score: 11 },
+    awayTeam: { name: "LG", logo: teamLogos.LG, score: 5 },
+    status: "종료",
+    userCorrect: true
+  },
+  {
+    homeTeam: { name: "한화", logo: teamLogos["한화"], score: 3 },
+    awayTeam: { name: "NC", logo: teamLogos.NC, score: 7 },
+    status: "경기 중",
+    userCorrect: false
+  },
+  {
+    homeTeam: { name: "두산", logo: teamLogos["두산"], score: 2 },
+    awayTeam: { name: "삼성", logo: teamLogos["삼성"], score: 2 },
+    status: "종료",
+    userCorrect: true
+  },
+  {
+    homeTeam: { name: "KIA", logo: teamLogos.KIA, score: 6 },
+    awayTeam: { name: "SSG", logo: teamLogos.SSG, score: 3 },
+    status: "종료",
+    userCorrect: false
+  },
+  {
+    homeTeam: { name: "키움", logo: teamLogos["키움"], score: 0 },
+    awayTeam: { name: "롯데", logo: teamLogos["롯데"], score: 8 },
+    status: "종료",
+    userCorrect: false
+  }
+];
+
 const TeamSelectionSection: React.FC = () => {
   const [selected, setSelected] = useState<Record<number, string>>({});
   const [buttonRendered, setButtonRendered] = useState(false);
@@ -89,17 +123,65 @@ const TeamSelectionSection: React.FC = () => {
   return (
     <section className="team-selection-section" id="team-selection-section">
       <h2 className="team-selection-title">올킬 도전!</h2>
-      <div className="game-list" id="game-list">
-        {kboGames.map((game, index) => (
-          <GameItem
-            key={game.id}
-            game={game}
-            selectedSide={selected[game.id]}
-            onTeamSelect={handleTeamSelect}
-            index={index}
-          />
-        ))}
+      
+      {/* Main team selection UI - Default state */}
+      <div className="state-tomorrow" id="state-default">
+        <div className="game-list" id="game-list">
+          {kboGames.map((game, index) => (
+            <GameItem
+              key={game.id}
+              game={game}
+              selectedSide={selected[game.id]}
+              onTeamSelect={handleTeamSelect}
+              index={index}
+            />
+          ))}
+        </div>
       </div>
+      
+      {/* Today's result state */}
+      <div className="state-today" id="state-today">
+        <div className="match-results-container">
+          {gameResults.map((result, index) => (
+            <div key={index} className="match-result-wrapper">
+              <div className="match-result">
+                <span className={`score home ${result.homeTeam.score > result.awayTeam.score ? 'winner' : 'loser'}`}>
+                  {result.homeTeam.score}
+                </span>
+                <span className="vs">vs</span>
+                <span className={`score away ${result.awayTeam.score > result.homeTeam.score ? 'winner' : 'loser'}`}>
+                  {result.awayTeam.score}
+                </span>
+              </div>
+              <div className="match-status">{result.status}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Yesterday's result state */}
+      <div className="state-yesterday" id="state-yesterday">
+        <div className="match-results-container">
+          {gameResults.map((result, index) => (
+            <div key={index} className="match-result-wrapper">
+              <div className="match-result">
+                <span className={`score home ${result.homeTeam.score > result.awayTeam.score ? 'winner' : 'loser'} ${result.userCorrect ? 'correct' : ''}`}>
+                  {result.homeTeam.score}
+                </span>
+                <span className="vs">vs</span>
+                <span className={`score away ${result.awayTeam.score > result.homeTeam.score ? 'winner' : 'loser'} ${result.userCorrect ? 'correct' : ''}`}>
+                  {result.awayTeam.score}
+                </span>
+              </div>
+              <div className="match-status">{result.status}</div>
+            </div>
+          ))}
+        </div>
+        <div className="stamp-container">
+          <img className="stamp-image" src="/lovable-uploads/46e10f18-b741-49e5-809e-500ae37ffbd7.png" alt="올킬 도장" />
+        </div>
+      </div>
+      
       <div className="w-full flex justify-center">
         <Button 
           className="submit-btn mx-auto" 
