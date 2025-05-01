@@ -62,13 +62,27 @@ document.addEventListener('DOMContentLoaded', function() {
       return false;
     }
     
+    // Get the team selection section
+    elements.teamSelectionSection = document.getElementById('team-selection-section');
+    if (!elements.teamSelectionSection) {
+      console.warn('Team selection section not found');
+      return false;
+    }
+    
+    // Get the team selection placeholder
+    elements.teamSelectionPlaceholder = document.getElementById('team-selection-placeholder');
+    if (!elements.teamSelectionPlaceholder) {
+      console.warn('Team selection placeholder not found');
+      return false;
+    }
+    
     // Mark as ready
     state.domReady = true;
     return true;
   }
   
   function setupEventListeners() {
-    // Listen for React's custom event
+    // Listen for React's custom event for button rendering
     document.addEventListener('react-rendered', function(event) {
       console.log('Vanilla JS: React rendered event received', event.detail);
       if (event.detail && event.detail.elementId === 'submit-allkill-btn') {
@@ -77,10 +91,35 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
+    // Listen for React's custom event for date changes
+    document.addEventListener('reactDateChanged', function(event) {
+      console.log('Vanilla JS: React date changed event received', event.detail);
+      if (event.detail) {
+        state.currentDay = event.detail.currentDay;
+        state.realToday = event.detail.realToday;
+        toggleTeamSelectionSection(state.currentDay);
+      }
+    });
+    
     // Set up date navigation if available
-    const dateNavigation = document.querySelector('.date-navigation');
+    const dateNavigation = document.querySelector('#date-navigation');
     if (dateNavigation) {
+      console.log('Date navigation found, initializing...');
       initDateNavigation();
+    } else {
+      // Try to find date-nav-prev and date-nav-next directly
+      const prevDateBtn = document.querySelector('.date-nav-prev');
+      const nextDateBtn = document.querySelector('.date-nav-next');
+      
+      if (prevDateBtn && nextDateBtn) {
+        console.log('Date navigation buttons found, initializing...');
+        setupDateNavigation(prevDateBtn, nextDateBtn);
+      } else {
+        console.warn('Date navigation elements not found, will retry');
+        setTimeout(() => {
+          setupEventListeners();
+        }, 500);
+      }
     }
     
     // Set up event listeners for game selection
@@ -158,7 +197,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // DOM element references initialized outside DOMContentLoaded for wider scope
   const elements = {
     gameList: null,
-    submitButton: null
+    submitButton: null,
+    teamSelectionSection: null,
+    teamSelectionPlaceholder: null
   };
   
   // ====== EVENT HANDLER FUNCTIONS ======
@@ -244,20 +285,50 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    prevDateBtn.addEventListener('click', function() {
-      state.currentDay--;
-      updateDateDisplay();
-    });
-    
-    nextDateBtn.addEventListener('click', function() {
-      state.currentDay++;
-      updateDateDisplay();
-    });
-    
-    console.log('Date navigation initialized successfully');
+    setupDateNavigation(prevDateBtn, nextDateBtn);
     
     // Initial update of date display
     updateDateDisplay();
+  }
+  
+  function setupDateNavigation(prevDateBtn, nextDateBtn) {
+    // Add click event for previous date button
+    prevDateBtn.addEventListener('click', function() {
+      state.currentDay--;
+      updateDateDisplay();
+      toggleTeamSelectionSection(state.currentDay);
+    });
+    
+    // Add click event for next date button
+    nextDateBtn.addEventListener('click', function() {
+      state.currentDay++;
+      updateDateDisplay();
+      toggleTeamSelectionSection(state.currentDay);
+    });
+    
+    // Add click event for date numbers
+    const prevDayElement = document.getElementById('prev-day');
+    const nextDayElement = document.getElementById('next-day');
+    
+    if (prevDayElement) {
+      prevDayElement.addEventListener('click', function(e) {
+        e.stopPropagation();
+        state.currentDay--;
+        updateDateDisplay();
+        toggleTeamSelectionSection(state.currentDay);
+      });
+    }
+    
+    if (nextDayElement) {
+      nextDayElement.addEventListener('click', function(e) {
+        e.stopPropagation();
+        state.currentDay++;
+        updateDateDisplay();
+        toggleTeamSelectionSection(state.currentDay);
+      });
+    }
+    
+    console.log('Date navigation initialized successfully');
   }
   
   function updateDateDisplay() {
@@ -277,5 +348,27 @@ document.addEventListener('DOMContentLoaded', function() {
       nextDayElement.textContent = state.currentDay + 1;
     }
   }
+  
+  // ====== TEAM SELECTION TOGGLE FUNCTIONS ======
+  
+  function toggleTeamSelectionSection(day) {
+    if (!elements.teamSelectionSection || !elements.teamSelectionPlaceholder) {
+      console.warn('Team selection elements not found');
+      return;
+    }
+    
+    console.log(`Toggling team selection for day ${day}, realToday: ${state.realToday}`);
+    
+    if (day === state.realToday || day > state.realToday) {
+      // Today or future date: Show team selection, hide placeholder
+      elements.teamSelectionSection.style.display = 'block';
+      elements.teamSelectionPlaceholder.style.display = 'none';
+      console.log('Showing team selection section (Today or Future)');
+    } else {
+      // Past date: Hide team selection, show placeholder
+      elements.teamSelectionSection.style.display = 'none';
+      elements.teamSelectionPlaceholder.style.display = 'block';
+      console.log('Showing team selection placeholder (Past)');
+    }
+  }
 });
-

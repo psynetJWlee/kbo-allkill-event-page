@@ -87,43 +87,50 @@ const TeamSelectionSection: React.FC = () => {
   const isAllSelected = Object.keys(selected).length === 5;
 
   return (
-    <section className="team-selection-section" id="team-selection-section">
-      <h2 className="team-selection-title">올킬 도전!</h2>
-      <div className="game-list" id="game-list">
-        {kboGames.map((game, index) => (
-          <GameItem
-            key={game.id}
-            game={game}
-            selectedSide={selected[game.id]}
-            onTeamSelect={handleTeamSelect}
-            index={index}
-          />
-        ))}
+    <>
+      <section className="team-selection-section" id="team-selection-section">
+        <h2 className="team-selection-title">올킬 도전!</h2>
+        <div className="game-list" id="game-list">
+          {kboGames.map((game, index) => (
+            <GameItem
+              key={game.id}
+              game={game}
+              selectedSide={selected[game.id]}
+              onTeamSelect={handleTeamSelect}
+              index={index}
+            />
+          ))}
+        </div>
+        <div className="w-full flex justify-center">
+          <Button 
+            className="submit-btn mx-auto" 
+            disabled={!isAllSelected}
+            id="submit-allkill-btn"
+            data-rendered-by="react"
+            data-ready={buttonRendered.toString()}
+            style={{ 
+              backgroundColor: '#FFD700',
+              opacity: isAllSelected ? 1 : 0.3,
+              color: isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              height: '68px',
+              width: 'calc(100% - 70px)',
+              maxWidth: '400px',
+              margin: '32px auto 0',
+              borderRadius: '50px'
+            }}
+          >
+            올킬 제출
+          </Button>
+        </div>
+      </section>
+      
+      {/* Placeholder for team selection section when navigating to previous date */}
+      <div className="team-selection-placeholder" id="team-selection-placeholder">
+        {/* Empty placeholder with same height as the team selection section */}
       </div>
-      <div className="w-full flex justify-center">
-        <Button 
-          className="submit-btn mx-auto" 
-          disabled={!isAllSelected}
-          id="submit-allkill-btn"
-          data-rendered-by="react"
-          data-ready={buttonRendered.toString()}
-          style={{ 
-            backgroundColor: '#FFD700',
-            opacity: isAllSelected ? 1 : 0.3,
-            color: isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)',
-            fontSize: '24px',
-            fontWeight: 'bold',
-            height: '68px',
-            width: 'calc(100% - 70px)',
-            maxWidth: '400px',
-            margin: '32px auto 0',
-            borderRadius: '50px'
-          }}
-        >
-          올킬 제출
-        </Button>
-      </div>
-    </section>
+    </>
   );
 };
 

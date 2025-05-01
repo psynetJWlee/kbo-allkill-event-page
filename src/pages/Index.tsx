@@ -13,16 +13,46 @@ const Index = () => {
   const [currentDay, setCurrentDay] = useState(26);
   const REAL_TODAY = 26; // Constant to track the actual today's date
 
+  useEffect(() => {
+    // After the component mounts, dispatch a custom event to inform vanilla JS 
+    // about the initial state
+    const initialStateEvent = new CustomEvent('reactDateChanged', {
+      detail: { currentDay, realToday: REAL_TODAY }
+    });
+    
+    document.dispatchEvent(initialStateEvent);
+  }, []);
+
   const handlePrevDate = () => {
-    setCurrentDay(currentDay - 1);
+    const newDay = currentDay - 1;
+    setCurrentDay(newDay);
+    
+    // Dispatch custom event for vanilla JS to handle
+    const event = new CustomEvent('reactDateChanged', {
+      detail: { currentDay: newDay, realToday: REAL_TODAY }
+    });
+    document.dispatchEvent(event);
   };
 
   const handleNextDate = () => {
-    setCurrentDay(currentDay + 1);
+    const newDay = currentDay + 1;
+    setCurrentDay(newDay);
+    
+    // Dispatch custom event for vanilla JS to handle
+    const event = new CustomEvent('reactDateChanged', {
+      detail: { currentDay: newDay, realToday: REAL_TODAY }
+    });
+    document.dispatchEvent(event);
   };
 
   const handleDateClick = (day: number) => {
     setCurrentDay(day);
+    
+    // Dispatch custom event for vanilla JS to handle
+    const event = new CustomEvent('reactDateChanged', {
+      detail: { currentDay: day, realToday: REAL_TODAY }
+    });
+    document.dispatchEvent(event);
   };
 
   return (

@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -105,6 +106,13 @@
   margin: 0;
   padding: 0;
   background: #121212;
+}
+
+.team-selection-placeholder {
+  width: 100%;
+  height: 900px; /* Match the height of team selection section */
+  background: #121212;
+  display: none;
 }
 
 .team-selection-title {
