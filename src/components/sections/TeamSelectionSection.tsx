@@ -150,7 +150,7 @@ const TeamSelectionSection: React.FC = () => {
             />
           ))}
         </div>
-        <div className="w-full flex justify-center mt-[50px]">
+        <div className="w-full flex justify-center mt-[30px]">
           <Button 
             className="submit-btn mx-auto" 
             disabled={!isAllSelected}
