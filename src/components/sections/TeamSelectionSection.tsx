@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -151,7 +150,7 @@ const TeamSelectionSection: React.FC = () => {
             />
           ))}
         </div>
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center mt-[50px]">
           <Button 
             className="submit-btn mx-auto" 
             disabled={!isAllSelected}
