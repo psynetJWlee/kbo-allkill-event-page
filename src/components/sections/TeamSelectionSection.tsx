@@ -88,9 +88,9 @@ const TeamSelectionSection: React.FC = () => {
 
   return (
     <>
-      <section className="team-selection-section" id="team-selection-section">
+      <section className="team-selection-section flex flex-col gap-4" id="team-selection-section">
         <h2 className="team-selection-title">올킬 도전!</h2>
-        <div className="game-list w-full" id="game-list">
+        <div className="game-list w-full flex flex-wrap gap-2" id="game-list">
           {kboGames.map((game, index) => (
             <GameItem
               key={game.id}
