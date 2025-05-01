@@ -236,7 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // 3-2. 모든 경기에 선택된 옵션이 있는지 검사
     const allSelected = Object.keys(state.selectedTeams).length === 5;
     
-    // 3-3. classList 사용 제거 → style과 disabled로 제어
+    // 3-3. 직접 style 속성과 disabled 속성을 사용하여 버튼 상태 변경
+    // classList 접근 제거 (classList에서 오류가 발생하던 부분)
     submitBtn.disabled = !allSelected;
     submitBtn.style.opacity = allSelected ? '1' : '0.3';
     submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
