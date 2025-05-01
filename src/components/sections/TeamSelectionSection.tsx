@@ -180,7 +180,7 @@ const TeamSelectionSection: React.FC = () => {
         <h2 className="team-selection-title">올킬 결과</h2>
         <div className="game-list w-full flex flex-wrap gap-2" id="yesterday-game-list">
           {yesterdayResults.map((result, index) => (
-            <div key={result.id} className={`match-result relative px-4 ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
+            <div key={result.id} className={`match-result relative ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
               <div className="team-column flex-none">
                 <div className={`team-box ${result.homeTeam.winner ? 'selected-home selected' : ''}`}>
                   <img className="team-logo" src={result.homeTeam.logo} alt={`${result.homeTeam.name} 로고`} />
@@ -221,7 +221,7 @@ const TeamSelectionSection: React.FC = () => {
           ))}
         </div>
         
-        <div className="yesterday-footer">
+        <div className="w-full flex justify-center mt-[50px] relative">
           <img
             src="https://drive.google.com/drive-viewer/AKGpiha1qvAUHn91M3Aw05FgKItLa7Il5pIHp-xVxp0jON2OGCIDz5zb4wXgA5e0h_J4hYPp1E4nCzo9N0lBoDP_AzKhKDOtHgy0xsU=w1920-h911"
             alt="올킬 도장"
