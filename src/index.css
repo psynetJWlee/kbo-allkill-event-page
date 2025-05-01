@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -128,7 +127,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 0 16px;
 }
 
 .game-item {
