@@ -45,9 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update submit button state initially
     updateSubmitButton();
-
-    // Set initial state visibility
-    updateStateVisibility();
   }
   
   function initializeElements() {
@@ -64,11 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
       console.warn('Submit button element not found');
       return false;
     }
-
-    // Get state containers
-    elements.stateDefault = document.getElementById('state-default');
-    elements.stateToday = document.getElementById('state-today');
-    elements.stateYesterday = document.getElementById('state-yesterday');
     
     // Mark as ready
     state.domReady = true;
@@ -86,12 +78,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Set up date navigation if available
-    const dateNavigation = document.querySelector('#date-navigation');
+    const dateNavigation = document.querySelector('.date-navigation');
     if (dateNavigation) {
       initDateNavigation();
-    } else {
-      // Try to find the date navigation elements directly
-      setupDateNavigationListeners();
     }
     
     // Set up event listeners for game selection
@@ -103,68 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
         opt.addEventListener('click', updateSubmitButton);
       });
     });
-
-    // Set up team box click listeners
-    setupTeamBoxListeners();
-  }
-
-  function setupTeamBoxListeners() {
-    const teamBoxes = document.querySelectorAll('.team-box');
-    teamBoxes.forEach(box => {
-      box.addEventListener('click', function() {
-        const gameItem = this.closest('.game-item');
-        if (gameItem) {
-          const gameId = parseInt(gameItem.dataset.index || '0', 10);
-          const teamSide = this.dataset.team;
-          if (teamSide) {
-            handleTeamSelect(gameId, teamSide);
-          }
-        }
-      });
-    });
-  }
-
-  function setupDateNavigationListeners() {
-    const prevBtn = document.querySelector('.date-nav-prev');
-    const nextBtn = document.querySelector('.date-nav-next');
-    const currentDayEl = document.getElementById('current-day');
-    const prevDayEl = document.getElementById('prev-day');
-    const nextDayEl = document.getElementById('next-day');
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function() {
-        state.currentDay--;
-        updateDateDisplay();
-        updateStateVisibility();
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function() {
-        state.currentDay++;
-        updateDateDisplay();
-        updateStateVisibility();
-      });
-    }
-
-    // Add click events for day numbers
-    if (prevDayEl) {
-      prevDayEl.addEventListener('click', function(e) {
-        e.stopPropagation();
-        state.currentDay--;
-        updateDateDisplay();
-        updateStateVisibility();
-      });
-    }
-
-    if (nextDayEl) {
-      nextDayEl.addEventListener('click', function(e) {
-        e.stopPropagation();
-        state.currentDay++;
-        updateDateDisplay();
-        updateStateVisibility();
-      });
-    }
   }
   
   // ====== DATA CREATION FUNCTIONS ======
@@ -231,10 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // DOM element references initialized outside DOMContentLoaded for wider scope
   const elements = {
     gameList: null,
-    submitButton: null,
-    stateDefault: null,
-    stateToday: null,
-    stateYesterday: null
+    submitButton: null
   };
   
   // ====== EVENT HANDLER FUNCTIONS ======
@@ -276,37 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
     submitBtn.style.opacity = allSelected ? '1' : '0.3';
     submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
     
-    // Update button based on current day
-    updateButtonForCurrentDay(submitBtn);
-    
     console.log('Submit button updated. All selected:', allSelected);
-  }
-  
-  function updateButtonForCurrentDay(submitBtn) {
-    if (!submitBtn) return;
-
-    if (state.currentDay === 27) {
-      // Tomorrow - always disabled
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.3';
-      submitBtn.style.color = 'rgba(18, 18, 18, 0.7)';
-      submitBtn.innerHTML = '올킬 제출';
-    } else if (state.currentDay === 25) {
-      // Yesterday - show success
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
-      submitBtn.style.color = '#121212';
-      submitBtn.innerHTML = '올킬 성공!';
-    } else if (state.currentDay === 26) {
-      // Today - show regular or results
-      if (elements.stateToday && elements.stateToday.style.display === 'block') {
-        // After submission
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.color = '#121212';
-        submitBtn.innerHTML = '2 경기 성공!<br>채점 중';
-      }
-    }
   }
   
   function setupSubmitButtonListener() {
@@ -322,11 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!submitBtn.dataset.listenerAdded) {
         submitBtn.addEventListener('click', function() {
           if (Object.keys(state.selectedTeams).length === 5) {
-            if (state.currentDay === 26) { // Only for today
-              showTodayResults();
-            } else {
-              alert('올킬 투표가 제출되었습니다!');
-            }
+            alert('올킬 투표가 제출되었습니다!');
           }
         });
         // Mark that we've added the listener
@@ -357,13 +247,11 @@ document.addEventListener('DOMContentLoaded', function() {
     prevDateBtn.addEventListener('click', function() {
       state.currentDay--;
       updateDateDisplay();
-      updateStateVisibility();
     });
     
     nextDateBtn.addEventListener('click', function() {
       state.currentDay++;
       updateDateDisplay();
-      updateStateVisibility();
     });
     
     console.log('Date navigation initialized successfully');
@@ -389,61 +277,5 @@ document.addEventListener('DOMContentLoaded', function() {
       nextDayElement.textContent = state.currentDay + 1;
     }
   }
-
-  // ====== STATE VISIBILITY FUNCTIONS ======
-
-  function updateStateVisibility() {
-    // First make sure we have our elements
-    if (!elements.stateDefault || !elements.stateToday || !elements.stateYesterday) {
-      // Try to get them if not already set
-      elements.stateDefault = document.getElementById('state-default');
-      elements.stateToday = document.getElementById('state-today');
-      elements.stateYesterday = document.getElementById('state-yesterday');
-      
-      // If still not found, we'll retry later
-      if (!elements.stateDefault || !elements.stateToday || !elements.stateYesterday) {
-        console.warn('State containers not found yet, will retry');
-        setTimeout(updateStateVisibility, 500);
-        return;
-      }
-    }
-
-    // Hide all states first
-    elements.stateDefault.style.display = 'none';
-    elements.stateToday.style.display = 'none';
-    elements.stateYesterday.style.display = 'none';
-
-    // Show appropriate state based on current day
-    if (state.currentDay === 25) {
-      // Yesterday
-      elements.stateYesterday.style.display = 'block';
-    } else if (state.currentDay === 27) {
-      // Tomorrow
-      elements.stateDefault.style.display = 'block';
-    } else {
-      // Today - default to selection state unless already submitted
-      elements.stateDefault.style.display = 'block';
-    }
-
-    // Update button appearance based on state
-    updateSubmitButton();
-  }
-
-  function showTodayResults() {
-    if (!elements.stateDefault || !elements.stateToday) {
-      console.warn('State containers not found');
-      return;
-    }
-
-    // Hide selection UI and show results
-    elements.stateDefault.style.display = 'none';
-    elements.stateToday.style.display = 'block';
-
-    // Update button text
-    const submitBtn = document.getElementById('submit-allkill-btn');
-    if (submitBtn) {
-      submitBtn.innerHTML = '2 경기 성공!<br>채점 중';
-      submitBtn.style.lineHeight = '1.2';
-    }
-  }
 });
+
