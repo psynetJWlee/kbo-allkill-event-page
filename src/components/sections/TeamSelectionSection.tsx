@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -90,7 +89,7 @@ const TeamSelectionSection: React.FC = () => {
     <>
       <section className="team-selection-section" id="team-selection-section">
         <h2 className="team-selection-title">올킬 도전!</h2>
-        <div className="game-list" id="game-list">
+        <div className="game-list m-0" id="game-list">
           {kboGames.map((game, index) => (
             <GameItem
               key={game.id}
