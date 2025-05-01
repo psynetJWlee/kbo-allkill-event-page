@@ -117,7 +117,7 @@ const TeamSelectionSection: React.FC = () => {
               height: '68px',
               width: 'calc(100% - 70px)',
               maxWidth: '400px',
-              margin: '32px auto 0',
+              
               borderRadius: '50px'
             }}
           >
