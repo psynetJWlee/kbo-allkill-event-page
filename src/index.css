@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -229,6 +228,43 @@
   /* 이제 인라인 스타일로 처리됨 */
 }
 
+/* Yesterday Section Styles */
+#state-yesterday {
+  position: relative;
+  min-height: 684.88px; /* Match Today's height */
+}
+
+.yesterday-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.yesterday-footer #submit-allkill-btn {
+  width: calc(100% - 70px);
+  max-width: 400px;
+  height: 68px;
+  font-size: 24px;
+  border-radius: 50px;
+  z-index: 1;
+}
+
+.stamp-image {
+  width: 338px;
+  height: 290px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* My Prize Title Styles */
 .my-prize-title {
   display: inline-block;                /* 너비 측정이 정확히 되도록 */
@@ -424,105 +460,4 @@
     margin-left: 0;
     margin-top: 10px;
   }
-}
-
-/* Yesterday State Styles */
-.state-yesterday {
-  width: 100%;
-  background: #121212;
-  padding: 20px 0;
-  display: none;
-}
-
-.state-yesterday .game-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.match-result {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  position: relative;
-}
-
-.match-result:nth-child(odd) {
-  background-color: #1C1C1C;
-  border-radius: 6px;
-}
-
-.match-result .score-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.match-result .score {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.match-result .score.home.winner {
-  color: #FFC736;
-}
-
-.match-result .score.away.winner {
-  color: #FFC736;
-}
-
-.match-result .score:not(.winner) {
-  color: #FFFFFF;
-}
-
-.match-result .vs {
-  font-size: 15px;
-  font-weight: bold;
-  color: #555555;
-  margin: 0 8px;
-}
-
-.match-result .match-status {
-  font-size: 14px;
-  color: #FFFFFF;
-  margin-top: 4px;
-}
-
-.correct-circle {
-  width: 125px;
-  height: 130px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.yesterday-footer {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-
-.yesterday-footer #submit-allkill-btn {
-  width: calc(100% - 70px);
-  max-width: 400px;
-  height: 68px;
-  font-size: 24px;
-  border-radius: 50px;
-  z-index: 1;
-}
-
-.stamp-image {
-  width: 338px;
-  height: 290px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 2;
 }
