@@ -220,11 +220,12 @@ const TeamSelectionSection: React.FC = () => {
           ))}
         </div>
         
-        <div className="yesterday-footer relative w-full flex justify-center mt-[50px]">
+        {/* Updated footer positioning to be static rather than absolute */}
+        <div className="yesterday-footer w-full flex flex-col items-center mt-[50px] mb-[50px]">
           <img
             src="https://drive.google.com/drive-viewer/AKGpiha1qvAUHn91M3Aw05FgKItLa7Il5pIHp-xVxp0jON2OGCIDz5zb4wXgA5e0h_J4hYPp1E4nCzo9N0lBoDP_AzKhKDOtHgy0xsU=w1920-h911"
             alt="올킬 도장"
-            className="stamp-image absolute w-[338px] h-[290px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            className="stamp-image mb-4 w-[338px] h-[290px]"
           />
           <Button 
             className="submit-btn mx-auto" 
