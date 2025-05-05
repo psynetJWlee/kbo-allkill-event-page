@@ -130,8 +130,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // Set up event listeners for game selection
+    // Set up event listeners for game selection using the new null-safe approach
     const matchContainers = document.querySelectorAll('.match') || [];
+    if (matchContainers.length === 0) {
+      console.warn('[팀 선택] .match 컨테이너를 찾을 수 없습니다.');
+      return;
+    }
+    
     matchContainers.forEach(match => {
       const opts = match.querySelectorAll('input[type="radio"], .team-option') || [];
       opts.forEach(opt => {
@@ -235,18 +240,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function updateSubmitButton() {
-    // 3-1. 버튼 엘리먼트 안전하게 가져오기
+    // Always check for null before accessing properties
     const submitBtn = document.getElementById('submit-allkill-btn');
     if (!submitBtn) {
-      console.warn('submit-allkill-btn not found');
+      console.warn('[팀 선택] submit-allkill-btn 요소를 찾을 수 없습니다.');
       return;
     }
     
-    // 3-2. 모든 경기에 선택된 옵션이 있는지 검사
-    const allSelected = Object.keys(state.selectedTeams).length === 5;
+    // Get all matches and verify they exist
+    const matches = document.querySelectorAll('.match');
+    if (!matches || matches.length === 0) {
+      console.warn('[팀 선택] .match 컨테이너를 찾을 수 없습니다.');
+      return;
+    }
     
-    // 3-3. 직접 style 속성과 disabled 속성을 사용하여 버튼 상태 변경
-    // classList 접근 제거 (classList에서 오류가 발생하던 부분)
+    // Check if all matches have a selected option
+    const allSelected = Array.from(matches).every(match =>
+      !!match.querySelector('input[type="radio"]:checked')
+    );
+    
+    // Use direct style manipulation instead of classList to avoid null errors
     submitBtn.disabled = !allSelected;
     submitBtn.style.opacity = allSelected ? '1' : '0.3';
     submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
