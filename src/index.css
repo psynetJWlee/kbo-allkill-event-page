@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -101,21 +100,21 @@
   }
 }
 
-/* KBO Team Selection Styles */
-.team-selection-section {
+/* KBO Team Selection Styles - Scoped with ID */
+#team-selection-section .team-selection-section {
   margin: 0;
   padding: 0;
   background: #121212;
 }
 
-.team-selection-placeholder {
+#team-selection-section .team-selection-placeholder {
   width: 100%;
   height: 900px; /* Match the height of team selection section */
   background: #121212;
   display: none;
 }
 
-.team-selection-title {
+#team-selection-section .team-selection-title {
   text-align: center;
   font-size: 30px;
   font-weight: bold;
@@ -124,34 +123,34 @@
   margin-bottom: 16px;
 }
 
-.game-list {
+#team-selection-section .game-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.game-item {
+#team-selection-section .game-item {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
 }
 
-.game-item.alternate-bg {
+#team-selection-section .game-item.alternate-bg {
   background-color: #1C1C1C;
   border-radius: 6px;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.team-column {
+#team-selection-section .team-column {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
 }
 
-.team-box {
+#team-selection-section .team-box {
   width: 90px;
   height: 80px;
   background: #1f1f1f;
@@ -165,67 +164,67 @@
   cursor: pointer;
 }
 
-.team-box.selected-home {
+#team-selection-section .team-box.selected-home {
   background-color: #C13D3D;
   border: 3px solid #FFFFFF;
 }
 
-.team-box.selected-away {
+#team-selection-section .team-box.selected-away {
   background-color: #047DBF;
   border: 3px solid #FFFFFF;
 }
 
-.team-logo {
+#team-selection-section .team-logo {
   width: 32px;
   height: 32px;
   margin-bottom: 4px;
 }
 
-.team-name {
+#team-selection-section .team-name {
   font-size: 14px;
   color: #FFFFFF;
   text-align: center;
 }
 
-.vote-count {
+#team-selection-section .vote-count {
   font-size: 14px;
 }
 
-.vote-count.higher {
+#team-selection-section .vote-count.higher {
   color: #FFC736;
   font-weight: bold;
 }
 
-.vote-count.lower {
+#team-selection-section .vote-count.lower {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.team-box.selected .vote-count.lower {
+#team-selection-section .team-box.selected .vote-count.lower {
   color: #FFFFFF;
 }
 
-.game-status {
+#team-selection-section .game-status {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
 }
 
-.voting-text {
+#team-selection-section .voting-text {
   font-size: 15px;
   color: rgba(255, 255, 255, 0.7);
 }
 
-.game-time {
+#team-selection-section .game-time {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
 }
 
-.submit-btn {
+#team-selection-section .submit-btn {
   /* hover 효과를 제거하고 인라인 스타일로 대체 */
 }
 
-.submit-btn.enabled {
+#team-selection-section .submit-btn.enabled {
   /* 이제 인라인 스타일로 처리됨 */
 }
 
@@ -427,68 +426,69 @@
 }
 
 /* Yesterday State Styles */
-.state-yesterday {
+#team-selection-section #state-yesterday {
   width: 100%;
   background: #121212;
   padding: 20px 0;
   display: none;
+  position: relative;
 }
 
-.state-yesterday .game-list {
+#team-selection-section #state-yesterday .game-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.match-result {
+#team-selection-section .match-result {
   display: flex;
   align-items: center;
   padding: 10px;
   position: relative;
 }
 
-.match-result:nth-child(odd) {
+#team-selection-section .match-result:nth-child(odd) {
   background-color: #1C1C1C;
   border-radius: 6px;
 }
 
-.match-result .score-line {
+#team-selection-section .match-result .score-line {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.match-result .score {
+#team-selection-section .match-result .score {
   font-size: 30px;
   font-weight: bold;
 }
 
-.match-result .score.home.winner {
+#team-selection-section .match-result .score.home.winner {
   color: #FFC736;
 }
 
-.match-result .score.away.winner {
+#team-selection-section .match-result .score.away.winner {
   color: #FFC736;
 }
 
-.match-result .score:not(.winner) {
+#team-selection-section .match-result .score:not(.winner) {
   color: #FFFFFF;
 }
 
-.match-result .vs {
+#team-selection-section .match-result .vs {
   font-size: 15px;
   font-weight: bold;
   color: #555555;
   margin: 0 8px;
 }
 
-.match-result .match-status {
+#team-selection-section .match-result .match-status {
   font-size: 14px;
   color: #FFFFFF;
   margin-top: 4px;
 }
 
-.correct-circle {
+#team-selection-section .correct-circle {
   width: 125px;
   height: 130px;
   position: absolute;
@@ -498,16 +498,20 @@
   pointer-events: none;
 }
 
-.yesterday-footer {
-  position: relative;
+#team-selection-section .yesterday-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   margin-top: 30px;
   margin-bottom: 20px;
 }
 
-.yesterday-footer #submit-allkill-btn {
+#team-selection-section .yesterday-footer #yesterday-allkill-btn {
   width: calc(100% - 70px);
   max-width: 400px;
   height: 68px;
@@ -516,13 +520,13 @@
   z-index: 1;
 }
 
-.stamp-image {
+#team-selection-section .stamp-image {
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 338px;
   height: 290px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
 }
