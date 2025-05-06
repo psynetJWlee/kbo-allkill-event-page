@@ -47,6 +47,7 @@ const TeamSelectionSection: React.FC = () => {
       setButtonRendered(true);
       const event = new CustomEvent('react-rendered', { detail: { elementId: 'submit-allkill-btn' } });
       document.dispatchEvent(event);
+      console.log('React: Submit button rendered and event dispatched');
     }
   }, []);
 
@@ -57,9 +58,12 @@ const TeamSelectionSection: React.FC = () => {
   const isAllSelected = Object.keys(selected).length === kboGames.length;
 
   return (
-    <section id="team-selection-section">
+    <section
+      id="team-selection-section"
+      
+    >
       {/* Today's Team Selection Section */}
-      <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-today">
+      <div className="team-selection-section flex flex-col gap-4 relative pb-[100px]" id="team-selection-section-today">
         <h2 className="team-selection-title">올킬 도전!</h2>
         <div className="game-list flex flex-col gap-2" id="game-list">
           {kboGames.map((game, index) => (
@@ -73,8 +77,11 @@ const TeamSelectionSection: React.FC = () => {
           ))}
         </div>
 
-        {/* 버튼을 맨 아래로 밀고, 바닥에서 30px 띄우기 */}
-        <div id="team-selection-submit" className="mt-auto mb-[30px] flex justify-center">
+        {/* 버튼을 섹션 바닥에서 30px 위에 고정 */}
+        <div
+          id="team-selection-submit"
+          className="absolute bottom-[30px] left-1/2 -translate-x-1/2"
+        >
           <Button
             className="submit-btn mx-auto"
             disabled={!isAllSelected}
@@ -99,17 +106,17 @@ const TeamSelectionSection: React.FC = () => {
       </div>
 
       {/* Yesterday's Result Section */}
-      <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-yesterday">
+      <div className="team-selection-section flex flex-col gap-4" id="state-yesterday">
         <h2 className="team-selection-title">올킬 결과</h2>
         <div className="game-list flex flex-col gap-2" id="yesterday-game-list">
           {yesterdayResults.map((result, index) => (
             <div key={result.id} className={`match-result relative px-4 ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
-              {/* ... 원본과 동일 ... */}
+              {/* 원본과 동일 */}
             </div>
           ))}
         </div>
         <div className="yesterday-footer w-full flex flex-col items-center mt-[50px] mb-[50px]">
-          {/* ... 원본과 동일 ... */}
+          {/* 원본과 동일 */}
         </div>
       </div>
 
