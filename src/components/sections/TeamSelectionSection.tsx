@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
 import GameItem from '@/components/GameItem';
+import GameResultItem from '@/components/GameResultItem';
 
 // KBO team logo URLs
 const teamLogos = {
@@ -17,7 +19,7 @@ const teamLogos = {
   "롯데": "https://i.namu.wiki/i/cFb8Ykp4kxvpk-foBdgeGyj3d2TGfYSW41KZ-k9SjjVsFSFgJnvAthnIjAND2AE____xihT73odP_H3LTi1UOjvyw5raOqh1biiza57RlobyEzf-ItioBNQEl8rtdqyY0Vw9hsk1CmUx7kNp3oddWw.svg"
 };
 
-// KBO 팀 경기 데이터
+// KBO 팀 경기 데이터 (내일)
 const kboGames: GameType[] = [
   { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, time: "18:00", status: "투표 중" },
   { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 }, time: "18:00", status: "투표 중" },
@@ -25,6 +27,24 @@ const kboGames: GameType[] = [
   { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, time: "18:00", status: "투표 중" },
   { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, time: "18:00", status: "투표 중" }
 ];
+
+// Today's game results data
+const todayResults = [
+  { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, homeScore: 1, awayScore: 5, status: "종료" },
+  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 }, homeScore: 2, awayScore: 3, status: "경기 중" },
+  { id: 2, homeTeam: { name: "두산", logo: teamLogos["두산"], votes: 0    }, awayTeam: { name: "삼성", logo: teamLogos["삼성"], votes: 5245 }, homeScore: 4, awayScore: 4, status: "경기 중" },
+  { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, homeScore: 10, awayScore: 2, status: "경기 중" },
+  { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, homeScore: 1, awayScore: 0, status: "경기 중" }
+];
+
+// Default selected teams for today view (기본 선택된 팀들)
+const defaultSelectedTeams = {
+  0: 'home', // KT
+  1: 'away', // NC
+  2: 'away', // 삼성
+  3: 'home', // KIA
+  4: 'home'  // 키움
+};
 
 // Yesterday's game results data
 const yesterdayResults = [
@@ -38,6 +58,7 @@ const yesterdayResults = [
 const TeamSelectionSection: React.FC = () => {
   const [selected, setSelected] = useState<Record<number, string>>({});
   const [buttonRendered, setButtonRendered] = useState(false);
+  const [currentDay, setCurrentDay] = useState<number>(26); // Default to "Today" (26)
 
   // Effect to ensure button is ready for vanilla JS to find
   useEffect(() => {
@@ -50,71 +71,176 @@ const TeamSelectionSection: React.FC = () => {
     }
   }, []);
 
+  // Effect to set default selected teams for today view
+  useEffect(() => {
+    if (currentDay === 26) { // Today
+      setSelected(defaultSelectedTeams);
+    } else {
+      setSelected({}); // Reset selections for other days
+    }
+  }, [currentDay]);
+
   const handleTeamSelect = (gameId: number, team: 'home' | 'away') => {
     setSelected(prev => ({ ...prev, [gameId]: team }));
   };
 
   const isAllSelected = Object.keys(selected).length === kboGames.length;
 
+  // Handle date navigation
+  const handleDateChange = (day: number) => {
+    setCurrentDay(day);
+  };
+
+  // Determine which button text to show
+  const getButtonText = () => {
+    if (currentDay === 26) { // Today
+      return "2경기 성공! 채점 중";
+    } else {
+      return "올킬 제출";
+    }
+  };
+
   return (
     <section id="team-selection-section">
-      {/* Today's Team Selection Section */}
-      <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-today">
-        <h2 className="team-selection-title">올킬 도전!</h2>
-        <div className="game-list flex flex-col gap-2" id="game-list">
-          {kboGames.map((game, index) => (
-            <GameItem
-              key={game.id}
-              game={game}
-              selectedSide={selected[game.id]}
-              onTeamSelect={handleTeamSelect}
-              index={index}
-            />
-          ))}
+      {/* Date Navigation */}
+      <div className="date-navigation flex items-center justify-between px-[21px] h-[50px] text-white">
+        <div 
+          className="flex items-center cursor-pointer date-nav-prev" 
+          onClick={() => handleDateChange(currentDay - 1)}
+        >
+          <div className="w-6 h-6 flex items-center justify-center">
+            <div className="w-[15px] h-[15px] border-y-[7.5px] border-y-transparent border-r-[10px] border-r-white"></div>
+          </div>
+          <span className="text-[16px] ml-[18px]" id="prev-day">{currentDay - 1}</span>
         </div>
-
-        {/* 버튼을 맨 아래로 밀고, 바닥에서 30px 띄우기 */}
-        <div id="team-selection-submit" className="mt-auto mb-[30px] flex justify-center">
-          <Button
-            className="submit-btn mx-auto"
-            disabled={!isAllSelected}
-            id="submit-allkill-btn"
-            data-rendered-by="react"
-            data-ready={buttonRendered.toString()}
-            style={{
-              backgroundColor: '#FFD700',
-              opacity: isAllSelected ? 1 : 0.3,
-              color: isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)',
-              fontSize: '24px',
-              fontWeight: 'bold',
-              height: '68px',
-              width: 'calc(100% - 70px)',
-              maxWidth: '400px',
-              borderRadius: '50px'
-            }}
-          >
-            올킬 제출
-          </Button>
+        
+        <span 
+          className="text-[16px] font-bold cursor-pointer" 
+          id="current-day"
+          onClick={() => handleDateChange(26)} // Click on Today to go back to today
+        >
+          {currentDay === 26 ? 'Today' : currentDay}
+        </span>
+        
+        <div 
+          className="flex items-center cursor-pointer date-nav-next"
+          onClick={() => handleDateChange(currentDay + 1)}
+        >
+          <span className="text-[16px] mr-[18px]" id="next-day">{currentDay + 1}</span>
+          <div className="w-6 h-6 flex items-center justify-center">
+            <div className="w-[15px] h-[15px] border-y-[7.5px] border-y-transparent border-l-[10px] border-l-white"></div>
+          </div>
         </div>
       </div>
+
+      {/* Tomorrow's Team Selection Section (27) */}
+      {currentDay === 27 && (
+        <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-tomorrow">
+          <h2 className="team-selection-title">올킬 도전!</h2>
+          <div className="game-list flex flex-col gap-2" id="game-list">
+            {kboGames.map((game, index) => (
+              <GameItem
+                key={game.id}
+                game={game}
+                selectedSide={selected[game.id]}
+                onTeamSelect={handleTeamSelect}
+                index={index}
+                showTime={true}
+              />
+            ))}
+          </div>
+
+          {/* Submit Button */}
+          <div id="team-selection-submit" className="mt-auto mb-[30px] flex justify-center">
+            <Button
+              className="submit-btn mx-auto"
+              disabled={!isAllSelected}
+              id="submit-allkill-btn"
+              data-rendered-by="react"
+              data-ready={buttonRendered.toString()}
+              style={{
+                backgroundColor: '#FFD700',
+                opacity: isAllSelected ? 1 : 0.3,
+                color: isAllSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)',
+                fontSize: '24px',
+                fontWeight: 'bold',
+                height: '68px',
+                width: 'calc(100% - 70px)',
+                maxWidth: '400px',
+                borderRadius: '50px'
+              }}
+            >
+              {getButtonText()}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Today's Game Results Section (26) */}
+      {currentDay === 26 && (
+        <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-today">
+          <h2 className="team-selection-title">올킬 도전!</h2>
+          <div className="game-list flex flex-col gap-2" id="game-list">
+            {todayResults.map((game, index) => (
+              <GameResultItem
+                key={game.id}
+                game={game}
+                selectedSide={selected[game.id]}
+                onTeamSelect={handleTeamSelect}
+                index={index}
+              />
+            ))}
+          </div>
+
+          {/* Submit Button */}
+          <div id="team-selection-submit" className="mt-auto mb-[30px] flex justify-center">
+            <Button
+              className="submit-btn mx-auto"
+              id="submit-allkill-btn"
+              data-rendered-by="react"
+              data-ready={buttonRendered.toString()}
+              style={{
+                backgroundColor: '#FFD700',
+                fontSize: '24px',
+                fontWeight: 'bold',
+                height: '68px',
+                width: 'calc(100% - 70px)',
+                maxWidth: '400px',
+                borderRadius: '50px',
+                color: '#121212'
+              }}
+            >
+              {getButtonText()}
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Yesterday's Result Section */}
-      <div className="team-selection-section flex flex-col gap-4" id="state-yesterday">
-        <h2 className="team-selection-title">올킬 결과</h2>
-        <div className="game-list flex flex-col gap-2" id="yesterday-game-list">
-          {yesterdayResults.map((result, index) => (
-            <div key={result.id} className={`match-result relative px-4 ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
-              {/* ... 원본과 동일 ... */}
-            </div>
-          ))}
+      {currentDay === 25 && (
+        <div className="team-selection-section flex flex-col gap-4" id="state-yesterday">
+          <h2 className="team-selection-title">올킬 결과</h2>
+          <div className="game-list flex flex-col gap-2" id="yesterday-game-list">
+            {yesterdayResults.map((result, index) => (
+              <div key={result.id} className={`match-result relative px-4 ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
+                {/* ... 원본과 동일 ... */}
+              </div>
+            ))}
+          </div>
+          <div className="yesterday-footer w-full flex flex-col items-center mt-[50px] mb-[50px]">
+            {/* ... 원본과 동일 ... */}
+          </div>
         </div>
-        <div className="yesterday-footer w-full flex flex-col items-center mt-[50px] mb-[50px]">
-          {/* ... 원본과 동일 ... */}
-        </div>
-      </div>
+      )}
 
-      {/* Placeholder for previous-date selection */}
-      <div className="team-selection-placeholder" id="team-selection-placeholder" />
+      {/* Placeholder for other dates */}
+      {(currentDay < 25 || currentDay > 27) && (
+        <div className="team-selection-placeholder" id="team-selection-placeholder">
+          <div className="flex justify-center items-center h-[400px] text-white text-lg">
+            이 날짜의 데이터가 없습니다.
+          </div>
+        </div>
+      )}
     </section>
   );
 };

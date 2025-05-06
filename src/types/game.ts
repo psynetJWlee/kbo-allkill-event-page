@@ -3,6 +3,7 @@ export interface TeamType {
   name: string;
   logo: string;
   votes: number;
+  winner?: boolean;
 }
 
 export interface GameType {
@@ -11,4 +12,7 @@ export interface GameType {
   awayTeam: TeamType;
   time: string;
   status: string;
+  homeScore?: number;
+  awayScore?: number;
+  correct?: boolean;
 }

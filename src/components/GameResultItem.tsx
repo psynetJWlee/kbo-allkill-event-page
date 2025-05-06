@@ -1,21 +1,39 @@
 
 import React from 'react';
 import TeamBox from './TeamBox';
-import { GameType } from '@/types/game';
 
-interface GameItemProps {
-  game: GameType;
+interface GameResultItemProps {
+  game: {
+    id: number;
+    homeTeam: {
+      name: string;
+      logo: string;
+      votes: number;
+    };
+    awayTeam: {
+      name: string;
+      logo: string;
+      votes: number;
+    };
+    homeScore: number;
+    awayScore: number;
+    status: string;
+  };
   selectedSide?: string;
   onTeamSelect: (gameId: number, team: 'home' | 'away') => void;
   index: number;
-  showTime?: boolean;
 }
 
-const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect, index, showTime = false }) => {
-  const { id, homeTeam, awayTeam, time, status } = game;
+const GameResultItem: React.FC<GameResultItemProps> = ({ game, selectedSide, onTeamSelect, index }) => {
+  const { id, homeTeam, awayTeam, homeScore, awayScore, status } = game;
   
   // Apply alternate background color for 1st, 3rd, and 5th games (0-based index: 0, 2, 4)
   const isAlternateBackground = index % 2 === 0;
+  
+  // Determine which score is higher
+  const homeScoreHigher = homeScore > awayScore;
+  const awayScoreHigher = awayScore > homeScore;
+  const scoreEqual = homeScore === awayScore;
   
   return (
     <div 
@@ -35,12 +53,26 @@ const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect, i
       </div>
       
       <div className="game-status flex-1 flex flex-col items-center justify-center">
-        {showTime && (
-          <>
-            <div className="voting-text">{status}</div>
-            <div className="game-time">{time}</div>
-          </>
-        )}
+        <div className="flex items-center justify-center">
+          <span 
+            style={{ 
+              fontSize: '30px', 
+              color: homeScoreHigher ? '#FFC736' : (scoreEqual ? '#FFFFFF' : '#FFFFFF')
+            }}
+          >
+            {homeScore}
+          </span>
+          <span style={{ fontSize: '15px', color: '#555555', margin: '0 8px' }}>vs</span>
+          <span 
+            style={{ 
+              fontSize: '30px', 
+              color: awayScoreHigher ? '#FFC736' : (scoreEqual ? '#FFFFFF' : '#FFFFFF')
+            }}
+          >
+            {awayScore}
+          </span>
+        </div>
+        <div style={{ fontSize: '14px', color: '#FFFFFF' }}>{status}</div>
       </div>
       
       <div className="team-column flex justify-end flex-none text-right">
@@ -58,4 +90,4 @@ const GameItem: React.FC<GameItemProps> = ({ game, selectedSide, onTeamSelect, i
   );
 };
 
-export default GameItem;
+export default GameResultItem;
