@@ -1,0 +1,229 @@
+
+/* Team Selection Styles */
+#kbo-selection-container {
+  background-color: #121212;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+/* Date Navigation */
+#date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 21px;
+  height: 50px;
+  color: white;
+  background-color: #1a1a1a;
+}
+
+#date-nav button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#date-nav #nav-today {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Team Selection Sections */
+.team-selection-section {
+  max-width: 353px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Game Items */
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 16px;
+}
+
+.game-item, .match-result {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  gap: 20px;
+}
+
+.alternate-bg {
+  background-color: #1C1C1C;
+  border-radius: 6px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Team Selection Title */
+.team-selection-title {
+  font-size: 30px;
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: 20px;
+  position: relative;
+}
+
+.team-selection-title::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px; /* Adjusted width */
+  height: 2px;
+  background: #FFC736;
+}
+
+/* Team Columns */
+.team-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-box {
+  width: 90px;
+  height: 80px;
+  background: #1f1f1f;
+  border: 1px solid #545454;
+  border-radius: 5px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.team-box.selected-home {
+  background-color: #C13D3D;
+  border: 3px solid #FFFFFF;
+}
+
+.team-box.selected-away {
+  background-color: #047DBF;
+  border: 3px solid #FFFFFF;
+}
+
+.team-logo {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+
+.team-name {
+  font-size: 14px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.vote-count {
+  font-size: 14px;
+}
+
+.vote-count.higher {
+  color: #FFC736;
+  font-weight: bold;
+}
+
+.vote-count.lower {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Game Status */
+.game-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.voting-text {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.game-time {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Score Display */
+.score-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.score.winner {
+  color: #FFC736;
+}
+
+.score:not(.winner) {
+  color: #FFFFFF;
+}
+
+.vs {
+  font-size: 15px;
+  font-weight: bold;
+  color: #555555;
+  margin: 0 8px;
+}
+
+.match-status {
+  font-size: 14px;
+  color: #FFFFFF;
+  margin-top: 4px;
+}
+
+/* Result Circle */
+.correct-circle {
+  position: absolute;
+  width: 125px;
+  height: 130px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Button Styles */
+.submit-btn {
+  background-color: #FFD700;
+  color: #121212;
+  font-weight: bold;
+  font-size: 24px;
+  height: 68px;
+  width: calc(100% - 70px);
+  max-width: 400px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Placeholder Section */
+#section-placeholder {
+  width: 100%;
+  height: 684.88px;
+  background-color: #121212;
+}
