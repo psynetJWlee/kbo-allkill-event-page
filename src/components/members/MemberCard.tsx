@@ -27,11 +27,8 @@ const MemberCard: React.FC<MemberCardProps> = ({
         <span className="text-[20px] text-[#FFFFFF]">{nickname}</span>
       </div>
       
-      {/* 우측: 당첨 금액 (폰트 스트로크 추가) */}
-      <span
-        className="text-[30px] font-bold text-[#FFC736] [-webkit-text-stroke:1px_#001a29]"
-        style={{ WebkitTextStroke: '1px #001a29' }}
-      >
+      {/* 우측: 당첨 금액 */}
+      <span className="text-[30px] font-bold text-[#FFC736]">
         {amount.toLocaleString()}원
       </span>
     </div>
