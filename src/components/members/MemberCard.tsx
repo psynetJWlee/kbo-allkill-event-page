@@ -15,7 +15,6 @@ const MemberCard: React.FC<MemberCardProps> = ({
   amount
 }) => {
   return (
-    // ↓ 이 div 전체를 flex justify-between 구조로 변경
     <div className="member-card flex justify-between items-center w-full px-4 py-2 border rounded">
       
       {/* 좌측: 프로필 아이콘 + 닉네임 */}
@@ -25,11 +24,14 @@ const MemberCard: React.FC<MemberCardProps> = ({
           alt={`${nickname} 프로필`}
           className="w-8 h-8 rounded-full object-cover"
         />
-        <span className="text-base">{nickname}</span>
+        <span className="text-[20px] text-[#FFFFFF]">{nickname}</span>
       </div>
       
-      {/* 우측: 당첨 금액 */}
-      <span className="text-base font-bold text-[#FFC736]">
+      {/* 우측: 당첨 금액 (폰트 스트로크 추가) */}
+      <span
+        className="text-[30px] font-bold text-[#FFC736] [-webkit-text-stroke:1px_#001a29]"
+        style={{ WebkitTextStroke: '1px #001a29' }}
+      >
         {amount.toLocaleString()}원
       </span>
     </div>
