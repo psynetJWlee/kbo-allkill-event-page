@@ -5,7 +5,7 @@ const TeamSelectionSection: React.FC = () => {
   return (
     <div id="team-selection-container">
       {/* Date Navigation */}
-      <div id="date-nav" className="flex items-center justify-between px-[21px] h-[50px] text-white">
+      <div id="date-nav" className="date-navigation flex items-center justify-between px-[21px] h-[50px] text-white">
         <button id="nav-prev" className="text-white">&larr; 25</button>
         <span id="nav-today" className="text-white">Today</span>
         <button id="nav-next" className="text-white">27 &rarr;</button>
