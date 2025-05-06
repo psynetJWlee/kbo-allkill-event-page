@@ -99,7 +99,7 @@ const TeamSelectionSection: React.FC = () => {
       </div>
 
       {/* Yesterday's Result Section */}
-      <div className="team-selection-section flex flex-col gap-4" id="state-yesterday">
+      <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-yesterday">
         <h2 className="team-selection-title">올킬 결과</h2>
         <div className="game-list flex flex-col gap-2" id="yesterday-game-list">
           {yesterdayResults.map((result, index) => (
