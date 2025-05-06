@@ -135,7 +135,19 @@ const TeamSelectionSection: React.FC = () => {
       {/* Tomorrow's Team Selection Section (27) */}
       {currentDay === 27 && (
         <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-tomorrow">
-          <h2 className="team-selection-title">올킬 도전!</h2>
+          <h2 className="team-selection-title flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/0b039722-f115-4a24-9d6f-2ad5d4ed35b7.png" 
+              alt="Pointing finger left" 
+              className="w-[60px] h-[60px] mr-[15px]"
+            />
+            올킬 도전!
+            <img 
+              src="/lovable-uploads/d9b8652f-78c0-41c0-beac-1e46e4375f4f.png" 
+              alt="Pointing finger right" 
+              className="w-[60px] h-[60px] ml-[15px]"
+            />
+          </h2>
           <div className="game-list flex flex-col gap-2" id="game-list">
             {kboGames.map((game, index) => (
               <GameItem
@@ -178,7 +190,19 @@ const TeamSelectionSection: React.FC = () => {
       {/* Today's Game Results Section (26) */}
       {currentDay === 26 && (
         <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-today">
-          <h2 className="team-selection-title">올킬 도전!</h2>
+          <h2 className="team-selection-title flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/0b039722-f115-4a24-9d6f-2ad5d4ed35b7.png" 
+              alt="Pointing finger left" 
+              className="w-[60px] h-[60px] mr-[15px]"
+            />
+            올킬 도전!
+            <img 
+              src="/lovable-uploads/d9b8652f-78c0-41c0-beac-1e46e4375f4f.png" 
+              alt="Pointing finger right" 
+              className="w-[60px] h-[60px] ml-[15px]"
+            />
+          </h2>
           <div className="game-list flex flex-col gap-2" id="game-list">
             {todayResults.map((game, index) => (
               <GameResultItem
@@ -224,7 +248,19 @@ const TeamSelectionSection: React.FC = () => {
       {/* Yesterday's Result Section */}
       {currentDay === 25 && (
         <div className="team-selection-section flex flex-col gap-4" id="state-yesterday">
-          <h2 className="team-selection-title">올킬 결과</h2>
+          <h2 className="team-selection-title flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/0b039722-f115-4a24-9d6f-2ad5d4ed35b7.png" 
+              alt="Pointing finger left" 
+              className="w-[60px] h-[60px] mr-[15px]"
+            />
+            올킬 결과
+            <img 
+              src="/lovable-uploads/d9b8652f-78c0-41c0-beac-1e46e4375f4f.png" 
+              alt="Pointing finger right" 
+              className="w-[60px] h-[60px] ml-[15px]"
+            />
+          </h2>
           <div className="game-list flex flex-col gap-2" id="yesterday-game-list">
             {yesterdayResults.map((result, index) => (
               <div key={result.id} className={`match-result relative px-4 ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
