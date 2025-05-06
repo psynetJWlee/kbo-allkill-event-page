@@ -107,6 +107,48 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnToday = document.getElementById('btn-today');
   const btnYesterday = document.getElementById('btn-yesterday');
   
+  // Check if elements are found
+  if (!sectToday) {
+    console.warn('Element #section-today not found');
+    return;
+  }
+  if (!sectYesterday) {
+    console.warn('Element #section-yesterday not found');
+    return;
+  }
+  if (!sectPlaceholder) {
+    console.warn('Element #section-placeholder not found');
+    return;
+  }
+  if (!gameListToday) {
+    console.warn('Element #game-list-today not found');
+    return;
+  }
+  if (!gameListYesterday) {
+    console.warn('Element #game-list-yesterday not found');
+    return;
+  }
+  if (!navPrev) {
+    console.warn('Element #nav-prev not found');
+    return;
+  }
+  if (!navToday) {
+    console.warn('Element #nav-today not found');
+    return;
+  }
+  if (!navNext) {
+    console.warn('Element #nav-next not found');
+    return;
+  }
+  if (!btnToday) {
+    console.warn('Element #btn-today not found');
+    return;
+  }
+  if (!btnYesterday) {
+    console.warn('Element #btn-yesterday not found');
+    return;
+  }
+  
   // Track selected teams
   const selectedTeams = {};
   
@@ -130,6 +172,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Render today's games
   function renderTodayGames() {
+    if (!gameListToday) {
+      console.warn('gameListToday is null, cannot render today games');
+      return;
+    }
+    
     gameListToday.innerHTML = '';
     
     todayGames.forEach((game, index) => {
@@ -169,14 +216,21 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Add click event to team boxes
       const teamBoxes = gameItem.querySelectorAll('.team-box');
-      teamBoxes.forEach(box => {
-        box.addEventListener('click', handleTeamSelect);
-      });
+      if (teamBoxes && teamBoxes.length > 0) {
+        teamBoxes.forEach(box => {
+          box.addEventListener('click', handleTeamSelect);
+        });
+      }
     });
   }
   
   // Render yesterday's games
   function renderYesterdayGames() {
+    if (!gameListYesterday) {
+      console.warn('gameListYesterday is null, cannot render yesterday games');
+      return;
+    }
+    
     gameListYesterday.innerHTML = '';
     
     yesterdayGames.forEach((game, index) => {
@@ -221,6 +275,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle team selection
   function handleTeamSelect(event) {
     const teamBox = event.currentTarget;
+    if (!teamBox) {
+      console.warn('Team box element is null');
+      return;
+    }
+    
     const gameId = parseInt(teamBox.dataset.gameId);
     const team = teamBox.dataset.team;
     
@@ -228,9 +287,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameItem = document.querySelector(`.game-item[data-game-id="${gameId}"]`);
     if (gameItem) {
       const teamBoxes = gameItem.querySelectorAll('.team-box');
-      teamBoxes.forEach(box => {
-        box.classList.remove('selected-home', 'selected-away');
-      });
+      if (teamBoxes && teamBoxes.length > 0) {
+        teamBoxes.forEach(box => {
+          box.classList.remove('selected-home', 'selected-away');
+        });
+      }
     }
     
     // Add selection class
@@ -245,44 +306,59 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Setup navigation
   function setupNavigation() {
-    navPrev.addEventListener('click', function() {
-      sectToday.style.display = 'none';
-      sectYesterday.style.display = 'flex';
-      sectPlaceholder.style.display = 'none';
-    });
+    if (navPrev) {
+      navPrev.addEventListener('click', function() {
+        if (sectToday) sectToday.style.display = 'none';
+        if (sectYesterday) sectYesterday.style.display = 'flex';
+        if (sectPlaceholder) sectPlaceholder.style.display = 'none';
+      });
+    }
     
-    navToday.addEventListener('click', function() {
-      sectToday.style.display = 'flex';
-      sectYesterday.style.display = 'none';
-      sectPlaceholder.style.display = 'none';
-    });
+    if (navToday) {
+      navToday.addEventListener('click', function() {
+        if (sectToday) sectToday.style.display = 'flex';
+        if (sectYesterday) sectYesterday.style.display = 'none';
+        if (sectPlaceholder) sectPlaceholder.style.display = 'none';
+      });
+    }
     
-    navNext.addEventListener('click', function() {
-      sectToday.style.display = 'none';
-      sectYesterday.style.display = 'none';
-      sectPlaceholder.style.display = 'block';
-    });
+    if (navNext) {
+      navNext.addEventListener('click', function() {
+        if (sectToday) sectToday.style.display = 'none';
+        if (sectYesterday) sectYesterday.style.display = 'none';
+        if (sectPlaceholder) sectPlaceholder.style.display = 'block';
+      });
+    }
   }
   
   // Setup buttons
   function setupButtons() {
-    btnToday.addEventListener('click', function() {
-      if (Object.keys(selectedTeams).length === 5) {
-        sectToday.style.display = 'none';
-        sectYesterday.style.display = 'flex';
-        sectPlaceholder.style.display = 'none';
-        
-        alert('올킬 투표가 제출되었습니다!');
-      }
-    });
+    if (btnToday) {
+      btnToday.addEventListener('click', function() {
+        if (Object.keys(selectedTeams).length === 5) {
+          if (sectToday) sectToday.style.display = 'none';
+          if (sectYesterday) sectYesterday.style.display = 'flex';
+          if (sectPlaceholder) sectPlaceholder.style.display = 'none';
+          
+          alert('올킬 투표가 제출되었습니다!');
+        }
+      });
+    }
     
-    btnYesterday.addEventListener('click', function() {
-      alert('어제 올킬 성공!');
-    });
+    if (btnYesterday) {
+      btnYesterday.addEventListener('click', function() {
+        alert('어제 올킬 성공!');
+      });
+    }
   }
   
   // Update today button state
   function updateTodayButtonState() {
+    if (!btnToday) {
+      console.warn('btnToday is null, cannot update button state');
+      return;
+    }
+    
     const isAllSelected = Object.keys(selectedTeams).length === 5;
     
     btnToday.disabled = !isAllSelected;
