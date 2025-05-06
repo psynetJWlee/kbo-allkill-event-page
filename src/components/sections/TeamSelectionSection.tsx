@@ -3,7 +3,7 @@ import React from 'react';
 
 const TeamSelectionSection: React.FC = () => {
   return (
-    <div id="team-selection-section">
+    <div id="team-selection-container">
       {/* Date Navigation */}
       <div id="date-nav" className="flex items-center justify-between px-[21px] h-[50px] text-white">
         <button id="nav-prev">&larr;</button>

@@ -107,45 +107,25 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnToday = document.getElementById('btn-today');
   const btnYesterday = document.getElementById('btn-yesterday');
   
-  // Check if elements are found
-  if (!sectToday) {
-    console.warn('Element #section-today not found');
+  // Check if elements are found - log error and exit if not
+  if (!sectToday || !sectYesterday || !sectPlaceholder || !navPrev || !navToday || !navNext) {
+    console.error('필수 요소가 없습니다:', {
+      sectToday, sectYesterday, sectPlaceholder, navPrev, navToday, navNext
+    });
     return;
   }
-  if (!sectYesterday) {
-    console.warn('Element #section-yesterday not found');
+  
+  if (!gameListToday || !gameListYesterday) {
+    console.error('게임 리스트 요소가 없습니다:', {
+      gameListToday, gameListYesterday
+    });
     return;
   }
-  if (!sectPlaceholder) {
-    console.warn('Element #section-placeholder not found');
-    return;
-  }
-  if (!gameListToday) {
-    console.warn('Element #game-list-today not found');
-    return;
-  }
-  if (!gameListYesterday) {
-    console.warn('Element #game-list-yesterday not found');
-    return;
-  }
-  if (!navPrev) {
-    console.warn('Element #nav-prev not found');
-    return;
-  }
-  if (!navToday) {
-    console.warn('Element #nav-today not found');
-    return;
-  }
-  if (!navNext) {
-    console.warn('Element #nav-next not found');
-    return;
-  }
-  if (!btnToday) {
-    console.warn('Element #btn-today not found');
-    return;
-  }
-  if (!btnYesterday) {
-    console.warn('Element #btn-yesterday not found');
+  
+  if (!btnToday || !btnYesterday) {
+    console.error('버튼 요소가 없습니다:', {
+      btnToday, btnYesterday
+    });
     return;
   }
   
@@ -154,14 +134,35 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Initialize the page
   function init() {
+    // Set initial display state
+    sectToday.style.display = 'flex';
+    sectYesterday.style.display = 'none';
+    sectPlaceholder.style.display = 'none';
+    
+    // Setup navigation
+    navPrev.onclick = () => {
+      sectToday.style.display = 'none';
+      sectYesterday.style.display = 'flex';
+      sectPlaceholder.style.display = 'none';
+    };
+    
+    navToday.onclick = () => {
+      sectToday.style.display = 'flex';
+      sectYesterday.style.display = 'none';
+      sectPlaceholder.style.display = 'none';
+    };
+    
+    navNext.onclick = () => {
+      sectToday.style.display = 'none';
+      sectYesterday.style.display = 'none';
+      sectPlaceholder.style.display = 'block';
+    };
+    
     // Render today's games
     renderTodayGames();
     
     // Render yesterday's games
     renderYesterdayGames();
-    
-    // Setup navigation
-    setupNavigation();
     
     // Setup button actions
     setupButtons();
@@ -302,33 +303,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update button state
     updateTodayButtonState();
-  }
-  
-  // Setup navigation
-  function setupNavigation() {
-    if (navPrev) {
-      navPrev.addEventListener('click', function() {
-        if (sectToday) sectToday.style.display = 'none';
-        if (sectYesterday) sectYesterday.style.display = 'flex';
-        if (sectPlaceholder) sectPlaceholder.style.display = 'none';
-      });
-    }
-    
-    if (navToday) {
-      navToday.addEventListener('click', function() {
-        if (sectToday) sectToday.style.display = 'flex';
-        if (sectYesterday) sectYesterday.style.display = 'none';
-        if (sectPlaceholder) sectPlaceholder.style.display = 'none';
-      });
-    }
-    
-    if (navNext) {
-      navNext.addEventListener('click', function() {
-        if (sectToday) sectToday.style.display = 'none';
-        if (sectYesterday) sectYesterday.style.display = 'none';
-        if (sectPlaceholder) sectPlaceholder.style.display = 'block';
-      });
-    }
   }
   
   // Setup buttons
