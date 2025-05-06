@@ -6,9 +6,9 @@ const TeamSelectionSection: React.FC = () => {
     <div id="team-selection-container">
       {/* Date Navigation */}
       <div id="date-nav" className="flex items-center justify-between px-[21px] h-[50px] text-white">
-        <button id="nav-prev">&larr;</button>
-        <span id="nav-today">Today</span>
-        <button id="nav-next">&rarr;</button>
+        <button id="nav-prev" className="text-white">&larr; 25</button>
+        <span id="nav-today" className="text-white">Today</span>
+        <button id="nav-next" className="text-white">27 &rarr;</button>
       </div>
 
       {/* Today's Team Selection */}
@@ -18,7 +18,7 @@ const TeamSelectionSection: React.FC = () => {
           {/* Game items will be inserted by vanilla JS */}
         </div>
         <div className="flex justify-center mt-[50px]">
-          <button id="btn-today" className="submit-btn mx-auto bg-[#FFD700] text-[#121212] font-bold rounded-full h-[87px] w-[calc(100%-70px)] max-w-[400px]">
+          <button id="submit-allkill-btn" className="submit-btn mx-auto bg-[#FFD700] text-[#121212] font-bold rounded-full h-[87px] w-[calc(100%-70px)] max-w-[400px]">
             올킬 제출
           </button>
         </div>

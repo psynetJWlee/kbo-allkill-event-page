@@ -1,4 +1,3 @@
-
 // Wrap everything in DOMContentLoaded to ensure DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM fully loaded and parsed');
@@ -49,11 +48,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function initializeElements() {
-    // Get game list element
+    // Get game list elements with the correct IDs
     elements.gameList = document.getElementById('game-list-today');
+    elements.yesterdayList = document.getElementById('game-list-yesterday');
+    
     if (!elements.gameList) {
-      console.warn('Game list element not found');
+      console.warn('Game list today element not found');
       return false;
+    }
+    
+    if (!elements.yesterdayList) {
+      console.warn('Game list yesterday element not found');
+      // Not critical, so continue
     }
     
     // Set the button reference
@@ -110,15 +116,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Set up date navigation if available
-    const dateNavigation = document.querySelector('#date-navigation');
+    const dateNavigation = document.getElementById('date-nav');
     if (dateNavigation) {
       console.log('Date navigation found, initializing...');
       initDateNavigation();
     } else {
       // Try to find date-nav-prev and date-nav-next directly
-      const prevDateBtn = document.querySelector('#nav-prev');
-      const nextDateBtn = document.querySelector('#nav-next');
-      const todayBtn = document.querySelector('#nav-today');
+      const prevDateBtn = document.getElementById('nav-prev');
+      const nextDateBtn = document.getElementById('nav-next');
+      const todayBtn = document.getElementById('nav-today');
       
       if (prevDateBtn && nextDateBtn && todayBtn) {
         console.log('Date navigation buttons found, initializing...');
@@ -211,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // DOM element references initialized outside DOMContentLoaded for wider scope
   const elements = {
     gameList: null,
+    yesterdayList: null,
     submitButton: null,
     teamSelectionSection: null,
     teamSelectionPlaceholder: null,
@@ -304,9 +311,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // ====== DATE NAVIGATION FUNCTIONS ======
   
   function initDateNavigation() {
-    const prevDateBtn = document.querySelector('#nav-prev');
-    const nextDateBtn = document.querySelector('#nav-next');
-    const todayBtn = document.querySelector('#nav-today');
+    const prevDateBtn = document.getElementById('nav-prev');
+    const nextDateBtn = document.getElementById('nav-next');
+    const todayBtn = document.getElementById('nav-today');
     
     if (!prevDateBtn || !nextDateBtn || !todayBtn) {
       console.warn('Date navigation buttons not found - will try again later');
@@ -395,5 +402,47 @@ document.addEventListener('DOMContentLoaded', function() {
       elements.teamSelectionPlaceholder.style.display = 'block';
       console.log('Showing team selection placeholder (Past)');
     }
+  }
+  
+  // Function to render today's games - Updated to use elements.gameList
+  function renderTodayGames() {
+    if (!elements.gameList) {
+      console.warn('Cannot render today games: game list element not found');
+      return;
+    }
+    
+    let html = '';
+    gameData.forEach((game, index) => {
+      // Generate game HTML
+      html += `
+        <div class="game-item match" data-index="${game.id}">
+          <!-- Game content -->
+        </div>
+      `;
+    });
+    
+    elements.gameList.innerHTML = html;
+    console.log('Today games rendered');
+  }
+  
+  // Function to render yesterday's results - Updated to use elements.yesterdayList
+  function renderYesterdayResults() {
+    if (!elements.yesterdayList) {
+      console.warn('Cannot render yesterday results: yesterday game list element not found');
+      return;
+    }
+    
+    let html = '';
+    gameData.forEach((game, index) => {
+      // Generate yesterday results HTML
+      html += `
+        <div class="game-item result" data-index="${game.id}">
+          <!-- Result content -->
+        </div>
+      `;
+    });
+    
+    elements.yesterdayList.innerHTML = html;
+    console.log('Yesterday results rendered');
   }
 });
