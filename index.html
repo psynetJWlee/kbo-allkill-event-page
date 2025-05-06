@@ -14,7 +14,15 @@
     <!-- GPT Engineer script for the "Select" feature -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Vanilla JS for team selection -->
-    <script src="/public/static-js/team-selection-vanilla.js"></script>
+    <!-- Vanilla JS for team selection - Move after React loads -->
+    <script>
+      // Wait for DOM to be fully loaded
+      window.addEventListener('DOMContentLoaded', function() {
+        // Then load the team selection script
+        const script = document.createElement('script');
+        script.src = '/public/static-js/team-selection-vanilla.js';
+        document.body.appendChild(script);
+      });
+    </script>
   </body>
 </html>

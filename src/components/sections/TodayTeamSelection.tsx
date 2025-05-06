@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
 import GameItem from '@/components/GameItem';
@@ -14,10 +14,20 @@ interface TodayTeamSelectionProps {
 const TodayTeamSelection: React.FC<TodayTeamSelectionProps> = ({ selected, onTeamSelect, buttonRendered }) => {
   const isAllSelected = Object.keys(selected).length === 5;
 
+  useEffect(() => {
+    // Dispatch a custom event to notify vanilla JS that the button has been rendered
+    if (buttonRendered) {
+      const event = new CustomEvent('react-rendered', { 
+        detail: { elementId: 'submit-allkill-btn' } 
+      });
+      document.dispatchEvent(event);
+    }
+  }, [buttonRendered]);
+
   return (
     <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-today">
       <h2 className="team-selection-title">올킬 도전!</h2>
-      <div className="game-list flex flex-col gap-2" id="game-list">
+      <div className="game-list flex flex-col gap-2" id="game-list-today">
         {kboGames.map((game, index) => (
           <GameItem
             key={game.id}
