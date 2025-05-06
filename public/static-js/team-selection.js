@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Always check for null before accessing properties
     const submitBtn = document.getElementById('submit-allkill-btn');
     if (!submitBtn) {
-      console.warn('[팀 선택] submit-allkill-btn 요소를 찾을 수 없습니다.');
+      console.warn('[updateSubmitButton] submit-allkill-btn 요소를 찾을 수 없습니다.');
       return;
     }
     
@@ -260,6 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
     );
     
     // Use direct style manipulation instead of classList to avoid null errors
+    if (submitBtn.classList) {
+      submitBtn.classList.toggle('opacity-100', allSelected);
+    }
+    
     submitBtn.disabled = !allSelected;
     submitBtn.style.opacity = allSelected ? '1' : '0.3';
     submitBtn.style.color = allSelected ? '#121212' : 'rgba(18, 18, 18, 0.7)';
