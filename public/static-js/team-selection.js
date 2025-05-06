@@ -1,3 +1,4 @@
+
 // Wrap everything in DOMContentLoaded to ensure DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM fully loaded and parsed');
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function initializeElements() {
     // Get game list element
-    elements.gameList = document.getElementById('game-list');
+    elements.gameList = document.getElementById('game-list-today');
     if (!elements.gameList) {
       console.warn('Game list element not found');
       return false;
