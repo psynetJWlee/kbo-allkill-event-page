@@ -1,48 +1,52 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import TodayTeamSelection from './TodayTeamSelection';
+import YesterdayResults from './YesterdayResults';
 
 const TeamSelectionSection: React.FC = () => {
+  const [selected, setSelected] = useState<Record<number, string>>({});
+  const [buttonRendered, setButtonRendered] = useState(false);
+
+  // Effect to ensure button is ready for vanilla JS to find
+  useEffect(() => {
+    // Signal to vanilla JS that React has rendered the button
+    const button = document.getElementById('submit-allkill-btn');
+    if (button) {
+      button.dataset.reactRendered = 'true';
+      setButtonRendered(true);
+      
+      // Create a custom event to notify vanilla JS that React has rendered the button
+      const event = new CustomEvent('react-rendered', { detail: { elementId: 'submit-allkill-btn' } });
+      document.dispatchEvent(event);
+      
+      console.log('React: Submit button rendered and event dispatched');
+    }
+  }, []);
+
+  const handleTeamSelect = (gameId: number, team: 'home' | 'away') => {
+    setSelected(prev => ({
+      ...prev,
+      [gameId]: team
+    }));
+  };
+
   return (
-    <div id="team-selection-container">
-      {/* Date Navigation */}
-      <div id="date-nav" className="date-navigation flex items-center justify-between px-[21px] h-[50px] text-white">
-        <button id="nav-prev" className="text-white">&larr; 25</button>
-        <span id="nav-today" className="text-white">Today</span>
-        <button id="nav-next" className="text-white">27 &rarr;</button>
+    <section id="team-selection-section">
+      {/* Today's Team Selection Section */}
+      <TodayTeamSelection 
+        selected={selected} 
+        onTeamSelect={handleTeamSelect} 
+        buttonRendered={buttonRendered} 
+      />
+      
+      {/* Yesterday's Result Section */}
+      <YesterdayResults />
+      
+      {/* Placeholder for team selection section when navigating to previous date */}
+      <div className="team-selection-placeholder" id="team-selection-placeholder">
+        {/* Empty placeholder with same height as the team selection section */}
       </div>
-
-      {/* Today's Team Selection */}
-      <section id="section-today" className="team-selection-section flex flex-col gap-4">
-        <h2 className="team-selection-title">올킬 도전!</h2>
-        <div id="game-list-today" className="game-list flex flex-col gap-2 px-4">
-          {/* Game items will be inserted by vanilla JS */}
-        </div>
-        <div className="flex justify-center mt-[50px]">
-          <button id="submit-allkill-btn" className="submit-btn mx-auto bg-[#FFD700] text-[#121212] font-bold rounded-full h-[87px] w-[calc(100%-70px)] max-w-[400px]">
-            올킬 제출
-          </button>
-        </div>
-      </section>
-
-      {/* Yesterday Results */}
-      <section id="section-yesterday" className="team-selection-section flex flex-col gap-4" style={{ display: 'none' }}>
-        <h2 className="team-selection-title">올킬 결과</h2>
-        <div id="game-list-yesterday" className="game-list flex flex-col gap-2 px-4">
-          {/* Match results will be inserted by vanilla JS */}
-        </div>
-        <div className="flex flex-col items-center mt-[50px] mb-[50px]">
-          <img src="" alt="도장" className="mb-4 w-[338px] h-[290px]" />
-          <button id="btn-yesterday" className="submit-btn mx-auto bg-[#FFD700] text-[#121212] font-bold rounded-full h-[87px] w-[calc(100%-70px)] max-w-[400px]">
-            올킬 성공!
-          </button>
-        </div>
-      </section>
-
-      {/* Placeholder for future dates */}
-      <section id="section-placeholder" style={{ display: 'none', height: '684.88px' }}>
-        {/* Empty placeholder */}
-      </section>
-    </div>
+    </section>
   );
 };
 
