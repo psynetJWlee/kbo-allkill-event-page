@@ -1,30 +1,36 @@
+// src/components/members/MemberCard.tsx
 
 import React from 'react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { UserRound } from 'lucide-react';
+import type { Member } from '@/types/member';
 
-type MemberCardProps = {
-  nickname: string;
-  profileImage?: string;
-  amount: number;
-};
+interface MemberCardProps {
+  nickname: Member['nickname'];
+  profileImage?: Member['profileImage'];
+  amount: Member['amount'];
+}
 
-const MemberCard = ({ nickname, profileImage, amount }: MemberCardProps) => {
+const MemberCard: React.FC<MemberCardProps> = ({
+  nickname,
+  profileImage = '/placeholder.svg',
+  amount
+}) => {
   return (
-    <div className="h-[48px] w-[333px] bg-[#003C5A] border border-[#FFFFFF] border-[0.5px] flex items-center rounded-[12px]">
-      <div className="ml-[9px]">
-        <Avatar className="h-8 w-8">
-          <AvatarImage src={profileImage} />
-          <AvatarFallback>
-            <UserRound className="h-6 w-6 text-white" />
-          </AvatarFallback>
-        </Avatar>
+    // ↓ 이 div 전체를 flex justify-between 구조로 변경
+    <div className="member-card flex justify-between items-center w-full px-4 py-2 border rounded">
+      
+      {/* 좌측: 프로필 아이콘 + 닉네임 */}
+      <div className="flex items-center space-x-2">
+        <img
+          src={profileImage}
+          alt={`${nickname} 프로필`}
+          className="w-8 h-8 rounded-full object-cover"
+        />
+        <span className="text-base">{nickname}</span>
       </div>
-      <span className="ml-[12px] text-[20px] text-white">
-        {nickname}
-      </span>
-      <span className="ml-auto mr-[9px] text-[30px] text-[#FFC736] font-bold">
-        {amount.toLocaleString()} 원
+      
+      {/* 우측: 당첨 금액 */}
+      <span className="text-base font-bold text-[#FFC736]">
+        {amount.toLocaleString()}원
       </span>
     </div>
   );
