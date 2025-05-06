@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -135,11 +136,11 @@ const TeamSelectionSection: React.FC = () => {
   const isAllSelected = Object.keys(selected).length === 5;
 
   return (
-    <section id="team-selection-section">
+    <>
       {/* Today's Team Selection Section */}
-      <div className="team-selection-section flex flex-col gap-4" id="team-selection-section-today">
+      <section className="team-selection-section flex flex-col gap-4" id="team-selection-section">
         <h2 className="team-selection-title">올킬 도전!</h2>
-        <div className="game-list flex flex-col gap-2" id="game-list">
+        <div className="game-list w-full flex flex-wrap gap-2" id="game-list">
           {kboGames.map((game, index) => (
             <GameItem
               key={game.id}
@@ -150,7 +151,7 @@ const TeamSelectionSection: React.FC = () => {
             />
           ))}
         </div>
-        <div className="flex justify-center mt-[50px]">
+        <div className="w-full flex justify-center mt-[50px]">
           <Button 
             className="submit-btn mx-auto" 
             disabled={!isAllSelected}
@@ -172,14 +173,14 @@ const TeamSelectionSection: React.FC = () => {
             올킬 제출
           </Button>
         </div>
-      </div>
+      </section>
       
       {/* Yesterday's Result Section - Updated to match Today's layout */}
-      <div className="team-selection-section flex flex-col gap-4" id="state-yesterday">
+      <section className="team-selection-section flex flex-col gap-4" id="state-yesterday">
         <h2 className="team-selection-title">올킬 결과</h2>
-        <div className="game-list flex flex-col gap-2" id="yesterday-game-list">
+        <div className="game-list w-full flex flex-wrap gap-2" id="yesterday-game-list">
           {yesterdayResults.map((result, index) => (
-            <div key={result.id} className={`match-result relative px-4 ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
+            <div key={result.id} className={`match-result relative ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
               <div className="team-column flex-none">
                 <div className={`team-box ${result.homeTeam.winner ? 'selected-home selected' : ''}`}>
                   <img className="team-logo" src={result.homeTeam.logo} alt={`${result.homeTeam.name} 로고`} />
@@ -220,7 +221,7 @@ const TeamSelectionSection: React.FC = () => {
           ))}
         </div>
         
-        <div className="yesterday-footer relative w-full flex justify-center mt-[50px]">
+        <div className="w-full flex justify-center mt-[50px] relative">
           <img
             src="https://drive.google.com/drive-viewer/AKGpiha1qvAUHn91M3Aw05FgKItLa7Il5pIHp-xVxp0jON2OGCIDz5zb4wXgA5e0h_J4hYPp1E4nCzo9N0lBoDP_AzKhKDOtHgy0xsU=w1920-h911"
             alt="올킬 도장"
@@ -243,13 +244,13 @@ const TeamSelectionSection: React.FC = () => {
             올킬 성공!
           </Button>
         </div>
-      </div>
+      </section>
       
       {/* Placeholder for team selection section when navigating to previous date */}
       <div className="team-selection-placeholder" id="team-selection-placeholder">
         {/* Empty placeholder with same height as the team selection section */}
       </div>
-    </section>
+    </>
   );
 };
 

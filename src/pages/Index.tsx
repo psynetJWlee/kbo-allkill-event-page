@@ -57,7 +57,7 @@ const Index = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-white" id="main-container">
-      <div className="max-w-[353px] mx-auto">
+      <div className="w-[353px] mx-auto">
         {/* 1. Event Title Section */}
         <EventTitle />
 
@@ -65,7 +65,7 @@ const Index = () => {
         <WinnersSection />
 
         {/* 3. KBO Team Selection Section */}
-        <section className="h-[950px] bg-[#121212]" id="kbo-selection-container">
+        <section className="h-[950px] w-full bg-[#121212]" id="kbo-selection-container">
           <DateNavigation 
             currentDay={currentDay}
             realToday={REAL_TODAY}
