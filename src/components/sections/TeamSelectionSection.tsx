@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -207,10 +206,16 @@ const TeamSelectionSection: React.FC = () => {
                 width: 'calc(100% - 70px)',
                 maxWidth: '400px',
                 borderRadius: '50px',
-                color: '#121212'
+                color: '#121212',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0 10px'
               }}
             >
-              {getButtonText()}
+              <span>2경기 성공!</span>
+              <span>채점 중</span>
             </Button>
           </div>
         </div>

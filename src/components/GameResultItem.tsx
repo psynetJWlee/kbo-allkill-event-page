@@ -57,6 +57,7 @@ const GameResultItem: React.FC<GameResultItemProps> = ({ game, selectedSide, onT
           <span 
             style={{ 
               fontSize: '30px', 
+              fontWeight: 'bold',
               color: homeScoreHigher ? '#FFC736' : (scoreEqual ? '#FFFFFF' : '#FFFFFF')
             }}
           >
@@ -66,6 +67,7 @@ const GameResultItem: React.FC<GameResultItemProps> = ({ game, selectedSide, onT
           <span 
             style={{ 
               fontSize: '30px', 
+              fontWeight: 'bold',
               color: awayScoreHigher ? '#FFC736' : (scoreEqual ? '#FFFFFF' : '#FFFFFF')
             }}
           >
