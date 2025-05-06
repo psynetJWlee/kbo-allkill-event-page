@@ -63,7 +63,7 @@ const TeamSelectionSection: React.FC = () => {
       
     >
       {/* Today's Team Selection Section */}
-      <div className="team-selection-section flex flex-col gap-4 relative" id="team-selection-section-today">
+      <div className="team-selection-section flex flex-col gap-4 relative pb-[100px]" id="team-selection-section-today">
         <h2 className="team-selection-title">올킬 도전!</h2>
         <div className="game-list flex flex-col gap-2" id="game-list">
           {kboGames.map((game, index) => (
