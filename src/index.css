@@ -431,6 +431,7 @@
   background: #121212;
   padding: 20px 0;
   display: none;
+  position: relative;
 }
 
 #team-selection-section #state-yesterday .game-list {
@@ -498,9 +499,16 @@
 }
 
 #team-selection-section .yesterday-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 #team-selection-section .yesterday-footer #yesterday-allkill-btn {
@@ -513,7 +521,12 @@
 }
 
 #team-selection-section .stamp-image {
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 338px;
   height: 290px;
   pointer-events: none;
+  z-index: 2;
 }
