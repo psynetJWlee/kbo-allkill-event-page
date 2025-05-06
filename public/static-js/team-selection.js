@@ -1,4 +1,3 @@
-
 // Wrap everything in DOMContentLoaded to ensure DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM fully loaded and parsed');
@@ -64,21 +63,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Get the team selection section
-    elements.teamSelectionSection = document.getElementById('team-selection-section');
+    elements.teamSelectionSection = document.getElementById('section-today');
     if (!elements.teamSelectionSection) {
       console.warn('Team selection section not found');
       return false;
     }
     
     // Get the team selection placeholder
-    elements.teamSelectionPlaceholder = document.getElementById('team-selection-placeholder');
+    elements.teamSelectionPlaceholder = document.getElementById('section-placeholder');
     if (!elements.teamSelectionPlaceholder) {
       console.warn('Team selection placeholder not found');
       return false;
     }
     
     // Get the yesterday state section
-    elements.stateYesterday = document.getElementById('state-yesterday');
+    elements.stateYesterday = document.getElementById('section-yesterday');
     if (!elements.stateYesterday) {
       console.warn('Yesterday state section not found');
       return false;
@@ -116,12 +115,13 @@ document.addEventListener('DOMContentLoaded', function() {
       initDateNavigation();
     } else {
       // Try to find date-nav-prev and date-nav-next directly
-      const prevDateBtn = document.querySelector('.date-nav-prev');
-      const nextDateBtn = document.querySelector('.date-nav-next');
+      const prevDateBtn = document.querySelector('#nav-prev');
+      const nextDateBtn = document.querySelector('#nav-next');
+      const todayBtn = document.querySelector('#nav-today');
       
-      if (prevDateBtn && nextDateBtn) {
+      if (prevDateBtn && nextDateBtn && todayBtn) {
         console.log('Date navigation buttons found, initializing...');
-        setupDateNavigation(prevDateBtn, nextDateBtn);
+        setupDateNavigation(prevDateBtn, nextDateBtn, todayBtn);
       } else {
         console.warn('Date navigation elements not found, will retry');
         setTimeout(() => {
@@ -303,25 +303,33 @@ document.addEventListener('DOMContentLoaded', function() {
   // ====== DATE NAVIGATION FUNCTIONS ======
   
   function initDateNavigation() {
-    const prevDateBtn = document.querySelector('.date-nav-prev');
-    const nextDateBtn = document.querySelector('.date-nav-next');
+    const prevDateBtn = document.querySelector('#nav-prev');
+    const nextDateBtn = document.querySelector('#nav-next');
+    const todayBtn = document.querySelector('#nav-today');
     
-    if (!prevDateBtn || !nextDateBtn) {
+    if (!prevDateBtn || !nextDateBtn || !todayBtn) {
       console.warn('Date navigation buttons not found - will try again later');
       setTimeout(initDateNavigation, 500);
       return;
     }
     
-    setupDateNavigation(prevDateBtn, nextDateBtn);
+    setupDateNavigation(prevDateBtn, nextDateBtn, todayBtn);
     
     // Initial update of date display
     updateDateDisplay();
   }
   
-  function setupDateNavigation(prevDateBtn, nextDateBtn) {
+  function setupDateNavigation(prevDateBtn, nextDateBtn, todayBtn) {
     // Add click event for previous date button
     prevDateBtn.addEventListener('click', function() {
       state.currentDay--;
+      updateDateDisplay();
+      toggleSections(state.currentDay);
+    });
+    
+    // Add click event for today button
+    todayBtn.addEventListener('click', function() {
+      state.currentDay = state.realToday;
       updateDateDisplay();
       toggleSections(state.currentDay);
     });
@@ -332,28 +340,6 @@ document.addEventListener('DOMContentLoaded', function() {
       updateDateDisplay();
       toggleSections(state.currentDay);
     });
-    
-    // Add click event for date numbers
-    const prevDayElement = document.getElementById('prev-day');
-    const nextDayElement = document.getElementById('next-day');
-    
-    if (prevDayElement) {
-      prevDayElement.addEventListener('click', function(e) {
-        e.stopPropagation();
-        state.currentDay = Number(prevDayElement.textContent);
-        updateDateDisplay();
-        toggleSections(state.currentDay);
-      });
-    }
-    
-    if (nextDayElement) {
-      nextDayElement.addEventListener('click', function(e) {
-        e.stopPropagation();
-        state.currentDay = Number(nextDayElement.textContent);
-        updateDateDisplay();
-        toggleSections(state.currentDay);
-      });
-    }
     
     console.log('Date navigation initialized successfully');
   }
