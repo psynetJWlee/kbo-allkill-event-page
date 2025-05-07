@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -18,6 +19,9 @@ const teamLogos = {
   "롯데": "https://i.namu.wiki/i/cFb8Ykp4kxvpk-foBdgeGyj3d2TGfYSW41KZ-k9SjjVsFSFgJnvAthnIjAND2AE____xihT73odP_H3LTi1UOjvyw5raOqh1biiza57RlobyEzf-ItioBNQEl8rtdqyY0Vw9hsk1CmUx7kNp3oddWw.svg"
 };
 
+// 빨간색 동그라미 이미지 URL
+const redCircleImageUrl = "/lovable-uploads/fccb5a69-9575-4777-8d61-0fd626de92a6.png";
+
 // KBO 팀 경기 데이터 (내일)
 const kboGames: GameType[] = [
   { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, time: "18:00", status: "투표 중" },
@@ -27,10 +31,21 @@ const kboGames: GameType[] = [
   { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, time: "18:00", status: "투표 중" }
 ];
 
+// 빨간색 동그라미 이미지 위치 영역
+const RedCircleImage = () => (
+  <div className="w-full flex justify-center items-center my-4">
+    <img 
+      src={redCircleImageUrl} 
+      alt="Red circle" 
+      className="w-auto h-auto" 
+    />
+  </div>
+);
+
 // Today's game results data
 const todayResults = [
   { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, homeScore: 1, awayScore: 5, status: "종료" },
-  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 }, homeScore: 2, awayScore: 3, status: "종료" },
+  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 }, homeScore: 2, awayScore: 3, status: "경기 중" },
   { id: 2, homeTeam: { name: "두산", logo: teamLogos["두산"], votes: 0    }, awayTeam: { name: "삼성", logo: teamLogos["삼성"], votes: 5245 }, homeScore: 4, awayScore: 4, status: "경기 중" },
   { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, homeScore: 10, awayScore: 2, status: "경기 중" },
   { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, homeScore: 1, awayScore: 0, status: "경기 중" }
@@ -203,6 +218,10 @@ const TeamSelectionSection: React.FC = () => {
               className="w-[60px] h-[60px] ml-[15px]"
             />
           </h2>
+          
+          {/* 추가된 빨간색 원형 이미지 */}
+          <RedCircleImage />
+          
           <div className="game-list flex flex-col gap-2" id="game-list">
             {todayResults.map((game, index) => (
               <GameResultItem
