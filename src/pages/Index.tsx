@@ -11,7 +11,7 @@ import TeamSelectionSection from '@/components/sections/TeamSelectionSection';
 const Index = () => {
   return (
     <div className="flex flex-col items-center min-h-screen bg-white" id="main-container">
-      <div className="w-full max-w-[430px] mx-auto px-2">
+      <div className="w-full max-w-[430px] mx-auto">
         {/* 1. Event Title Section */}
         <EventTitle />
 
