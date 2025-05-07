@@ -1,6 +1,6 @@
 
-// Function to create confetti elements
-export function createConfetti(container: HTMLElement): void {
+// Create confetti elements
+function createConfetti(container) {
   const confetti = document.createElement('div');
   confetti.className = 'confetti';
   
@@ -29,8 +29,8 @@ export function createConfetti(container: HTMLElement): void {
   });
 }
 
-// Function to create star elements
-export function createStar(container: HTMLElement): void {
+// Create star elements
+function createStar(container) {
   const star = document.createElement('div');
   star.className = 'star';
   
@@ -60,10 +60,8 @@ export function createStar(container: HTMLElement): void {
   });
 }
 
-// Function to start animation
-export function startAnimation(sectionSelector: string): void {
-  const container = document.querySelector(sectionSelector) as HTMLElement;
-  
+// Start animation
+function startAnimation(container) {
   if (!container) {
     console.error('Animation container not found');
     return;
@@ -88,3 +86,10 @@ export function startAnimation(sectionSelector: string): void {
     }
   }, 300);
 }
+
+// Export functions
+window.animationUtils = {
+  createConfetti,
+  createStar,
+  startAnimation
+};
