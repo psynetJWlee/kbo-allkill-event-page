@@ -18,3 +18,21 @@ function formatNumber(num) {
 window.utils = {
   formatNumber
 };
+
+// Helper function to check if an element exists before accessing its properties
+window.safeDOM = {
+  getElement: function(selector) {
+    return document.querySelector(selector);
+  },
+  hasElement: function(selector) {
+    return document.querySelector(selector) !== null;
+  },
+  addClass: function(selector, className) {
+    const el = this.getElement(selector);
+    if (el) el.classList.add(className);
+  },
+  removeClass: function(selector, className) {
+    const el = this.getElement(selector);
+    if (el) el.classList.remove(className);
+  }
+};

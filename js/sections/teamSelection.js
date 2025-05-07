@@ -366,14 +366,24 @@ function updateTeamSelections() {
   });
 }
 
-// Check if all teams are selected and update submit button
+// Check if all teams are selected and update submit button - fixed to avoid null references
 function updateSubmitButton() {
   const state = window.appState;
   
-  const allSelected = (state.currentDay === 27) && 
-                     Object.keys(state.selectedTeams).length === kboGames.length;
+  // Make sure we're on tomorrow's view
+  if (state.currentDay !== 27) {
+    return;
+  }
   
+  // Check if the button exists
   const submitBtn = $('#submit-allkill-btn');
+  if (submitBtn.length === 0) {
+    return;
+  }
+  
+  const allGamesCount = kboGames ? kboGames.length : 0;
+  const allSelected = Object.keys(state.selectedTeams).length === allGamesCount;
+  
   if (allSelected) {
     submitBtn.addClass('enabled');
     submitBtn.prop('disabled', false);
