@@ -6,13 +6,11 @@ export const EventDescriptionSection: React.FC = () => {
     <div className="px-[20px] py-[27px] bg-[#00283F]">
       {/* 1. 상금 지급 안내 제목 */}
       <div className="flex items-center gap-2 mb-[15px]">
-        <div className="flex justify-center items-center bg-gray-400/30 w-[24px] h-[24px] rounded-full">
-          <img 
-            src="/lovable-uploads/a9f0ccb5-f9ae-4444-9be4-2597208cc0d7.png" 
-            alt="Info icon" 
-            className="w-[16px] h-[16px]"
-          />
-        </div>
+        <img 
+          src="/lovable-uploads/d85d06bb-3146-4fad-8560-d5f095fe350a.png" 
+          alt="Info icon" 
+          className="w-[16px] h-[16px]"
+        />
         <h3 className="text-[13px] text-white font-medium">상금 지급 안내</h3>
       </div>
 
