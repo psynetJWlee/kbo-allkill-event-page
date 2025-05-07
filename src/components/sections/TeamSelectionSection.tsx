@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { GameType } from "@/types/game";
@@ -30,17 +29,6 @@ const kboGames: GameType[] = [
   { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, time: "18:00", status: "투표 중" },
   { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, time: "18:00", status: "투표 중" }
 ];
-
-// 빨간색 동그라미 이미지 위치 영역
-const RedCircleImage = () => (
-  <div className="w-full flex justify-center items-center my-4">
-    <img 
-      src={redCircleImageUrl} 
-      alt="Red circle" 
-      className="w-auto h-auto" 
-    />
-  </div>
-);
 
 // Today's game results data
 const todayResults = [
@@ -112,6 +100,22 @@ const TeamSelectionSection: React.FC = () => {
     } else {
       return "올킬 제출";
     }
+  };
+
+  // 빨간색 동그라미 렌더링 함수
+  const renderRedCircle = (gameIndex: number) => {
+    if (gameIndex === 1) { // 두 번째 게임(한화 vs NC) 위에만 표시
+      return (
+        <div className="w-full flex justify-center items-center my-4">
+          <img 
+            src={redCircleImageUrl} 
+            alt="Red circle" 
+            className="w-auto h-auto" 
+          />
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -219,18 +223,18 @@ const TeamSelectionSection: React.FC = () => {
             />
           </h2>
           
-          {/* 추가된 빨간색 원형 이미지 */}
-          <RedCircleImage />
-          
           <div className="game-list flex flex-col gap-2" id="game-list">
             {todayResults.map((game, index) => (
-              <GameResultItem
-                key={game.id}
-                game={game}
-                selectedSide={selected[game.id]}
-                onTeamSelect={handleTeamSelect}
-                index={index}
-              />
+              <React.Fragment key={`game-container-${game.id}`}>
+                {renderRedCircle(index)}
+                <GameResultItem
+                  key={game.id}
+                  game={game}
+                  selectedSide={selected[game.id]}
+                  onTeamSelect={handleTeamSelect}
+                  index={index}
+                />
+              </React.Fragment>
             ))}
           </div>
 
@@ -283,12 +287,30 @@ const TeamSelectionSection: React.FC = () => {
           <div className="game-list flex flex-col gap-2" id="yesterday-game-list">
             {yesterdayResults.map((result, index) => (
               <div key={result.id} className={`match-result relative px-4 ${index % 2 === 0 ? 'alternate-bg' : ''}`}>
-                {/* ... 원본과 동일 ... */}
+                {result.correct ? (
+                  <img src="/lovable-uploads/e19a9dd1-4945-4a9a-9192-45a64a09049a.png" alt="Correct" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px]" />
+                ) : (
+                  <img src="/lovable-uploads/49754814-6c63-4007-a991-45a90a443a46.png" alt="Incorrect" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px]" />
+                )}
+                <div className="match-teams flex items-center justify-between">
+                  <div className="team home-team flex flex-col items-center">
+                    <img src={result.homeTeam.logo} alt={result.homeTeam.name} className="team-logo w-[50px] h-[50px]" />
+                    <span className="team-name text-white text-sm">{result.homeTeam.name}</span>
+                    <span className="vote-count text-white text-xs">{result.homeTeam.votes}</span>
+                  </div>
+                  <div className="score text-white text-lg font-bold">{result.homeScore} : {result.awayScore}</div>
+                  <div className="team away-team flex flex-col items-center">
+                    <img src={result.awayTeam.logo} alt={result.awayTeam.name} className="team-logo w-[50px] h-[50px]" />
+                    <span className="team-name text-white text-sm">{result.awayTeam.name}</span>
+                    <span className="vote-count text-white text-xs">{result.awayTeam.votes}</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
           <div className="yesterday-footer w-full flex flex-col items-center mt-[50px] mb-[50px]">
-            {/* ... 원본과 동일 ... */}
+            <div className="yesterday-success-rate text-white text-[24px] font-bold">나의 성공률은 100%</div>
+            <div className="yesterday-ranking text-white text-[16px]">전체 1000명 중 1등</div>
           </div>
         </div>
       )}
