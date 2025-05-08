@@ -182,22 +182,21 @@ body {
   margin-left: 15px;
 }
 
-.game-list {
+.game-list,
+.state-yesterday {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.game-item,
-.match-result {
+.game-item {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
 }
 
-.game-item.alternate-bg,
-.match-result alternate-bg {
+.game-item.alternate-bg {
   background-color: #1C1C1C;
   border-radius: 6px;
   padding-top: 10px;
