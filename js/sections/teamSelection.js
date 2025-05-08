@@ -341,6 +341,7 @@ function setupDateNavigationHandlers() {
   $(document).off('click', '#yesterday-nav-btn')  // 중복 바인딩 방지
              .on('click', '#yesterday-nav-btn', function() {
     state.currentDay = 27;
+    state.selectedTeams = {};
     initTeamSelectionSection();
   });
 }
