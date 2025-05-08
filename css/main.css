@@ -186,12 +186,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 0 16px;
 }
 
 .game-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -200,15 +201,6 @@ body {
   border-radius: 6px;
   padding-top: 10px;
   padding-bottom: 10px;
-  justify-content: space-between;
-}
-
-.match-result {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 0 16px;
 }
 
 .team-column {
