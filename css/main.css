@@ -170,6 +170,12 @@ body {
   height: 80px;
 }
 
+#state-yesterday .submit-btn {
+  /* disabled 상태라도 원래 불투명도(1)로 복원 */
+  opacity: 1 !important;
+  color: #121212 !important;
+}
+
 .pointing-finger {
   width: 60px;
   height: 60px;
