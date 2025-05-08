@@ -194,16 +194,12 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 0 16px;
+  padding: 14px 16px;
 }
 
 .game-item.alternate-bg {
   background-color: #1C1C1C;
   border-radius: 6px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding: 0 16px;
-  justify-content: space-between;
 }
 
 .team-column {
