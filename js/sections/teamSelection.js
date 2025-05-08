@@ -90,22 +90,18 @@ function initTeamSelectionSection() {
     contentHtml = `
       <div class="team-selection-section" id="state-yesterday">
         <h2 class="team-selection-title">
-          <img 
-            src="/lovable-uploads/0b039722-f115-4a24-9d6f-2ad5d4ed35b7.png" 
-            alt="Pointing finger left" 
-            class="pointing-finger pointing-finger-left"
-          />
-          올킬 결과
-          <img 
-            src="/lovable-uploads/d9b8652f-78c0-41c0-beac-1e46e4375f4f.png" 
-            alt="Pointing finger right" 
-            class="pointing-finger pointing-finger-right"
-          />
+          ...올킬 결과...
         </h2>
         <div class="game-list" id="yesterday-game-list"></div>
-        <div class="yesterday-footer w-full flex flex-col items-center mt-[50px] mb-[50px]">
-          <!-- Footer content will be added -->
+
+        <!-- 어제 섹션에도 버튼 추가 -->
+        <div id="team-selection-submit" class="team-selection-submit">
+          <button class="submit-btn" disabled>
+            <!-- 원하시는 텍스트로 바꿔주세요 -->
+            다음 경기 도전!
+          </button>
         </div>
+
       </div>
     `;
   }
