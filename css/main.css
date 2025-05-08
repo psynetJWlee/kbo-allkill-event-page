@@ -82,11 +82,16 @@ body {
   margin-bottom: 16px;
 }
 
+
 .winners-count {
-  display: inline-block;
-  width: auto;
+
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 24px;
+  display: block;
+  width: 100%;
   text-align: center;
-  margin: 0 auto;
 }
 
 .member-list {
