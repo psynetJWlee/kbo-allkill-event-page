@@ -146,8 +146,6 @@ function renderGames() {
   }
 }
 
-// js/section/team-selection.js
-
 // Render tomorrow's games (27)
 function renderTomorrowGames() {
   const { formatNumber } = window.utils;
@@ -161,16 +159,11 @@ function renderTomorrowGames() {
     const awayHigherVotes = game.awayTeam.votes >= game.homeTeam.votes;
     
     return `
-      <div class="game-item ${isAlternateBackground ? 'alternate-bg' : ''}"
-           data-index="${game.id}"
-           ${index === 1 ? 'id="highlighted-game"' : ''}>
-        
+      <div class="game-item ${isAlternateBackground ? 'alternate-bg' : ''}" data-index="${game.id}" ${index === 1 ? 'id="highlighted-game"' : ''}>
+        ${index === 1 ? '<div class="red-circle-container"><img class="red-circle-image" src="/lovable-uploads/99d04a7e-ced1-4bc0-8dc6-309e89feb3d4.png" alt="Red Circle"></div>' : ''}
         <div class="team-column">
-          <div class="team-box ${homeSelected ? 'selected-home' : ''}"
-               data-game-id="${game.id}" data-team="home">
-            <img class="team-logo"
-                 src="${game.homeTeam.logo}"
-                 alt="${game.homeTeam.name} 로고" />
+          <div class="team-box ${homeSelected ? 'selected-home' : ''}" data-game-id="${game.id}" data-team="home">
+            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
             <span class="team-name">${game.homeTeam.name}</span>
           </div>
           <div class="vote-count ${homeHigherVotes ? 'higher' : 'lower'}">
@@ -184,11 +177,8 @@ function renderTomorrowGames() {
         </div>
         
         <div class="team-column">
-          <div class="team-box ${awaySelected ? 'selected-away' : ''}"
-               data-game-id="${game.id}" data-team="away">
-            <img class="team-logo"
-                 src="${game.awayTeam.logo}"
-                 alt="${game.awayTeam.name} 로고" />
+          <div class="team-box ${awaySelected ? 'selected-away' : ''}" data-game-id="${game.id}" data-team="away">
+            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
             <span class="team-name">${game.awayTeam.name}</span>
           </div>
           <div class="vote-count ${awayHigherVotes ? 'higher' : 'lower'}">
@@ -201,10 +191,6 @@ function renderTomorrowGames() {
   
   $('#game-list').html(gamesHtml);
   
-  // Setup event handlers for team selection
-  setupTeamSelectionHandlers();
-}
-
   // Setup event handlers for team selection
   setupTeamSelectionHandlers();
 }
