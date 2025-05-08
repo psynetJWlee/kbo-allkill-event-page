@@ -12,7 +12,7 @@ function initWinnersSection() {
         alt="오늘의 당첨자"
         class="winners-title"
       />
-      <p class="winners-count text-center w-full">
+      <p class="winners-count mx-auto">
         총 20명
       </p>
     </div>
