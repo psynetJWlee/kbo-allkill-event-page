@@ -185,15 +185,15 @@ body {
 .game-list {
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
   gap: 20px;
 }
 
 .game-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* 홈/중앙/원정 3개 영역 양끝 배치 */
   gap: 20px;
+  padding: 0 16px;                /* ← 여기서 좌우 16px 패딩 */
 }
 
 .game-item.alternate-bg {
@@ -201,6 +201,11 @@ body {
   border-radius: 6px;
   padding-top: 10px;
   padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 홈/중앙/원정 3개 영역 양끝 배치 */
+  gap: 20px;
+
 }
 
 .team-column {
