@@ -1,3 +1,4 @@
+// js/section/winners.js
 
 // Winners Section
 function initWinnersSection() {
@@ -11,7 +12,7 @@ function initWinnersSection() {
         alt="오늘의 당첨자"
         class="winners-title"
       />
-      <p class="winners-count">
+      <p class="winners-count text-center w-full">
         총 20명
       </p>
     </div>
@@ -23,7 +24,7 @@ function initWinnersSection() {
   // Render member list
   const memberListHtml = members.map(member => {
     return `
-      <div class="member-card">
+      <div class="member-card" style="border: 0.5px solid #FFFFFF;">
         <div class="member-profile">
           <img
             src="${member.profileImage || '/placeholder.svg'}"
