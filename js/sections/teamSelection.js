@@ -160,7 +160,7 @@ function renderTomorrowGames() {
     
     return `
       <div class="game-item ${isAlternateBackground ? 'alternate-bg' : ''}" data-index="${game.id}" ${index === 1 ? 'id="highlighted-game"' : ''}>
-        ${index === 1 ? '<div class="red-circle-container"><img class="red-circle-image" src="/lovable-uploads/a9f0ccb5-f9ae-4444-9be4-2597208cc0d7.png" alt="Red Circle"></div>' : ''}
+        ${index === 1 ? '<div class="red-circle-container"><img class="red-circle-image" src="/lovable-uploads/99d04a7e-ced1-4bc0-8dc6-309e89feb3d4.png" alt="Red Circle"></div>' : ''}
         <div class="team-column">
           <div class="team-box ${homeSelected ? 'selected-home' : ''}" data-game-id="${game.id}" data-team="home">
             <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
@@ -212,7 +212,7 @@ function renderTodayGames() {
     
     return `
       <div class="game-item ${isAlternateBackground ? 'alternate-bg' : ''}" data-index="${game.id}" ${index === 1 ? 'id="highlighted-game"' : ''}>
-        ${index === 1 ? '<div class="red-circle-container"><img class="red-circle-image" src="/lovable-uploads/a9f0ccb5-f9ae-4444-9be4-2597208cc0d7.png" alt="Red Circle"></div>' : ''}
+        ${index === 1 ? '<div class="red-circle-container"><img class="red-circle-image" src="/lovable-uploads/99d04a7e-ced1-4bc0-8dc6-309e89feb3d4.png" alt="Red Circle"></div>' : ''}
         <div class="team-column">
           <div class="team-box ${homeSelected ? 'selected-home' : ''}" data-game-id="${game.id}" data-team="home">
             <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
@@ -406,3 +406,4 @@ window.teamSelectionSection = {
   init: initTeamSelectionSection,
   updateTeamSelections
 };
+
