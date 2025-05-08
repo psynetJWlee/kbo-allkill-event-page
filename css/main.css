@@ -188,24 +188,20 @@ body {
   gap: 20px;
 }
 
-.game-item {
+.game-item,
+.match-result {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 홈/중앙/원정 3개 영역 양끝 배치 */
+  justify-content: center;
   gap: 20px;
-  padding: 0 16px;                /* ← 여기서 좌우 16px 패딩 */
 }
 
-.game-item.alternate-bg {
+.game-item.alternate-bg,
+.match-result alternate-bg {
   background-color: #1C1C1C;
   border-radius: 6px;
   padding-top: 10px;
   padding-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 홈/중앙/원정 3개 영역 양끝 배치 */
-  gap: 20px;
-
 }
 
 .team-column {
