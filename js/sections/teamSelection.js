@@ -198,14 +198,11 @@ function renderTomorrowGames() {
   }).join('');
   
   $('#game-list').html(gamesHtml);
-  
-  // Setup event handlers for team selection
-  setupTeamSelectionHandlers();
-}
 
   // Setup event handlers for team selection
   setupTeamSelectionHandlers();
 }
+
 
 // Render today's games (26)
 function renderTodayGames() {
