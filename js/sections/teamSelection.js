@@ -92,12 +92,9 @@ function initTeamSelectionSection() {
         <h2 class="team-selection-title">
           ...올킬 결과...
         </h2>
-        <div class="game-list" id="yesterday-game-list"></div>
-
-        <!-- 어제 섹션에도 버튼 추가 -->
+        <div class="game-list" id="yesterday-game-list"></div>        
         <div id="team-selection-submit" class="team-selection-submit">
-          <button class="submit-btn" disabled>
-            <!-- 원하시는 텍스트로 바꿔주세요 -->
+          <button id="yesterday-nav-btn" class="submit-btn enabled">
             다음 경기 도전!
           </button>
         </div>
@@ -338,6 +335,12 @@ function setupDateNavigationHandlers() {
   $('#next-day').on('click', function(e) {
     e.stopPropagation();
     state.currentDay = state.currentDay + 1;
+    initTeamSelectionSection();
+  });
+  
+  $(document).off('click', '#yesterday-nav-btn')  // 중복 바인딩 방지
+             .on('click', '#yesterday-nav-btn', function() {
+    state.currentDay = 27;
     initTeamSelectionSection();
   });
 }
