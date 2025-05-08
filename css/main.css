@@ -372,7 +372,7 @@ body {
 
 /* Submit Button */
 .team-selection-submit {
-  margin-top: auto;
+  margin-top: 30px;
   margin-bottom: 30px;
   display: flex;
   justify-content: center;
