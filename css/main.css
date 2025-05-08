@@ -188,7 +188,8 @@ body {
   gap: 20px;
 }
 
-.game-item {
+.game-item,
+.match-result {
   display: flex;
   align-items: center;
   justify-content: center;
