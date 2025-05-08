@@ -191,7 +191,7 @@ body {
 .game-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 20px;
 }
 
@@ -200,6 +200,15 @@ body {
   border-radius: 6px;
   padding-top: 10px;
   padding-bottom: 10px;
+  justify-content: space-between;
+}
+
+.match-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 16px;
 }
 
 .team-column {
