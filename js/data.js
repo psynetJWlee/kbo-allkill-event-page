@@ -62,12 +62,12 @@ const yesterdayResults = [
   },
   {
     id: 3,
-    homeTeam:    { name: "KIA",  logo: teamLogos.KIA,  votes: 4218, winner: true  },
-    awayTeam:    { name: "SSG",  logo: teamLogos.SSG,  votes: 5524, winner: false },
+    homeTeam:    { name: "KIA",  logo: teamLogos.KIA,  votes: 4218, winner: false  },
+    awayTeam:    { name: "SSG",  logo: teamLogos.SSG,  votes: 5524, winner: true },
     homeScore:   8,
     awayScore:   4,
     status:      "종료",
-    correct:     true
+    correct:     false
   },
   {
     id: 4,
