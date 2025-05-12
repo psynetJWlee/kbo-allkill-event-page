@@ -73,6 +73,9 @@ body {
   z-index: 0;
 }
 
+.event-emoticon {
+  z-index: 1;
+}
 /* Winners Section */
 .winners-section {
   width: 100%;
