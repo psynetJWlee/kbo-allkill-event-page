@@ -266,15 +266,14 @@ function renderYesterdayGames() {
     const isAlternateBackground = index % 2 === 0;
     const homeHigherVotes     = game.homeTeam.votes >= game.awayTeam.votes;
     const awayHigherVotes     = game.awayTeam.votes >= game.homeTeam.votes;
-
-    // —————————————————————————————————————————
-    // 선택 팀의 실제 득점이 더 낮으면 disabled
-    const selected   = state.selectedTeams[game.id];               // 'home' 또는 'away' 또는 undefined
-    const myScore    = selected === 'home' ? game.homeScore : game.awayScore;
-    const otherScore = selected === 'home' ? game.awayScore : game.homeScore;
-    const disableCls = (selected && myScore < otherScore) ? 'disabled' : '';
-    // —————————————————————————————————————————
-
++    // 내가 예측한 팀이 실제로 졌으면 disabled
++    const selected   = state.selectedTeams[game.id]; // 'home' | 'away' | undefined
++    const disableCls = selected
++      ? ((selected === 'home' && !game.homeTeam.winner)
++         || (selected === 'away' && !game.awayTeam.winner))
++        ? 'disabled'
++        : ''
++      : '';
     return `
       <div
         class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
