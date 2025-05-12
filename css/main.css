@@ -291,17 +291,16 @@ body {
 }
 
 .score-display {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
 }
 
 .score-display .score {
   display: inline-block;
-  padding: 0 10px;
-}
+  width: 3ch;
+  text-align: center;
 
 .score-display .vs-text {
   position: absolute;
