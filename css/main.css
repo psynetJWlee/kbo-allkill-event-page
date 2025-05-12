@@ -137,9 +137,10 @@ body {
 /* KBO Selection Container */
 /* 어제 결과 타이틀 아이콘 */
 .yesterday-icon {
-  width: 32px;
+  width: auto;
   height: auto;
   vertical-align: middle;
+  display: inline-block;
 }
 
 
@@ -173,17 +174,12 @@ body {
   display: none;
 }
 
-.team-selection-title {
-  text-align: center;
-  font-size: 30px;
-  font-weight: bold;
-  color: #FFFFFF;
-  padding-top: 20px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
+.team-selection-title .yesterday-icon.right  {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  margin: 0;
 }
 
 #state-yesterday .submit-btn {
