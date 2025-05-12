@@ -109,6 +109,7 @@ function initTeamSelectionSection() {
   else if (state.currentDay === 24) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-day24" style="position: relative;">
+        <h2 class="team-selection-title">올킬 성공!</h2>
         <img
           src="YOUR_STAMP_IMAGE_URL"
           alt="올킬 도장"
@@ -126,6 +127,8 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
+
+  
   // Placeholder for other dates
   else {
     contentHtml = `
