@@ -266,14 +266,14 @@ function renderYesterdayGames() {
     const isAlternateBackground = index % 2 === 0;
     const homeHigherVotes     = game.homeTeam.votes >= game.awayTeam.votes;
     const awayHigherVotes     = game.awayTeam.votes >= game.homeTeam.votes;
-+    // 내가 예측한 팀이 실제로 졌으면 disabled
-+    const selected   = state.selectedTeams[game.id]; // 'home' | 'away' | undefined
-+    const disableCls = selected
-+      ? ((selected === 'home' && !game.homeTeam.winner)
-+         || (selected === 'away' && !game.awayTeam.winner))
-+        ? 'disabled'
-+        : ''
-+      : '';
+    // 내가 예측한 팀이 실제로 졌으면 disabled
+    const selected   = state.selectedTeams[game.id]; // 'home' | 'away' | undefined
+    const disableCls = selected
+      ? ((selected === 'home' && !game.homeTeam.winner)
+         || (selected === 'away' && !game.awayTeam.winner))
+        ? 'disabled'
+        : ''
+      : '';
     return `
       <div
         class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
