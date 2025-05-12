@@ -135,6 +135,19 @@ body {
 }
 
 /* KBO Selection Container */
+/* 어제 결과 타이틀 아이콘 */
+.yesterday-icon {
+  width: 40px;
+  height: auto;
+  vertical-align: middle;
+}
+.yesterday-icon.left {
+  margin-right: 8px;
+}
+.yesterday-icon.right {
+  margin-left: 8px;
+}
+
 .match-result.disabled {
   opacity: 0.3;
   pointer-events: none; /* 필요시 클릭 방지 */
