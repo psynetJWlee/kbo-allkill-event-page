@@ -192,7 +192,7 @@ body {
   margin-left: 15px;
 }
 
-.game-list, {
+.game-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -207,7 +207,8 @@ body {
   padding: 14px 16px;
 }
 
-.game-item.alternate-bg {
+.game-item.alternate-bg,
+.match-result.alternate-bg {
   background-color: #1C1C1C;
   border-radius: 6px;
 }
@@ -273,10 +274,10 @@ body {
 }
 
 .game-status {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+  position: relative;
+  flex: 0 0 100px;
+  display: block;
+  text-align: center;
 }
 
 .voting-text {
@@ -287,6 +288,19 @@ body {
 .game-time {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.score-display {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+}
+
+.score-display .score {
+  display: inline-block;
+  padding: 0 10px;
 }
 
 .score-display .vs-text {
@@ -311,12 +325,6 @@ body {
 
 .score.regular {
   color: rgba(255, 255, 255, 0.7);
-}
-
-.vs-text {
-  font-size: 15px;
-  color: #555555;
-  margin: 0 8px;
 }
 
 .status-text {
