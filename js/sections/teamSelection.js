@@ -1,4 +1,3 @@
-
 // Team Selection Section
 function initTeamSelectionSection() {
   const state = window.appState;
@@ -260,17 +259,14 @@ function renderTodayGames() {
 // Render yesterday's games (25)
 function renderYesterdayGames() {
   const { formatNumber } = window.utils;
-  const state = window.appState;
-
+  
   const gamesHtml = yesterdayResults.map((game, index) => {
     const isAlternateBackground = index % 2 === 0;
     const homeHigherVotes     = game.homeTeam.votes >= game.awayTeam.votes;
     const awayHigherVotes     = game.awayTeam.votes >= game.homeTeam.votes;
-  // 내가 예측한 팀의 득점이 작으면 disasbled
-   const selected   = state.selectedTeams[game.id]; // 'home' | 'away' | undefined
-   const myScore    = selected === 'home' ? game.homeScore : game.awayScore;
-   const otherScore = selected === 'home' ? game.awayScore  : game.homeScore;
-   const disableCls = (selected && myScore < otherScore) ? 'disabled' : '';
+    
+    // Use game.correct flag directly to determine disabled class
+    const disableCls = game.correct === false ? 'disabled' : '';
     
     return `
       <div
@@ -327,7 +323,6 @@ function renderYesterdayGames() {
 
   $('#yesterday-game-list').html(gamesHtml);
 }
-
 
 // Set up event handlers for date navigation
 function setupDateNavigationHandlers() {
@@ -437,4 +432,3 @@ window.teamSelectionSection = {
   init: initTeamSelectionSection,
   updateTeamSelections
 };
-
