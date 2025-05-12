@@ -207,8 +207,7 @@ body {
   padding: 14px 16px;
 }
 
-.game-item.alternate-bg,
-.match-result.alternate-bg {
+.game-item.alternate-bg {
   background-color: #1C1C1C;
   border-radius: 6px;
 }
@@ -291,12 +290,14 @@ body {
 }
 
 .score-display {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  display: inline-block;
+  padding: 0 20px;
 }
 
 .score {
+  display: inline-block;
+  padding: 0 10px;
   font-size: 30px;
   font-weight: bold;
 }
@@ -310,9 +311,14 @@ body {
 }
 
 .vs-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 15px;
   color: #555555;
-  margin: 0 8px;
+  margin: 0;
+  z-index: 1;
 }
 
 .status-text {
@@ -330,7 +336,6 @@ body {
 .red-circle-image {
   width: 100px;
 }
-
 
 /* Date Navigation */
 .date-navigation {
