@@ -408,7 +408,10 @@ body {
   color: rgba(18, 18, 18, 0.7);
   font-size: 24px;
   font-weight: bold;
-  height: 68px;
+  /* 텍스트 위아래로 10px 패딩 추가 */
+  padding: 10px 10px;
+  /* 자동 높이로 조절 */
+  height: auto;
   width: calc(100% - 70px);
   max-width: 400px;
   border-radius: 50px;
@@ -418,7 +421,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 10px;
 }
 
 .submit-btn.enabled {
