@@ -105,7 +105,15 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
-  
+  // Day before yesterday's content (24)
+  else if (state.currentDay === 24) {
+    contentHtml = `
+      <div class="team-selection-section" id="team-selection-section-day24">
+        <h2 class="team-selection-title">24일 경기 리스트</h2>
+        <div class="game-list" id="day24-game-list"></div>
+      </div>
+    `;
+  }
   // Placeholder for other dates
   else {
     contentHtml = `
@@ -140,6 +148,9 @@ function renderGames() {
   } else if (state.currentDay === 25) {
     // Yesterday's games
     renderYesterdayGames();
+  } else if (state.currentDay === 24) {
+    // Day before yesterday's games
+    renderDay24Games();
   }
 }
 
@@ -199,7 +210,6 @@ function renderTomorrowGames() {
   // Setup event handlers for team selection
   setupTeamSelectionHandlers();
 }
-
 
 // Render today's games (26)
 function renderTodayGames() {
@@ -327,6 +337,74 @@ function renderYesterdayGames() {
   }).join('');
 
   $('#yesterday-game-list').html(gamesHtml);
+}
+
+// Render day before yesterday's games (24)
+function renderDay24Games() {
+  const { formatNumber } = window.utils;
+  
+  const gamesHtml = dayBeforeYesterdayResults.map((game, index) => {
+    const isAlternateBackground = index % 2 === 0;
+    const homeHigherVotes = game.homeTeam.votes >= game.awayTeam.votes;
+    const awayHigherVotes = game.awayTeam.votes >= game.homeTeam.votes;
+    
+    // Use game.correct flag to determine disabled class
+    const disableCls = game.correct === false ? 'disabled' : '';
+    
+    return `
+      <div
+        class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
+        data-index="${game.id}"
+      >
+        <div class="team-column">
+          <div
+            class="team-box ${game.homeTeam.winner ? 'selected-home' : ''}"
+            data-game-id="${game.id}"
+            data-team="home"
+          >
+            <img class="team-logo"
+                 src="${game.homeTeam.logo}"
+                 alt="${game.homeTeam.name} 로고" />
+            <span class="team-name">${game.homeTeam.name}</span>
+          </div>
+          <div class="vote-count ${homeHigherVotes ? 'higher' : 'lower'}">
+            ${formatNumber(game.homeTeam.votes)}
+          </div>
+        </div>
+
+        <div class="game-status">
+          <div class="score-display">
+            <span class="score ${game.homeScore > game.awayScore ? 'winner' : 'regular'}">
+              ${game.homeScore}
+            </span>
+            <span class="vs-text">vs</span>
+            <span class="score ${game.awayScore > game.homeScore ? 'winner' : 'regular'}">
+              ${game.awayScore}
+            </span>
+          </div>
+          <div class="status-text">${game.status}</div>
+        </div>
+
+        <div class="team-column">
+          <div
+            class="team-box ${game.awayTeam.winner ? 'selected-away' : ''}"
+            data-game-id="${game.id}"
+            data-team="away"
+          >
+            <img class="team-logo"
+                 src="${game.awayTeam.logo}"
+                 alt="${game.awayTeam.name} 로고" />
+            <span class="team-name">${game.awayTeam.name}</span>
+          </div>
+          <div class="vote-count ${awayHigherVotes ? 'higher' : 'lower'}">
+            ${formatNumber(game.awayTeam.votes)}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  $('#day24-game-list').html(gamesHtml);
 }
 
 // Set up event handlers for date navigation
