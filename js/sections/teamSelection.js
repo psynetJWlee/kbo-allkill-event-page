@@ -43,12 +43,11 @@ function initTeamSelectionSection() {
         </h2>
         <div class="game-list" id="game-list"></div>
         <div id="team-selection-submit" class="team-selection-submit">
-          <button
-            class="submit-btn"
-            id="submit-allkill-btn"
-            disabled
-          >
+          <button id="submit-allkill-btn" class="mega-sparkle-btn">
             올킬 제출
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
           </button>
         </div>
       </div>
