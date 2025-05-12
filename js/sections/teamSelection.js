@@ -280,11 +280,11 @@ function renderYesterdayGames() {
         
         <div class="game-status">
           <div class="score-display">
-            <span class="score ${game.homeTeam.winner ? 'winner' : 'regular'}">
+            <span class="score ${game.homeScore > game.awayScore ? 'winner' : 'regular'}">
               ${game.homeScore}
             </span>
             <span class="vs-text">vs</span>
-            <span class="score ${game.awayTeam.winner ? 'winner' : 'regular'}">
+            <span class="score ${game.awayScore > game.homeScore ? 'winner' : 'regular'}">
               ${game.awayScore}
             </span>
           </div>
