@@ -136,19 +136,15 @@ body {
 
 /* KBO Selection Container */
 
-/* 올킬 이미지를 가운데 띄우는 래퍼 */
-.allkill-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;   /* 위·아래 여백은 필요에 따라 조절 */
-}
-
-/* 실제 이미지 크기 */
-.allkill-image {
-  display: block;
-  max-width: 80%;   /* 반응형으로 가로폭 80%로 제한 */
-  height: auto;     
+/* 24일 스탬프 이미지 */
+#team-selection-section-day24 .allkill-stamp {
+  position: absolute;
+  top: 20px;                   
+  left: 50%;                   
+  transform: translateX(-50%) rotate(-15deg);
+  z-index: 10;                 
+  width: 200px;                
+  height: auto;
 }
 
 /* 어제 결과 타이틀 아이콘 */
