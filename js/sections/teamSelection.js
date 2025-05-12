@@ -260,16 +260,30 @@ function renderTodayGames() {
 // Render yesterday's games (25)
 function renderYesterdayGames() {
   const { formatNumber } = window.utils;
-  
+  const state = window.appState;
+
   const gamesHtml = yesterdayResults.map((game, index) => {
     const isAlternateBackground = index % 2 === 0;
     const homeHigherVotes = game.homeTeam.votes >= game.awayTeam.votes;
     const awayHigherVotes = game.awayTeam.votes >= game.homeTeam.votes;
-    
+
+    // 내가 선택한 팀과 점수 비교
+    const selected    = state.selectedTeams[game.id];
+    const myScore     = selected === 'home' ? game.homeScore : game.awayScore;
+    const otherScore  = selected === 'home' ? game.awayScore : game.homeScore;
+    const disableCls  = (selected && myScore < otherScore) ? 'disabled' : '';
+
     return `
-      <div class="match-result ${isAlternateBackground ? 'alternate-bg' : ''}" data-index="${game.id}">
+      <div
+        class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
+        data-index="${game.id}"
+      >
         <div class="team-column">
-          <div class="team-box ${game.homeTeam.winner ? 'selected-home' : ''}" data-game-id="${game.id}" data-team="home">
+          <div
+            class="team-box ${game.homeTeam.winner ? 'selected-home' : ''}"
+            data-game-id="${game.id}"
+            data-team="home"
+          >
             <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
             <span class="team-name">${game.homeTeam.name}</span>
           </div>
@@ -277,7 +291,7 @@ function renderYesterdayGames() {
             ${formatNumber(game.homeTeam.votes)}
           </div>
         </div>
-        
+
         <div class="game-status">
           <div class="score-display">
             <span class="score ${game.homeScore > game.awayScore ? 'winner' : 'regular'}">
@@ -290,9 +304,13 @@ function renderYesterdayGames() {
           </div>
           <div class="status-text">${game.status}</div>
         </div>
-        
+
         <div class="team-column">
-          <div class="team-box ${game.awayTeam.winner ? 'selected-away' : ''}" data-game-id="${game.id}" data-team="away">
+          <div
+            class="team-box ${game.awayTeam.winner ? 'selected-away' : ''}"
+            data-game-id="${game.id}"
+            data-team="away"
+          >
             <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
             <span class="team-name">${game.awayTeam.name}</span>
           </div>
@@ -303,9 +321,10 @@ function renderYesterdayGames() {
       </div>
     `;
   }).join('');
-  
+
   $('#yesterday-game-list').html(gamesHtml);
 }
+
 
 // Set up event handlers for date navigation
 function setupDateNavigationHandlers() {

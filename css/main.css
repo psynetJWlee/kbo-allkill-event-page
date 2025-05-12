@@ -135,6 +135,11 @@ body {
 }
 
 /* KBO Selection Container */
+.match-result.disabled {
+  opacity: 0.3;
+  pointer-events: none; /* 필요시 클릭 방지 */
+}
+
 .kbo-selection-container {
   height: 950px;
   background-color: #121212;
