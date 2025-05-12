@@ -141,7 +141,7 @@ body {
   position: absolute;
   top: 200px;                   
   left: 50%;                   
-  transform: translateX(-50%) rotate(-15deg);
+  transform: translateX(-50%) rotate(-1deg);
   z-index: 10;                 
   width: 300px;                
   height: auto;
