@@ -67,6 +67,12 @@ body {
   height: 238px;
 }
 
+.event-title-section .confetti,
+.event-title-section .star {
+  position: absolute;
+  z-index: 0;
+}
+
 /* Winners Section */
 .winners-section {
   width: 100%;
