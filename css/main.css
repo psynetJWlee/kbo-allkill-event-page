@@ -290,14 +290,31 @@ body {
 }
 
 .score-display {
-  position: relative;
-  display: inline-block;
-  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;   /* 세로 중앙 정렬 */
+  /* justify-items: center; 이런 건 필요 없습니다 */
 }
 
+/* 왼쪽 점수(right 정렬) */
+.score-display .score:first-child {
+  justify-self: end;
+}
+/* 오른쪽 점수(left 정렬) */
+.score-display .score:last-child {
+  justify-self: start;
+}
+
+.score-display .vs-text {
+  /* grid 두 번째 칸에 자동 배치되고, justify-self 기본이 center이므로 추가 설정 불필요 */
+  font-size: 15px;
+  color: #555555;
+  margin: 0;    /* 혹시 남아있는 margin 삭제 */
+  z-index: 1;
+}
+
+
 .score {
-  display: inline-block;
-  padding: 0 10px;
   font-size: 30px;
   font-weight: bold;
 }
@@ -311,14 +328,9 @@ body {
 }
 
 .vs-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 15px;
   color: #555555;
-  margin: 0;
-  z-index: 1;
+  margin: 0 8px;
 }
 
 .status-text {
