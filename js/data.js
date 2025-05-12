@@ -97,7 +97,7 @@ const dayBeforeYesterdayResults = [
     homeScore:   1,
     awayScore:   6,
     status:      "종료",
-    correct:     false
+    correct:     true
   },
   {
     id: 2,
@@ -124,7 +124,7 @@ const dayBeforeYesterdayResults = [
     homeScore:   6,
     awayScore:   4,
     status:      "종료",
-    correct:     false
+    correct:     true
   }
 ];
 
