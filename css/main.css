@@ -139,12 +139,13 @@ body {
 /* 24일 스탬프 이미지 */
 #team-selection-section-day24 .allkill-stamp {
   position: absolute;
-  top: 200px;                   
-  left: 50%;                   
-  transform: translateX(-50%) rotate(-15deg);
-  z-index: 10;                 
-  width: 300px;                
+  top: 20px;
+  left: 16px;      /* 왼쪽 여백 */
+  right: 16px;     /* 오른쪽 여백 */
+  transform: translateX(0) rotate(-1deg);
+  /* width 대신 left/right 로 영역 크기 결정 */
   height: auto;
+  z-index: 10;
 }
 
 /* 어제 결과 타이틀 아이콘 */
