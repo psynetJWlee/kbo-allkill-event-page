@@ -188,6 +188,19 @@ body {
   padding-top: 0;       /* 기존 상단 패딩 제거 */
 }
 
+.team-selection-title .pointing-finger-left {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+}
+.team-selection-title .pointing-finger-right {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+}
+
 .team-selection-title .yesterday-icon.right {
   position: absolute;
   top: 50%;
