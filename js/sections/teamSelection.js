@@ -108,11 +108,19 @@ function initTeamSelectionSection() {
   // Day before yesterday's content (24)
   else if (state.currentDay === 24) {
     contentHtml = `
-      <div class="team-selection-section" id="team-selection-section-day24">
-        <h2 class="team-selection-title">올킬 성공!</h2>
-        <div class="game-list" id="day24-game-list"></div>
-      </div>
-    `;
+     <div class="team-selection-section" id="team-selection-section-day24">
+       <!-- ① 올킬 이미지 넣어주기 -->
+       <div class="allkill-wrapper">
+         <img
+           src="https://lh3.googleusercontent.com/fife/ALs6j_HJ1A8nuC0V35VJsqd0l9xEl4Lfv9hXfM6MnTCweulMD8kI4ntOeopnMbIwqyujadPBH9_ETbzY5HYIJVEFscvcqBRqDgWcVJt0GNXICwhBddLY930gmA7ANtCsBXKRp2nYTLkbAOLzmcQfPyTvfMmTwJBFBUIe8Kv3Yais5vAj1yg1gbuv_jHEdrI04L2UuRjBUGC8v2YWeMxf7eyialumFX9jqkXJaOk_SRLaAGyrzZni3uZHeSrgNzhBEjkWRUTT2J245XGlXegBxyj8bR8f4o4nBjbF1nw_WlvAcqs7T_nqOlvaDHO1m0Bj-jZbopiludi6Pf4DSLoaMTpYZpPXitn8vEbGEhcbqAnWBp1aASNG5MsiWTR6g-tmFBpkhNI5fRx3pHOceXtplNMWQUWzZbI-Rddjb46vqMF-FsR7GTKftG0yc4E28JMnt6ZVDxIO1S7VdfJR8P1L8pouMrNg-JtugAOndtoTnn9w117EyKujx8dRKq7wtdpvem1YAyvdQQs9ukl91YnpbftVM23twk3Mu2pIkaWi9Nw5h-F_9kyHu1D0yjb205mgi2L6dxkX6uDwLunFuMUevGXMXAQF73n4543b8I4NALibktZtuXk1b5faurRyMti-hEVgsVFYSZ2c1tpkbqeUW1kw57ug2nxQs2BSmISLTf2H6JiITMzT5yLJN9jhMB3JKoK9HVeyT8OGNgXGqe5MdIltak8om7DzmVIxMXr-kqjCAYE3pQD4UN6nmNDYrGSfHm0C9j0J9F2sqg5a8JNmZto_ubFjnK17gjhHxe6p2kdqhRKAufCa1riAsVeX33fv90tvKJdXZZxl8GIgYfVIVeIEktgRR_54bHPq_gT99NA6KzRx3MDEwYL8KA7H6zql6nFjIhdKnyz8Q_f8-83v0u67ZUOJEjgUt-RYm93ywWjcvjBqjW-Q0-2cx2dauB7h9PR4Ep63rNUJx2GRdJI-v6praXPz0Eb5CyXNG04dvp-2Py8u2QmX4YGN_jOR5DkIe5pVv32kHl9onpYTLXVr9w1pFUxZBaRe5V3KTAdKw7rECMMlQ4eRhb34oXfbwITzyrrurd3c9xnIBx9Vg7RQHw9NyCF1aeYo1-MAeMy1zCuJmQoN7Y11FtPwdxLm66mdp1eAaTnzC399ssmBJqLZleitxtqk_JfuqMnkkVk_mxG4oBpmKqYnfUftmmkzxEx1KVfMyqfrB3RaXcd198it1GqnjME6bKrdh1aYbZ9r6xWUkFyiGuRFRq-CvEubmg6FhaRi2Bd4E-pSMBjU_y_CKkhJpJIzA-nbhW0Yfo4abgqus-7ceoqXd55Evfsw2twb7Tso4NdhDGy18VHdR4TdNGNhJaJX1VrbkT66ucnCmAwmtAVURi4K324HRXSdNHr2AVhdj85yqqv9tLwtpMC1QuxkLgUwkwZrsRfI-P3mZA9BM2K3WshNKRjmhOLhYrDydqlMzYNCy_vPl7kJP34nMCb_tXB4CWNv4BlO97s94etoWl-AgDwdBEj-hw0LeeOmzvj_d-9-9V7U0QLpa21KUGophxGXO83GNTFtzzdA8pR8VmUnWb3kuBfzZtkOeMBTAGUbnKQ_BJfDMDL4oS77VY9eehA=w1252-h911?auditContext=prefetch"
+           alt="올킬"
+           class="allkill-image"
+         />
+       </div>
+       <!-- ② 게임 리스트 -->
+       <div class="game-list" id="day24-game-list"></div>
+     </div>
+   `;
   }
   // Placeholder for other dates
   else {
