@@ -53,8 +53,8 @@ const yesterdayResults = [
   },
   {
     id: 2,
-    homeTeam:    { name: "두산", logo: teamLogos["두산"], votes: 423,  winner: false },
-    awayTeam:    { name: "삼성", logo: teamLogos["삼성"], votes: 9324, winner: true  },
+    homeTeam:    { name: "두산", logo: teamLogos["두산"], votes: 423,  winner: true },
+    awayTeam:    { name: "삼성", logo: teamLogos["삼성"], votes: 9324, winner: false  },
     homeScore:   3,
     awayScore:   9,
     status:      "종료",
