@@ -105,6 +105,7 @@ body {
   width: 100%;
   padding: 0 15px;
   margin-top: 15px;
+  
 }
 
 .member-card {
@@ -116,7 +117,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   margin-bottom: 10px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #001A29;
 }
 
 .member-profile {
