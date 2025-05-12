@@ -411,7 +411,7 @@ body {
   /* 텍스트 위아래로 10px 패딩 추가 */
   padding: 10px 10px;
   /* 자동 높이로 조절 */
-  height: auto;
+  height: 88px;
   width: calc(100% - 70px);
   max-width: 400px;
   border-radius: 50px;
