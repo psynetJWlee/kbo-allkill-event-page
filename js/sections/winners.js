@@ -1,4 +1,3 @@
-
 // js/section/winners.js
 
 // Winners Section
@@ -18,53 +17,12 @@ function initWinnersSection() {
       </p>
     </div>
     <div class="member-list" id="member-list"></div>
-    
-    <!-- Add pagination similar to My Prize section -->
-    <div class="pagination">
-      <div class="pagination-content">
-        <div id="winners-prev-page" class="page-item ${winnersData.currentPage === 1 ? 'disabled' : ''}">
-          &lt;
-        </div>
-        
-        ${Array.from({ length: winnersData.totalPages }, (_, i) => i + 1).map(page => `
-          <div class="page-item ${winnersData.currentPage === page ? 'active' : ''}" data-page="${page}">
-            ${page}
-          </div>
-        `).join('')}
-        
-        <div id="winners-next-page" class="page-item ${winnersData.currentPage === winnersData.totalPages ? 'disabled' : ''}">
-          &gt;
-        </div>
-      </div>
-    </div>
   `;
   
   $('#winners-section').html(sectionHtml);
   
-  // Create winnersData with pagination info if it doesn't exist
-  if (!window.winnersData) {
-    window.winnersData = {
-      currentPage: 1,
-      itemsPerPage: 5,
-      totalPages: Math.ceil(members.length / 5)
-    };
-  }
-  
-  renderMemberList();
-  
-  // Set up pagination handlers
-  setupWinnersPaginationHandlers();
-}
-
-// Render member list with pagination
-function renderMemberList() {
-  const { formatNumber } = window.utils;
-  const startIndex = (winnersData.currentPage - 1) * winnersData.itemsPerPage;
-  const endIndex = startIndex + winnersData.itemsPerPage;
-  const currentMembers = members.slice(startIndex, endIndex);
-  
   // Render member list
-  const memberListHtml = currentMembers.map(member => {
+  const memberListHtml = members.map(member => {
     return `
       <div class="member-card" style="border: 0.5px solid #FFFFFF;">
         <div class="member-profile">
@@ -83,32 +41,6 @@ function renderMemberList() {
   }).join('');
   
   $('#member-list').html(memberListHtml);
-}
-
-// Set up pagination handlers for winners section
-function setupWinnersPaginationHandlers() {
-  $('.winners-section .page-item[data-page]').on('click', function() {
-    const page = parseInt($(this).data('page'));
-    handleWinnersPageChange(page);
-  });
-  
-  $('#winners-prev-page').on('click', function() {
-    if (winnersData.currentPage > 1) {
-      handleWinnersPageChange(winnersData.currentPage - 1);
-    }
-  });
-  
-  $('#winners-next-page').on('click', function() {
-    if (winnersData.currentPage < winnersData.totalPages) {
-      handleWinnersPageChange(winnersData.currentPage + 1);
-    }
-  });
-}
-
-// Handle pagination page change for winners section
-function handleWinnersPageChange(page) {
-  winnersData.currentPage = page;
-  initWinnersSection();
 }
 
 // Export the initialization function
