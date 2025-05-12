@@ -191,8 +191,8 @@ body {
   top: 50%;
   right: 16px;
   transform: translateY(-50%);
-  width: auto;    /* 원본 크기 유지 */
-  height: auto;
+  width: 75px;    /* 원본(150px) 절반 */
+  height: auto;   /* 비율 유지 */
   margin: 0;
 }
 
