@@ -13,7 +13,9 @@ function createConfetti(container) {
   const delay = Math.random() * 2;
   
   confetti.style.cssText = `
+    position: absolute;
     left: ${left}%;
+    top: -${size}px;
     background-color: ${color};
     width: ${size}px;
     height: ${size}px;
@@ -43,7 +45,9 @@ function createStar(container) {
   const delay = Math.random() * 3;
   
   star.style.cssText = `
+  position: absolute;
     left: ${left}%;
+    top: -${size}px;
     background-color: ${color};
     width: ${size}px;
     height: ${size}px;
