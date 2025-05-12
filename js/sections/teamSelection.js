@@ -264,14 +264,16 @@ function renderYesterdayGames() {
 
   const gamesHtml = yesterdayResults.map((game, index) => {
     const isAlternateBackground = index % 2 === 0;
-    const homeHigherVotes = game.homeTeam.votes >= game.awayTeam.votes;
-    const awayHigherVotes = game.awayTeam.votes >= game.homeTeam.votes;
+    const homeHigherVotes     = game.homeTeam.votes >= game.awayTeam.votes;
+    const awayHigherVotes     = game.awayTeam.votes >= game.homeTeam.votes;
 
-    // 내가 선택한 팀과 점수 비교
-    const selected    = state.selectedTeams[game.id];
-    const myScore     = selected === 'home' ? game.homeScore : game.awayScore;
-    const otherScore  = selected === 'home' ? game.awayScore : game.homeScore;
-    const disableCls  = (selected && myScore < otherScore) ? 'disabled' : '';
+    // —————————————————————————————————————————
+    // 선택 팀의 실제 득점이 더 낮으면 disabled
+    const selected   = state.selectedTeams[game.id];               // 'home' 또는 'away' 또는 undefined
+    const myScore    = selected === 'home' ? game.homeScore : game.awayScore;
+    const otherScore = selected === 'home' ? game.awayScore : game.homeScore;
+    const disableCls = (selected && myScore < otherScore) ? 'disabled' : '';
+    // —————————————————————————————————————————
 
     return `
       <div
@@ -284,7 +286,9 @@ function renderYesterdayGames() {
             data-game-id="${game.id}"
             data-team="home"
           >
-            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
+            <img class="team-logo"
+                 src="${game.homeTeam.logo}"
+                 alt="${game.homeTeam.name} 로고" />
             <span class="team-name">${game.homeTeam.name}</span>
           </div>
           <div class="vote-count ${homeHigherVotes ? 'higher' : 'lower'}">
@@ -311,7 +315,9 @@ function renderYesterdayGames() {
             data-game-id="${game.id}"
             data-team="away"
           >
-            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
+            <img class="team-logo"
+                 src="${game.awayTeam.logo}"
+                 alt="${game.awayTeam.name} 로고" />
             <span class="team-name">${game.awayTeam.name}</span>
           </div>
           <div class="vote-count ${awayHigherVotes ? 'higher' : 'lower'}">
