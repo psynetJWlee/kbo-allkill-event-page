@@ -273,11 +273,10 @@ body {
 }
 
 .game-status {
-  position: relative;
-  /* 경기가 표시되는 열의 너비: 팀 컬럼 사이 딱 가운데로 잡힙니다 */
-  flex: 0 0 100px;        /* 적당히 조절하세요 */
-  display: block;
-  text-align: center;     /* 내부 텍스트(종료, 경기중)도 가운데 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .voting-text {
@@ -290,14 +289,6 @@ body {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.score-display {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;              /* 숫자 ↔ vs ↔ 숫자 간격 */
-  position: relative;     /* vs 절대위치를 위해 relative */
-}
-
 .score-display .vs-text {
   position: absolute;
   top: 50%;
@@ -307,12 +298,6 @@ body {
   font-size: 15px;
   color: #555555;
   z-index: 1;
-}
-
-/* 4) score 에는 좌우 패딩 줘서 vs 와 겹치지 않게 */
-.score-display .score {
-  display: inline-block;
-  padding: 0 10px;       /* 필요시 숫자 자릿수에 맞춰 조절 */
 }
 
 .score {
