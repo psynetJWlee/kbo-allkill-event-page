@@ -183,7 +183,9 @@ body {
   color: #FFFFFF;
   padding-top: 20px;
   margin-bottom: 16px;
-  height: auto;
+  height: 80px;
+  line-height: 80px;    /* 텍스트/아이콘이 수직 가운데 오도록 */
+  padding-top: 0;       /* 기존 상단 패딩 제거 */
 }
 
 .team-selection-title .yesterday-icon.right {
