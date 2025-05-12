@@ -203,8 +203,8 @@ body {
 }
 
 .pointing-finger {
-  width: 60px;
-  height: 60px;
+  width: 75px;    /* 원본 이미지 150px의 절반 */
+  height: auto;   /* 비율 유지 */
 }
 
 .pointing-finger-left {
