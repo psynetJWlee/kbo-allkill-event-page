@@ -135,6 +135,22 @@ body {
 }
 
 /* KBO Selection Container */
+
+/* 올킬 이미지를 가운데 띄우는 래퍼 */
+.allkill-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;   /* 위·아래 여백은 필요에 따라 조절 */
+}
+
+/* 실제 이미지 크기 */
+.allkill-image {
+  display: block;
+  max-width: 80%;   /* 반응형으로 가로폭 80%로 제한 */
+  height: auto;     
+}
+
 /* 어제 결과 타이틀 아이콘 */
 .yesterday-icon {
   width: auto;
