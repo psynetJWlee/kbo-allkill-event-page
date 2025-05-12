@@ -1,3 +1,5 @@
+// js/sections/teamSelectionSection.js
+
 // Team Selection Section
 function initTeamSelectionSection() {
   const state = window.appState;
@@ -55,7 +57,9 @@ function initTeamSelectionSection() {
         </h2>
         <div class="game-list" id="game-list"></div>
         <div class="team-selection-submit">
-          <button id="submit-allkill-btn" class="submit-btn" disabled>올킬 제출</button>
+          <button id="submit-allkill-btn" class="submit-btn" disabled>
+            올킬 제출
+          </button>
         </div>
       </div>
     `;
@@ -69,7 +73,9 @@ function initTeamSelectionSection() {
         </h2>
         <div class="game-list" id="yesterday-game-list"></div>
         <div class="team-selection-submit">
-          <button id="yesterday-nav-btn" class="submit-btn enabled">다음 경기 도전!</button>
+          <button id="yesterday-nav-btn" class="submit-btn enabled">
+            다음 경기 도전!
+          </button>
         </div>
       </div>
     `;
@@ -81,7 +87,9 @@ function initTeamSelectionSection() {
         <img src="YOUR_STAMP_IMAGE_URL" class="allkill-stamp" alt="올킬 도장" />
         <div class="game-list" id="day24-game-list"></div>
         <div class="team-selection-submit">
-          <button id="submit-day24-btn" class="submit-btn enabled">올킬 성공!</button>
+          <button id="submit-day24-btn" class="submit-btn enabled">
+            올킬 성공!
+          </button>
         </div>
       </div>
     `;
@@ -96,7 +104,7 @@ function initTeamSelectionSection() {
     `;
   }
 
-  // 3) 한 번만 HTML 주입
+  // 3) HTML 주입 — contentHtml 이 모두 결정된 후에 한 번만
   $('#kbo-selection-container').html(dateNavHtml + contentHtml);
 
   // 4) sparkle 효과 (내일일 때만)
