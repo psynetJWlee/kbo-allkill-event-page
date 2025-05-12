@@ -175,11 +175,15 @@ body {
 }
 
 .team-selection-title .yesterday-icon.right  {
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  transform: translateY(-50%);
-  margin: 0;
+  position: relative;   /* 아이콘 절대위치 기준 */
+  display: block;       /* 텍스트만 가운데 정렬 */
+  text-align: center;   /* 텍스트 중앙 정렬 */
+  font-size: 30px;
+  font-weight: bold;
+  color: #FFFFFF;
+  padding-top: 20px;
+  margin-bottom: 16px;
+  height: auto;         /* 높이는 필요에 따라 */
 }
 
 #state-yesterday .submit-btn {
