@@ -14,7 +14,6 @@ function createConfetti(container) {
   
   confetti.style.cssText = `
     left: ${left}%;
-    top: -${size}px;
     background-color: ${color};
     width: ${size}px;
     height: ${size}px;
