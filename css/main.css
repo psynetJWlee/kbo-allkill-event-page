@@ -254,6 +254,11 @@ body {
 
 .vote-count {
   font-size: 14px;
+  color: rgba(255,255,255,0.7);
+}
+
+.vote-count.highlighted {
+  color: #FFC736;
 }
 
 .vote-count.higher {
