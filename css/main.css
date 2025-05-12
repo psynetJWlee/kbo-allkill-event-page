@@ -174,16 +174,26 @@ body {
   display: none;
 }
 
-.team-selection-title .yesterday-icon.right  {
-  position: relative;   /* 아이콘 절대위치 기준 */
-  display: block;       /* 텍스트만 가운데 정렬 */
-  text-align: center;   /* 텍스트 중앙 정렬 */
+.team-selection-title {
+  position: relative;
+  display: block;
+  text-align: center;
   font-size: 30px;
   font-weight: bold;
   color: #FFFFFF;
   padding-top: 20px;
   margin-bottom: 16px;
-  height: auto;         /* 높이는 필요에 따라 */
+  height: auto;
+}
+
+.team-selection-title .yesterday-icon.right {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: auto;    /* 원본 크기 유지 */
+  height: auto;
+  margin: 0;
 }
 
 #state-yesterday .submit-btn {
