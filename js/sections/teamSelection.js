@@ -109,7 +109,7 @@ function initTeamSelectionSection() {
   else if (state.currentDay === 24) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-day24">
-        <h2 class="team-selection-title">24일 경기 리스트</h2>
+        <h2 class="team-selection-title">올킬 성공!</h2>
         <div class="game-list" id="day24-game-list"></div>
       </div>
     `;
