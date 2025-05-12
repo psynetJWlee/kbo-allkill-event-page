@@ -68,13 +68,13 @@ function startAnimation(container) {
   }
   
   // Initial creation
-  for (let i = 0; i < 30; i++) {
-    createConfetti(container);
-  }
+  // for (let i = 0; i < 30; i++) {
+  // createConfetti(container);
+  // }
   
-  for (let i = 0; i < 15; i++) {
-    createStar(container);
-  }
+  // for (let i = 0; i < 15; i++) {
+  // createStar(container);
+  // }
   
   // Continuous animation
   let counter = 0;
