@@ -141,7 +141,8 @@ body {
 }
 
 .kbo-selection-container {
-  height: 950px;
+  height: auto;
+  min-height: 1000px;
   background-color: #121212;
   width: 100%;
 }
