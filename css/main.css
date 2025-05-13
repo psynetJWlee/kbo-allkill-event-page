@@ -147,6 +147,11 @@ body {
 
 /* KBO Selection Container */
 
+.button-line {
+  display: block;
+  line-height: 1.2; /* 필요에 따라 조절 */
+}
+
 /* 24일 스탬프 이미지 */
 #team-selection-section-day24 .allkill-stamp {
   position: absolute;
