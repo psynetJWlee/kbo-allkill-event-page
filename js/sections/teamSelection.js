@@ -430,16 +430,16 @@ function setupDateNavigationHandlers() {
 
   // 기본 todayResults 기반 매핑을 리턴하는 헬퍼
   function resetToDefaultSelections() {
-    if (!Array.isArray(window.todayResults)) return {};
-    const games = window.todayResults;
-    return {
-      [games[0].id]: 'home',
-      [games[1].id]: 'away',
-      [games[2].id]: 'away',
-      [games[3].id]: 'home',
-      [games[4].id]: 'home'
-    };
-  }
+  if (!Array.isArray(window.todayResults)) return {};
+  const games = window.todayResults;
+  return {
+    [games[0].id]: 'home',
+    [games[1].id]: 'away',
+    [games[2].id]: 'away',
+    [games[3].id]: 'home',
+    [games[4].id]: 'home'
+  };
+}
   
   // ← 버튼: 과거(이전 날)로 이동 — 선택 유지 (단, 오늘로 돌아오는 경우만 리셋)
   $('#date-nav-prev').on('click', function() {
