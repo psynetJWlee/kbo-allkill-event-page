@@ -10,11 +10,11 @@ function initTeamSelectionSection() {
         <div class="w-6 h-6 flex items-center justify-center">
           <div class="arrow-left"></div>
         </div>
-        <span class="prev-day" id="prev-day">${prevDay}</span>
+        <span class="prev-day" id="prev-day">${state.today - 1}</span>
       </div>
-      <span class="current-day" id="current-day">${labelToday}</span>
+      <span class="current-day" id="current-day">${state.currentDay === state.today ? 'Today' : state.currentDay}</span>
       <div class="date-nav-next" id="date-nav-next">
-        <span class="next-day" id="next-day">${nextDay}</span>
+        <span class="next-day" id="next-day">${state.today + 1}</span>
         <div class="w-6 h-6 flex items-center justify-center">
           <div class="arrow-right"></div>
         </div>
