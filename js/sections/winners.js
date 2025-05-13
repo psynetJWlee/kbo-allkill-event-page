@@ -37,10 +37,26 @@ function initWinnersSection() {
           ${formatNumber(member.amount)}원
         </span>
       </div>
+      
     `;
   }).join('');
   
-  $('#member-list').html(memberListHtml);
+  // 3) 페이징 HTML (한 번만!)
+  const paginationHtml = `
+    <div class="pagination">
+      <div class="pagination-content">
+        <div id="prev-page" class="page-item ${userData.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
+        ${Array.from({ length: userData.totalPages }, (_, i) => i + 1).map(page => `
+          <div class="page-item ${userData.currentPage === page ? 'active' : ''}" data-page="${page}">
+            ${page}
+          </div>
+        `).join('')}
+        <div id="next-page" class="page-item ${userData.currentPage === userData.totalPages ? 'disabled' : ''}">&gt;</div>
+      </div>
+    </div>
+  `;
+  
+  $('#member-list').html(memberListHtml + paginationHtml);
 }
 
 // Export the initialization function
