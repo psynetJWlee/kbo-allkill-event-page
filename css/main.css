@@ -318,6 +318,7 @@ body {
 }
 
 .team-name {
+  font-weight: bold;
   font-size: 14px;
   color: #FFFFFF;
   text-align: center;
