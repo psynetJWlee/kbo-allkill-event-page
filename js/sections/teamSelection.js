@@ -427,28 +427,35 @@ function setupDateNavigationHandlers() {
   
   $('#date-nav-prev').on('click', function() {
     state.currentDay--;
+    // 이전·다음 이동할 때마다 선택 초기화
+    state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
   $('#date-nav-next').on('click', function() {
     state.currentDay++;
+    // 이전·다음 이동할 때마다 선택 초기화
+    state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
   $('#current-day').on('click', function() {
     state.currentDay = state.today; // 오늘 날짜로
+    state.selectedTeams = {};       // 선택 초기화
     initTeamSelectionSection();
   });
   
   $('#prev-day').on('click', function(e) {
     e.stopPropagation();
     state.currentDay = state.currentDay - 1;
+    state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
   $('#next-day').on('click', function(e) {
     e.stopPropagation();
     state.currentDay = state.currentDay + 1;
+    state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
