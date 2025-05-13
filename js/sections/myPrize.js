@@ -62,10 +62,10 @@
     </div>
   `;
   
-  $('#my-prize-section').html(sectionHtml);
+  container.innerHTML = sectionHtml;
   
   // Render prize history
-  const historyItemsHtml = prizeHistory.map(item => {
+  const historyItemsHtml = window.prizeHistory.map(item => {
     return `
       <div class="history-item">
         <p class="history-date">${item.date}</p>
@@ -74,7 +74,12 @@
     `;
   }).join('');
   
-  $('#prize-history-items').html(historyItemsHtml);
+  const historyContainer = document.getElementById('prize-history-items');
+  if (historyContainer) {
+    historyContainer.innerHTML = historyItemsHtml;
+  } else {
+    console.error('[initMyPrizeSection] #prize-history-items not found');
+  }
   
   // Set up pagination handlers
   setupPaginationHandlers();
@@ -82,19 +87,22 @@
 
 // Set up pagination handlers
 function setupPaginationHandlers() {
-  $('.page-item[data-page]').on('click', function() {
-    const page = parseInt($(this).data('page'));
-    handlePageChange(page);
-  });
-  
+  document.querySelectorAll('.page-item[data-page]').forEach(el =>
+    el.addEventListener('click', e => {
+      const page = parseInt(el.getAttribute('data-page'));
+       handlePageChange(page);
+    })
+                                                             
   $('#prev-page').on('click', function() {
-    if (userData.currentPage > 1) {
-      handlePageChange(userData.currentPage - 1);
+  const prev = document.getElementById('prev-page');
+  if (prev) prev.addEventListener('click', () => {
+  if (window.userData.currentPage > 1) {
     }
   });
   
-  $('#next-page').on('click', function() {
-    if (userData.currentPage < userData.totalPages) {
+    const next = document.getElementById('next-page');
+    if (next) next.addEventListener('click', () => {
+    if (window.userData.currentPage < window.userData.totalPages) {
       handlePageChange(userData.currentPage + 1);
     }
   });
@@ -106,7 +114,5 @@ function handlePageChange(page) {
   initMyPrizeSection();
 }
 
-// Export the initialization function
-window.myPrizeSection = {
-  init: initMyPrizeSection
-};
++// 이제 ES 모듈로 export 되어, app.js에서 import 해서 사용합니다.
++// export는 위에서 이미 선언된 형태입니다.
