@@ -429,7 +429,7 @@ function setupDateNavigationHandlers() {
   const state = window.appState;
 
   // 기본 todayResults 기반 매핑을 리턴하는 헬퍼
-  function resetToDefaultSelections() {
+function resetToDefaultSelections() {
   if (!Array.isArray(window.todayResults)) return {};
   const games = window.todayResults;
   return {
