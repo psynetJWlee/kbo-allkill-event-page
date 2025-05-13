@@ -436,7 +436,7 @@ function setupDateNavigationHandlers() {
   });
   
   $('#current-day').on('click', function() {
-    state.currentDay = 26; // Today
+    state.currentDay = state.today; // 오늘 날짜로
     initTeamSelectionSection();
   });
   
