@@ -1,30 +1,19 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
   <title>KBO 올킬 이벤트</title>
   <!-- Styles -->
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/animations.css" />
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <!-- ES Module Support -->
-  <script type="importmap">
-    {
-      "imports": {
-        "./teamSelection/": "/js/sections/teamSelection/",
-        "./index.js": "/js/sections/teamSelection/index.js",
-        "./handlers.js": "/js/sections/teamSelection/handlers.js",
-        "./render.js": "/js/sections/teamSelection/render.js",
-        "./state.js": "/js/sections/teamSelection/state.js",
-        "./utils.js": "/js/sections/teamSelection/utils.js"
-      }
-    }
-  </script>
 </head>
 <body>
   <div id="root">
@@ -62,13 +51,18 @@
       </div>
     </div>
   </div>
-    <!-- 공통(비모듈) 스크립트 -->
+
+  <!-- 공통(비모듈) 스크립트 -->
   <script src="js/utils/animationUtils.js"></script>
   <script src="js/data.js"></script>
   <script src="js/state.js"></script>
-
-  <!-- 앱 엔트리만 ES 모듈로 로드 -->
-  <script type="module" src="js/app.js"></script>
-
+  <script src="js/sections/eventTitle.js"></script>
+  <script src="js/sections/winners.js"></script>
+  <script src="js/sections/teamSelection.js"></script>
+  <script src="js/sections/myPrize.js"></script>
+  <script src="js/sections/prizeRanking.js"></script>
+  <script src="js/sections/eventDescription.js"></script>
+  <!-- 앱 엔트리 -->
+  <script src="js/app.js"></script>
 </body>
 </html>
