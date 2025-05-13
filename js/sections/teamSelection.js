@@ -1,3 +1,4 @@
+
 function initTeamSelectionSection() {
   const state = window.appState;
   const { today, currentDay } = state;
@@ -27,7 +28,7 @@ function initTeamSelectionSection() {
   // Container HTML
   let contentHtml = '';
   
-  // Tomorrow’s content (today + 1)
+  // Tomorrow's content (today + 1)
   if (state.currentDay === state.today + 1) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-tomorrow">
@@ -56,7 +57,7 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
-  // Today’s content (today)
+  // Today's content (today)
   else if (state.currentDay === state.today) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-today">
@@ -86,7 +87,7 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
-  // Yesterday’s content (today - 1)
+  // Yesterday's content (today - 1)
   else if (state.currentDay === state.today - 1) {
     contentHtml = `
       <div class="team-selection-section" id="state-yesterday">
@@ -110,7 +111,7 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
-  // Day before yesterday’s content (today - 2)
+  // Day before yesterday's content (today - 2)
   else if (state.currentDay === state.today - 2) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-day24" style="position: relative;">
@@ -583,7 +584,7 @@ $(document).on('click', '#submit-allkill-btn', function() {
     .addClass('submitted');
 });
 
-// 2) 제출 후 팀 선택을 바꾸면 “수정 제출”로
+// 2) 제출 후 팀 선택을 바꾸면 "수정 제출"로
 $(document).on('click', '.team-box', function() {
   const state = window.appState;
   if (state.submitted && state.currentDay === state.today + 1) {
