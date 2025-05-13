@@ -151,12 +151,6 @@ function initTeamSelectionSection() {
   renderGames();
   setupDateNavigationHandlers();
 }
-  // Render games based on currentDay
-  renderGames();
-  
-  // Set up event handlers for date navigation
-  setupDateNavigationHandlers();
-}
 
 // Render games based on current day
 function renderGames() {
