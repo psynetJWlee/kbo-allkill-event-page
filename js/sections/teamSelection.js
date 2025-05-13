@@ -425,51 +425,58 @@ function renderDay24Games() {
 function setupDateNavigationHandlers() {
   const state = window.appState;
   
+  // ← 버튼: 과거(이전 날)로 이동 — 선택 유지
   $('#date-nav-prev').on('click', function() {
     state.currentDay--;
     initTeamSelectionSection();
   });
   
+  // → 버튼: 미래(다음 날)로 이동 — 선택 초기화
   $('#date-nav-next').on('click', function() {
     state.currentDay++;
-    // 이전·다음 이동할 때마다 선택 초기화
+    // 내일(미래)로 넘어갈 때만 선택 초기화
     state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
+  // “Today” 클릭: 오늘로 돌아오기 — 선택 유지
   $('#current-day').on('click', function() {
-    state.currentDay = state.today; // 오늘 날짜로
-    state.selectedTeams = {};       // 선택 초기화
+    state.currentDay = state.today;
     initTeamSelectionSection();
   });
   
+  // 숫자 클릭(prev-day): 과거로 이동 — 선택 유지
   $('#prev-day').on('click', function(e) {
     e.stopPropagation();
     state.currentDay = state.currentDay - 1;
-    state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
+  // 숫자 클릭(next-day): 미래로 이동 — 선택 초기화
   $('#next-day').on('click', function(e) {
     e.stopPropagation();
     state.currentDay = state.currentDay + 1;
+    // 내일(미래)로 넘어갈 때만 선택 초기화
     state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
-  $(document).off('click', '#yesterday-nav-btn')  // 중복 바인딩 방지
+  // 어제 네비게이션 버튼 → 내일로 이동 — 선택 초기화
+  $(document).off('click', '#yesterday-nav-btn')
              .on('click', '#yesterday-nav-btn', function() {
-    state.currentDay = 27;
+    state.currentDay    = state.today + 1;
     state.selectedTeams = {};
     initTeamSelectionSection();
   });
     
-  $(document).on('click',
+  // 어제/그저께 성공 후 “내일”로 이동 — 선택 초기화
+  $(document).on(
+    'click',
     '#state-yesterday .team-selection-submit button, ' +
     '#team-selection-section-day24 .team-selection-submit button',
     function() {
-      state.currentDay      = state.today + 1;
-      state.selectedTeams   = {};
+      state.currentDay    = state.today + 1;
+      state.selectedTeams = {};
       initTeamSelectionSection();
     }
   );
