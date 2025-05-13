@@ -427,8 +427,6 @@ function setupDateNavigationHandlers() {
   
   $('#date-nav-prev').on('click', function() {
     state.currentDay--;
-    // 이전·다음 이동할 때마다 선택 초기화
-    state.selectedTeams = {};
     initTeamSelectionSection();
   });
   
