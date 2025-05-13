@@ -1,4 +1,3 @@
-
 // KBO team logo URLs
 const teamLogos = {
   "KT": "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png",
@@ -129,6 +128,20 @@ const dayBeforeYesterdayResults = [
   }
 ];
 
+// Winner members data
+const members = [
+  { id: 1, nickname: "고량뉴스", profileImage: "/lovable-uploads/85ed9ad3-9c97-4322-9410-b661d4cafb48.png", amount: 50000 },
+  { id: 2, nickname: "컴오라파", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 3, nickname: "홈런왕김탁구", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 4, nickname: "엘지트윈스", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 5, nickname: "두산베어준", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 6, nickname: "라스돌해라", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 7, nickname: "다이노스", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 8, nickname: "래랜라", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 9, nickname: "하이고", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 10, nickname: "올림픽ㄱㄱ", profileImage: "/placeholder.svg", amount: 50000 },
+];
+
 // Default selected teams for today view
 const defaultSelectedTeams = {
   0: 'home', // KT
@@ -166,14 +179,3 @@ const userData = {
   currentPage: 1,
   totalPages: 3
 };
-
-// Make sure these variables are accessible globally
-window.teamLogos = teamLogos;
-window.kboGames = kboGames;
-window.todayResults = todayResults;
-window.yesterdayResults = yesterdayResults;
-window.dayBeforeYesterdayResults = dayBeforeYesterdayResults;
-window.defaultSelectedTeams = defaultSelectedTeams;
-window.rankingData = rankingData;
-window.prizeHistory = prizeHistory;
-window.userData = userData;

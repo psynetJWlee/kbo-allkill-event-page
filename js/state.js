@@ -3,14 +3,10 @@ const seoulNow  = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
 const seoulDate = new Date(seoulNow);
 
 let state = {
-  today:          seoulDate.getDate(),
-  currentDay:     seoulDate.getDate(),
-  selectedTeams:  {},
-  activeTab:      'weekly',
-
-  // 여기를 추가
-  submitted:      false,
-  submittedTime:  null
+  today:       seoulDate.getDate(),  // 오늘(일) 기준
+  currentDay:  seoulDate.getDate(),  // 초기 currentDay도 오늘로
+  selectedTeams:{},
+  activeTab:   'weekly'
 };
 
 window.appState = state;
