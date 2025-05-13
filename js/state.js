@@ -1,4 +1,17 @@
 
+const seoulNow  = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
+const seoulDate = new Date(seoulNow);
+
+let state = {
+  today:    seoulDate.getDate(),
+  currentDay: seoulDate.getDate(),
+  selectedTeams: {},
+  activeTab: 'weekly'
+};
+
+window.appState = state;
+
+
 // Global state for the application
 
 const seoulNow  = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
