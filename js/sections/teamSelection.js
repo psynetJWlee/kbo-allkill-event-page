@@ -42,13 +42,12 @@ function initTeamSelectionSection() {
           />
         </h2>
         <div class="game-list" id="game-list"></div>
-        <div id="team-selection-submit" class="team-selection-submit">
-          <button
-            class="submit-btn"
-            id="submit-allkill-btn"
-            disabled
-          >
+        <div class="team-selection-submit">
+          <button id="submit-allkill-btn" class="mega-sparkle-btn">
             올킬 제출
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
           </button>
         </div>
       </div>
@@ -72,13 +71,14 @@ function initTeamSelectionSection() {
           />
         </h2>
         <div class="game-list" id="game-list"></div>
-        <div id="team-selection-submit" class="team-selection-submit">
-          <button
-            class="submit-btn enabled"
-            id="submit-allkill-btn"
-          >
-            <span>2경기 성공!</span>
-            <span>채점 중</span>
+        <div class="team-selection-submit">
+          <button id="submit-allkill-btn" class="mega-sparkle-btn">
+                  >
+                    <span>2경기 성공!</span>
+                    <span>채점 중</span>
+                      <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
           </button>
         </div>
       </div>
@@ -98,8 +98,11 @@ function initTeamSelectionSection() {
        </h2>
         <div class="game-list" id="yesterday-game-list"></div>
         <div class="team-selection-submit">
-          <button id="yesterday-nav-btn" class="submit-btn enabled">
+          <button id="submit-allkill-btn" class="mega-sparkle-btn">
             다음 경기 도전!
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
           </button>
         </div>
       </div>
@@ -116,12 +119,12 @@ function initTeamSelectionSection() {
           class="allkill-stamp"
         />
         <div class="game-list" id="day24-game-list"></div>
-        <div class="team-selection-submit">
-          <button
-            class="submit-btn enabled"
-            id="submit-day24-btn"
-          >
+         <div class="team-selection-submit">
+          <button id="submit-allkill-btn" class="mega-sparkle-btn">
             올킬 성공!
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
           </button>
         </div>
       </div>
