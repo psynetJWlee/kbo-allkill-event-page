@@ -1,6 +1,9 @@
 function initTeamSelectionSection() {
   const { today, currentDay } = window.appState;
-  
+  // 오늘 페이지 진입이면 무조건 기본값 복원
+     if (currentDay === today) {
+       window.appState.selectedTeams = resetToDefaultSelections();
+     }
   // 계산
   const prevDay    = currentDay - 1;
   const nextDay    = currentDay + 1;
