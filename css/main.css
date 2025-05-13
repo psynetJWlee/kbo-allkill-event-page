@@ -210,11 +210,15 @@ body {
   font-size: 40px;
   font-weight: bold;
   color: #FFFFFF;
-  padding-top: 20px;
   margin-bottom: 16px;
-  height: 80px;
-  line-height: 80px;    /* 텍스트/아이콘이 수직 가운데 오도록 */
-  padding-top: 0;       /* 기존 상단 패딩 제거 */
+
+  /* 주석 처리 혹은 삭제 */
+  /* height: 80px; */
+  /* line-height: 80px; */
+
+  /* 대신 */
+  line-height: 1.2;       /* 텍스트 줄 높이 비율 */
+  padding: 20px 0;        /* 위아래 여백 확보 */
 }
 
 /* 어제 섹션 타이틀의 소제목 */
