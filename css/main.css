@@ -225,7 +225,7 @@ body {
 /* 어제 섹션 타이틀의 소제목 */
 .team-selection-title .subtitle {
   display: block;     /* 줄바꿈 후 독립 블록 처리 */
-  font-size: 0.5em;   /* 부모 폰트 크기의 절반 */
+  font-size: 30px;   /* 부모 폰트 크기의 절반 */
   margin-top: 0.25em; /* 필요시 간격 조정 */
 }
 
