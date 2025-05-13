@@ -1,7 +1,10 @@
-// Team Selection Section
 function initTeamSelectionSection() {
-  const state = window.appState;
-  const today = state.currentDay;
+  const { today, currentDay } = window.appState;
+  
+  // 계산
+  const prevDay    = currentDay - 1;
+  const nextDay    = currentDay + 1;
+  const labelToday = currentDay === today ? 'Today' : currentDay;
   
   // Date Navigation
   const dateNavHtml = `
@@ -10,11 +13,11 @@ function initTeamSelectionSection() {
         <div class="w-6 h-6 flex items-center justify-center">
           <div class="arrow-left"></div>
         </div>
-        <span class="prev-day" id="prev-day">${state.today - 1}</span>
+        <span class="prev-day" id="prev-day">${prevDay}</span>
       </div>
-      <span class="current-day" id="current-day">${state.currentDay === state.today ? 'Today' : state.currentDay}</span>
+      <span class="current-day" id="current-day">${labelToday}</span>
       <div class="date-nav-next" id="date-nav-next">
-        <span class="next-day" id="next-day">${state.today + 1}</span>
+        <span class="next-day" id="next-day">${nextDay}</span>
         <div class="w-6 h-6 flex items-center justify-center">
           <div class="arrow-right"></div>
         </div>
@@ -145,7 +148,9 @@ function initTeamSelectionSection() {
   
   // Combine date navigation and content
   $('#kbo-selection-container').html(dateNavHtml + contentHtml);
-  
+  renderGames();
+  setupDateNavigationHandlers();
+}
   // Render games based on currentDay
   renderGames();
   
