@@ -1,4 +1,4 @@
-// js/sections/teamselection/myPrizeSection.js
+// js/sections/myPrizeSection.js
 
 ;(function(window, $) {
   // My Prize Section 초기화 함수
