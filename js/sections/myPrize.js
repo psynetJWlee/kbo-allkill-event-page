@@ -1,9 +1,18 @@
-// js/sections/myPrizeSection.js
+
+// js/sections/myPrize.js
 
 ;(function(window, $) {
   // My Prize Section 초기화 함수
   function initMyPrizeSection() {
-    const userData     = window.userData;
+    console.log("Initializing My Prize Section");
+    
+    // 데이터 확인
+    if (!window.userData || !window.prizeHistory) {
+      console.error("Missing required data for My Prize Section", { userData: window.userData, prizeHistory: window.prizeHistory });
+      return;
+    }
+    
+    const userData = window.userData;
     const prizeHistory = window.prizeHistory;
     const { formatNumber } = window.utils;
 
@@ -78,6 +87,8 @@
 
     // 페이지네이션 이벤트 바인딩
     setupPaginationHandlers();
+    
+    console.log("My Prize Section initialized successfully");
   }
 
   // 페이지네이션 핸들러
@@ -121,3 +132,4 @@
   };
 
 })(window, jQuery);
+
