@@ -1,7 +1,13 @@
 
 // My Prize Section
-function initMyPrizeSection() {
++export function initMyPrizeSection() {
+
   const { formatNumber } = window.utils;
+  const container = document.getElementById('my-prize-section');
+  if (!container) {
+    console.error('[initMyPrizeSection] #my-prize-section not found');
+    return;
+  }
   
   const sectionHtml = `
     <div class="my-prize-container">
