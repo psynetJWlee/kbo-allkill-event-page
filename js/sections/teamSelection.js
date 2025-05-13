@@ -424,43 +424,61 @@ function renderDay24Games() {
 // Set up event handlers for date navigation
 function setupDateNavigationHandlers() {
   const state = window.appState;
+
+  // 기본 todayResults 기반 매핑을 리턴하는 헬퍼
+  function resetToDefaultSelections() {
+    if (!Array.isArray(window.todayResults)) return {};
+    const games = window.todayResults;
+    return {
+      [games[0].id]: 'home',
+      [games[1].id]: 'away',
+      [games[2].id]: 'away',
+      [games[3].id]: 'home',
+      [games[4].id]: 'home'
+    };
+  }
   
-  // ← 버튼: 과거(이전 날)로 이동 — 선택 유지
+  // ← 버튼: 과거(이전 날)로 이동 — 선택 유지 (단, 오늘로 돌아오는 경우만 리셋)
   $('#date-nav-prev').on('click', function() {
     state.currentDay--;
+    if (state.currentDay === state.today) {
+      state.selectedTeams = resetToDefaultSelections();
+    }
     initTeamSelectionSection();
   });
-  
+
   // → 버튼: 미래(다음 날)로 이동 — 선택 초기화
   $('#date-nav-next').on('click', function() {
     state.currentDay++;
-    // 내일(미래)로 넘어갈 때만 선택 초기화
     state.selectedTeams = {};
     initTeamSelectionSection();
   });
-  
-  // “Today” 클릭: 오늘로 돌아오기 — 선택 유지
+
+  // “Today” 클릭: 오늘로 돌아오기 — 기본 선택값으로 리셋
   $('#current-day').on('click', function() {
     state.currentDay = state.today;
+    state.selectedTeams = resetToDefaultSelections();
     initTeamSelectionSection();
   });
-  
-  // 숫자 클릭(prev-day): 과거로 이동 — 선택 유지
+
+  // 숫자 클릭(prev-day): 과거로 이동 — 선택 유지 (오늘로 돌아올 때만 리셋)
   $('#prev-day').on('click', function(e) {
     e.stopPropagation();
     state.currentDay = state.currentDay - 1;
+    if (state.currentDay === state.today) {
+      state.selectedTeams = resetToDefaultSelections();
+    }
     initTeamSelectionSection();
   });
-  
+
   // 숫자 클릭(next-day): 미래로 이동 — 선택 초기화
   $('#next-day').on('click', function(e) {
     e.stopPropagation();
     state.currentDay = state.currentDay + 1;
-    // 내일(미래)로 넘어갈 때만 선택 초기화
     state.selectedTeams = {};
     initTeamSelectionSection();
   });
-  
+
   // 어제 네비게이션 버튼 → 내일로 이동 — 선택 초기화
   $(document).off('click', '#yesterday-nav-btn')
              .on('click', '#yesterday-nav-btn', function() {
@@ -468,7 +486,7 @@ function setupDateNavigationHandlers() {
     state.selectedTeams = {};
     initTeamSelectionSection();
   });
-    
+
   // 어제/그저께 성공 후 “내일”로 이동 — 선택 초기화
   $(document).on(
     'click',
@@ -481,7 +499,6 @@ function setupDateNavigationHandlers() {
     }
   );
 }
-
 // Set up event handlers for team selection
 function setupTeamSelectionHandlers() {
   const state = window.appState;
