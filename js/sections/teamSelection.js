@@ -1,7 +1,6 @@
 function initTeamSelectionSection() {
-  const { today, currentDay } = window.appState;
-  
-  // 계산
+  const state = window.appState;
+  const { today, currentDay } = state;
   const prevDay    = currentDay - 1;
   const nextDay    = currentDay + 1;
   const labelToday = currentDay === today ? 'Today' : currentDay;
@@ -222,7 +221,18 @@ function renderTomorrowGames() {
 
   // Setup event handlers for team selection
   setupTeamSelectionHandlers();
-}
+  $('.team-box').on('click', function() {
+  // 기존 선택 로직 실행…
+  const state = window.appState;
+  // …state.selectedTeams 업데이트, UI 반영 등…
+
+  // 만약 이미 제출 상태고, 내일(오늘+1) 페이지라면
+  if (state.submitted && state.currentDay === state.today + 1) {
+    $('#submit-allkill-btn').text('수정 제출');
+  }
+});
+    
+
 
 // Render today's games (26)
 function renderTodayGames() {
@@ -472,10 +482,14 @@ function setupDateNavigationHandlers() {
 // Set up event handlers for team selection
 function setupTeamSelectionHandlers() {
   const state = window.appState;
-  
   $('.team-box').on('click', function() {
     const gameId = parseInt($(this).data('game-id'));
     const team = $(this).data('team');
+    const gameId = parseInt($(this).data('game-id'));
+    const team   = $(this).data('team');
+    state.selectedTeams[gameId] = team;
+    updateTeamSelections();
+    updateSubmitButton();
     
     state.selectedTeams[gameId] = team;
     updateTeamSelections();
@@ -533,8 +547,54 @@ function updateSubmitButton() {
   }
 }
 
+  // -----------------------------
+  // 1) 올킬 제출 버튼 클릭 핸들러
+  $(document).on('click', '#submit-allkill-btn', function() {
+    const state = window.appState;
+    const gameCount = kboGames.length;
+
+    // 5개 다 선택했는지 체크
+    if (Object.keys(state.selectedTeams).length !== gameCount) {
+      alert('모든 경기에 팀을 선택해주세요.');
+      return;
+    }
+
+    // 현재 시간 포맷
+    const now = new Date();
+    const pad = n => n.toString().padStart(2, '0');
+    const timeLabel = `${now.getMonth()+1}월 ${now.getDate()}일 ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+    // 확인 얼럿
+    if (!confirm('제출 완료!\n경기시작 전까지 수정이 가능합니다.')) return;
+
+    // 상태 저장
+    state.submitted     = true;
+    state.submittedTime = timeLabel;
+
+    // 타이틀 변경
+    $('#team-selection-section-tomorrow .team-selection-title').html(`
+      <div style="font-size:45px;font-weight:bold;">제출 완료!</div>
+      <div style="font-size:35px;">${timeLabel}</div>
+    `);
+
+    // 버튼 텍스트 변경
+    $('#submit-allkill-btn').text('제출 완료!').addClass('submitted');
+  });
+
+  // 2) 팀 박스 클릭 시 “수정 제출” 로직
+  $('.team-box').on('click', function() {
+    const state = window.appState;
+    if (state.submitted && state.currentDay === state.today + 1) {
+      $('#submit-allkill-btn')
+        .text('수정 제출')
+        .addClass('modified');
+    }
+  });
+  // -----------------------------
+
 // Export the initialization functions
 window.teamSelectionSection = {
   init: initTeamSelectionSection,
   updateTeamSelections
 };
+
