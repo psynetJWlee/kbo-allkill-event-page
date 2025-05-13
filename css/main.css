@@ -147,9 +147,10 @@ body {
 
 /* KBO Selection Container */
 
-.button-line {
+/* 버튼 안의 .button-line 을 블록으로 바꿔서 각 줄이 내려가게 */
+#submit-allkill-btn .button-line {
   display: block;
-  line-height: 1.2; /* 필요에 따라 조절 */
+  line-height: 1.2; /* 필요하면 줄간격 조정 */
 }
 
 /* 24일 스탬프 이미지 */
