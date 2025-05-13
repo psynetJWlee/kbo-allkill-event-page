@@ -1,6 +1,7 @@
 // Team Selection Section
 function initTeamSelectionSection() {
   const state = window.appState;
+  const today = state.currentDay;
   
   // Date Navigation
   const dateNavHtml = `
@@ -9,11 +10,11 @@ function initTeamSelectionSection() {
         <div class="w-6 h-6 flex items-center justify-center">
           <div class="arrow-left"></div>
         </div>
-        <span class="prev-day" id="prev-day">${state.currentDay - 1}</span>
+        <span class="prev-day" id="prev-day">${today - 1}</span>
       </div>
-      <span class="current-day" id="current-day">${state.currentDay === 26 ? 'Today' : state.currentDay}</span>
+      <span class="current-day" id="current-day">${state.currentDay === today ? 'Today' : state.currentDay}</span>
       <div class="date-nav-next" id="date-nav-next">
-        <span class="next-day" id="next-day">${state.currentDay + 1}</span>
+        <span class="next-day" id="next-day">${today + 1}</span>
         <div class="w-6 h-6 flex items-center justify-center">
           <div class="arrow-right"></div>
         </div>
@@ -25,7 +26,7 @@ function initTeamSelectionSection() {
   let contentHtml = '';
   
   // Tomorrow's content (27)
-  if (state.currentDay === 27) {
+  if (state.currentDay === today + 1) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-tomorrow">
         <h2 class="team-selection-title">
@@ -54,7 +55,7 @@ function initTeamSelectionSection() {
     `;
   }
   // Today's content (26)
-  else if (state.currentDay === 26) {
+  else if (state.currentDay === today) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-today">
         <h2 class="team-selection-title">
@@ -84,7 +85,7 @@ function initTeamSelectionSection() {
     `;
   }
   // Yesterday's content (25)
-  else if (state.currentDay === 25) {
+  else if (state.currentDay === today - 1) {
     contentHtml = `
       <div class="team-selection-section" id="state-yesterday">
        <h2 class="team-selection-title">
@@ -108,7 +109,7 @@ function initTeamSelectionSection() {
     `;
   }
   // Day before yesterday's content (24)
-  else if (state.currentDay === 24) {
+  else if (state.currentDay === today - 2) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-day24" style="position: relative;">
         <h2 class="team-selection-title">올킬 성공!</h2>
@@ -154,19 +155,15 @@ function initTeamSelectionSection() {
 
 // Render games based on current day
 function renderGames() {
-  const state = window.appState;
-  
-  if (state.currentDay === 27) {
-    // Tomorrow's games
+  const { currentDay, today } = window.appState;  // today는 앱 시작 시 저장한 ‘오늘 날짜’
+
+  if (currentDay === today + 1) {
     renderTomorrowGames();
-  } else if (state.currentDay === 26) {
-    // Today's games
+  } else if (currentDay === today) {
     renderTodayGames();
-  } else if (state.currentDay === 25) {
-    // Yesterday's games
+  } else if (currentDay === today - 1) {
     renderYesterdayGames();
-  } else if (state.currentDay === 24) {
-    // Day before yesterday's games
+  } else if (currentDay === today - 2) {
     renderDay24Games();
   }
 }
