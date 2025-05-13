@@ -12,6 +12,19 @@
   <link rel="stylesheet" href="css/animations.css">
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- ES Module Support -->
+  <script type="importmap">
+    {
+      "imports": {
+        "./teamSelection/": "/js/sections/teamSelection/",
+        "./index.js": "/js/sections/teamSelection/index.js",
+        "./handlers.js": "/js/sections/teamSelection/handlers.js",
+        "./render.js": "/js/sections/teamSelection/render.js",
+        "./state.js": "/js/sections/teamSelection/state.js",
+        "./utils.js": "/js/sections/teamSelection/utils.js"
+      }
+    }
+  </script>
 </head>
 <body>
   <div id="root">
@@ -55,7 +68,8 @@
   <script src="js/state.js"></script>
   <script src="js/sections/eventTitle.js"></script>
   <script src="js/sections/winners.js"></script>
-  <script src="js/sections/teamSelection.js"></script>
+  <!-- Team Selection Section - modularized -->
+  <script src="js/sections/teamSelection.js" type="module"></script>
   <script src="js/sections/myPrize.js"></script>
   <script src="js/sections/prizeRanking.js"></script>
   <script src="js/sections/eventDescription.js"></script>
