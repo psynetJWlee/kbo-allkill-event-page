@@ -547,50 +547,52 @@ function updateSubmitButton() {
   }
 }
 
-  // -----------------------------
-  // 1) 올킬 제출 버튼 클릭 핸들러
-  $(document).on('click', '#submit-allkill-btn', function() {
-    const state = window.appState;
-    const gameCount = kboGames.length;
+// -----------------------------
+// 1) 올킬 제출 버튼 클릭 핸들러
+$(document).on('click', '#submit-allkill-btn', function() {
+  const state = window.appState;
+  const totalGames = kboGames.length;
 
-    // 5개 다 선택했는지 체크
-    if (Object.keys(state.selectedTeams).length !== gameCount) {
-      alert('모든 경기에 팀을 선택해주세요.');
-      return;
-    }
+  // (1) 5개 모두 선택했는지 체크
+  if (Object.keys(state.selectedTeams).length !== totalGames) {
+    alert('모든 경기에 팀을 선택해주세요.');
+    return;
+  }
 
-    // 현재 시간 포맷
-    const now = new Date();
-    const pad = n => n.toString().padStart(2, '0');
-    const timeLabel = `${now.getMonth()+1}월 ${now.getDate()}일 ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  // (2) 타임스탬프 생성
+  const now = new Date();
+  const pad = n => n.toString().padStart(2, '0');
+  const timeLabel = `${now.getMonth()+1}월 ${now.getDate()}일 ${pad(now.getHours())}:${pad(now.getMinutes())}`;
 
-    // 확인 얼럿
-    if (!confirm('제출 완료!\n경기시작 전까지 수정이 가능합니다.')) return;
+  // (3) 시스템 얼럿 (confirm)
+  if (!confirm('제출 완료!\n경기시작 전까지 수정이 가능합니다.')) return;
 
-    // 상태 저장
-    state.submitted     = true;
-    state.submittedTime = timeLabel;
+  // (4) 상태 저장
+  state.submitted     = true;
+  state.submittedTime = timeLabel;
 
-    // 타이틀 변경
-    $('#team-selection-section-tomorrow .team-selection-title').html(`
-      <div style="font-size:45px;font-weight:bold;">제출 완료!</div>
-      <div style="font-size:35px;">${timeLabel}</div>
-    `);
+  // (5) 타이틀 변경 (두 줄, 폰트 크기)
+  $('#team-selection-section-tomorrow .team-selection-title').html(`
+    <div style="font-size:45px;font-weight:bold;">제출 완료!</div>
+    <div style="font-size:35px;">${timeLabel}</div>
+  `);
 
-    // 버튼 텍스트 변경
-    $('#submit-allkill-btn').text('제출 완료!').addClass('submitted');
-  });
+  // (6) 버튼 텍스트 변경
+  $('#submit-allkill-btn')
+    .text('제출 완료!')
+    .addClass('submitted');
+});
 
-  // 2) 팀 박스 클릭 시 “수정 제출” 로직
-  $('.team-box').on('click', function() {
-    const state = window.appState;
-    if (state.submitted && state.currentDay === state.today + 1) {
-      $('#submit-allkill-btn')
-        .text('수정 제출')
-        .addClass('modified');
-    }
-  });
-  // -----------------------------
+// 2) 제출 후 팀 선택을 바꾸면 “수정 제출”로
+$(document).on('click', '.team-box', function() {
+  const state = window.appState;
+  if (state.submitted && state.currentDay === state.today + 1) {
+    $('#submit-allkill-btn')
+      .text('수정 제출')
+      .addClass('modified');
+  }
+});
+// -----------------------------
 
 // Export the initialization functions
 window.teamSelectionSection = {
