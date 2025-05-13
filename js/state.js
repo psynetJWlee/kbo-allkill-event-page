@@ -1,29 +1,14 @@
-
+// state.js
 const seoulNow  = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
 const seoulDate = new Date(seoulNow);
 
 let state = {
-  today:    seoulDate.getDate(),
-  currentDay: seoulDate.getDate(),
-  selectedTeams: {},
-  activeTab: 'weekly'
+  today:       seoulDate.getDate(),  // 오늘(일) 기준
+  currentDay:  seoulDate.getDate(),  // 초기 currentDay도 오늘로
+  selectedTeams:{},
+  activeTab:   'weekly'
 };
 
-window.appState = state;
-
-
-// Global state for the application
-
-const seoulNow  = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
-const seoulDate = new Date(seoulNow);
-
-let state = {
-  currentDay: seoulDate.getDate(),  // 오늘 날짜의 일(day)
-  selectedTeams: {},
-  activeTab: 'weekly'
-};
-
-// Export the state object
 window.appState = state;
 
 // Utility function to format numbers with commas
