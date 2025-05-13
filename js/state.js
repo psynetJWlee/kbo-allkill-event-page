@@ -1,7 +1,11 @@
 
 // Global state for the application
+
+const seoulNow  = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
+const seoulDate = new Date(seoulNow);
+
 let state = {
-  currentDay: 26,  // Default to "Today" (26)
+  currentDay: seoulDate.getDate(),  // 오늘 날짜의 일(day)
   selectedTeams: {},
   activeTab: 'weekly'
 };
