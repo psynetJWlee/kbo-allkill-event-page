@@ -458,6 +458,16 @@ function setupDateNavigationHandlers() {
     state.selectedTeams = {};
     initTeamSelectionSection();
   });
+    
+  $(document).on('click',
+    '#state-yesterday .team-selection-submit button, ' +
+    '#team-selection-section-day24 .team-selection-submit button',
+    function() {
+      state.currentDay      = state.today + 1;
+      state.selectedTeams   = {};
+      initTeamSelectionSection();
+    }
+  );
 }
 
 // Set up event handlers for team selection
