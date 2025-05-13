@@ -1,9 +1,6 @@
 function initTeamSelectionSection() {
   const { today, currentDay } = window.appState;
-  // 오늘 페이지 진입이면 무조건 기본값 복원
-     if (currentDay === today) {
-       window.appState.selectedTeams = resetToDefaultSelections();
-     }
+  
   // 계산
   const prevDay    = currentDay - 1;
   const nextDay    = currentDay + 1;
@@ -429,17 +426,17 @@ function setupDateNavigationHandlers() {
   const state = window.appState;
 
   // 기본 todayResults 기반 매핑을 리턴하는 헬퍼
-function resetToDefaultSelections() {
-  if (!Array.isArray(window.todayResults)) return {};
-  const games = window.todayResults;
-  return {
-    [games[0].id]: 'home',
-    [games[1].id]: 'away',
-    [games[2].id]: 'away',
-    [games[3].id]: 'home',
-    [games[4].id]: 'home'
-  };
-}
+  function resetToDefaultSelections() {
+    if (!Array.isArray(window.todayResults)) return {};
+    const games = window.todayResults;
+    return {
+      [games[0].id]: 'home',
+      [games[1].id]: 'away',
+      [games[2].id]: 'away',
+      [games[3].id]: 'home',
+      [games[4].id]: 'home'
+    };
+  }
   
   // ← 버튼: 과거(이전 날)로 이동 — 선택 유지 (단, 오늘로 돌아오는 경우만 리셋)
   $('#date-nav-prev').on('click', function() {
