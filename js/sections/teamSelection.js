@@ -72,11 +72,10 @@ function initTeamSelectionSection() {
         </h2>
         <div class="game-list" id="game-list"></div>
         <div class="team-selection-submit">
-          <button id="submit-allkill-btn" class="mega-sparkle-btn">
-                  >
-                    <span>2경기 성공!</span>
-                    <span>채점 중</span>
-                      <div class="spark"></div>
+          <button id="submit-allkill-btn" class="mega-sparkle-btn">                  
+          <span>2경기 성공!</span>
+          <span>채점 중</span>
+            <div class="spark"></div>
             <div class="spark"></div>
             <div class="spark"></div>
           </button>
