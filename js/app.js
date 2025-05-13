@@ -1,3 +1,17 @@
+// js/app.js
+import { initTeamSelection }           from './sections/teamselection/teamSelection.js';
+import { initDateNavigation }          from './sections/teamselection/dateNavigation.js';
+import { initMyPrizeSection }          from './sections/teamselection/myPrizeSection.js';
+import { initPrizeRankingSection }     from './sections/teamselection/prizeRankingSection.js';
+import { initEventDescriptionSection } from './sections/teamselection/eventDescriptionSection.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTeamSelection();
+  initDateNavigation();
+  initMyPrizeSection();
+  initPrizeRankingSection();
+  initEventDescriptionSection();
+});
 
 // Initialize the page when DOM is loaded
 $(document).ready(function() {
