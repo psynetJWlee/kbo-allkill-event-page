@@ -1,6 +1,7 @@
 function resetToDefaultSelections() {
-  return { ...window.defaultSelectedTeams };
+    return $.extend({}, window.defaultSelectedTeams);
 }
+
 function setupSubmitHandler() {
   const state = window.appState;
 
@@ -54,8 +55,8 @@ function setupSubmitHandler() {
 function initTeamSelectionSection() {
   const state = window.appState;
   const { today, currentDay } = state;
-
-  // 오늘 화면일 때만 기본 선택값 복원
+  
+  // 오늘일 때만 기본 선택 복원
   if (currentDay === today) {
     state.selectedTeams = resetToDefaultSelections();
   }

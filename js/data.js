@@ -1,3 +1,11 @@
+window.defaultSelectedTeams = {
+  0: 'home',
+  1: 'away',
+  2: 'away',
+  3: 'home',
+  4: 'home'
+};
+
 // KBO team logo URLs
 const teamLogos = {
   "KT": "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png",
@@ -187,11 +195,3 @@ const userData = {
   currentPage: 1,
   totalPages: 3
 };
-
-window.defaultSelectedTeams = {
-   0: 'home',
-   1: 'away',
-   2: 'away',
-   3: 'home',
-   4: 'home'
- };
