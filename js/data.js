@@ -12,169 +12,59 @@ const teamLogos = {
   "롯데": "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png"
 };
 
-// KBO 팀 경기 데이터 (내일)
+// 내일 경기 데이터
 const kboGames = [
   { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, time: "18:00", status: "투표 중" },
-  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 }, time: "18:00", status: "투표 중" },
+  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 },  time: "18:00", status: "투표 중" },
   { id: 2, homeTeam: { name: "두산", logo: teamLogos["두산"], votes: 0    }, awayTeam: { name: "삼성", logo: teamLogos["삼성"], votes: 5245 }, time: "18:00", status: "투표 중" },
   { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, time: "18:00", status: "투표 중" },
   { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, time: "18:00", status: "투표 중" }
 ];
 
-// Today's game results data
+// 오늘 경기 결과
 const todayResults = [
   { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, homeScore: 1, awayScore: 5, status: "종료" },
-  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 }, homeScore: 2, awayScore: 3, status: "종료" },
+  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 },  homeScore: 2, awayScore: 3, status: "종료" },
   { id: 2, homeTeam: { name: "두산", logo: teamLogos["두산"], votes: 0    }, awayTeam: { name: "삼성", logo: teamLogos["삼성"], votes: 5245 }, homeScore: 4, awayScore: 4, status: "경기 중" },
   { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, homeScore: 10, awayScore: 2, status: "경기 중" },
   { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, homeScore: 1, awayScore: 0, status: "경기 중" }
 ];
 
-// -1일 game results data
+// 어제 경기 결과
 const yesterdayResults = [
-  {
-    id: 0,
-    homeTeam:    { name: "KT",   logo: teamLogos.KT,   votes: 1111, winner: true  },
-    awayTeam:    { name: "LG",   logo: teamLogos.LG,   votes: 3215, winner: false },
-    homeScore:   11,
-    awayScore:   5,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 1,
-    homeTeam:    { name: "한화", logo: teamLogos["한화"], votes: 227,  winner: true  },
-    awayTeam:    { name: "NC",   logo: teamLogos.NC,    votes: 4322, winner: false },
-    homeScore:   7,
-    awayScore:   2,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 2,
-    homeTeam:    { name: "두산", logo: teamLogos["두산"], votes: 423,  winner: true },
-    awayTeam:    { name: "삼성", logo: teamLogos["삼성"], votes: 9324, winner: false  },
-    homeScore:   3,
-    awayScore:   9,
-    status:      "종료",
-    correct:     false   // 예측이 틀린 경기
-  },
-  {
-    id: 3,
-    homeTeam:    { name: "KIA",  logo: teamLogos.KIA,  votes: 4218, winner: false  },
-    awayTeam:    { name: "SSG",  logo: teamLogos.SSG,  votes: 5524, winner: true },
-    homeScore:   8,
-    awayScore:   4,
-    status:      "종료",
-    correct:     false
-  },
-  {
-    id: 4,
-    homeTeam:    { name: "키움", logo: teamLogos["키움"], votes: 5525, winner: false },
-    awayTeam:    { name: "롯데", logo: teamLogos["롯데"], votes: 1230, winner: true  },
-    homeScore:   5,
-    awayScore:   10,
-    status:      "종료",
-    correct:     true
-  }
+  { id: 0, homeTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:true}, awayTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:false}, homeScore:11, awayScore:5, status:"종료", correct:true  },
+  { id: 1, homeTeam:{name:"한화",logo:teamLogos["한화"],votes:227,   winner:true}, awayTeam:{name:"NC",logo:teamLogos.NC, votes:4322,winner:false}, homeScore:7,  awayScore:2, status:"종료", correct:true  },
+  { id: 2, homeTeam:{name:"두산",logo:teamLogos["두산"],votes:423,   winner:true}, awayTeam:{name:"삼성",logo:teamLogos["삼성"],votes:9324,winner:false}, homeScore:3,  awayScore:9, status:"종료", correct:false },
+  { id: 3, homeTeam:{name:"KIA",logo:teamLogos.KIA,   votes:4218,winner:false}, awayTeam:{name:"SSG",logo:teamLogos.SSG, votes:5524,winner:true }, homeScore:8,  awayScore:4, status:"종료", correct:false },
+  { id: 4, homeTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, awayTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true }, homeScore:5,  awayScore:10,status:"종료", correct:true  }
 ];
 
-// -2일 경기 결과 데이터
+// 그제(오늘 - 2) 경기 결과
 const dayBeforeYesterdayResults = [
-  {
-    id: 0,
-    homeTeam:    { name: "LG",   logo: teamLogos.LG,   votes: 3215, winner: true  },
-    awayTeam:    { name: "KT",   logo: teamLogos.KT,   votes: 1111, winner: false },
-    homeScore:   8,
-    awayScore:   3,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 1,
-    homeTeam:    { name: "NC",   logo: teamLogos.NC,    votes: 4322, winner: false },
-    awayTeam:    { name: "한화", logo: teamLogos["한화"], votes: 227,  winner: true  },
-    homeScore:   1,
-    awayScore:   6,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 2,
-    homeTeam:    { name: "삼성", logo: teamLogos["삼성"], votes: 9324, winner: true },
-    awayTeam:    { name: "두산", logo: teamLogos["두산"], votes: 423,  winner: false },
-    homeScore:   7,
-    awayScore:   2,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 3,
-    homeTeam:    { name: "SSG",  logo: teamLogos.SSG,  votes: 5524, winner: false },
-    awayTeam:    { name: "KIA",  logo: teamLogos.KIA,  votes: 4218, winner: true  },
-    homeScore:   3,
-    awayScore:   9,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 4,
-    homeTeam:    { name: "롯데", logo: teamLogos["롯데"], votes: 1230, winner: true },
-    awayTeam:    { name: "키움", logo: teamLogos["키움"], votes: 5525, winner: false },
-    homeScore:   6,
-    awayScore:   4,
-    status:      "종료",
-    correct:     true
-  }
+  { id: 0, homeTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:true},  awayTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:false}, homeScore:8, awayScore:3, status:"종료", correct:true },
+  { id: 1, homeTeam:{name:"NC",logo:teamLogos.NC,votes:4322,winner:false}, awayTeam:{name:"한화",logo:teamLogos["한화"],votes:227,winner:true},  homeScore:1, awayScore:6, status:"종료", correct:true },
+  { id: 2, homeTeam:{name:"삼성",logo:teamLogos["삼성"],votes:9324,winner:true},  awayTeam:{name:"두산",logo:teamLogos["두산"],votes:423,winner:false},  homeScore:7, awayScore:2, status:"종료", correct:true },
+  { id: 3, homeTeam:{name:"SSG",logo:teamLogos.SSG,votes:5524,winner:false}, awayTeam:{name:"KIA",logo:teamLogos.KIA,votes:4218,winner:true},   homeScore:3, awayScore:9, status:"종료", correct:true },
+  { id: 4, homeTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true},  awayTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, homeScore:6, awayScore:4, status:"종료", correct:true }
 ];
 
-const threeDaysAgoResults  = [
-  {
-    id: 0,
-    homeTeam:    { name: "LG",   logo: teamLogos.LG,   votes: 3215, winner: true  },
-    awayTeam:    { name: "KT",   logo: teamLogos.KT,   votes: 1111, winner: false },
-    homeScore:   8,
-    awayScore:   3,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 1,
-    homeTeam:    { name: "NC",   logo: teamLogos.NC,    votes: 4322, winner: false },
-    awayTeam:    { name: "한화", logo: teamLogos["한화"], votes: 227,  winner: true  },
-    homeScore:   1,
-    awayScore:   6,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 2,
-    homeTeam:    { name: "삼성", logo: teamLogos["삼성"], votes: 9324, winner: true },
-    awayTeam:    { name: "두산", logo: teamLogos["두산"], votes: 423,  winner: false },
-    homeScore:   7,
-    awayScore:   2,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 3,
-    homeTeam:    { name: "SSG",  logo: teamLogos.SSG,  votes: 5524, winner: false },
-    awayTeam:    { name: "KIA",  logo: teamLogos.KIA,  votes: 4218, winner: true  },
-    homeScore:   3,
-    awayScore:   9,
-    status:      "종료",
-    correct:     true
-  },
-  {
-    id: 4,
-    homeTeam:    { name: "롯데", logo: teamLogos["롯데"], votes: 1230, winner: true },
-    awayTeam:    { name: "키움", logo: teamLogos["키움"], votes: 5525, winner: false },
-    homeScore:   6,
-    awayScore:   4,
-    status:      "종료",
-    correct:     true
-  }
+// 3일 전(오늘 - 3) 경기 결과
+//   ※ 변수명을 day23Results 로 바꿔야 teamSelection.js 와 일치합니다.
+const day23Results = [
+  { id: 0, homeTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:true},  awayTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:false}, homeScore:8, awayScore:3, status:"종료", correct:true },
+  { id: 1, homeTeam:{name:"NC",logo:teamLogos.NC,votes:4322,winner:false}, awayTeam:{name:"한화",logo:teamLogos["한화"],votes:227,winner:true},  homeScore:1, awayScore:6, status:"종료", correct:true },
+  { id: 2, homeTeam:{name:"삼성",logo:teamLogos["삼성"],votes:9324,winner:true},  awayTeam:{name:"두산",logo:teamLogos["두산"],votes:423,winner:false},  homeScore:7, awayScore:2, status:"종료", correct:true },
+  { id: 3, homeTeam:{name:"SSG",logo:teamLogos.SSG,votes:5524,winner:false}, awayTeam:{name:"KIA",logo:teamLogos.KIA,votes:4218,winner:true},   homeScore:3, awayScore:9, status:"종료", correct:true },
+  { id: 4, homeTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true},  awayTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, homeScore:6, awayScore:4, status:"종료", correct:true }
 ];
+
+// (아래는 필요하다면 window 멤버로도 노출해 주세요)
+window.teamLogos              = teamLogos;
+window.kboGames               = kboGames;
+window.todayResults           = todayResults;
+window.yesterdayResults       = yesterdayResults;
+window.dayBeforeYesterdayResults = dayBeforeYesterdayResults;
+window.day23Results           = day23Results;
 
 // Winner members data
 const members = [
