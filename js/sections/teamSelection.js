@@ -238,19 +238,12 @@ function initTeamSelectionSection() {
 function renderGames() {
   const { currentDay, today } = window.appState;
 
-  if (currentDay === today + 1) {
-    renderTomorrowGames();
-  } else if (currentDay === today) {
-    renderTodayGames();
-  } else if (currentDay === today - 1) {
-    renderYesterdayGames();
-  } else if (currentDay === today - 2) {
-    renderDay24Games();
-  }
-  } else if (currentDay === today - 3) {
-    renderDay23Games();
-  }
-  
+  if      (currentDay === today + 1) renderTomorrowGames();
+  else if (currentDay === today)     renderTodayGames();
+  else if (currentDay === today - 1) renderYesterdayGames();
+  else if (currentDay === today - 2) renderDay24Games();
+  else if (currentDay === today - 3) renderDay23Games();
+  else                                /* no data for this date */;
 }
 
 // Render tomorrow's games (27)
