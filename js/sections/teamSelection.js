@@ -243,7 +243,7 @@ function renderGames() {
   else if (currentDay === today - 1) renderYesterdayGames();
   else if (currentDay === today - 2) renderDay24Games();
   else if (currentDay === today - 3) renderDay23Games();
-  else                                /* no data for this date */;
+  else                                /* 범위 외 날짜 */;
 }
 
 // Render tomorrow's games (27)
