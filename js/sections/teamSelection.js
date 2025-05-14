@@ -584,11 +584,11 @@ function setupTeamSelectionHandlers() {
       state.currentDay === state.today + 1 &&
       $('#team-selection-section-tomorrow .team-selection-title')
         .text()
-        .startsWith('제출 완료')
+        .startsWith('제출 완료 !')
     ) {
       // 버튼 텍스트를 “수정 제출” 로 변경
       $('#submit-allkill-btn')
-        .text('수정 제출')
+        .text('수정 제출 !')
         .append(
           '<div class="spark"></div>' +
           '<div class="spark"></div>' +
