@@ -3,6 +3,18 @@
 // ======================
 // 1. 공통 헬퍼 추가
 // ======================
+
+function getHighlightHtml(game) {
+  if (!game.correct) return '';
+  return `
+    <div class="red-circle-container">
+      <img class="red-circle-image"
+           src="https://your.cdn/red-circle.png"
+           alt="정답">
+    </div>
+  `;
+}
+
 function renderGameStatus(game) {
   // 1) 투표 중 / 경기 취소
   if (game.status === '투표 중' || game.status === '경기 취소') {
