@@ -168,6 +168,7 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
+    
   // Day before yesterday's content (today - 2)
   else if (state.currentDay === state.today - 2) {
     contentHtml = `
@@ -190,6 +191,7 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
+    
   // Three days ago content (today - 3)
   else if (state.currentDay === state.today - 3) {
     contentHtml = `
@@ -240,8 +242,8 @@ function renderGames() {
   else if (currentDay === today - 1) renderYesterdayGames();
   else if (currentDay === today - 2) renderDay24Games();
   else if (currentDay === today - 3) renderDay23Games();
-  else                                /* 범위 외 날짜 */;
-}
+  // (optional) else { /* placeholder */ }
+ }
 
 // Render tomorrow's games (27)
 function renderTomorrowGames() {
