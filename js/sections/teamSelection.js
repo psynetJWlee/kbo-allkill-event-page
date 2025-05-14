@@ -1,24 +1,25 @@
 function setupSubmitHandler() {
   const state = window.appState;
 
-  // 이벤트 위임으로 한 번만 등록
-  $(document).on('click', '#submit-allkill-btn', function() {
-    // 내일(오늘+1) 화면에서만 처리
-    if (state.currentDay !== state.today + 1) return;
+  // 기존 #submit-allkill-btn에 바인딩된 클릭 핸들러 제거 → 신규 등록
+  $(document)
+    .off('click', '#submit-allkill-btn')
+    .on('click', '#submit-allkill-btn', function() {
+      if (state.currentDay !== state.today + 1) return;
 
-    const totalGames    = kboGames.length;                         // 내일 경기 수
-    const selectedCount = Object.keys(state.selectedTeams).length;  // 선택된 팀 수
+      const totalGames    = kboGames.length;
+      const selectedCount = Object.keys(state.selectedTeams).length;
 
-    if (selectedCount < totalGames) {
-      alert('모든 경기를 선택해주세요.');
-    } else {
-      alert(
-        '제출완료 !\n' +
-        '경기시작 전 까지\n' +
-        '수정이 가능합니다.'
-      );
-    }
-  });
+      if (selectedCount < totalGames) {
+        alert('모든 경기를 선택해주세요.');
+      } else {
+        alert(
+          '제출완료 !\n' +
+          '경기시작 전 까지\n' +
+          '수정이 가능합니다.'
+        );
+      }
+    });
 }
 
 
@@ -175,7 +176,7 @@ function initTeamSelectionSection() {
   $('#kbo-selection-container').html(dateNavHtml + contentHtml);
   renderGames();
   setupDateNavigationHandlers();
-  setupSubmitHandler();    // ← 이 한 줄 추가
+  setupSubmitHandler();
   }
 
 // Render games based on current day
