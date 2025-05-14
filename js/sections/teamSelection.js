@@ -34,23 +34,31 @@ function renderGameStatus(game) {
   // 2) 경기 중
   if (game.status === '경기 중') {
     return `
-      <div class="game-status">
-        <div class="score-display">${game.homeScore} vs ${game.awayScore}</div>
-        <div class="status-text">경기 중</div>
-      </div>
-    `;
-  }
+    <div class="game-status">
 
+     <div class="score-display match-score">
+       <span id="score-home" class="score">${game.homeScore}</span>
+       <span class="vs">vs</span>
+       <span id="score-away" class="score">${game.awayScore}</span>
+     </div>
+      <div class="status-text">${game.status === '경기 중' ? '경기 중' : (isDraw ? '무승부' : '종료')}</div>
+    </div>
+  `;
+}
   // 3) 종료 or 무승부
   const isDraw = game.homeScore === game.awayScore;
   return `
     <div class="game-status">
-      <div class="score-display">${game.homeScore} vs ${game.awayScore}</div>
-      <div class="status-text">${isDraw ? '무승부' : '종료'}</div>
+
+     <div class="score-display match-score">
+       <span id="score-home" class="score">${game.homeScore}</span>
+       <span class="vs">vs</span>
+       <span id="score-away" class="score">${game.awayScore}</span>
+     </div>
+      <div class="status-text">${game.status === '경기 중' ? '경기 중' : (isDraw ? '무승부' : '종료')}</div>
     </div>
   `;
 }
-
 // ======================
 // 2. 제출 버튼 핸들러
 // ======================
