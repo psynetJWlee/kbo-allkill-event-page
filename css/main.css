@@ -1,3 +1,4 @@
+
 /* Reset and base styles */
 * {
   margin: 0;
@@ -65,17 +66,9 @@ body {
   transform: translateX(-50%);
   width: 238px;
   height: 238px;
-}
-
-.event-title-section .confetti,
-.event-title-section .star {
-  position: absolute;
-  z-index: 0;
-}
-
-.event-emoticon {
   z-index: 1;
 }
+
 /* Winners Section */
 .winners-section {
   width: 100%;
@@ -91,7 +84,6 @@ body {
 }
 
 .winners-count {
-
   font-size: 20px;
   color: white;
   font-weight: bold;
@@ -106,7 +98,6 @@ body {
   padding: 0 15px;
   margin-top: 15px;
   margin-bottom: 16px;
-  
 }
 
 .member-card {
@@ -146,28 +137,26 @@ body {
 }
 
 /* KBO Selection Container */
-
-/* 버튼 안의 .button-line 을 블록으로 바꿔서 각 줄이 내려가게 */
 #submit-allkill-btn .button-line {
   display: block;
-  line-height: 1.2; /* 필요하면 줄간격 조정 */
+  line-height: 1.2;
 }
 
 #team-selection-section-day24 {
-  position: relative;    /* 이미 되어 있겠지만 확인 */
-  overflow: visible;     /* 스탬프가 컨테이너 밖으로 나가도 잘 보이게 */
+  position: relative;
+  overflow: visible;
 }
 
 /* 24일 스탬프 이미지 */
 #team-selection-section-day24 .allkill-stamp {
   position: absolute;
-  top: 250px;                    /* 200px → 원하는 만큼 위로 당기기 (0보다 작아도 됩니다) */
+  top: 250px;
   left: 50%;
   transform: translateX(-50%) rotate(-1deg);
-  z-index: 100;                   /* %가 아니라 정수로만 작성 */
+  z-index: 100;
   width: 300px;
   height: auto;
-  pointer-events: none;          /* 클릭 방해 안 하도록 */
+  pointer-events: none;
 }
 
 /* 어제 결과 타이틀 아이콘 */
@@ -178,14 +167,13 @@ body {
   display: inline-block;
 }
 
-
 .yesterday-icon.right {
   margin-left: 8px;
 }
 
 .match-result.disabled {
   opacity: 0.3;
-  pointer-events: none; /* 필요시 클릭 방지 */
+  pointer-events: none;
 }
 
 .kbo-selection-container {
@@ -215,15 +203,12 @@ body {
   flex-direction: column;      
   justify-content: center;     
   align-items: center;       
-
   height: 100px;
   font-size: 40px;
   font-weight: bold;
   color: #FFFFFF;
   margin-bottom: 16px;
-
 }
-
 
 .team-selection-title .subtitle {
   display: block;     
@@ -237,6 +222,7 @@ body {
   left: 16px;
   transform: translateY(-50%);
 }
+
 .team-selection-title .pointing-finger-right {
   position: absolute;
   top: 50%;
@@ -249,20 +235,19 @@ body {
   top: 50%;
   right: 16px;
   transform: translateY(-50%);
-  width: 75px;    /* 원본(150px) 절반 */
-  height: auto;   /* 비율 유지 */
+  width: 75px;
+  height: auto;
   margin: 0;
 }
 
 #state-yesterday .submit-btn {
-  /* disabled 상태라도 원래 불투명도(1)로 복원 */
   opacity: 1 !important;
   color: #121212 !important;
 }
 
 .pointing-finger {
-  width: 75px;    /* 원본 이미지 150px의 절반 */
-  height: auto;   /* 비율 유지 */
+  width: 75px;
+  height: auto;
 }
 
 .pointing-finger-left {
@@ -349,10 +334,6 @@ body {
 
 .vote-count.lower {
   color: rgba(255, 255, 255, 0.7);
-}
-
-.team-box.selected .vote-count.lower {
-  color: #FFFFFF;
 }
 
 .game-status {
@@ -489,9 +470,7 @@ body {
   color: rgba(18, 18, 18, 0.7);
   font-size: 24px;
   font-weight: bold;
-  /* 텍스트 위아래로 10px 패딩 추가 */
   padding: 10px 10px;
-  /* 자동 높이로 조절 */
   height: 88px;
   width: calc(100% - 70px);
   max-width: 400px;
@@ -916,10 +895,7 @@ body {
   }
 }
 
-/* ---------------------------- */
-/* mega sparkle button styles  */
-/* ---------------------------- */
-
+/* Mega sparkle button styles */
 .mega-sparkle-btn {
   background: linear-gradient(45deg, #FFD700, #FFA500, #FFB347);
   background-size: 200% 200%;
@@ -933,28 +909,18 @@ body {
   position: relative;
   overflow: hidden;
   animation: twinkle 1.5s ease-in-out infinite, gradientShift 3s infinite;
-  box-shadow:
-    0 0 30px rgba(255, 215, 0, 0.6),
-    inset 0 2px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -2px 0 rgba(255, 165, 0, 0.3);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 0 rgba(255, 165, 0, 0.3);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes twinkle {
   0%,100% {
     filter: brightness(1);
-    box-shadow:
-      0 0 30px rgba(255, 215, 0, 0.6),
-      inset 0 2px 0 rgba(255,255,255,0.3),
-      inset 0 -2px 0 rgba(255,165,0,0.3);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), inset 0 2px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(255,165,0,0.3);
   }
   50% {
     filter: brightness(1.1);
-    box-shadow:
-      0 0 50px rgba(255,215,0,0.8),
-      0 0 70px rgba(255,165,0,0.5),
-      inset 0 2px 0 rgba(255,255,255,0.4),
-      inset 0 -2px 0 rgba(255,165,0,0.4);
+    box-shadow: 0 0 50px rgba(255,215,0,0.8), 0 0 70px rgba(255,165,0,0.5), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(255,165,0,0.4);
   }
 }
 
@@ -976,7 +942,7 @@ body {
 @keyframes megaSparkle {
   0%   { transform: translateX(-100%) rotateZ(0deg); opacity:0; }
   50%  { opacity:1; }
-  100% { transform: translateX(100%)  rotateZ(180deg); opacity:0; }
+  100% { transform: translateX(100%) rotateZ(180deg); opacity:0; }
 }
 
 .mega-sparkle-btn::after {
@@ -1003,15 +969,14 @@ body {
   border-radius: 50%;
   animation: sparkFloat 1.5s ease-out infinite;
 }
+
 @keyframes sparkFloat {
-  0%   { opacity:0; transform: translateY(0)   scale(0); }
+  0%   { opacity:0; transform: translateY(0) scale(0); }
   50%  { opacity:1; transform: translateY(-20px) scale(1); }
   100% { opacity:0; transform: translateY(-40px) scale(0); }
 }
-/* ─────────────────────────────────────────────────────────────
-   ● 공통 game-status 레이아웃 덮어쓰기
-───────────────────────────────────────────────────────────── */
-/* game-item·match-result 내부에 중앙 정렬 flex로 재정의 */
+
+/* Game status layout overrides */
 .game-item .game-status,
 .match-result .game-status {
   position: static !important;
@@ -1020,39 +985,32 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  flex: 0 0 100px !important; /* 기존 width 대체 */
+  flex: 0 0 100px !important;
   padding: 0 !important;
 }
 
-/* 점수·상태·시간 기본 block */
 .game-status .score-display,
 .game-status .status-text,
 .game-status .game-time {
   display: block;
 }
 
-/* score-display 아래 여백 */
 .game-status .score-display {
   margin-bottom: 4px;
 }
 
-/* ─ 상태별 보이고/숨기기 설정 ──────────────────────────────── */
-/* 투표 중 / 경기 취소: vs() 숨기고, time 보이기 */
+/* Status-specific display rules */
 .game-status[data-status="투표 중"] .score-display,
 .game-status[data-status="경기 취소"] .score-display {
   display: none;
 }
+
 .game-status[data-status="투표 중"] .game-time,
 .game-status[data-status="경기 취소"] .game-time {
   display: block;
 }
 
-/* 경기 중: 시간 숨기기 (vs + “경기 중”만) */
-.game-status[data-status="경기 중"] .game-time {
-  display: none;
-}
-
-/* 종료 / 무승부: 시간 숨기기 (vs + “종료”/“무승부”만) */
+.game-status[data-status="경기 중"] .game-time,
 .game-status[data-status="종료"] .game-time,
 .game-status[data-status="무승부"] .game-time {
   display: none;
