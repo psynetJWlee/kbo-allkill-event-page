@@ -1015,3 +1015,24 @@ body {
 .game-status[data-status="무승부"] .game-time {
   display: none;
 }
+
+/* 1) match-score 영역의 .score에만 적용되는 규칙 */
+.match-score .score {
+  font-size: 30px;      /* 볼드 사이즈 30 */
+  font-weight: bold;    /* 볼드 처리 */
+}
+
+/* 2) 점수 비교용 high / low 색상 */
+.match-score .score.high {
+  color: #FFC736;
+}
+.match-score .score.low {
+  color: #FFFFFF;
+}
+
+/* 3) vs 텍스트 */
+.match-score .vs {
+  font-size: 15px;
+  color: #555555;
+  margin: 0 8px;
+}
