@@ -376,7 +376,7 @@ body {
 .score-display.match-score .vs {
   font-size: 15px;            /* 원래 vs 크기 */
   color: #555555;             /* 원래 vs 색상 */
-  margin: 0 16px;             /* 좌우 16px 간격 */
+  margin: 0 10px;             /* 좌우 10px 간격 */
 }
 
 
