@@ -1,3 +1,5 @@
+import { defaultSelectedTeams } from './data.js';
+
 function setupSubmitHandler() {
   const state = window.appState;
 
@@ -49,8 +51,13 @@ function setupSubmitHandler() {
 
 
 function initTeamSelectionSection() {
-  const state      = window.appState;
-  const { today, currentDay } = window.appState;
+  const state = window.appState;
+  const { today, currentDay } = state;
+
+  // 오늘 화면일 때만 기본 선택값 복원
+  if (currentDay === today) {
+    state.selectedTeams = resetToDefaultSelections();
+  }
   
   // 계산
   const prevDay    = currentDay - 1;
@@ -493,6 +500,7 @@ function setupDateNavigationHandlers() {
 
   // 기본 todayResults 기반 매핑을 리턴하는 헬퍼
   function resetToDefaultSelections() {
+    return { ...defaultSelectedTeams };
     if (!Array.isArray(window.todayResults)) return {};
     const games = window.todayResults;
     return {
