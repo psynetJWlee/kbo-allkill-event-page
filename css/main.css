@@ -161,10 +161,10 @@ body {
 /* 24일 스탬프 이미지 */
 #team-selection-section-day24 .allkill-stamp {
   position: absolute;
-  top: -30px;                    /* 200px → 원하는 만큼 위로 당기기 (0보다 작아도 됩니다) */
+  top: 250px;                    /* 200px → 원하는 만큼 위로 당기기 (0보다 작아도 됩니다) */
   left: 50%;
   transform: translateX(-50%) rotate(-1deg);
-  z-index: 10;                   /* %가 아니라 정수로만 작성 */
+  z-index: 100;                   /* %가 아니라 정수로만 작성 */
   width: 300px;
   height: auto;
   pointer-events: none;          /* 클릭 방해 안 하도록 */
