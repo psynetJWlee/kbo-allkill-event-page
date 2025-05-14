@@ -121,10 +121,10 @@ const dayBeforeYesterdayResults = [
     id: 4,
     homeTeam:    { name: "롯데", logo: teamLogos["롯데"], votes: 1230, winner: true },
     awayTeam:    { name: "키움", logo: teamLogos["키움"], votes: 5525, winner: false },
-    homeScore:   6,
-    awayScore:   4,
-    status:      "종료",
-    correct:     true
+    homeScore:   0,
+    awayScore:   0,
+    status:      "취소",
+    correct:     false
   }
 ];
 
