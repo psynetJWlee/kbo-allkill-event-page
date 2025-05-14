@@ -1,3 +1,36 @@
+// ======================
+// 1. 공통 헬퍼 추가
+// ======================
+function renderGameStatus(game) {
+  // 1) 투표 중, 경기 취소
+  if (game.status === '투표 중' || game.status === '경기 취소') {
+    return `
+      <div class="game-status">
+        <div class="status-text">${game.status}</div>
+        <div class="game-time">${game.time || ''}</div>
+      </div>
+    `;
+  }
+
+  // 2) 경기 중
+  if (game.status === '경기 중') {
+    return `
+      <div class="game-status">
+        <div class="score-display">${game.homeScore} vs ${game.awayScore}</div>
+        <div class="status-text">경기 중</div>
+      </div>
+    `;
+  }
+
+  // 3) 종료 or 무승부
+  const isDraw = game.homeScore === game.awayScore;
+  return `
+    <div class="game-status">
+      <div class="score-display">${game.homeScore} vs ${game.awayScore}</div>
+      <div class="status-text">${isDraw ? '무승부' : '종료'}</div>
+    </div>
+  `;
+}
 
 function setupSubmitHandler() {
   const state = window.appState;
@@ -267,27 +300,19 @@ function renderTomorrowGames() {
         <div class="team-column">
           <div class="team-box ${homeSelected ? 'selected-home' : ''}"
                data-game-id="${game.id}" data-team="home">
-            <img class="team-logo"
-                 src="${game.homeTeam.logo}"
-                 alt="${game.homeTeam.name} 로고" />
+            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
             <span class="team-name">${game.homeTeam.name}</span>
           </div>
           <div class="vote-count ${homeHigherVotes ? 'higher' : 'lower'}">
             ${formatNumber(game.homeTeam.votes)}
           </div>
         </div>
-        
-        <div class="game-status">
-          <div class="voting-text">${game.status}</div>
-          <div class="game-time">${game.time}</div>
-        </div>
+        ${renderGameStatus(game)}
         
         <div class="team-column">
           <div class="team-box ${awaySelected ? 'selected-away' : ''}"
                data-game-id="${game.id}" data-team="away">
-            <img class="team-logo"
-                 src="${game.awayTeam.logo}"
-                 alt="${game.awayTeam.name} 로고" />
+            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
             <span class="team-name">${game.awayTeam.name}</span>
           </div>
           <div class="vote-count ${awayHigherVotes ? 'higher' : 'lower'}">
@@ -297,8 +322,11 @@ function renderTomorrowGames() {
       </div>
     `;
   }).join('');
-  
+
   $('#game-list').html(gamesHtml);
+  setupTeamSelectionHandlers();
+}
+
 
   // Setup event handlers for team selection
   setupTeamSelectionHandlers();
@@ -332,18 +360,7 @@ function renderTodayGames() {
           </div>
         </div>
         
-        <div class="game-status">
-          <div class="score-display">
-            <span class="score ${homeScoreHigher ? 'winner' : 'regular'}">
-              ${game.homeScore}
-            </span>
-            <span class="vs-text">vs</span>
-            <span class="score ${awayScoreHigher ? 'winner' : 'regular'}">
-              ${game.awayScore}
-            </span>
-          </div>
-          <div class="status-text">${game.status}</div>
-        </div>
+        ${renderGameStatus(game)}
         
         <div class="team-column">
           <div class="team-box ${awaySelected ? 'selected-away' : ''}" data-game-id="${game.id}" data-team="away">
@@ -400,18 +417,7 @@ function renderYesterdayGames() {
           </div>
         </div>
 
-        <div class="game-status">
-          <div class="score-display">
-            <span class="score ${game.homeScore > game.awayScore ? 'winner' : 'regular'}">
-              ${game.homeScore}
-            </span>
-            <span class="vs-text">vs</span>
-            <span class="score ${game.awayScore > game.homeScore ? 'winner' : 'regular'}">
-              ${game.awayScore}
-            </span>
-          </div>
-          <div class="status-text">${game.status}</div>
-        </div>
+        ${renderGameStatus(game)}
 
         <div class="team-column">
           <div class="team-box ${game.awayTeam.winner ? 'selected-away' : ''}"
@@ -473,18 +479,7 @@ function renderDay24Games() {
           </div>
         </div>
 
-        <div class="game-status">
-          <div class="score-display">
-            <span class="score ${game.homeScore > game.awayScore ? 'winner' : 'regular'}">
-              ${game.homeScore}
-            </span>
-            <span class="vs-text">vs</span>
-            <span class="score ${game.awayScore > game.homeScore ? 'winner' : 'regular'}">
-              ${game.awayScore}
-            </span>
-          </div>
-          <div class="status-text">${game.status}</div>
-        </div>
+        ${renderGameStatus(game)}
 
         <div class="team-column">
           <div
@@ -550,18 +545,7 @@ function renderDay23Games() {
           </div>
         </div>
 
-        <div class="game-status">
-          <div class="score-display">
-            <span class="score ${game.homeScore > game.awayScore ? 'winner' : 'regular'}">
-              ${game.homeScore}
-            </span>
-            <span class="vs-text">vs</span>
-            <span class="score ${game.awayScore > game.homeScore ? 'winner' : 'regular'}">
-              ${game.awayScore}
-            </span>
-          </div>
-          <div class="status-text">${game.status}</div>
-        </div>
+        ${renderGameStatus(game)}
 
         <div class="team-column">
           <div
