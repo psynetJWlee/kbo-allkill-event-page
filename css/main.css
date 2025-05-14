@@ -1017,22 +1017,8 @@ body {
 }
 
 /* 경기 스코어 전용 스타일 (@match-score 영역) */
-.match-score .score {
-  font-size: 30px;      /* 글자 크기 30px, 볼드 */
-  font-weight: bold;
-}
-
-.match-score .score.high {
-  color: #FFC736;       /* 더 높은 점수 */
-}
-
-.match-score .score.low {
-  color: #FFFFFF;       /* 더 낮은 점수 */
-}
-
-.match-score .vs {
-  font-size: 15px;      /* “vs” 텍스트 크기 15px */
-  color: #555555;
-  margin: 0 8px;
-}
-/* ───────────────────────────────────────────────────────── */
+.match-score { display:flex; align-items:center; justify-content:center; }
+.match-score .score { /* 30px bold */ }
+.match-score .score.winner { color:#FFC736; }
+.match-score .score.regular { color:#FFFFFF; }
+.match-score .vs { /* 15px #555 */ }
