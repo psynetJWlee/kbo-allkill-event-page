@@ -1,4 +1,4 @@
-import { defaultSelectedTeams } from './data.js';
++ import { defaultSelectedTeams } from '../../data.js';
 
 function setupSubmitHandler() {
   const state = window.appState;
