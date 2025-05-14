@@ -35,6 +35,7 @@ function setupSubmitHandler() {
 
 
 function initTeamSelectionSection() {
+  const state      = window.appState;
   const { today, currentDay } = window.appState;
   
   // 계산
