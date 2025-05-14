@@ -1,5 +1,6 @@
-import { defaultSelectedTeams } from '../../data.js';
-
+function resetToDefaultSelections() {
+  return { ...window.defaultSelectedTeams };
+}
 function setupSubmitHandler() {
   const state = window.appState;
 
