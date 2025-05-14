@@ -153,15 +153,21 @@ body {
   line-height: 1.2; /* 필요하면 줄간격 조정 */
 }
 
+#team-selection-section-day24 {
+  position: relative;    /* 이미 되어 있겠지만 확인 */
+  overflow: visible;     /* 스탬프가 컨테이너 밖으로 나가도 잘 보이게 */
+}
+
 /* 24일 스탬프 이미지 */
 #team-selection-section-day24 .allkill-stamp {
   position: absolute;
-  top: 200px;                   
-  left: 50%;                   
+  top: -30px;                    /* 200px → 원하는 만큼 위로 당기기 (0보다 작아도 됩니다) */
+  left: 50%;
   transform: translateX(-50%) rotate(-1deg);
-  z-index: 100%;                 
-  width: 300px;                
+  z-index: 10;                   /* %가 아니라 정수로만 작성 */
+  width: 300px;
   height: auto;
+  pointer-events: none;          /* 클릭 방해 안 하도록 */
 }
 
 /* 어제 결과 타이틀 아이콘 */
