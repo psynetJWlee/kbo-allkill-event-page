@@ -221,7 +221,6 @@ function initTeamSelectionSection() {
 
   $('#kbo-selection-container').html(dateNavHtml + contentHtml);
   renderGames();
-  styleScores();
   setupDateNavigationHandlers();
   setupSubmitHandler();
   
