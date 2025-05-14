@@ -366,16 +366,19 @@ body {
   text-align: center;
 }
 
-.score-display .vs {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  font-size: 15px;
-  color: #555555;
-  z-index: 1;
+/* main.css 하단에 추가 */
+.score-display.match-score {
+  display: flex;              /* flex 컨테이너 유지 */
+  align-items: center;        /* 수직 중앙 정렬 */
+  justify-content: center;    /* 수평 중앙 정렬 */
 }
+
+.score-display.match-score .vs {
+  font-size: 15px;            /* 원래 vs 크기 */
+  color: #555555;             /* 원래 vs 색상 */
+  margin: 0 16px;             /* 좌우 16px 간격 */
+}
+
 
 .score {
   font-size: 30px;
