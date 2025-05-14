@@ -148,7 +148,7 @@ function initTeamSelectionSection() {
   else if (state.currentDay === state.today - 1) {
     contentHtml = `
       <div class="team-selection-section" id="state-yesterday">
-     <h2 class="team-selection-title">
+       <h2 class="team-selection-title">
        다음 경기 도전 !<br/>
        <span class="subtitle">3 경기 성공!</span>
          <img 
@@ -195,7 +195,10 @@ function initTeamSelectionSection() {
  else if (currentDay === today - 3) {
    contentHtml = `
      <div class="team-selection-section" id="team-selection-section-day23" style="position: relative;">
-       <h2 class="team-selection-title">다음 경기 도전 !</h2>
+        <h2 class="team-selection-title">
+       다음 올킬 도전 !<br/>
+       <span class="subtitle">2경기 이상 경기 취소</span>
+       
        <div class="game-list" id="day23-game-list"></div>
        <div class="team-selection-submit">
          <button id="submit-allkill-btn" class="mega-sparkle-btn">
@@ -666,56 +669,6 @@ function updateSubmitButton() {
     });
   }
 }
-
-
-function renderDay23Games() {
-  const { formatNumber } = window.utils;
-  const gamesHtml = window.threeDaysAgoResults.map((game, index) => {
-    const isAlt = index % 2 === 0;
-    const homeHigher = game.homeTeam.votes >= game.awayTeam.votes;
-    const awayHigher = game.awayTeam.votes >= game.homeTeam.votes;
-    const disableCls = game.correct === false ? 'disabled' : '';
-    return `
-      <div class="match-result ${isAlt?'alternate-bg':''} ${disableCls}" data-index="${game.id}">
-        <div class="team-column">
-          <div class="team-box ${game.homeTeam.winner?'selected-home':''}"
-               data-game-id="${game.id}" data-team="home">
-            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
-            <span class="team-name">${game.homeTeam.name}</span>
-          </div>
-          <div class="vote-count ${homeHigher?'higher':'lower'}">
-            ${formatNumber(game.homeTeam.votes)}
-          </div>
-        </div>
-        <div class="game-status">
-          <div class="score-display">
-            <span class="score ${game.homeScore>game.awayScore?'winner':'regular'}">
-              ${game.homeScore}
-            </span>
-            <span class="vs-text">vs</span>
-            <span class="score ${game.awayScore>game.homeScore?'winner':'regular'}">
-              ${game.awayScore}
-            </span>
-          </div>
-          <div class="status-text">${game.status}</div>
-        </div>
-        <div class="team-column">
-          <div class="team-box ${game.awayTeam.winner?'selected-away':''}"
-               data-game-id="${game.id}" data-team="away">
-            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
-            <span class="team-name">${game.awayTeam.name}</span>
-          </div>
-          <div class="vote-count ${awayHigher?'higher':'lower'}">
-            ${formatNumber(game.awayTeam.votes)}
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-  $('#day23-game-list').html(gamesHtml);
-  setupTeamSelectionHandlers();
-}
-
 
 // Export the initialization functions
 window.teamSelectionSection = {
