@@ -37,7 +37,13 @@ function setupSubmitHandler() {
         // 3) subtitle만 교체
         $('#team-selection-section-tomorrow .subtitle')
           .text(stamp);
+        
+        // 4) 버튼 텍스트 변경
+        $('#team-selection-section-tomorrow #submit-allkill-btn')
+          .text('제출 완료 !')       // 순수 텍스트만 바뀝니다.
+          .append('<div class="spark"></div><div class="spark"></div><div class="spark"></div>');
       }
+      
     });
 }
 
