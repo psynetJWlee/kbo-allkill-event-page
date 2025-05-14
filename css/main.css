@@ -211,28 +211,24 @@ body {
 
 .team-selection-title {
   position: relative;
-  display: flex;                /* flexbox 켜기 */
-  flex-direction: column;       /* 세로 축 기준으로 정렬 */
-  justify-content: center;      /* 세로 중앙 정렬 */
-  align-items: center;          /* 가로 중앙 정렬 */
+  display: flex;            
+  flex-direction: column;      
+  justify-content: center;     
+  align-items: center;       
 
-  height: 100px;                /* 충분히 큰 고정 높이 (1줄·2줄 모두 수용) */
+  height: 100px;
   font-size: 40px;
   font-weight: bold;
   color: #FFFFFF;
   margin-bottom: 16px;
 
-  /* 더 이상 line-height나 padding-top으로 중앙 정렬하지 않습니다 */
-  /* line-height: 80px; */      
-  /* padding-top: 20px; */
 }
 
 
-/* 어제 섹션 타이틀의 소제목 */
 .team-selection-title .subtitle {
-  display: block;     /* 줄바꿈 후 독립 블록 처리 */
-  font-size: 30px;   /* 부모 폰트 크기의 절반 */
-  margin-top: 0.25em; /* 필요시 간격 조정 */
+  display: block;     
+  font-size: 30px;  
+  margin-top: 0.25em;
 }
 
 .team-selection-title .pointing-finger-left {
