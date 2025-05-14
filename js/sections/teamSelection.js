@@ -190,6 +190,21 @@ function initTeamSelectionSection() {
         </div>
       </div>
     `;
+    
+ // Three days ago content (today - 3)
+ else if (currentDay === today - 3) {
+   contentHtml = `
+     <div class="team-selection-section" id="team-selection-section-day23" style="position: relative;">
+       <h2 class="team-selection-title">다음 경기 도전 !</h2>
+       <div class="game-list" id="day23-game-list"></div>
+       <div class="team-selection-submit">
+         <button id="submit-allkill-btn" class="mega-sparkle-btn">
+           다음 경기 도전!
+           <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+         </button>
+       </div>
+     </div>
+   `;
   }
 
   
@@ -224,6 +239,10 @@ function renderGames() {
   } else if (currentDay === today - 2) {
     renderDay24Games();
   }
+  } else if (currentDay === today - 3) {
+    renderDay23Games();
+  }
+  
 }
 
 // Render tomorrow's games (27)
