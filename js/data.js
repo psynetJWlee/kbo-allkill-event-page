@@ -50,8 +50,8 @@ const dayBeforeYesterdayResults = [
 
 // 3일 전(오늘 - 3) 경기 결과
 const day23Results = [
-  { id: 0, homeTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:true},  awayTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:false}, homeScore:8, awayScore:3, status:"종료", correct:true },
-  { id: 1, homeTeam:{name:"NC",logo:teamLogos.NC,votes:4322,winner:false}, awayTeam:{name:"한화",logo:teamLogos["한화"],votes:227,winner:true},  homeScore:1, awayScore:6, status:"종료", correct:true },
+  { id: 0, homeTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:true},  awayTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:false}, homeScore:0, awayScore:0, status:"경기 취소", correct:false },
+  { id: 1, homeTeam:{name:"NC",logo:teamLogos.NC,votes:4322,winner:false}, awayTeam:{name:"한화",logo:teamLogos["한화"],votes:227,winner:true},  homeScore:1, awayScore:1, status:"무승부", correct:false },
   { id: 2, homeTeam:{name:"삼성",logo:teamLogos["삼성"],votes:9324,winner:true},  awayTeam:{name:"두산",logo:teamLogos["두산"],votes:423,winner:false},  homeScore:7, awayScore:2, status:"종료", correct:true },
   { id: 3, homeTeam:{name:"SSG",logo:teamLogos.SSG,votes:5524,winner:false}, awayTeam:{name:"KIA",logo:teamLogos.KIA,votes:4218,winner:true},   homeScore:3, awayScore:9, status:"종료", correct:true },
   { id: 4, homeTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true},  awayTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, homeScore:6, awayScore:4, status:"종료", correct:true }
