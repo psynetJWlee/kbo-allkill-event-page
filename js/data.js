@@ -188,7 +188,7 @@ const userData = {
   totalPages: 3
 };
 
- export const defaultSelectedTeams = {
+window.defaultSelectedTeams = {
    0: 'home',
    1: 'away',
    2: 'away',
