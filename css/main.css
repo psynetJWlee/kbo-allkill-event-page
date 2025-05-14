@@ -989,10 +989,10 @@ body {
   padding: 0 !important;
 }
 
-.game-status .score-display,
-.game-status .status-text,
-.game-status .game-time {
-  display: block;
+.game-status .score-display.match-score {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 .game-status .score-display {
