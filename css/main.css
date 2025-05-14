@@ -1062,12 +1062,7 @@ body {
     padding: 10px;
   }
 
-  /* 팀 박스 크기 축소 */
-  .team-box {
-    width: 60px;
-    height: 60px;
-    padding: 4px;
-  }
+
   .team-name {
     font-size: 12px;
   }
