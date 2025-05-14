@@ -81,7 +81,7 @@ function initTeamSelectionSection() {
   let contentHtml = '';
   
   // --- Tomorrow's content (today + 1) ---
-  if (state.currentDay === state.today + 1) {
+  if (currentDay === today + 1) {
     contentHtml = `
     <div class="team-selection-section" id="team-selection-section-tomorrow">
       <h2 class="team-selection-title">
@@ -112,7 +112,7 @@ function initTeamSelectionSection() {
   `;
   }
   // --- Today's content (today) ---
-  else if (state.currentDay === state.today) {
+  else if (currentDay === today) {
     contentHtml = `
     <div class="team-selection-section" id="team-selection-section-today">
       <h2 class="team-selection-title">
@@ -144,7 +144,7 @@ function initTeamSelectionSection() {
   `;
   }
   // Yesterday's content (today - 1)
-  else if (state.currentDay === state.today - 1) {
+  else if (currentDay === today - 1) {
     contentHtml = `
       <div class="team-selection-section" id="state-yesterday">
        <h2 class="team-selection-title">
@@ -170,7 +170,7 @@ function initTeamSelectionSection() {
   }
     
   // Day before yesterday’s content (today - 2)
-  else if (state.currentDay === state.today - 2) {
+  else if (currentDay === today - 2) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-day24" style="position: relative;">
         <h2 class="team-selection-title">올킬 성공!</h2>
@@ -191,8 +191,9 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
+    
   // Three days ago content (today - 3)
-  else if (state.currentDay === state.today - 3) {
+  else if (currentDay === today - 3) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-day23">
         <h2 class="team-selection-title">
@@ -214,8 +215,9 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
+    
   // Placeholder for other dates
-  else {
+else {
     contentHtml = `
       <div class="team-selection-placeholder" id="team-selection-placeholder">
         <div class="flex justify-center items-center h-[400px] text-white text-lg">
@@ -224,13 +226,14 @@ function initTeamSelectionSection() {
       </div>
     `;
   }
-
-  // Combine date navigation and content
+  
+  // 렌더링 & 핸들러 재설정
   $('#kbo-selection-container').html(dateNavHtml + contentHtml);
   renderGames();
   setupDateNavigationHandlers();
   setupSubmitHandler();
 }
+
 
 // Render games based on current day
 function renderGames() {
