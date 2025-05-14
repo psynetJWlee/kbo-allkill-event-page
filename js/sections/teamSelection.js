@@ -148,9 +148,9 @@ function initTeamSelectionSection() {
   else if (state.currentDay === state.today - 1) {
     contentHtml = `
       <div class="team-selection-section" id="state-yesterday">
-       <h2 class="team-selection-title">
-         다음 경기 도전 !<br/>
-         <span class="subtitle">3 경기 성공!</span>
+     <h2 class="team-selection-title">
+       다음 경기 도전 !<br/>
+       <span class="subtitle">3 경기 성공!</span>
          <img 
            src="https://lh3.googleusercontent.com/fife/ALs6j_HDqpSkW_tSXGLmnHJLh2DlvBwNtY7IQ49dGWXqy2m53PVXYtpiRhqXmfPN_YN6NxC13OX-WqKZO81M63eY4ls5iNSnPfR5WYYQpX_udEd3qZTAkhzzyMfgYp_-A0B6-Wf9rgou8ZgHEtteVflXllGseYJl73NC-BMqRP2BrRO_foDTYJC9Xihn8y9cIfb8Y8YrIdU4lh-8si4PbQKq54XmrGvBszMSarNUy8Weoo0o2kqbt4nG-kXFjwfvwWlNIZZn8eH6nPhtXl_mlemCiNE5MxLsBI0gbtYgTVxZcOOSuaKXdYzWznpQ2htjGpsjI--4cTayw9xyNPmP2qvd-bOQwoct0wsTfDqgYdqLFU6jY65oSadEJznxZOprbKTbM4edJ7bARkUaBGn4pospKNTB4F9R3gnXwL0pc20BkfUFbVJ6Wuj3yykmeDOGpw1u0TyhqeYVuonG2xHOelGVvD6p0m8-FIrZgtR00RMvDt3DZ_hyMA1sSoSGjOz_waxMCasGPJSIj76Ue5WSbNIArITprWw0pNoCDc_Wrof2LjoWxtXDvf626c0OtGxnqQVgESVCK7jEx5iEyEFY0Z9PViZEB-vZgC4FT6jqTzaQlhsWerwSzLgcR5SfaD5sW1BxrrJuLF2tRbsxgcCDeeXAjDi4j10FF1uSD9u2oq1r7I5wcv_FJiApHzisM-xLJFMRh2utmE8q6HKoFkgXRIxnCDcA56FR0qBzBUowtSmP6TrN565T9PjpRpd0iWDTRVww3dyu1Ie4u4xe_2zIhyInjdhueATgAgZNo1gu3T_rLGwA2id4MeLn-sQU_OoGAYdkfIkRbjmwMofUhwEBgsvskOY_CzUwcwCMSbdd5EJhXwBJjVG6exrBiMppm-3VOcp4uWPzWIzQGaXQ_D56jASJmSoKQcUiLatO4ONsaFSjQGugU0GEnuuaAPtcn6Ot9p4vNqFomQwP8tYxfZN0EKzVloRtvG9WST0jZWxQHGzzDBJEHq2cqmAzY-EyQ3efAH68l-yj2dVtypMJUo8V5HklcHcCl_qg5WAzStPRlnKOLkUBjaimDQ7-M_51Fm75FCaGbU4HXbSGEIyW-w18PLxay5w4_pTM1kg5HMaaJfJSOwm6HnGoEt4d3w1klOKqoZ55KMMzjjVQoCrBNVAxsJklKdMgGM804-fcvJN1OkuN6_-tSXDO3OKZ1pgbkqbOCGIWRktIjIND5JaeHhmTDdSIljZxXd5zVdvgZzIBWeUMHKNJs7D7q1sDX5ipBQyqAlkzKHylYQoXj4gkNZXGqIHt_PkdTDGzHhYNnMCWnzhjeq8wbYN-XSYke5RgUNKc6jpWVMpeWnPlDCGXMJpQe60ooRQ1HpOsYiXTPEBFVaBbXGpoPvdj8HCOk08RnN-z-TAuHv6QQ9Js6HzDyg9BShPR4eJk5hC4IwFum7zrVLbeO5hx6C7SET56egUwPeoCoakF9Qa5b-Zkw5_nTVPH-pyTiQen2K7U9lEZT5w_2WA6WbWjDy7wUK6vmBXzeMHoGPvc1fT4gHci79WwVc894Gb_mLzlxoF7-W24HCRSHV6l3Q0ia1MVWF4oSk0kJWwWYubNVaKVlh7reAXqgBhj0WJjcRZY=w1252-h911?auditContext=prefetch" 
            alt="결과 아이콘" 
@@ -195,9 +195,7 @@ function initTeamSelectionSection() {
  else if (currentDay === today - 3) {
    contentHtml = `
      <div class="team-selection-section" id="team-selection-section-day23" style="position: relative;">
-       <h2 class="team-selection-title">
-       다음 올킬 도전 !<br/>
-       <span class="subtitle">2경기 이상 경기 취소</span>
+       <h2 class="team-selection-title">다음 경기 도전 !</h2>
        <div class="game-list" id="day23-game-list"></div>
        <div class="team-selection-submit">
          <button id="submit-allkill-btn" class="mega-sparkle-btn">
@@ -668,6 +666,56 @@ function updateSubmitButton() {
     });
   }
 }
+
+
+function renderDay23Games() {
+  const { formatNumber } = window.utils;
+  const gamesHtml = window.threeDaysAgoResults.map((game, index) => {
+    const isAlt = index % 2 === 0;
+    const homeHigher = game.homeTeam.votes >= game.awayTeam.votes;
+    const awayHigher = game.awayTeam.votes >= game.homeTeam.votes;
+    const disableCls = game.correct === false ? 'disabled' : '';
+    return `
+      <div class="match-result ${isAlt?'alternate-bg':''} ${disableCls}" data-index="${game.id}">
+        <div class="team-column">
+          <div class="team-box ${game.homeTeam.winner?'selected-home':''}"
+               data-game-id="${game.id}" data-team="home">
+            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
+            <span class="team-name">${game.homeTeam.name}</span>
+          </div>
+          <div class="vote-count ${homeHigher?'higher':'lower'}">
+            ${formatNumber(game.homeTeam.votes)}
+          </div>
+        </div>
+        <div class="game-status">
+          <div class="score-display">
+            <span class="score ${game.homeScore>game.awayScore?'winner':'regular'}">
+              ${game.homeScore}
+            </span>
+            <span class="vs-text">vs</span>
+            <span class="score ${game.awayScore>game.homeScore?'winner':'regular'}">
+              ${game.awayScore}
+            </span>
+          </div>
+          <div class="status-text">${game.status}</div>
+        </div>
+        <div class="team-column">
+          <div class="team-box ${game.awayTeam.winner?'selected-away':''}"
+               data-game-id="${game.id}" data-team="away">
+            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
+            <span class="team-name">${game.awayTeam.name}</span>
+          </div>
+          <div class="vote-count ${awayHigher?'higher':'lower'}">
+            ${formatNumber(game.awayTeam.votes)}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  $('#day23-game-list').html(gamesHtml);
+  setupTeamSelectionHandlers();
+}
+
 
 // Export the initialization functions
 window.teamSelectionSection = {
