@@ -71,13 +71,13 @@ function setupSubmitHandler() {
 
       // 제목 변경 & subtitle 교체 & 버튼 텍스트 변경
       const $section = $('#team-selection-section-tomorrow');
-      +     const $title = $section.find('.team-selection-title');
-     // 1) 기존 순수 텍스트(올킬 도전! 등)만 삭제
-     $title.contents()
+      const $title = $section.find('.team-selection-title');
+       // 1) 기존 순수 텍스트(올킬 도전! 등)만 삭제
+       $title.contents()
        .filter((_, el) => el.nodeType === Node.TEXT_NODE)
        .remove();
-     // 2) 왼쪽 손가락 이미지(.pointing-finger-left) 바로 뒤에 삽입
-     $title.find('.pointing-finger-left')
+       // 2) 왼쪽 손가락 이미지(.pointing-finger-left) 바로 뒤에 삽입
+       $title.find('.pointing-finger-left')
        .after('제출 완료 ! ');
       
       $section.find('.subtitle').text(stamp);
