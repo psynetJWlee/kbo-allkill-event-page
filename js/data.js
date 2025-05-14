@@ -49,7 +49,6 @@ const dayBeforeYesterdayResults = [
 ];
 
 // 3일 전(오늘 - 3) 경기 결과
-//   ※ 변수명을 day23Results 로 바꿔야 teamSelection.js 와 일치합니다.
 const day23Results = [
   { id: 0, homeTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:true},  awayTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:false}, homeScore:8, awayScore:3, status:"종료", correct:true },
   { id: 1, homeTeam:{name:"NC",logo:teamLogos.NC,votes:4322,winner:false}, awayTeam:{name:"한화",logo:teamLogos["한화"],votes:227,winner:true},  homeScore:1, awayScore:6, status:"종료", correct:true },
@@ -58,7 +57,7 @@ const day23Results = [
   { id: 4, homeTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true},  awayTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, homeScore:6, awayScore:4, status:"종료", correct:true }
 ];
 
-// (아래는 필요하다면 window 멤버로도 노출해 주세요)
+
 window.teamLogos              = teamLogos;
 window.kboGames               = kboGames;
 window.todayResults           = todayResults;
