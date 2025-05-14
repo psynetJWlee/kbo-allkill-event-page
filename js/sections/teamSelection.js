@@ -3,18 +3,6 @@
 // ======================
 // 1. 공통 헬퍼 추가
 // ======================
-
-function getHighlightHtml(game) {
-  if (!game.correct) return '';
-  return `
-    <div class="red-circle-container">
-      <img class="red-circle-image"
-           src="https://lh3.googleusercontent.com/fife/ALs6j_FS9zOwrQikdw3Flg2geoaU1oLq1Sf509QEYXI_kd1_khDbmg45PZnGJP29rnCfdVzeKU4cbj__RMzGfQNEgAinN8HO_595XgPB7jHIpfB9jMIyb6PLvTHrGiGWGv5__qo1C42W3T4ZTRUys5Jfiv78u6MHgQxAVE0lb3VjTVO6dFye000H0OUoIwBhWoTnMOlUBN_VlZr7AlituyZnsBBaO1i9MzhZnfwAUrRzaFeeDhsVEyz0zuzw6E-KyYCUaGGHnMCuig6DdBsvIfBgus52hvklCHkqnqVwQ-tG4ubYuz1w-1_8_TqUWIYuHSf8KCOQxY1-QyHLzF2ZTBov0D8VUjKAmvx-6-vVkyuvbNUnoIhpLWfbiIdQPt488WAc54OyGbTF0j2e5zYK80c8bJndsD0HOy7cyx9BbVDkExrEvQTplRfUckbk8GJh1WKJlGW_LVGsmh4PBcPEunnJGlP9p44c_oLqriPwcW8Hst43TzyPS_TkR4U8rlxBnciq4BOnpRsQ81da8zytZfMlRM6dSHuJfLbe5kOREvxL0EXhUs_2eSedt7YgZqMOudg1Y3q54q6VGEuqYjnJHonZ-mVjBKpCBk69TC3_zPgu4D626RQ0etZq50KPSRBzp73lllReofsLW3M9JFkRtPT7Vi4lmGuwHrObee8g9FS83JKoldzNVgnQC-_HpFjbGQzz1RgPAZVHeyM8vLAQ8bfrciWP3ulfA2QMKikwm6CG2OH7FX9RldNJx1Atc-7I2Wu59bp328MUObFySswAj_1udxoZ5dQRZn0GfZxY5rlLDZ_y8MtdamIqhp-Z09qnro2vj9KVqkBfiDcVuX5Q2IqmF2phn9BSF59qS30j7HZmkw3CRwi5VY7upTNbTIWyiRNVvGKoaFf-n1aZxyBqOVgNfhS3jgou6xX5N9BVAcCdfCKZokxYLD1yXpEaahF5hn8r6yfBBycsF7iUCShgj9jH_NJftX-Jo-siXBKKa0UI1LHuc1RlY0Wa6eDgtQaUoy2IQIVV2zrai_ySXFsn9XuI_Mv67x9fFIXzyvdfr7IMIGoDEFO7TrIBsk4LNFLGYlB3w9eVHm6uaVMuP_EvZ0BTJBpbc5cyOVmGPC02-2niJynAL-LdBw7uqo1QwIj-W5Q-irqQC-iKrK2bs9ILx5efurkoZZAvToETXXRDFTrCvKonm3FY0vpIIMGHWxjMdPTve0KQ1lx96r61GAbqvs2xsjIeMupaOgXGFHafEN0X3G11d6XGMjdfJQEYF08C8W81x0S5GFoMeR0hAszZBQM4snM7sF4K_-ft8s_tWjC82ELs_cnaxGqmu8PvHv5G7obME7QvQToj0KDQSZNYC9aZSQtdzN02PFAMFzDQLAfo_9r7wjAjbOskZTSn4vLtrAJipEu_0GqC_mlb3zom9totY-VWaDoTby2SmbNdxe_jeyVgOCsYChFU3wm64idm42GBw3iLwF0WqemFAP1q5UpLknN2QuGC_H4Vd43ZHO-OOjO1kV7vQ_UILUFX0kmxs75PgEI5XoIQDAa5McwYub64BAHJKpgfkhWU9qj-hUdRwrOHscwYUdm4UCRsf5wLHsAqK9P8YgagAm2S8d9P2stJSic=w1902-h910?auditContext=prefetch"
-           alt="정답">
-    </div>
-  `;
-}
-
 function renderGameStatus(game) {
   // 1) 투표 중 / 경기 취소
   if (game.status === '투표 중' || game.status === '경기 취소') {
@@ -322,104 +310,18 @@ function renderTodayGames() {
 
 function renderYesterdayGames() {
   const { formatNumber } = window.utils;
-  const gamesHtml = yesterdayResults.map((game, index) => {
-    const isAlternateBackground = index % 2 === 0;
-    const homeHigherVotes = game.homeTeam.votes >= game.awayTeam.votes;
-    const awayHigherVotes = game.awayTeam.votes >= game.homeTeam.votes;
-    const disableCls = game.correct === false ? 'disabled' : '';
-    const highlightHtml = getHighlightHtml(game);
-
+  const html = yesterdayResults.map((game,i) => {
+    const bg = i%2===0?'alternate-bg':'';
+    const disabled = game.correct===false?'disabled':'';
+    const homeHigh = game.homeTeam.votes>=game.awayTeam.votes?'higher':'lower';
+    const awayHigh = game.awayTeam.votes>=game.homeTeam.votes?'higher':'lower';
+    const mark = game.correct
+      ? `<div class="red-circle-container"><img class="red-circle-image" src="…red.png" alt=""></div>`
+      : '';
     return `
-      <div class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
-           data-index="${game.id}">
-        ${highlightHtml}
-        <!-- 홈 팀 칼럼 -->
+      <div class="match-result ${bg} ${disabled}" data-index="${game.id}">
+        ${mark}
         <div class="team-column">
-          <div class="team-box ${game.homeTeam.winner ? 'selected-home' : ''}"
-               data-game-id="${game.id}" data-team="home">
-            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
-            <span class="team-name">${game.homeTeam.name}</span>
-          </div>
-          <div class="vote-count ${homeHigherVotes ? 'higher' : 'lower'}">
-            ${formatNumber(game.homeTeam.votes)}
-          </div>
-        </div>
-        <!-- 상태/스코어 -->
-        <div class="game-status">
-          <div class="score-display">
-            <span class="score ${game.homeScore > game.awayScore ? 'winner' : 'regular'}">
-              ${game.homeScore}
-            </span>
-            <span class="vs-text">vs</span>
-            <span class="score ${game.awayScore > game.homeScore ? 'winner' : 'regular'}">
-              ${game.awayScore}
-            </span>
-          </div>
-          <div class="status-text">${game.status}</div>
-        </div>
-        <!-- 어웨이 팀 칼럼 -->
-        <div class="team-column">
-          <div class="team-box ${game.awayTeam.winner ? 'selected-away' : ''}"
-               data-game-id="${game.id}" data-team="away">
-            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
-            <span class="team-name">${game.awayTeam.name}</span>
-          </div>
-          <div class="vote-count ${awayHigherVotes ? 'higher' : 'lower'}">
-            ${formatNumber(game.awayTeam.votes)}
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  $('#yesterday-game-list').html(gamesHtml);
-}
-
-
-function renderDay24Games() {
-  const { formatNumber } = window.utils;
-  const gamesHtml = dayBeforeYesterdayResults.map((game, index) => {
-    const isAlternateBackground = index % 2 === 0;
-    const homeHigherVotes = game.homeTeam.votes >= game.awayTeam.votes;
-    const awayHigherVotes = game.awayTeam.votes >= game.homeTeam.votes;
-    const disableCls = game.correct === false ? 'disabled' : '';
-    const highlightHtml = getHighlightHtml(game);
-
-    return `
-      <div class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
-           data-index="${game.id}">
-        ${highlightHtml}
-        <div class="team-column">
-          <!-- ... 홈 팀 ... -->
-        </div>
-        <div class="game-status">
-          <!-- ... 스코어/상태 ... -->
-        </div>
-        <div class="team-column">
-          <!-- ... 어웨이 팀 ... -->
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  $('#day24-game-list').html(gamesHtml);
-}
-
-
-function renderDay23Games() {
-  const { formatNumber } = window.utils;
-  const gamesHtml = day23Results.map((game, index) => {
-    const isAlternateBackground = index % 2 === 0;
-    const homeHigherVotes = game.homeTeam.votes >= game.awayTeam.votes;
-    const awayHigherVotes = game.awayTeam.votes >= game.homeTeam.votes;
-    const disableCls = game.correct === false ? 'disabled' : '';
-    const highlightHtml = getHighlightHtml(game);
-
-    return `
-      <div class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
-           data-index="${game.id}">
-        ${highlightHtml}
-          <div class="team-column">
           <div class="team-box ${game.homeTeam.winner?'selected-home':''}" data-game-id="${game.id}" data-team="home">
             <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name}">
             <span class="team-name">${game.homeTeam.name}</span>
@@ -437,7 +339,75 @@ function renderDay23Games() {
       </div>
     `;
   }).join('');
-  $('#day23-game-list').html(gamesHtml);
+  $('#yesterday-game-list').html(html);
+}
+
+function renderDay24Games() {
+  const { formatNumber } = window.utils;
+  const html = dayBeforeYesterdayResults.map((game,i) => {
+    const bg = i%2===0?'alternate-bg':'';
+    const disabled = game.correct===false?'disabled':'';
+    const homeHigh = game.homeTeam.votes>=game.awayTeam.votes?'higher':'lower';
+    const awayHigh = game.awayTeam.votes>=game.homeTeam.votes?'higher':'lower';
+    const mark = game.correct
+      ? `<div class="red-circle-container"><img class="red-circle-image" src="…red.png" alt=""></div>`
+      : '';
+    return `
+      <div class="match-result ${bg} ${disabled}" data-index="${game.id}">
+        ${mark}
+        <div class="team-column">
+          <div class="team-box ${game.homeTeam.winner?'selected-home':''}" data-game-id="${game.id}" data-team="home">
+            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name}">
+            <span class="team-name">${game.homeTeam.name}</span>
+          </div>
+          <div class="vote-count ${homeHigh}">${formatNumber(game.homeTeam.votes)}</div>
+        </div>
+        ${renderGameStatus(game)}
+        <div class="team-column">
+          <div class="team-box ${game.awayTeam.winner?'selected-away':''}" data-game-id="${game.id}" data-team="away">
+            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name}">
+            <span class="team-name">${game.awayTeam.name}</span>
+          </div>
+          <div class="vote-count ${awayHigh}">${formatNumber(game.awayTeam.votes)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  $('#day24-game-list').html(html);
+}
+
+function renderDay23Games() {
+  const { formatNumber } = window.utils;
+  const html = day23Results.map((game,i) => {
+    const bg = i%2===0?'alternate-bg':'';
+    const disabled = game.correct===false?'disabled':'';
+    const homeHigh = game.homeTeam.votes>=game.awayTeam.votes?'higher':'lower';
+    const awayHigh = game.awayTeam.votes>=game.homeTeam.votes?'higher':'lower';
+    const mark = game.correct
+      ? `<div class="red-circle-container"><img class="red-circle-image" src="…red.png" alt=""></div>`
+      : '';
+    return `
+      <div class="match-result ${bg} ${disabled}" data-index="${game.id}">
+        ${mark}
+        <div class="team-column">
+          <div class="team-box ${game.homeTeam.winner?'selected-home':''}" data-game-id="${game.id}" data-team="home">
+            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name}">
+            <span class="team-name">${game.homeTeam.name}</span>
+          </div>
+          <div class="vote-count ${homeHigh}">${formatNumber(game.homeTeam.votes)}</div>
+        </div>
+        ${renderGameStatus(game)}
+        <div class="team-column">
+          <div class="team-box ${game.awayTeam.winner?'selected-away':''}" data-game-id="${game.id}" data-team="away">
+            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name}">
+            <span class="team-name">${game.awayTeam.name}</span>
+          </div>
+          <div class="vote-count ${awayHigh}">${formatNumber(game.awayTeam.votes)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  $('#day23-game-list').html(html);
 }
 
 // ======================
