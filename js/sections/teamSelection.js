@@ -1,5 +1,22 @@
 // teamSelection.js
 
+function styleScores() {
+  var $home = $('#score-home');
+  var $away = $('#score-away');
+  if (!$home.length || !$away.length) return;
+
+  var home = parseInt($home.text(), 10);
+  var away = parseInt($away.text(), 10);
+
+  if (home > away) {
+    $home.addClass('high');
+    $away.addClass('low');
+  } else if (away > home) {
+    $away.addClass('high');
+    $home.addClass('low');
+  }
+}
+
 // ======================
 // 1. 공통 헬퍼 추가
 // ======================
@@ -133,8 +150,9 @@ function initTeamSelectionSection() {
           </button>
         </div>
       </div>
-    `;
+    `;    
   }
+
   else if (currentDay === today) {
     contentHtml = `
       <div class="team-selection-section" id="team-selection-section-today">
