@@ -569,13 +569,32 @@ function setupDateNavigationHandlers() {
 function setupTeamSelectionHandlers() {
   const state = window.appState;
   
-  $('.team-box').on('click', function() {
+  // 먼저 기존 핸들러를 제거하고 다시 붙여 중복 바인딩 방지
+  $('.team-box').off('click').on('click', function() {
     const gameId = parseInt($(this).data('game-id'));
-    const team = $(this).data('team');
+    const team   = $(this).data('team');
     
+    // 선택 상태 업데이트
     state.selectedTeams[gameId] = team;
     updateTeamSelections();
     updateSubmitButton();
+
+    // “내일” 화면에서 이미 제출 완료 상태였다면
+    if (
+      state.currentDay === state.today + 1 &&
+      $('#team-selection-section-tomorrow .team-selection-title')
+        .text()
+        .startsWith('제출 완료')
+    ) {
+      // 버튼 텍스트를 “수정 제출” 로 변경
+      $('#submit-allkill-btn')
+        .text('수정 제출')
+        .append(
+          '<div class="spark"></div>' +
+          '<div class="spark"></div>' +
+          '<div class="spark"></div>'
+        );
+    }
   });
 }
 
