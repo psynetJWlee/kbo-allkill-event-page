@@ -1043,3 +1043,61 @@ body {
   color: #555555;       /* “vs” 색상 */
   margin: 0 8px;        /* 좌우 여백 */
 }
+
+/* main.css 맨 아래에 붙여주세요 */
+@media (max-width: 480px) {
+  /* 컨테이너 패딩 줘서 좌우 여백 확보 */
+  #kbo-selection-container {
+    padding: 0 12px;
+  }
+
+  /* 게임 아이템 간격 좁히기 */
+  .game-list {
+    gap: 12px;
+  }
+
+  /* 카드 안 여백도 조금 줄여주고 */
+  .game-item,
+  .match-result {
+    padding: 10px;
+  }
+
+  /* 팀 박스 크기 축소 */
+  .team-box {
+    width: 60px;
+    height: 60px;
+    padding: 4px;
+  }
+  .team-name {
+    font-size: 12px;
+  }
+  .vote-count {
+    font-size: 12px;
+  }
+
+  /* 점수/VS 줄 사이즈 조정 */
+  .match-score .score {
+    font-size: 24px;
+  }
+  .match-score .vs {
+    margin: 0 8px;
+  }
+
+  /* 제목 폰트 줄이기 */
+  .team-selection-title {
+    font-size: 32px;
+    height: auto;
+    padding: 8px 0;
+  }
+  .team-selection-title .subtitle {
+    font-size: 24px;
+  }
+
+  /* 날짜 네비게이션 글씨 줄이기 */
+  .date-navigation {
+    padding: 0 8px;
+  }
+  .prev-day, .next-day, .current-day {
+    font-size: 14px;
+  }
+}
