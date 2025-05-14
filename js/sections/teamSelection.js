@@ -290,27 +290,30 @@ function renderYesterdayGames() {
   const { formatNumber } = window.utils;
   
   const gamesHtml = yesterdayResults.map((game, index) => {
-    const isAlternateBackground = index % 2 === 0;
-    const homeHigherVotes     = game.homeTeam.votes >= game.awayTeam.votes;
-    const awayHigherVotes     = game.awayTeam.votes >= game.homeTeam.votes;
+  const isAlternateBackground = index % 2 === 0;
+  const homeHigherVotes     = game.homeTeam.votes >= game.awayTeam.votes;
+  const awayHigherVotes     = game.awayTeam.votes >= game.homeTeam.votes;
     
-    // Use game.correct flag directly to determine disabled class
-    const disableCls = game.correct === false ? 'disabled' : '';
-    
+  // Use game.correct flag directly to determine disabled class
+  const disableCls = game.correct === false ? 'disabled' : '';
+  // ▶ correct가 true일 때만 동그라미 HTML
+  const highlightHtml = game.correct
+    ? `<div class="red-circle-container">
+         <img class="red-circle-image"
+              src="/images/red-circle.png"
+              alt="Highlight">
+       </div>`
+    : '';
+   
     return `
-      <div
-        class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
-        data-index="${game.id}"
-      >
+      <div class="match-result ${isAlternateBackground ? 'alternate-bg' : ''} ${disableCls}"
+           data-index="${game.id}">
+        ${highlightHtml}
+
         <div class="team-column">
-          <div
-            class="team-box ${game.homeTeam.winner ? 'selected-home' : ''}"
-            data-game-id="${game.id}"
-            data-team="home"
-          >
-            <img class="team-logo"
-                 src="${game.homeTeam.logo}"
-                 alt="${game.homeTeam.name} 로고" />
+          <div class="team-box ${game.homeTeam.winner ? 'selected-home' : ''}"
+               data-game-id="${game.id}" data-team="home">
+            <img class="team-logo" src="${game.homeTeam.logo}" alt="${game.homeTeam.name} 로고" />
             <span class="team-name">${game.homeTeam.name}</span>
           </div>
           <div class="vote-count ${homeHigherVotes ? 'higher' : 'lower'}">
@@ -332,14 +335,9 @@ function renderYesterdayGames() {
         </div>
 
         <div class="team-column">
-          <div
-            class="team-box ${game.awayTeam.winner ? 'selected-away' : ''}"
-            data-game-id="${game.id}"
-            data-team="away"
-          >
-            <img class="team-logo"
-                 src="${game.awayTeam.logo}"
-                 alt="${game.awayTeam.name} 로고" />
+          <div class="team-box ${game.awayTeam.winner ? 'selected-away' : ''}"
+               data-game-id="${game.id}" data-team="away">
+            <img class="team-logo" src="${game.awayTeam.logo}" alt="${game.awayTeam.name} 로고" />
             <span class="team-name">${game.awayTeam.name}</span>
           </div>
           <div class="vote-count ${awayHigherVotes ? 'higher' : 'lower'}">
@@ -349,6 +347,7 @@ function renderYesterdayGames() {
       </div>
     `;
   }).join('');
+
 
   $('#yesterday-game-list').html(gamesHtml);
 }
