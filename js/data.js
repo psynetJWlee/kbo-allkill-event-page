@@ -22,6 +22,7 @@ const kboGames = [
 ];
 
 // Today's game results data
+export const defaultSelectedTeams = { 0:'home',1:'away',2:'away',3:'home',4:'home' };
 const todayResults = [
   { 
     id: 0, 
