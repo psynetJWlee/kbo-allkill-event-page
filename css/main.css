@@ -1015,10 +1015,28 @@ body {
 .game-status[data-status="무승부"] .game-time {
   display: none;
 }
-
 /* 경기 스코어 전용 스타일 (@match-score 영역) */
-.match-score { display:flex; align-items:center; justify-content:center; }
-.match-score .score { /* 30px bold */ }
-.match-score .score.winner { color:#FFC736; }
-.match-score .score.regular { color:#FFFFFF; }
-.match-score .vs { /* 15px #555 */ }
+.match-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.match-score .score {
+  font-size: 30px;      /* 폰트 크기 */
+  font-weight: bold;    /* 볼드 처리 */
+}
+
+.match-score .score.winner {
+  color: #FFC736;       /* 더 높은 점수 */
+}
+
+.match-score .score.regular {
+  color: #FFFFFF;       /* 더 낮은 점수 */
+}
+
+.match-score .vs {
+  font-size: 15px;      /* “vs” 크기 */
+  color: #555555;       /* “vs” 색상 */
+  margin: 0 8px;        /* 좌우 여백 */
+}
