@@ -25,8 +25,8 @@ const kboGames = [
 const todayResults = [
   { 
     id: 0, 
-    homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941, winner: true }, 
-    awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, 
+    homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941, winner: true  }, 
+    awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304, winner: false }, 
     homeScore: 1, 
     awayScore: 5, 
     status: "종료"
