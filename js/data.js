@@ -187,3 +187,11 @@ const userData = {
   currentPage: 1,
   totalPages: 3
 };
+
+ export const defaultSelectedTeams = {
+   0: 'home',
+   1: 'away',
+   2: 'away',
+   3: 'home',
+   4: 'home'
+ };
