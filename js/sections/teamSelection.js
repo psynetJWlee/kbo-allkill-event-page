@@ -27,9 +27,18 @@ function renderGameStatus(game) {
   // 3) 종료 or 무승부
   const isDraw = game.homeScore === game.awayScore;
   return `
-    <div class="game-status">
-      <div class="score-display">${game.homeScore} vs ${game.awayScore}</div>
-      <div class="status-text">${isDraw ? '무승부' : '종료'}</div>
+    <div class="game-status" data-status="${st}">
+      ${
+        (st === '투표 중' || st === '경기 취소')
+          ? `<div class="status-text">${st}</div><div class="game-time">${game.time || ''}</div>`
+        : (st === '경기 중')
+          ? `<div class="score-display">${game.homeScore} vs ${game.awayScore}</div><div class="status-text">경기 중</div>`
+        : (() => {
+            const draw = game.homeScore === game.awayScore;
+            return `<div class="score-display">${game.homeScore} vs ${game.awayScore}</div>
+                    <div class="status-text">${draw ? '무승부' : '종료'}</div>`;
+          })()
+      }
     </div>
   `;
 }
