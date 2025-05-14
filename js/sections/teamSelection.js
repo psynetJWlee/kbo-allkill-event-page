@@ -191,8 +191,8 @@ function initTeamSelectionSection() {
       </div>
     `;
     
- // Three days ago content (today - 3)
- else if (currentDay === today - 3) {
+   // Three days ago content (today - 3)
+    else if (state.currentDay === state.today - 3) {
    contentHtml = `
      <div class="team-selection-section" id="team-selection-section-day23">
        <h2 class="team-selection-title">
