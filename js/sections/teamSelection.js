@@ -25,8 +25,16 @@ function setupSubmitHandler() {
         const hour    = now.getHours();
         const minute  = now.getMinutes().toString().padStart(2, '0');
         const stamp   = `${month}월 ${day}일 ${hour}:${minute}`;
+        
+        // 2) 제목을 “제출 완료 !” 로 변경
+        $('#team-selection-section-tomorrow .team-selection-title')
+          .contents()              // 기존 텍스트/노드를 모두
+          .filter((_, el) => el.nodeType === 3) // 텍스트 노드만
+          .remove();               // 제거
+        $('#team-selection-section-tomorrow .team-selection-title')
+          .prepend('제출 완료 !');  // 새 텍스트 삽입
 
-        // subtitle만 교체
+        // 3) subtitle만 교체
         $('#team-selection-section-tomorrow .subtitle')
           .text(stamp);
       }
