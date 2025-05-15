@@ -194,7 +194,15 @@
       </div>
     `;
   }
-
+  
+ function canEditSelections() { 
+   const key     = dateKeys[currentIndex]; 
+   const matches = window.matchData[key] || []; 
+   const allPre  = matches.every(m => m.status === '경기전'); 
+   const canceledCount = matches.filter(m => m.status === '경기취소').length; 
+   return allPre && canceledCount < 2; 
+ }
+  
   // ==============================
   // 8. 타이틀 파트 계산
   // ==============================
@@ -345,15 +353,24 @@
   // 13. 팀 선택 핸들러
   // ==============================
   function setupTeamSelectionHandlers() {
-    $(`#${gameListId}`)
-      .off('click', '.team-box')
-      .on('click', '.team-box', function() {
-        const gameId = $(this).data('game-id');
-        const team   = $(this).data('team');
-        window.appState.selectedTeams = window.appState.selectedTeams || {};
-        window.appState.selectedTeams[gameId] = team;
-        renderGames();
-      });
+   $(`#${gameListId}`)
+     .off('click', '.team-box')
+     .on('click', '.team-box', function() {
+       // 1) 편집 불가능한 경우 무시
+       if (!canEditSelections()) return;
+
+       // 2) 선택 로직
+       const gameId = $(this).data('game-id');
+       const team   = $(this).data('team');
+       window.appState.selectedTeams = window.appState.selectedTeams || {};
+       window.appState.selectedTeams[gameId] = team;
+
+       // 3) 버튼을 “제출 !” 로 변경
+       $('.btn-text').text('제출 !');
+
+       // 4) 화면 갱신 (타이틀·버튼 활성화 등)
+       renderGames();
+     });
   }
 
   // ==============================
