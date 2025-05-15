@@ -152,7 +152,24 @@ body {
 .title-wrapper {
   position: relative;
   text-align: center;
-  padding-right: 150px;
+  padding: 0 150px;
+}
+
+.title-wrapper .title-decor-left,
+.title-wrapper .title-decor-right {
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 150px;
+  pointer-events: none;
+}
+
+.title-wrapper .title-decor-left {
+  left: 0;
+}
+
+.title-wrapper .title-decor-right {
+  right: 0;
 }
 
 .team-selection-title {
