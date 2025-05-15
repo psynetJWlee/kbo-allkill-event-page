@@ -15,6 +15,10 @@
 
   // 카운트다운 타이머 ID
   let countdownTimerId = null;
+  
+  // 제출 시각을 날짜별로 저장할 맵
+  window.appState.submissionTimes = window.appState.submissionTimes || {};
+
 
   // ==============================
   // 2. 날짜 키 배열 생성
@@ -200,13 +204,13 @@
   const selMap   = window.appState.selectedTeams || {};
   const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
 
-  // ➤ 1) 제출 완료 케이스
-  if (window.appState.submissionTime) {
-    const dt  = window.appState.submissionTime;
-    const mm  = dt.getMonth() + 1;
-    const dd  = dt.getDate();
-    const hh  = String(dt.getHours()).padStart(2, '0');
-    const mi  = String(dt.getMinutes()).padStart(2, '0');
+  // ➤ 1) 제출 완료(그 날짜에만)
+  const submittedAt = window.appState.submissionTimes[key];
+  if (submittedAt) {
+    const mm = String(submittedAt.getMonth()+1).padStart(2,'0');
+    const dd = String(submittedAt.getDate()).padStart(2,'0');
+    const hh = String(submittedAt.getHours()).padStart(2,'0');
+    const mi = String(submittedAt.getMinutes()).padStart(2,'0');
     return {
       main: '제출 완료 !',
       sub:  `${mm}월 ${dd}일 ${hh}:${mi}`
@@ -223,7 +227,7 @@
   // ➤ 3) 경기중 한 건이라도
   if (matches.some(m => m.status === '경기중')) {
     const ok = matches.filter(m => m.eventResult === 'success').length;
-    return { main: '채점 중!', sub:  `${ok} 경기 성공 !` };
+    return { main: '채점 중!', sub: `${ok} 경기 성공 !` };
   }
 
   // ➤ 4) 모두 완료 상태
@@ -239,7 +243,8 @@
 
   // ➤ 5) 기본
   return { main: initialTitle, sub: '' };
-}
+  }
+
 
   // ==============================
   // 9. 타이틀 & 카운트다운 업데이트
@@ -353,13 +358,13 @@
   // 14. 제출 핸들러
   // ==============================
     function setupSubmitHandler() {
-      $('#submit-allkill-btn').on('click', function() {
-        // 선택 후 제출 시점 기록
-        window.appState.submissionTime = new Date();
-        // 타이틀 갱신을 위해 다시 렌더
-        renderGames();
+    $('#submit-allkill-btn').on('click', function() {
+      const key = dateKeys[currentIndex];
+      window.appState.submissionTimes[key] = new Date();  // 오늘 날짜 기준 제출 시각 저장
+      renderGames();  // 타이틀·카운트다운 재계산
       });
     }
+  
   // ==============================
   // 15. 전체 갱신
   // ==============================
