@@ -33,27 +33,48 @@
     setupSubmitHandler();
   }
 
-  // ==============================
-  // 3. 날짜 내비게이션 렌더링
-  // ==============================
-  function renderNav() {
-    const prevLabel = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
-    const nextLabel = currentIndex < dateKeys.length - 1 ? dateKeys[currentIndex + 1] : '';
-    const navHtml = `
-      <div class="date-navigation">
-        <div class="date-nav-prev" id="${prevBtnId}">
-          <div class="arrow-left"></div>
-          <span class="prev-day">${prevLabel}</span>
-        </div>
-        <span class="current-day" id="${currentDayId}">${dateKeys[currentIndex]}</span>
-        <div class="date-nav-next" id="${nextBtnId}">
-          <span class="next-day">${nextLabel}</span>
-          <div class="arrow-right"></div>
-        </div>
-      </div>
-    `;
-    $(containerSelector).html(navHtml);
+// ==============================
+// 3. 날짜 내비게이션 렌더링
+// ==============================
+function renderNav() {
+  // 이전·다음 날짜 키 가져오기
+  const prevKey = currentIndex > 0
+    ? dateKeys[currentIndex - 1]
+    : '';
+  const nextKey = currentIndex < dateKeys.length - 1
+    ? dateKeys[currentIndex + 1]
+    : '';
+
+  // YYYY-MM-DD 키를 화면에 표시할 레이블로 변환
+  function dayLabel(key) {
+    if (!key) return '';
+    if (key === todayKey) return 'Today';
+    return key.split('-')[2];   // '2025-05-15' → '15'
   }
+
+  const prevLabel    = dayLabel(prevKey);
+  const currentLabel = dayLabel(dateKeys[currentIndex]);
+  const nextLabel    = dayLabel(nextKey);
+
+  const navHtml = `
+    <div class="date-navigation">
+      <div class="date-nav-prev" id="${prevBtnId}">
+        <div class="arrow-left"></div>
+        <span class="prev-day">${prevLabel}</span>
+      </div>
+      <span class="current-day" id="${currentDayId}">
+        ${currentLabel}
+      </span>
+      <div class="date-nav-next" id="${nextBtnId}">
+        <span class="next-day">${nextLabel}</span>
+        <div class="arrow-right"></div>
+      </div>
+    </div>
+  `;
+
+  // 내비게이션 마크업 갱신
+  $(containerSelector).html(navHtml);
+}
 
   // ==============================
   // 4. 메인 섹션(타이틀·스탬프·게임 리스트·버튼) 렌더링
