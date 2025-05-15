@@ -158,18 +158,10 @@ function renderNav() {
   // 6. 상태별 UI 분기 (pre / live / post)
   // ==============================
 function renderStatusSection(match) {
-  // 경기 전
-  if (match.status === '경기전') {
-    return `
-      <div class="status-column status-pre">
-        <div class="status-text">경기전</div>
-        <div class="start-time">${match.startTime}</div>
-      </div>
-    `;
-  }
+  const s = match.status;
 
-  // 경기 중
-  if (match.status === '경기중') {
+  // 1) Live (경기중)
+  if (s === '경기중') {
     return `
       <div class="status-column status-live">
         <div class="score">
@@ -182,8 +174,8 @@ function renderStatusSection(match) {
     `;
   }
 
-  // 종료
-  if (match.status === '경기종') {
+  // 2) Post (경기종료)
+  if (s === '경기종료') {
     return `
       <div class="status-column status-post">
         <div class="score">
@@ -196,7 +188,18 @@ function renderStatusSection(match) {
     `;
   }
 
-  return `<div class="status-column"></div>`;
+  // 3) Pre & Special States
+  //   경기전, 경기지연, 경기중지, 서스펜드, 우천중지, 경기취소
+  // 모두 동일하게 “상태 텍스트 + (시작 시간)” 구조로 렌더
+  return `
+    <div class="status-column status-pre">
+      <div class="status-text">${s}</div>
+      ${match.startTime
+        ? `<div class="start-time">${match.startTime}</div>`
+        : ``
+      }
+    </div>
+  `;
 }
 
   // ==============================
