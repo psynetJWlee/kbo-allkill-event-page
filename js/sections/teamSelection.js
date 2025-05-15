@@ -95,18 +95,15 @@
     const sectionHtml = `
       <div class="team-selection-section" id="${sectionId}">
         <div class="title-wrapper">
-          <img src="" class="title-decor" alt="" />
           <h2 class="team-selection-title">
             <span class="title-main">${initialTitle}</span>
             <span class="title-sub"></span>
           </h2>
-          <img src="" class="title-decor" alt="" />
+          <img src="" class="title-decor" alt="" style="display:none;" />
         </div>
   
-        <!-- 게임 리스트 영역 (renderGames 에서 #game-list 채워줌) -->
         <div class="game-list" id="${gameListId}"></div>
   
-        <!-- 제출 버튼 영역 -->
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
             <span class="btn-text">${submitBtnText}</span>
@@ -275,7 +272,7 @@
     const submittedAt = window.appState.submissionTimes?.[key];
     const parts       = computeTitleParts();
   
-    // 1) 타이틀 갱신
+    // 1) 타이틀 텍스트 갱신
     $('.team-selection-title .title-main').text(parts.main);
     $('.team-selection-title .title-sub')
       .text(parts.sub)
@@ -284,22 +281,22 @@
     // 2) 버튼 텍스트 동기화
     $('.btn-text').text(parts.main);
   
-    // 3) 데코 아이콘 제어 (150×150px 한 장만)
+    // 3) 데코 아이콘 제어 — 오직 이 블록만 남깁니다.
     const bothStates = ['채점 중!', '올킬 도전!', '제출 완료 !'];
     const rightOnly  = ['다음 경기 도전 !', '올킬 성공 !'];
     let decorSrc = '';
   
     if (bothStates.includes(parts.main)) {
-      decorSrc = iconBothRight;
+      decorSrc = iconBothRight;  // 150×150 양옆용 아이콘 중 오른쪽 버전
     } else if (rightOnly.includes(parts.main)) {
-      decorSrc = iconSingle;
+      decorSrc = iconSingle;     // 150×150 오른쪽 전용 아이콘
     }
   
     $('.title-decor')
       .attr('src', decorSrc)
       .css('display', decorSrc ? 'block' : 'none');
   
-    // 4) 카운트다운 실행/중지
+    // 4) 카운트다운
     if (allPre && !submittedAt && matches.length) {
       const [h, mi]      = matches[0].startTime.split(':').map(Number);
       const [yy, mo, dd] = key.split('-').map(Number);
