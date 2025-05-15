@@ -167,9 +167,9 @@ function renderStatusSection(match) {
     return `
       <div class="status-column status-live">
         <div class="score">
-          <span class="home-score">${match.score.home}</span>
+          <span class="home-score ${homeScoreClass}">${match.score.home}</span>
           <span class="vs">vs</span>
-          <span class="away-score">${match.score.away}</span>
+          <span class="away-score ${awayScoreClass}">${match.score.away}</span>`
         </div>
         <div class="status-text">경기중</div>
       </div>
@@ -181,9 +181,9 @@ function renderStatusSection(match) {
     return `
       <div class="status-column status-post">
         <div class="score">
-          <span class="home-score">${match.score.home}</span>
+          <span class="home-score ${homeScoreClass}">${match.score.home}</span>
           <span class="vs">vs</span>
-          <span class="away-score">${match.score.away}</span>
+          <span class="away-score ${awayScoreClass}">${match.score.away}</span>`
         </div>
         <div class="status-text">경기종료</div>
       </div>
