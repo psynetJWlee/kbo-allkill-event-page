@@ -365,6 +365,51 @@ body {
   width: 3ch;
   text-align: center;
 }
+/* ──────────────────────────────────────────
+   상태 텍스트 (status-text)
+────────────────────────────────────────── */
+.status-column .status-text {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+/* ──────────────────────────────────────────
+   경기 시작 시간 (start-time)
+────────────────────────────────────────── */
+.status-column .start-time {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+/* ──────────────────────────────────────────
+   스코어 (home-score, away-score)
+────────────────────────────────────────── */
+.status-column .score .home-score,
+.status-column .score .away-score {
+  font-size: 30px;
+  font-weight: bold;
+  color: #FFFFFF;       /* 기본 흰색 */
+}
+
+/* 높은 점수 강조 */
+.status-column .score .home-score.higher,
+.status-column .score .away-score.higher {
+  color: #FFC736;
+}
+
+/* ──────────────────────────────────────────
+   “vs” 텍스트
+────────────────────────────────────────── */
+.status-column .vs {
+  font-size: 15px;
+  font-weight: bold;
+  color: #555555;
+  margin: 0 8px;        /* 숫자 사이 적당한 간격 */
+}
 
 /* main.css 하단에 추가 */
 .score-display.match-score {
