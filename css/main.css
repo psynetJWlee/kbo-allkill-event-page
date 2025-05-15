@@ -155,13 +155,17 @@ body {
   width: 100%;
 }
 
+.team-selection-title .title-main,
+.team-selection-title .title-sub {
+  display: block;
+}
+
 .team-selection-section {
   margin: 0;
   padding: 0 0 20px 0;
   background: #121212;
 }
 
-/* Team Selection 타이틀 및 아이콘 */
 .title-wrapper {
   position: relative;
   text-align: center;
