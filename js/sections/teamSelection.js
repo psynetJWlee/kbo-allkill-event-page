@@ -251,23 +251,22 @@
     const key     = dateKeys[currentIndex];
     const matches = window.matchData[key] || [];
     const selMap  = window.appState.selectedTeams || {};
-  
     const allPre  = matches.every(m => m.status === '경기전');
     const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
     const submittedAt = window.appState.submissionTimes?.[key];
-    
     // 메인/서브 텍스트 설정
-  $('.team-selection-title .title-sub')
+    $('.team-selection-title .title-main').text(computeTitleParts().main);
+    $('.team-selection-title .title-sub')
+    .text(computeTitleParts().sub)
     .toggleClass('countdown-active', allPre && !submittedAt);
 
     // 카운트다운 실행/중지
     if (allPre && !submittedAt) {
-      const key         = dateKeys[currentIndex];
       const [h, mi]     = matches[0].startTime.split(':').map(Number);
       const [yy, mo, dd]= key.split('-').map(Number);
       const target      = new Date(yy, mo - 1, dd, h, mi);
       startCountdown(target);
-    } else {
+  } else {
       if (countdownTimerId) {
         clearInterval(countdownTimerId);
         countdownTimerId = null;
@@ -359,7 +358,7 @@
     $('#submit-allkill-btn').on('click', function() {
       const key = dateKeys[currentIndex];
       window.appState.submissionTimes[key] = new Date();  // 오늘 날짜 기준 제출 시각 저장
-      renderGames();  // 타이틀·카운트다운 재계산
+      updateTitleAndCountdown();
       });
     }
   
