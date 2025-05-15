@@ -160,8 +160,6 @@
             <div class="vote-count ${homeHigh}">${match.home.votes}</div>
           </div>
 
-          ${statusSection}
-
           <div class="team-column">
             <div class="team-box ${awaySelClass}" data-game-id="${match.gameId}" data-team="away">
               <img class="team-logo" src="${match.away.logo}" alt="${match.away.teamName}" />
@@ -169,7 +167,11 @@
             </div>
             <div class="vote-count ${awayHigh}">${match.away.votes}</div>
           </div>
+
+          ${overlayHtml}
+          
         </div>
+        
       `;
       $list.append(itemHtml);
     });
