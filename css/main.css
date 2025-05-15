@@ -205,7 +205,7 @@ body {
 .team-selection-title {
   position: relative;
   display: grid;
-  grid-template-columns: 150px auto 150px;
+  grid-template-columns: 24px auto 24px;
   flex-direction: column;      
   justify-content: center;     
   align-items: center;       
