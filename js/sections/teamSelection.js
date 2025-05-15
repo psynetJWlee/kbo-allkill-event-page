@@ -195,34 +195,51 @@
   // 8. 타이틀 파트 계산
   // ==============================
   function computeTitleParts() {
-    const key      = dateKeys[currentIndex];
-    const matches  = window.matchData[key] || [];
-    const selMap   = window.appState.selectedTeams || {};
-    const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
+  const key      = dateKeys[currentIndex];
+  const matches  = window.matchData[key] || [];
+  const selMap   = window.appState.selectedTeams || {};
+  const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
 
-    const allPre  = matches.every(m => m.status === '경기전');
-    const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
-    if (allPre && allNone) {
-      return { main: '올킬 도전!', sub: '참여시간 ' };
-    }
-
-    if (matches.some(m => m.status === '경기중')) {
-      const ok = matches.filter(m => m.eventResult === 'success').length;
-      return { main: '채점 중!', sub: `${ok} 경기 성공 !` };
-    }
-
-    if (matches.length > 0 && matches.every(m => finished.includes(m.status))) {
-      const ok    = matches.filter(m => m.eventResult === 'success').length;
-      const allOK = ok === matches.length;
-      if (allOK) {
-        return { main: '올킬 성공 !', sub: '상금을 확인하세요 !' };
-      } else {
-        return { main: '다음 경기 도전 !', sub: `${ok} 경기 성공 !` };
-      }
-    }
-
-    return { main: initialTitle, sub: '' };
+  // ➤ 1) 제출 완료 케이스
+  if (window.appState.submissionTime) {
+    const dt  = window.appState.submissionTime;
+    const mm  = dt.getMonth() + 1;
+    const dd  = dt.getDate();
+    const hh  = String(dt.getHours()).padStart(2, '0');
+    const mi  = String(dt.getMinutes()).padStart(2, '0');
+    return {
+      main: '제출 완료 !',
+      sub:  `${mm}월 ${dd}일 ${hh}:${mi}`
+    };
   }
+
+  // ➤ 2) 모두 경기전 & 미선택
+  const allPre  = matches.every(m => m.status === '경기전');
+  const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
+  if (allPre && allNone) {
+    return { main: '올킬 도전!', sub: '참여시간 ' };
+  }
+
+  // ➤ 3) 경기중 한 건이라도
+  if (matches.some(m => m.status === '경기중')) {
+    const ok = matches.filter(m => m.eventResult === 'success').length;
+    return { main: '채점 중!', sub:  `${ok} 경기 성공 !` };
+  }
+
+  // ➤ 4) 모두 완료 상태
+  if (matches.length > 0 && matches.every(m => finished.includes(m.status))) {
+    const ok    = matches.filter(m => m.eventResult === 'success').length;
+    const allOK = ok === matches.length;
+    if (allOK) {
+      return { main: '올킬 성공 !', sub: '상금을 확인하세요 !' };
+    } else {
+      return { main: '다음 경기 도전 !', sub: `${ok} 경기 성공 !` };
+    }
+  }
+
+  // ➤ 5) 기본
+  return { main: initialTitle, sub: '' };
+}
 
   // ==============================
   // 9. 타이틀 & 카운트다운 업데이트
@@ -335,13 +352,14 @@
   // ==============================
   // 14. 제출 핸들러
   // ==============================
-  function setupSubmitHandler() {
-    $('#submit-allkill-btn').on('click', function() {
-      console.log('팀 선택 제출:', window.appState.selectedTeams);
-      renderGames();
-    });
-  }
-
+    function setupSubmitHandler() {
+      $('#submit-allkill-btn').on('click', function() {
+        // 선택 후 제출 시점 기록
+        window.appState.submissionTime = new Date();
+        // 타이틀 갱신을 위해 다시 렌더
+        renderGames();
+      });
+    }
   // ==============================
   // 15. 전체 갱신
   // ==============================
