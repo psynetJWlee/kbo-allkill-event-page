@@ -262,7 +262,7 @@ function updateTitleAndCountdown() {
   const allPre      = matches.every(m => m.status === '경기전');
   const submittedAt = window.appState.submissionTimes?.[key];
   const parts       = computeTitleParts();
-
+  
   // 1) 메인/서브 타이틀 설정
   $('.team-selection-title .title-main')
     .text(parts.main);
@@ -312,7 +312,18 @@ function updateTitleAndCountdown() {
       countdownTimerId = null;
     }
   }
-}
+    const main = parts.main;
+      let src = '';
+      if (['채점 중!', '올킬 도전!', '제출 완료 !'].includes(main)) {
+        src = iconBothRight;    // 양옆 중 오른쪽용 (원본 150px 아이콘)
+      } else if (['다음 경기 도전 !', '올킬 성공 !'].includes(main)) {
+        src = iconSingle;       // 오른쪽 전용
+      }
+      // 빈 문자열이면 .title-decor 은 숨김
+      $('.title-decor')
+        .attr('src', src)
+        .css('display', src ? 'block' : 'none');
+  }
 
 
   // ==============================
