@@ -237,56 +237,10 @@ body {
   margin-top: 0.25em;
 }
 
-.title-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.title-text {
-  text-align: center;
-}
-
-
-.team-selection-title .pointing-finger-left {
-  position: absolute;
-  top: 50%;
-  left: 16px;
-  transform: translateY(-50%);
-}
-
-.team-selection-title .pointing-finger-right {
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  transform: translateY(-50%);
-}
-
-.team-selection-title .yesterday-icon.right {
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  transform: translateY(-50%);
-  width: 75px;
-  height: auto;
-  margin: 0;
-}
 
 #state-yesterday .submit-btn {
   opacity: 1 !important;
   color: #121212 !important;
-}
-
-.pointing-finger {
-  width: 75px;
-  height: auto;
-}
-
-.pointing-finger-left {
-  margin-right: 15px;
-}
-
-.pointing-finger-right {
-  margin-left: 15px;
 }
 
 .game-list {
@@ -596,6 +550,32 @@ body {
   opacity: 1;
   color: #121212;
 }
+
+/* 1) 래퍼를 중앙 정렬·상대 위치로 */
+.title-wrapper {
+  position: relative;
+  text-align: center;
+  padding-right: 150px; /* 우측 아이콘 공간 확보 */
+}
+
+/* 2) 제목 자체는 inline-block */
+.team-selection-title {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* 3) 데코 아이콘: 150×150 크기로 우측 상단 */
+.title-wrapper .title-decor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  pointer-events: none;
+}
+
+
+
 
 /* My Prize Section */
 .my-prize-section {
