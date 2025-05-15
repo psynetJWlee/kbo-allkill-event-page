@@ -118,8 +118,10 @@ function renderNav() {
     const $list   = $(`#${gameListId}`).empty();
 
     matches.forEach(match => {
-      const homeSelClass  = window.appState.selectedTeams[match.gameId] === 'home' ? 'selected-home' : '';
-      const awaySelClass  = window.appState.selectedTeams[match.gameId] === 'away' ? 'selected-away' : '';
+      const selected = window.appState.selectedTeams[match.gameId] 
+                  ?? match.userSelection;
+      const homeSelClass = selected === 'home' ? 'selected-home' : '';
+      const awaySelClass = selected === 'away' ? 'selected-away' : '';
       const homeHighClass = match.home.votes >= match.away.votes ? 'higher' : 'lower';
       const awayHighClass = match.away.votes >= match.home.votes ? 'higher' : 'lower';
       const statusSection = renderStatusSection(match);
