@@ -301,12 +301,11 @@ function updateTitleAndCountdown() {
       .show();
 
   } else if (allFinished) {
-    // (모두 종료/취소) 왼쪽에만 아이콘
-    $('.title-decor-left')
-      .attr('src', iconBothLeft)
-      .show();
+    // (모두 종료/취소) 오른쪽에 단일 아이콘
+    $('.title-decor-left').hide();
     $('.title-decor-right')
-      .hide();
+      .attr('src', iconSingle)
+      .show();
 
   } else {
     // 그 외 상태에는 둘 다 숨김
