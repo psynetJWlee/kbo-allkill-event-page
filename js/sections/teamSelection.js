@@ -16,16 +16,14 @@
   // 카운트다운 타이머 ID
   let countdownTimerId = null;
 
-  // 1) matchData에 정의된 날짜 키(YYYY-MM-DD) 배열 구하기
+  // ==============================
+  // 2. 날짜 키 배열 생성
+  // ==============================
   const rawKeys = Object.keys(window.matchData);
-
-  // 2) rawKeys 중 최소·최대 날짜(Date 객체) 계산
   const dates   = rawKeys.map(k => new Date(k).getTime());
   const minDate = new Date(Math.min(...dates));
   const maxDate = new Date(Math.max(...dates));
 
-  // 3) minDate부터 maxDate까지 하루씩 증가시키며
-  //    범위 내 모든 날짜(YYYY-MM-DD)를 dateKeys 배열에 담기
   const dateKeys = [];
   for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
     dateKeys.push(d.toISOString().slice(0,10));
@@ -36,7 +34,7 @@
   if (currentIndex === -1) currentIndex = 0;
 
   // ==============================
-  // 2. 초기화 함수
+  // 3. 초기화
   // ==============================
   function initTeamSelectionSection() {
     renderNav();
@@ -47,7 +45,7 @@
   }
 
   // ==============================
-  // 3. 날짜 내비게이션 렌더링
+  // 4. 내비게이션 렌더링
   // ==============================
   function renderNav() {
     const prevKey = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
@@ -82,7 +80,7 @@
   }
 
   // ==============================
-  // 4. 메인 섹션 렌더링
+  // 5. 섹션 렌더링
   // ==============================
   function renderSection() {
     const sectionHtml = `
@@ -95,7 +93,9 @@
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
             ${submitBtnText}
-            <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
+            <div class="spark"></div>
           </button>
         </div>
       </div>
@@ -105,19 +105,19 @@
   }
 
   // ==============================
-  // 5. 경기 리스트 렌더링
+  // 6. 경기 리스트 렌더링
   // ==============================
   function renderGames() {
     const key     = dateKeys[currentIndex];
     const matches = window.matchData[key] || [];
-    const $list   = $(`#${gameListId}").empty();
+    const $list   = $(`#${gameListId}`).empty();
 
     matches.forEach(match => {
-      const selected     = window.appState.selectedTeams[match.gameId] ?? match.userSelection;
+      const selected     = window.appState.selectedTeams?.[match.gameId] ?? match.userSelection;
       const homeSelClass = selected === 'home' ? 'selected-home' : '';
       const awaySelClass = selected === 'away' ? 'selected-away' : '';
-      const homeHighClass = match.home.votes >= match.away.votes ? 'higher' : 'lower';
-      const awayHighClass = match.away.votes >= match.home.votes ? 'higher' : 'lower';
+      const homeHigh     = match.home.votes >= match.away.votes ? 'higher' : 'lower';
+      const awayHigh     = match.away.votes >= match.home.votes ? 'higher' : 'lower';
       const statusSection = renderStatusSection(match);
 
       const itemHtml = `
@@ -127,7 +127,7 @@
               <img class="team-logo" src="${match.home.logo}" alt="${match.home.teamName}" />
               <span class="team-name">${match.home.teamName}</span>
             </div>
-            <div class="vote-count ${homeHighClass}">${match.home.votes}</div>
+            <div class="vote-count ${homeHigh}">${match.home.votes}</div>
           </div>
 
           ${statusSection}
@@ -137,7 +137,7 @@
               <img class="team-logo" src="${match.away.logo}" alt="${match.away.teamName}" />
               <span class="team-name">${match.away.teamName}</span>
             </div>
-            <div class="vote-count ${awayHighClass}">${match.away.votes}</div>
+            <div class="vote-count ${awayHigh}">${match.away.votes}</div>
           </div>
         </div>
       `;
@@ -149,7 +149,7 @@
   }
 
   // ==============================
-  // 6. 상태별 UI 분기
+  // 7. 상태별 UI 분기
   // ==============================
   function renderStatusSection(match) {
     const s = match.status;
@@ -186,41 +186,33 @@
     return `
       <div class="status-column status-pre">
         <div class="status-text">${s}</div>
-        ${match.startTime
-          ? `<div class="start-time">${match.startTime}</div>`
-          : ``
-        }
+        ${match.startTime ? `<div class="start-time">${match.startTime}</div>` : ''}
       </div>
     `;
   }
 
   // ==============================
-  // 7. 타이틀 파트 계산
+  // 8. 타이틀 파트 계산
   // ==============================
   function computeTitleParts() {
-    const key     = dateKeys[currentIndex];
-    const matches = window.matchData[key] || [];
-    const selMap  = window.appState.selectedTeams || {};
-    const finishedStatuses = [
-      '경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'
-    ];
+    const key      = dateKeys[currentIndex];
+    const matches  = window.matchData[key] || [];
+    const selMap   = window.appState.selectedTeams || {};
+    const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
 
-    // 1) 모두 경기전 & 미선택
     const allPre  = matches.every(m => m.status === '경기전');
     const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
     if (allPre && allNone) {
       return { main: '올킬 도전!', sub: '참여시간 ' };
     }
 
-    // 2) 경기중이 하나라도
     if (matches.some(m => m.status === '경기중')) {
       const ok = matches.filter(m => m.eventResult === 'success').length;
       return { main: '채점 중!', sub: `${ok} 경기 성공 !` };
     }
 
-    // 3) 모두 완료 상태
-    if (matches.length > 0 && matches.every(m => finishedStatuses.includes(m.status))) {
-      const ok   = matches.filter(m => m.eventResult === 'success').length;
+    if (matches.length > 0 && matches.every(m => finished.includes(m.status))) {
+      const ok    = matches.filter(m => m.eventResult === 'success').length;
       const allOK = ok === matches.length;
       if (allOK) {
         return { main: '올킬 성공 !', sub: '상금을 확인하세요 !' };
@@ -229,32 +221,31 @@
       }
     }
 
-    // 기본
     return { main: initialTitle, sub: '' };
   }
 
   // ==============================
-  // 8. 타이틀 & 카운트다운 업데이트
+  // 9. 타이틀 & 카운트다운 업데이트
   // ==============================
   function updateTitleAndCountdown() {
-    const parts  = computeTitleParts();
-    const matches= window.matchData[dateKeys[currentIndex]] || [];
-    const selMap = window.appState.selectedTeams || {};
-    const allPre = matches.every(m => m.status === '경기전');
-    const allNone= matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
+    const parts   = computeTitleParts();
+    const matches = window.matchData[dateKeys[currentIndex]] || [];
+    const selMap  = window.appState.selectedTeams || {};
+    const allPre  = matches.every(m => m.status === '경기전');
+    const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
 
-    // 제목과 부제목 적용
+    // 메인/서브 텍스트 설정
     $('.team-selection-title .title-main').text(parts.main);
     $('.team-selection-title .title-sub')
       .text(parts.sub)
       .toggleClass('countdown-active', allPre && allNone);
 
     // 카운트다운 실행/중지
-    if (allPre && allNone) {
-      const key = dateKeys[currentIndex];
-      const [h, mi] = matches[0].startTime.split(':').map(Number);
-      const [yy, mo, dd] = key.split('-').map(Number);
-      const target = new Date(yy, mo - 1, dd, h, mi);
+    if (allPre && allNone && matches.length) {
+      const key         = dateKeys[currentIndex];
+      const [h, mi]     = matches[0].startTime.split(':').map(Number);
+      const [yy, mo, dd]= key.split('-').map(Number);
+      const target      = new Date(yy, mo - 1, dd, h, mi);
       startCountdown(target);
     } else {
       if (countdownTimerId) {
@@ -265,7 +256,7 @@
   }
 
   // ==============================
-  // 9. 카운트다운 시작 함수
+  // 10. 카운트다운 시작 함수
   // ==============================
   function startCountdown(targetDate) {
     if (countdownTimerId) clearInterval(countdownTimerId);
@@ -278,6 +269,7 @@
       const h = Math.floor(diff / 3600);
       const m = Math.floor((diff % 3600) / 60);
       const text = `-${h}:${String(m).padStart(2, '0')}`;
+
       $('.team-selection-title .title-sub').text(`참여시간 ${text}`);
     }
 
@@ -286,14 +278,14 @@
   }
 
   // ==============================
-  // 10. 제출 버튼 활성화/비활성화
+  // 11. 제출 버튼 활성화/비활성화
   // ==============================
   function updateSubmitButton() {
     const $btn    = $('#submit-allkill-btn');
     const matches= window.matchData[dateKeys[currentIndex]] || [];
-    const allSelected = matches.every(m => window.appState.selectedTeams[m.gameId] != null);
+    const allSel = matches.every(m => window.appState.selectedTeams?.[m.gameId] != null);
 
-    if (allSelected) {
+    if (allSel) {
       $btn.addClass('enabled').prop('disabled', false)
           .css({ opacity: 1, color: '#121212' });
     } else {
@@ -303,24 +295,30 @@
   }
 
   // ==============================
-  // 11. 내비게이션 핸들러
+  // 12. 내비게이션 핸들러
   // ==============================
   function setupNavHandlers() {
     $(containerSelector)
       .off('click', `#${prevBtnId}`)
       .on('click', `#${prevBtnId}`, () => {
-        if (currentIndex > 0) { currentIndex--; refreshAll(); }
+        if (currentIndex > 0) {
+          currentIndex--;
+          refreshAll();
+        }
       });
 
     $(containerSelector)
       .off('click', `#${nextBtnId}`)
       .on('click', `#${nextBtnId}`, () => {
-        if (currentIndex < dateKeys.length - 1) { currentIndex++; refreshAll(); }
+        if (currentIndex < dateKeys.length - 1) {
+          currentIndex++;
+          refreshAll();
+        }
       });
   }
 
   // ==============================
-  // 12. 팀 선택 핸들러
+  // 13. 팀 선택 핸들러
   // ==============================
   function setupTeamSelectionHandlers() {
     $(`#${gameListId}`)
@@ -335,7 +333,7 @@
   }
 
   // ==============================
-  // 13. 제출 핸들러
+  // 14. 제출 핸들러
   // ==============================
   function setupSubmitHandler() {
     $('#submit-allkill-btn').on('click', function() {
@@ -345,7 +343,7 @@
   }
 
   // ==============================
-  // 14. 전체 갱신
+  // 15. 전체 갱신
   // ==============================
   function refreshAll() {
     renderNav();
@@ -357,7 +355,7 @@
   }
 
   // ==============================
-  // 15. 외부 API 노출
+  // 16. 외부 API 노출
   // ==============================
   window.teamSelectionSection = {
     init: initTeamSelectionSection,
