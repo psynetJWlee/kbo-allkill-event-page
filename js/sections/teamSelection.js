@@ -161,40 +161,38 @@ function renderNav() {
   // ==============================
 function renderStatusSection(match) {
   const s = match.status;
-  const homeScoreClass = match.score.home > match.score.away ? 'higher' : '';
-  const awayScoreClass = match.score.away > match.score.home ? 'higher' : '';
+  const homeScoreClass = match.score?.home > match.score?.away ? 'higher' : '';
+  const awayScoreClass = match.score?.away > match.score?.home ? 'higher' : '';
 
-  // 1) Live (경기중)
+  // 경기중
   if (s === '경기중') {
     return `
       <div class="status-column status-live">
         <div class="score">
           <span class="home-score ${homeScoreClass}">${match.score.home}</span>
           <span class="vs">vs</span>
-          <span class="away-score ${awayScoreClass}">${match.score.away}</span>`
+          <span class="away-score ${awayScoreClass}">${match.score.away}</span>
         </div>
         <div class="status-text">경기중</div>
       </div>
     `;
   }
 
-  // 2) Post (경기종료)
+  // 경기종료
   if (s === '경기종료') {
     return `
       <div class="status-column status-post">
         <div class="score">
           <span class="home-score ${homeScoreClass}">${match.score.home}</span>
           <span class="vs">vs</span>
-          <span class="away-score ${awayScoreClass}">${match.score.away}</span>`
+          <span class="away-score ${awayScoreClass}">${match.score.away}</span>
         </div>
         <div class="status-text">경기종료</div>
       </div>
     `;
   }
 
-  // 3) Pre & Special States
-  //   경기전, 경기지연, 경기중지, 서스펜드, 우천중지, 경기취소
-  // 모두 동일하게 “상태 텍스트 + (시작 시간)” 구조로 렌더
+  // 경기전 & 기타 상태
   return `
     <div class="status-column status-pre">
       <div class="status-text">${s}</div>
@@ -205,6 +203,7 @@ function renderStatusSection(match) {
     </div>
   `;
 }
+
 
   // ==============================
   // 7. 제출 버튼 활성화/비활성화
