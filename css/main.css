@@ -202,19 +202,26 @@ body {
   display: none;
 }
 
-.team-selection-title {
+/* 1. 래퍼를 중앙 정렬·상대 위치로 */
+.title-wrapper {
   position: relative;
-  display: grid;
-  grid-template-columns: 24px auto 24px;
-  flex-direction: column;      
-  justify-content: center;     
-  align-items: center;       
-  height: 100px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #FFFFFF;
-  margin-bottom: 16px;
-  gap: 8px;
+  text-align: center;    /* 제목 텍스트가 가운데 */
+  padding-right: 150px;  /* 데코 아이콘 공간 확보 */
+}
+
+/* 2. 제목 자체는 inline-block으로 */
+.team-selection-title {
+  display: inline-block;
+}
+
+/* 3. 데코 아이콘: 150×150 크기로 래퍼 우측 상단에 띄우기 */
+.title-wrapper .title-decor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  pointer-events: none;  /* 클릭 투과 */
 }
 
 .team-selection-title .title-sub {
