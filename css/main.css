@@ -166,6 +166,8 @@ body {
   right: 0;
   width: 150px;
   height: 150px;
+  max-width: 100%;
+  height: auto;
   pointer-events: none;
 }
 
@@ -882,6 +884,9 @@ body {
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
+  .title-wrapper .title-decor {
+   width: 100px;
+  }
   .ranking-header {
     flex-direction: column;
     align-items: flex-start;
