@@ -252,7 +252,7 @@
     const matches = window.matchData[dateKeys[currentIndex]] || [];
     const selMap  = window.appState.selectedTeams || {};
     const allPre  = matches.every(m => m.status === '경기전');
-    const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
+    const submittedAt = window.appState.submissionTimes?.[key];
 
     // 메인/서브 텍스트 설정
     $('.team-selection-title .title-main').text(parts.main);
@@ -261,7 +261,7 @@
       .toggleClass('countdown-active', allPre && allNone);
 
     // 카운트다운 실행/중지
-    if (allPre && allNone && matches.length) {
+    if (allPre && !submittedAt) {
       const key         = dateKeys[currentIndex];
       const [h, mi]     = matches[0].startTime.split(':').map(Number);
       const [yy, mo, dd]= key.split('-').map(Number);
