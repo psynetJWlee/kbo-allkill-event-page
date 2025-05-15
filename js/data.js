@@ -23,7 +23,7 @@ window.matchData = {
       away: { teamName: "KT", logo: teamLogos.KT, votes: 1111 },
       status: "경기종료",
       startTime: "18:00",
-      score: { home: 0, away: 0 },
+      score: { home: 1, away: 0 },
       userSelection: "home",
       gameResult: "home",
       eventResult: "success"
@@ -34,7 +34,7 @@ window.matchData = {
       away: { teamName: "한화", logo: teamLogos["한화"], votes: 227 },
       status: "경기종료",
       startTime: "18:00",
-      score: { home: 1, away: 1 },
+      score: { home: 1, away: 2 },
       userSelection: "away",
       gameResult: "away",
       eventResult: "success"
@@ -46,9 +46,9 @@ window.matchData = {
       status: "경기종료",
       startTime: "18:00",
       score: { home: 7, away: 2 },
-      userSelection: "home",
+      userSelection: "away",
       gameResult: "home",
-      eventResult: "success"
+      eventResult: "fail"
     },
     {
       gameId: "20250512-3",
@@ -195,7 +195,7 @@ window.matchData = {
       gameId: "20250515-0",
       home: { teamName: "KT", logo: teamLogos.KT, votes: 1243 },
       away: { teamName: "SK", logo: teamLogos.SK, votes: 4214 },
-      status: "경기전",
+      status: "우천취소",
       startTime: "18:00",
       userSelection: "home"
     },
@@ -238,39 +238,6 @@ window.matchData = {
       startTime: "18:00",
       userSelection: "home"
     },
-    {
-      gameId: "20250515-5",
-      home: { teamName: "KT", logo: teamLogos.KT, votes: 1243 },
-      away: { teamName: "SK", logo: teamLogos.SK, votes: 4214 },
-      status: "경기중지",
-      startTime: "18:00",
-      score: { home: 0, away: 0 },
-      userSelection: "away"
-    },
-    {
-      gameId: "20250515-6",
-      home: { teamName: "KT", logo: teamLogos.KT, votes: 1243 },
-      away: { teamName: "SK", logo: teamLogos.SK, votes: 4214 },
-      status: "서스펜드",
-      startTime: "18:00",
-      userSelection: "home"
-    },
-    {
-      gameId: "20250515-7",
-      home: { teamName: "KT", logo: teamLogos.KT, votes: 1243 },
-      away: { teamName: "SK", logo: teamLogos.SK, votes: 4214 },
-      status: "우천중지",
-      startTime: "18:00",
-      userSelection: "away"
-    },
-    {
-      gameId: "20250515-8",
-      home: { teamName: "KT", logo: teamLogos.KT, votes: 1243 },
-      away: { teamName: "SK", logo: teamLogos.SK, votes: 4214 },
-      status: "경기취소",
-      startTime: "18:00",
-      userSelection: "home"
-    }
   ],
 
   "2025-05-16": [
@@ -280,7 +247,7 @@ window.matchData = {
       away: { teamName: "LG", logo: teamLogos.LG, votes: 3304 },
       status: "경기전",
       startTime: "18:00",
-      userSelection: "home"
+      userSelection: "none"
     },
     {
       gameId: "20250516-1",
@@ -288,7 +255,7 @@ window.matchData = {
       away: { teamName: "NC", logo: teamLogos.NC, votes: 524 },
       status: "경기전",
       startTime: "18:00",
-      userSelection: "away"
+      userSelection: "none"
     },
     {
       gameId: "20250516-2",
@@ -296,7 +263,7 @@ window.matchData = {
       away: { teamName: "삼성", logo: teamLogos["삼성"], votes: 5245 },
       status: "경기전",
       startTime: "18:00",
-      userSelection: "away"
+      userSelection: "none"
     },
     {
       gameId: "20250516-3",
@@ -304,7 +271,7 @@ window.matchData = {
       away: { teamName: "SSG", logo: teamLogos.SSG, votes: 787 },
       status: "경기전",
       startTime: "18:00",
-      userSelection: "home"
+      userSelection: "none"
     },
     {
       gameId: "20250516-4",
@@ -312,7 +279,7 @@ window.matchData = {
       away: { teamName: "롯데", logo: teamLogos["롯데"], votes: 4458 },
       status: "경기전",
       startTime: "18:00",
-      userSelection: "away"
+      userSelection: "none"
     }
   ],
 
