@@ -477,3 +477,4 @@ function updateTitleAndCountdown() {
     }
   };
 })(jQuery);
+
