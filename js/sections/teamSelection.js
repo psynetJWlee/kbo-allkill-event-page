@@ -189,19 +189,28 @@ function renderNav() {
   // 8. 내비게이션 이전/다음 핸들러
   // ==============================
   function setupNavHandlers() {
-    $(`#${prevBtnId}`).on('click', () => {
+  // 1) 이전 버튼 클릭
+  $(containerSelector)
+    .off('click', `#${prevBtnId}`)        // 기존 바인딩 해제
+    .on('click', `#${prevBtnId}`, () => {
       if (currentIndex > 0) {
         currentIndex--;
-        refreshAll();
+        renderNav();    // 내비게이션만 다시 그려도 OK
+        renderGames();  // 게임 리스트도 다시 그려야 날짜가 바뀝니다
       }
     });
-    $(`#${nextBtnId}`).on('click', () => {
+
+  // 2) 다음 버튼 클릭
+  $(containerSelector)
+    .off('click', `#${nextBtnId}`)
+    .on('click', `#${nextBtnId}`, () => {
       if (currentIndex < dateKeys.length - 1) {
         currentIndex++;
-        refreshAll();
+        renderNav();
+        renderGames();
       }
     });
-  }
+}
 
   // ==============================
   // 9. 팀 선택 클릭 핸들러
