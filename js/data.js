@@ -15,13 +15,13 @@ const teamLogos = {
 
 // 날짜별 경기 데이터
 window.matchData = {
-  // 내일 경기(샘플: 기존 kboGames)
+
   "2025-05-16": [
     {
       gameId: "20250516-0",
       home: { teamName: "KT", logo: teamLogos.KT, votes: 1941 },
       away: { teamName: "LG", logo: teamLogos.LG, votes: 3304 },
-      status: "pre", // 경기전
+      status: "pre", 
       startTime: "18:00",
       userSelection: "home",
       eventResult: null
@@ -63,13 +63,13 @@ window.matchData = {
       eventResult: null
     }
   ],
-  // 오늘 경기 (todayResults 기준)
+  
   "2025-05-15": [
     {
       gameId: "20250515-0",
       home: { teamName: "KT", logo: teamLogos.KT, votes: 1941 },
       away: { teamName: "LG", logo: teamLogos.LG, votes: 3304 },
-      status: "post", // 경기 종료
+      status: "post", 
       startTime: "18:00",
       score: { home: 1, away: 5 },
       userSelection: "home",
@@ -89,7 +89,7 @@ window.matchData = {
       gameId: "20250515-2",
       home: { teamName: "두산", logo: teamLogos["두산"], votes: 0 },
       away: { teamName: "삼성", logo: teamLogos["삼성"], votes: 5245 },
-      status: "live", // 경기중
+      status: "live", 
       startTime: "18:00",
       score: { home: 4, away: 4 },
       userSelection: "away",
@@ -116,7 +116,7 @@ window.matchData = {
       eventResult: "in progress"
     }
   ],
-  // 어제 경기 (yesterdayResults 기준)
+  
   "2025-05-14": [
     {
       gameId: "20250514-0",
@@ -169,7 +169,7 @@ window.matchData = {
       eventResult: "success"
     }
   ],
-  // 그제 경기 (dayBeforeYesterdayResults 기준)
+ 
   "2025-05-13": [
     {
       gameId: "20250513-0",
@@ -222,7 +222,7 @@ window.matchData = {
       eventResult: "success"
     }
   ],
-  // 3일 전 (day23Results 기준)
+  
   "2025-05-12": [
     {
       gameId: "20250512-0",
@@ -232,7 +232,7 @@ window.matchData = {
       startTime: "18:00",
       score: { home: 0, away: 0 },
       userSelection: "home",
-      eventResult: "cancel"
+      eventResult: "success"
     },
     {
       gameId: "20250512-1",
@@ -242,7 +242,7 @@ window.matchData = {
       startTime: "18:00",
       score: { home: 1, away: 1 },
       userSelection: "away",
-      eventResult: "draw"
+      eventResult: "success"
     },
     {
       gameId: "20250512-2",
