@@ -124,7 +124,7 @@ function renderNav() {
       const awayHighClass = match.away.votes >= match.home.votes ? 'higher' : 'lower';
       const statusSection = renderStatusSection(match);
 
-      +    const itemHtml = `
+      const itemHtml = `
       <div class="game-item" data-game-id="${match.gameId}">
         <!-- 홈팀 컬럼 -->
         <div class="team-column">
