@@ -135,7 +135,20 @@ body {
   color: #FFC736;
 }
 
-/* KBO Team Selection Section - 사용되는 부분만 남김 */
+//======================* KBO Team Selection Section - 사용되는 부분만 남김 */
+
+.team-selection-title .title-main {
+  font-size: 40px;
+  color: #FFFFFF;
+  font-weight: bold; /* 필요 시 */
+}
+
+.team-selection-title .title-sub {
+  font-size: 30px;
+  color: #FFFFFF;
+  font-weight: bold; /* 필요 시 */
+}
+
 .kbo-selection-container {
   min-height: 1000px;
   background-color: #121212;
