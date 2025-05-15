@@ -180,6 +180,15 @@ body {
   pointer-events: none;
 }
 
+.title-wrapper .title-decor-left {
+  left: 0;
+}
+
+.title-wrapper .title-decor-right {
+  right: 0;
+}
+
+
 
 .title-wrapper .title-decor {
   position: absolute;
