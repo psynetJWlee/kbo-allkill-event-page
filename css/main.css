@@ -216,7 +216,7 @@ body {
   margin-top: 0.25em;
 }
 
-.team-selection-title .title-sub countdown-active {
+.team-selection-title .countdown-active {
   display: block;     
   font-size: 30px;  
   color: #FF0000;
