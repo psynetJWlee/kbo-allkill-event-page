@@ -152,22 +152,47 @@ function renderNav() {
   // ==============================
   // 6. 상태별 UI 분기 (pre / live / post)
   // ==============================
-  function renderStatusSection(match) {
-    if (match.status === 'pre') {
-      return `<div class="match-info"><span class="match-time">시작 ${match.startTime}</span></div>`;
-    }
-    else if (match.status === 'live') {
-      return `<div class="match-info live-info">
-                <span class="score">${match.score.home}-${match.score.away}</span>
-              </div>`;
-    }
-    else if (match.status === 'post') {
-      return `<div class="match-info final-score">
-                <span>최종 ${match.score.home}-${match.score.away}</span>
-              </div>`;
-    }
-    return '';
+function renderStatusSection(match) {
+  // 경기 전
+  if (match.status === 'pre') {
+    return `
+      <div class="status-column status-pre">
+        <div class="status-text">경기전</div>
+        <div class="start-time">${match.startTime}</div>
+      </div>
+    `;
   }
+
+  // 경기 중
+  if (match.status === 'live') {
+    return `
+      <div class="status-column status-live">
+        <div class="score">
+          <span class="home-score">${match.score.home}</span>
+          <span class="vs">vs</span>
+          <span class="away-score">${match.score.away}</span>
+        </div>
+        <div class="status-text">경기중</div>
+      </div>
+    `;
+  }
+
+  // 종료
+  if (match.status === 'post') {
+    return `
+      <div class="status-column status-post">
+        <div class="score">
+          <span class="home-score">${match.score.home}</span>
+          <span class="vs">vs</span>
+          <span class="away-score">${match.score.away}</span>
+        </div>
+        <div class="status-text">경기종료</div>
+      </div>
+    `;
+  }
+
+  return `<div class="status-column"></div>`;
+}
 
   // ==============================
   // 7. 제출 버튼 활성화/비활성화
