@@ -257,10 +257,8 @@
     const submittedAt = window.appState.submissionTimes?.[key];
     
     // 메인/서브 텍스트 설정
-    $('.team-selection-title .title-main').text(parts.main);
-    $('.team-selection-title .title-sub')
-      .text(parts.sub)
-      .toggleClass('countdown-active', allPre && allNone);
+  $('.team-selection-title .title-sub')
+    .toggleClass('countdown-active', allPre && !submittedAt);
 
     // 카운트다운 실행/중지
     if (allPre && !submittedAt) {
