@@ -365,6 +365,14 @@ body {
   width: 3ch;
   text-align: center;
 }
+
+/* 상태 컬럼 공통 */
+.status-column {
+  display: flex;             /* flex 컨테이너로 전환 */
+  flex-direction: column;    /* 위→아래 정렬 */
+  align-items: center;       /* 가운데 정렬 */
+  gap: 10px;
+  
 /* ──────────────────────────────────────────
    상태 텍스트 (status-text)
 ────────────────────────────────────────── */
