@@ -94,13 +94,15 @@
   function renderSection() {
     const sectionHtml = `
       <div class="team-selection-section" id="${sectionId}">
-        <div class="title-wrapper">
-          <h2 class="team-selection-title">
-            <span class="title-main">${initialTitle}</span>
-            <span class="title-sub"></span>
-          </h2>
-          <img src="" class="title-decor" alt="" style="display:none;" />
-        </div>
+      <div class="title-wrapper">
+        <h2 class="team-selection-title">
+          <span class="title-main">${initialTitle}</span>
+          <span class="title-sub"></span>
+        </h2>
+        <!-- 왼쪽/오른쪽 데코 자리 -->
+        <img src="" class="title-decor-left"  alt="" style="display:none;" />
+        <img src="" class="title-decor-right" alt="" style="display:none;" />
+      </div>
   
         <div class="game-list" id="${gameListId}"></div>
   
