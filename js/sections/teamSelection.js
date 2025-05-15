@@ -248,25 +248,30 @@
   // 9. 타이틀 & 카운트다운 업데이트
   // ==============================
   function updateTitleAndCountdown() {
-    const key     = dateKeys[currentIndex];
-    const matches = window.matchData[key] || [];
-    const selMap  = window.appState.selectedTeams || {};
-    const allPre  = matches.every(m => m.status === '경기전');
-    const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
-    const submittedAt = window.appState.submissionTimes?.[key];
-    // 메인/서브 텍스트 설정
-    $('.team-selection-title .title-main').text(computeTitleParts().main);
+    const key        = dateKeys[currentIndex];
+    const matches    = window.matchData[key] || [];
+    const selMap     = window.appState.selectedTeams || {};
+    const allPre     = matches.every(m => m.status === '경기전');
+    const submittedAt= window.appState.submissionTimes?.[key];
+    const parts      = computeTitleParts();
+  
+    // 1) 메인/서브 타이틀 설정
+    $('.team-selection-title .title-main')
+      .text(parts.main);
     $('.team-selection-title .title-sub')
-    .text(computeTitleParts().sub)
-    .toggleClass('countdown-active', allPre && !submittedAt);
-
-    // 카운트다운 실행/중지
-    if (allPre && !submittedAt) {
-      const [h, mi]     = matches[0].startTime.split(':').map(Number);
-      const [yy, mo, dd]= key.split('-').map(Number);
-      const target      = new Date(yy, mo - 1, dd, h, mi);
+      .text(parts.sub)
+      .toggleClass('countdown-active', allPre && !submittedAt);
+  
+    // 2) 버튼 텍스트 동기화
+    $('.btn-text').text(parts.main);
+  
+    // 3) 카운트다운 실행/중지
+    if (allPre && !submittedAt && matches.length) {
+      const [h, mi]      = matches[0].startTime.split(':').map(Number);
+      const [yy, mo, dd] = key.split('-').map(Number);
+      const target       = new Date(yy, mo - 1, dd, h, mi);
       startCountdown(target);
-  } else {
+    } else {
       if (countdownTimerId) {
         clearInterval(countdownTimerId);
         countdownTimerId = null;
