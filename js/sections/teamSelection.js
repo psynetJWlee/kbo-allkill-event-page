@@ -207,7 +207,7 @@
   // ➤ 1) 제출 완료(그 날짜에만)
   const submittedAt = window.appState.submissionTimes[key];
   if (submittedAt) {
-    const mm = String(submittedAt.getMonth()+1).padStart(2,'0');
+    const mm = submittedAt.getMonth() + 1;
     const dd = String(submittedAt.getDate()).padStart(2,'0');
     const hh = String(submittedAt.getHours()).padStart(2,'0');
     const mi = String(submittedAt.getMinutes()).padStart(2,'0');
