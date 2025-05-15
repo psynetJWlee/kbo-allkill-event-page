@@ -127,10 +127,11 @@ function renderGames() {
   const $list   = $(`#${gameListId}`).empty();
 
   matches.forEach(match => {
-    const homeSelClass  = /* … */;
-    const awaySelClass  = /* … */;
-    const homeHigh      = /* … */;
-    const awayHigh      = /* … */;
+    const selectedTeam  = window.appState.selectedTeams?.[match.gameId];
+    const homeSelClass  = selectedTeam === 'home' ? 'selected' : '';
+    const awaySelClass  = selectedTeam === 'away' ? 'selected' : '';
+    const homeHigh      = match.score?.home > match.score?.away ? 'higher' : '';
+    const awayHigh      = match.score?.away > match.score?.home ? 'higher' : '';
     const statusSection = renderStatusSection(match);
 
     // ▶ ① fade 처리
@@ -487,3 +488,9 @@ function updateTitleAndCountdown() {
     }
   };
 })(jQuery);
+
+
+// ▶ DOM 로드 후 초기화 자동 호출
+$(function(){
+  window.teamSelectionSection.init();
+});
