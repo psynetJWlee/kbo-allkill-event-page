@@ -190,26 +190,23 @@ function renderNav() {
   // ==============================
   function setupNavHandlers() {
   // 이전 버튼 클릭 (부모 컨테이너에 위임)
-  $(containerSelector)
-    .off('click', `#${prevBtnId}`)
-    .on('click', `#${prevBtnId}`, () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        renderNav();
-        renderGames();
-      }
-    });
-
-  // 다음 버튼 클릭 (부모 컨테이너에 위임)
-  $(containerSelector)
-    .off('click', `#${nextBtnId}`)
-    .on('click', `#${nextBtnId}`, () => {
-      if (currentIndex < dateKeys.length - 1) {
-        currentIndex++;
-        renderNav();
-        renderGames();
-      }
-    });
+  +  $(containerSelector)
++    .off('click', `#${prevBtnId}`)
++    .on('click', `#${prevBtnId}`, () => {
++      if (currentIndex > 0) {
++        currentIndex--;
++        refreshAll();     // <-- 전체 섹션(nav + games)을 다시 렌더
++      }
++    });
++
++  $(containerSelector)
++    .off('click', `#${nextBtnId}`)
++    .on('click', `#${nextBtnId}`, () => {
++      if (currentIndex < dateKeys.length - 1) {
++        currentIndex++;
++        refreshAll();     // <-- 전체 섹션(nav + games)을 다시 렌더
++      }
++    });
 }
 
 
