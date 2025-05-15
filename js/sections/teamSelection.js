@@ -95,8 +95,8 @@
         </h2>
         <div class="game-list" id="${gameListId}"></div>
         <div class="team-selection-submit">
-          <button id="submit-allkill-btn" class="mega-sparkle-btn">
-            ${submitBtnText}
+        <button id="submit-allkill-btn" class="mega-sparkle-btn">
+          <span class="btn-text">${submitBtnText}</span>
             <div class="spark"></div>
             <div class="spark"></div>
             <div class="spark"></div>
