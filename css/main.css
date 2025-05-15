@@ -152,7 +152,7 @@ body {
 .title-wrapper {
   position: relative;
   text-align: center;
-  padding-right: 150px;  /* 우측 아이콘 공간 확보 */
+  padding-right: 150px;
 }
 
 .team-selection-title {
