@@ -4,6 +4,11 @@
   // ==============================
   // 1. 설정 및 상태 변수
   // ==============================
+    // 양옆에 들어갈 아이콘 (채점 중, 올킬 도전, 제출 완료)
+  const iconBothLeft   = 'path/to/both-left.png';
+  const iconBothRight  = 'path/to/both-right.png';
+  // 오른쪽에만 들어갈 아이콘 (다음 경기 도전, 올킬 성공)
+  const iconSingle     = 'path/to/single-right.png';
   const containerSelector = '#kbo-selection-container';
   const sectionId         = 'team-selection-section';
   const gameListId        = 'game-list';
