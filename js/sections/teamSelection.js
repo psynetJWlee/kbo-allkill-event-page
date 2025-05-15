@@ -24,11 +24,22 @@ const dates   = rawKeys.map(k => new Date(k));
 const minDate = new Date(Math.min(...dates));
 const maxDate = new Date(Math.max(...dates));
 
-// 3) 최소~최대 날짜 사이의 모든 날짜(빈 날 포함) 생성
+
+// 1) matchData에 정의된 날짜 키들(YYYY-MM-DD)만 먼저 꺼내기
+const rawKeys = Object.keys(window.matchData);
+
+// 2) rawKeys 중 최소·최대 날짜(Date 객체) 계산
+const dates   = rawKeys.map(k => new Date(k));
+const minDate = new Date(Math.min(...dates));
+const maxDate = new Date(Math.max(...dates));
+
+// 3) minDate부터 maxDate까지 하루씩 증가시키며
+//    범위 내 모든 날짜(YYYY-MM-DD)를 dateKeys 배열에 담기
 const dateKeys = [];
 for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
   dateKeys.push(d.toISOString().slice(0,10));
 }
+
 
   // 실제 오늘 날짜에 해당하는 키를 찾아, 없으면 0번(첫 날짜)으로 시작
   const todayKey    = new Date().toISOString().slice(0,10);
