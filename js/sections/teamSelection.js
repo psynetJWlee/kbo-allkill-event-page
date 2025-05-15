@@ -93,14 +93,26 @@
   // ==============================
   function renderSection() {
     const sectionHtml = `
-     <div class="team-selection-section" id="${sectionId}">
-       <div class="title-wrapper">
-         <h2 class="team-selection-title">
-           <span class="title-main">${initialTitle}</span>
-           <span class="title-sub"></span>
-         </h2>
-         <img src="" class="title-decor" alt="" />
-       </div>
+      <div class="team-selection-section" id="${sectionId}">
+        <div class="title-wrapper">
+          <h2 class="team-selection-title">
+            <span class="title-main">${initialTitle}</span>
+            <span class="title-sub"></span>
+          </h2>
+          <img src="" class="title-decor" alt="" />
+        </div>
+  
+        <!-- 게임 리스트 영역 (renderGames 에서 #game-list 채워줌) -->
+        <div class="game-list" id="${gameListId}"></div>
+  
+        <!-- 제출 버튼 영역 -->
+        <div class="team-selection-submit">
+          <button id="submit-allkill-btn" class="mega-sparkle-btn">
+            <span class="btn-text">${submitBtnText}</span>
+            <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+          </button>
+        </div>
+      </div>
     `;
     $(containerSelector).append(sectionHtml);
     renderGames();
