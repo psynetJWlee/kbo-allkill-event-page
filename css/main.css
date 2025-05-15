@@ -172,8 +172,8 @@ body {
 .title-wrapper .title-decor-right {
   position: absolute;
   top: 0;
-  width: 75px;
-  height: 75px;
+  width: 100px;
+  height: 100px;
   pointer-events: none;
 }
 
@@ -185,10 +185,7 @@ body {
   right: 0;
 }
 
-.team-selection-title {
-  display: inline-block;
-  margin: 0 auto;
-}
+
 
 .title-wrapper .title-decor {
   position: absolute;
@@ -201,11 +198,6 @@ body {
   pointer-events: none;
 }
 
-.team-selection-title .title-sub {
-  display: block;
-  font-size: 30px;
-  margin-top: 0.25em;
-}
 
 .team-selection-title .countdown-active {
   display: block;
