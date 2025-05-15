@@ -172,8 +172,8 @@ body {
 .title-wrapper .title-decor-right {
   position: absolute;
   top: 0;
-  width: 150px;
-  height: 150px;
+  width: 75px;
+  height: 75px;
   pointer-events: none;
 }
 
