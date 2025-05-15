@@ -194,7 +194,9 @@
       </div>
     `;
   }
-  
+  // ==============================
+  // 8. 편집 가능 여부 판단
+  // ==============================
  function canEditSelections() { 
    const key     = dateKeys[currentIndex]; 
    const matches = window.matchData[key] || []; 
@@ -204,7 +206,7 @@
  }
   
   // ==============================
-  // 8. 타이틀 파트 계산
+  // 9. 타이틀 파트 계산
   // ==============================
   function computeTitleParts() {
   const key      = dateKeys[currentIndex];
@@ -253,7 +255,7 @@
 
 
   // ==============================
-  // 9. 타이틀 & 카운트다운 업데이트
+  // 10. 타이틀 & 카운트다운 업데이트
   // ==============================
   function updateTitleAndCountdown() {
     const key        = dateKeys[currentIndex];
@@ -288,7 +290,7 @@
   }
 
   // ==============================
-  // 10. 카운트다운 시작 함수
+  // 11. 카운트다운 시작 함수
   // ==============================
   function startCountdown(targetDate) {
     if (countdownTimerId) clearInterval(countdownTimerId);
@@ -310,7 +312,7 @@
   }
 
   // ==============================
-  // 11. 제출 버튼 활성화/비활성화
+  // 12. 제출 버튼 활성화/비활성화
   // ==============================
   function updateSubmitButton() {
     const $btn    = $('#submit-allkill-btn');
@@ -327,7 +329,7 @@
   }
 
   // ==============================
-  // 12. 내비게이션 핸들러
+  // 13. 내비게이션 핸들러
   // ==============================
   function setupNavHandlers() {
     $(containerSelector)
@@ -350,7 +352,7 @@
   }
 
   // ==============================
-  // 13. 팀 선택 핸들러
+  // 14. 팀 선택 핸들러
   // ==============================
   function setupTeamSelectionHandlers() {
    $(`#${gameListId}`)
@@ -374,7 +376,7 @@
   }
 
   // ==============================
-  // 14. 제출 핸들러
+  // 15. 제출 핸들러
   // ==============================
     function setupSubmitHandler() {
     $('#submit-allkill-btn')
@@ -401,7 +403,7 @@
   }
   
   // ==============================
-  // 15. 전체 갱신
+  // 16. 전체 갱신
   // ==============================
   function refreshAll() {
     renderNav();
@@ -413,7 +415,7 @@
   }
 
   // ==============================
-  // 16. 외부 API 노출
+  // 17. 외부 API 노출
   // ==============================
   window.teamSelectionSection = {
     init: initTeamSelectionSection,
