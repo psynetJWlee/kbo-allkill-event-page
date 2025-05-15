@@ -248,12 +248,14 @@
   // 9. 타이틀 & 카운트다운 업데이트
   // ==============================
   function updateTitleAndCountdown() {
-    const parts   = computeTitleParts();
-    const matches = window.matchData[dateKeys[currentIndex]] || [];
+    const key     = dateKeys[currentIndex];
+    const matches = window.matchData[key] || [];
     const selMap  = window.appState.selectedTeams || {};
+  
     const allPre  = matches.every(m => m.status === '경기전');
+    const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
     const submittedAt = window.appState.submissionTimes?.[key];
-
+    
     // 메인/서브 텍스트 설정
     $('.team-selection-title .title-main').text(parts.main);
     $('.team-selection-title .title-sub')
