@@ -161,6 +161,8 @@ function renderNav() {
   // ==============================
 function renderStatusSection(match) {
   const s = match.status;
+  const homeScoreClass = match.score.home > match.score.away ? 'higher' : '';
+  const awayScoreClass = match.score.away > match.score.home ? 'higher' : '';
 
   // 1) Live (경기중)
   if (s === '경기중') {
