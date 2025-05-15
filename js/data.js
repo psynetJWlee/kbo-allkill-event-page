@@ -9,61 +9,273 @@ const teamLogos = {
   "NC": "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png",
   "삼성": "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png",
   "SSG": "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png",
-  "롯데": "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png"
+  "롯데": "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png",
+  "SK": "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png" // SSG / 구SK
 };
 
-// 내일 경기 데이터
-const kboGames = [
-  { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, time: "18:00", status: "투표 중" },
-  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 },  time: "18:00", status: "투표 중" },
-  { id: 2, homeTeam: { name: "두산", logo: teamLogos["두산"], votes: 0    }, awayTeam: { name: "삼성", logo: teamLogos["삼성"], votes: 5245 }, time: "18:00", status: "투표 중" },
-  { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, time: "18:00", status: "투표 중" },
-  { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, time: "18:00", status: "투표 중" }
-];
-
-// 오늘 경기 결과
-const todayResults = [
-  { id: 0, homeTeam: { name: "KT", logo: teamLogos.KT, votes: 1941 }, awayTeam: { name: "LG", logo: teamLogos.LG, votes: 3304 }, homeScore: 1, awayScore: 5, status: "종료" },
-  { id: 1, homeTeam: { name: "한화", logo: teamLogos["한화"], votes: 4720 }, awayTeam: { name: "NC", logo: teamLogos.NC, votes: 524 },  homeScore: 2, awayScore: 3, status: "종료" },
-  { id: 2, homeTeam: { name: "두산", logo: teamLogos["두산"], votes: 0    }, awayTeam: { name: "삼성", logo: teamLogos["삼성"], votes: 5245 }, homeScore: 4, awayScore: 4, status: "경기 중" },
-  { id: 3, homeTeam: { name: "KIA", logo: teamLogos.KIA, votes: 4458 }, awayTeam: { name: "SSG", logo: teamLogos.SSG, votes: 787  }, homeScore: 10, awayScore: 2, status: "경기 중" },
-  { id: 4, homeTeam: { name: "키움", logo: teamLogos["키움"], votes: 787  }, awayTeam: { name: "롯데", logo: teamLogos["롯데"], votes: 4458 }, homeScore: 1, awayScore: 0, status: "경기 중" }
-];
-
-// 어제 경기 결과
-const yesterdayResults = [
-  { id: 0, homeTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:true}, awayTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:false}, homeScore:11, awayScore:5, status:"종료", correct:true  },
-  { id: 1, homeTeam:{name:"한화",logo:teamLogos["한화"],votes:227,   winner:true}, awayTeam:{name:"NC",logo:teamLogos.NC, votes:4322,winner:false}, homeScore:7,  awayScore:2, status:"종료", correct:true  },
-  { id: 2, homeTeam:{name:"두산",logo:teamLogos["두산"],votes:423,   winner:true}, awayTeam:{name:"삼성",logo:teamLogos["삼성"],votes:9324,winner:false}, homeScore:3,  awayScore:9, status:"종료", correct:false },
-  { id: 3, homeTeam:{name:"KIA",logo:teamLogos.KIA,   votes:4218,winner:false}, awayTeam:{name:"SSG",logo:teamLogos.SSG, votes:5524,winner:true }, homeScore:8,  awayScore:4, status:"종료", correct:false },
-  { id: 4, homeTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, awayTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true }, homeScore:5,  awayScore:10,status:"종료", correct:true  }
-];
-
-// 그제(오늘 - 2) 경기 결과
-const dayBeforeYesterdayResults = [
-  { id: 0, homeTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:true},  awayTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:false}, homeScore:8, awayScore:3, status:"종료", correct:true },
-  { id: 1, homeTeam:{name:"NC",logo:teamLogos.NC,votes:4322,winner:false}, awayTeam:{name:"한화",logo:teamLogos["한화"],votes:227,winner:true},  homeScore:1, awayScore:6, status:"종료", correct:true },
-  { id: 2, homeTeam:{name:"삼성",logo:teamLogos["삼성"],votes:9324,winner:true},  awayTeam:{name:"두산",logo:teamLogos["두산"],votes:423,winner:false},  homeScore:7, awayScore:2, status:"종료", correct:true },
-  { id: 3, homeTeam:{name:"SSG",logo:teamLogos.SSG,votes:5524,winner:false}, awayTeam:{name:"KIA",logo:teamLogos.KIA,votes:4218,winner:true},   homeScore:3, awayScore:9, status:"종료", correct:true },
-  { id: 4, homeTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true},  awayTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, homeScore:6, awayScore:4, status:"종료", correct:true }
-];
-
-// 3일 전(오늘 - 3) 경기 결과
-const day23Results = [
-  { id: 0, homeTeam:{name:"LG",logo:teamLogos.LG,votes:3215,winner:true},  awayTeam:{name:"KT",logo:teamLogos.KT,votes:1111,winner:false}, homeScore:0, awayScore:0, status:"경기 취소", correct:false },
-  { id: 1, homeTeam:{name:"NC",logo:teamLogos.NC,votes:4322,winner:false}, awayTeam:{name:"한화",logo:teamLogos["한화"],votes:227,winner:true},  homeScore:1, awayScore:1, status:"무승부", correct:false },
-  { id: 2, homeTeam:{name:"삼성",logo:teamLogos["삼성"],votes:9324,winner:true},  awayTeam:{name:"두산",logo:teamLogos["두산"],votes:423,winner:false},  homeScore:7, awayScore:2, status:"종료", correct:true },
-  { id: 3, homeTeam:{name:"SSG",logo:teamLogos.SSG,votes:5524,winner:false}, awayTeam:{name:"KIA",logo:teamLogos.KIA,votes:4218,winner:true},   homeScore:3, awayScore:9, status:"종료", correct:true },
-  { id: 4, homeTeam:{name:"롯데",logo:teamLogos["롯데"],votes:1230,winner:true},  awayTeam:{name:"키움",logo:teamLogos["키움"],votes:5525,winner:false}, homeScore:6, awayScore:4, status:"종료", correct:true }
-];
-
-
-window.teamLogos              = teamLogos;
-window.kboGames               = kboGames;
-window.todayResults           = todayResults;
-window.yesterdayResults       = yesterdayResults;
-window.dayBeforeYesterdayResults = dayBeforeYesterdayResults;
-window.day23Results           = day23Results;
+// 날짜별 경기 데이터
+window.matchData = {
+  // 내일 경기(샘플: 기존 kboGames)
+  "2025-05-16": [
+    {
+      gameId: "20250516-0",
+      home: { teamName: "KT", logo: teamLogos.KT, votes: 1941 },
+      away: { teamName: "LG", logo: teamLogos.LG, votes: 3304 },
+      status: "pre", // 경기전
+      startTime: "18:00",
+      userSelection: "home",
+      eventResult: null
+    },
+    {
+      gameId: "20250516-1",
+      home: { teamName: "한화", logo: teamLogos["한화"], votes: 4720 },
+      away: { teamName: "NC", logo: teamLogos.NC, votes: 524 },
+      status: "pre",
+      startTime: "18:00",
+      userSelection: "away",
+      eventResult: null
+    },
+    {
+      gameId: "20250516-2",
+      home: { teamName: "두산", logo: teamLogos["두산"], votes: 0 },
+      away: { teamName: "삼성", logo: teamLogos["삼성"], votes: 5245 },
+      status: "pre",
+      startTime: "18:00",
+      userSelection: "away",
+      eventResult: null
+    },
+    {
+      gameId: "20250516-3",
+      home: { teamName: "KIA", logo: teamLogos.KIA, votes: 4458 },
+      away: { teamName: "SSG", logo: teamLogos.SSG, votes: 787 },
+      status: "pre",
+      startTime: "18:00",
+      userSelection: "home",
+      eventResult: null
+    },
+    {
+      gameId: "20250516-4",
+      home: { teamName: "키움", logo: teamLogos["키움"], votes: 787 },
+      away: { teamName: "롯데", logo: teamLogos["롯데"], votes: 4458 },
+      status: "pre",
+      startTime: "18:00",
+      userSelection: "away",
+      eventResult: null
+    }
+  ],
+  // 오늘 경기 (todayResults 기준)
+  "2025-05-15": [
+    {
+      gameId: "20250515-0",
+      home: { teamName: "KT", logo: teamLogos.KT, votes: 1941 },
+      away: { teamName: "LG", logo: teamLogos.LG, votes: 3304 },
+      status: "post", // 경기 종료
+      startTime: "18:00",
+      score: { home: 1, away: 5 },
+      userSelection: "home",
+      eventResult: "fail"
+    },
+    {
+      gameId: "20250515-1",
+      home: { teamName: "한화", logo: teamLogos["한화"], votes: 4720 },
+      away: { teamName: "NC", logo: teamLogos.NC, votes: 524 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 2, away: 3 },
+      userSelection: "home",
+      eventResult: "fail"
+    },
+    {
+      gameId: "20250515-2",
+      home: { teamName: "두산", logo: teamLogos["두산"], votes: 0 },
+      away: { teamName: "삼성", logo: teamLogos["삼성"], votes: 5245 },
+      status: "live", // 경기중
+      startTime: "18:00",
+      score: { home: 4, away: 4 },
+      userSelection: "away",
+      eventResult: "in progress"
+    },
+    {
+      gameId: "20250515-3",
+      home: { teamName: "KIA", logo: teamLogos.KIA, votes: 4458 },
+      away: { teamName: "SSG", logo: teamLogos.SSG, votes: 787 },
+      status: "live",
+      startTime: "18:00",
+      score: { home: 10, away: 2 },
+      userSelection: "home",
+      eventResult: "in progress"
+    },
+    {
+      gameId: "20250515-4",
+      home: { teamName: "키움", logo: teamLogos["키움"], votes: 787 },
+      away: { teamName: "롯데", logo: teamLogos["롯데"], votes: 4458 },
+      status: "live",
+      startTime: "18:00",
+      score: { home: 1, away: 0 },
+      userSelection: "away",
+      eventResult: "in progress"
+    }
+  ],
+  // 어제 경기 (yesterdayResults 기준)
+  "2025-05-14": [
+    {
+      gameId: "20250514-0",
+      home: { teamName: "KT", logo: teamLogos.KT, votes: 1111 },
+      away: { teamName: "LG", logo: teamLogos.LG, votes: 3215 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 11, away: 5 },
+      userSelection: "home",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250514-1",
+      home: { teamName: "한화", logo: teamLogos["한화"], votes: 227 },
+      away: { teamName: "NC", logo: teamLogos.NC, votes: 4322 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 7, away: 2 },
+      userSelection: "home",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250514-2",
+      home: { teamName: "두산", logo: teamLogos["두산"], votes: 423 },
+      away: { teamName: "삼성", logo: teamLogos["삼성"], votes: 9324 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 3, away: 9 },
+      userSelection: "away",
+      eventResult: "fail"
+    },
+    {
+      gameId: "20250514-3",
+      home: { teamName: "KIA", logo: teamLogos.KIA, votes: 4218 },
+      away: { teamName: "SSG", logo: teamLogos.SSG, votes: 5524 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 8, away: 4 },
+      userSelection: "away",
+      eventResult: "fail"
+    },
+    {
+      gameId: "20250514-4",
+      home: { teamName: "키움", logo: teamLogos["키움"], votes: 5525 },
+      away: { teamName: "롯데", logo: teamLogos["롯데"], votes: 1230 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 5, away: 10 },
+      userSelection: "home",
+      eventResult: "success"
+    }
+  ],
+  // 그제 경기 (dayBeforeYesterdayResults 기준)
+  "2025-05-13": [
+    {
+      gameId: "20250513-0",
+      home: { teamName: "LG", logo: teamLogos.LG, votes: 3215 },
+      away: { teamName: "KT", logo: teamLogos.KT, votes: 1111 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 8, away: 3 },
+      userSelection: "home",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250513-1",
+      home: { teamName: "NC", logo: teamLogos.NC, votes: 4322 },
+      away: { teamName: "한화", logo: teamLogos["한화"], votes: 227 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 1, away: 6 },
+      userSelection: "away",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250513-2",
+      home: { teamName: "삼성", logo: teamLogos["삼성"], votes: 9324 },
+      away: { teamName: "두산", logo: teamLogos["두산"], votes: 423 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 7, away: 2 },
+      userSelection: "home",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250513-3",
+      home: { teamName: "SSG", logo: teamLogos.SSG, votes: 5524 },
+      away: { teamName: "KIA", logo: teamLogos.KIA, votes: 4218 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 3, away: 9 },
+      userSelection: "away",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250513-4",
+      home: { teamName: "롯데", logo: teamLogos["롯데"], votes: 1230 },
+      away: { teamName: "키움", logo: teamLogos["키움"], votes: 5525 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 6, away: 4 },
+      userSelection: "home",
+      eventResult: "success"
+    }
+  ],
+  // 3일 전 (day23Results 기준)
+  "2025-05-12": [
+    {
+      gameId: "20250512-0",
+      home: { teamName: "LG", logo: teamLogos.LG, votes: 3215 },
+      away: { teamName: "KT", logo: teamLogos.KT, votes: 1111 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 0, away: 0 },
+      userSelection: "home",
+      eventResult: "cancel"
+    },
+    {
+      gameId: "20250512-1",
+      home: { teamName: "NC", logo: teamLogos.NC, votes: 4322 },
+      away: { teamName: "한화", logo: teamLogos["한화"], votes: 227 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 1, away: 1 },
+      userSelection: "away",
+      eventResult: "draw"
+    },
+    {
+      gameId: "20250512-2",
+      home: { teamName: "삼성", logo: teamLogos["삼성"], votes: 9324 },
+      away: { teamName: "두산", logo: teamLogos["두산"], votes: 423 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 7, away: 2 },
+      userSelection: "home",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250512-3",
+      home: { teamName: "SSG", logo: teamLogos.SSG, votes: 5524 },
+      away: { teamName: "KIA", logo: teamLogos.KIA, votes: 4218 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 3, away: 9 },
+      userSelection: "away",
+      eventResult: "success"
+    },
+    {
+      gameId: "20250512-4",
+      home: { teamName: "롯데", logo: teamLogos["롯데"], votes: 1230 },
+      away: { teamName: "키움", logo: teamLogos["키움"], votes: 5525 },
+      status: "post",
+      startTime: "18:00",
+      score: { home: 6, away: 4 },
+      userSelection: "home",
+      eventResult: "success"
+    }
+  ]
+};
 
 // Winner members data
 const members = [
