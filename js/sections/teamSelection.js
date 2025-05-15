@@ -274,7 +274,7 @@
     const submittedAt = window.appState.submissionTimes?.[key];
     const parts       = computeTitleParts();
   
-    // 1) 타이틀 텍스트 갱신
+    // 1) 타이틀 갱신
     $('.team-selection-title .title-main').text(parts.main);
     $('.team-selection-title .title-sub')
       .text(parts.sub)
@@ -283,23 +283,22 @@
     // 2) 버튼 텍스트 동기화
     $('.btn-text').text(parts.main);
   
-    // 3) 데코 아이콘 제어 (title-decor 하나만)
+    // 3) 데코 아이콘 제어 (150×150px 한 장만)
     const bothStates = ['채점 중!', '올킬 도전!', '제출 완료 !'];
     const rightOnly  = ['다음 경기 도전 !', '올킬 성공 !'];
-  
     let decorSrc = '';
+  
     if (bothStates.includes(parts.main)) {
-      decorSrc = iconBothRight;   // 양옆용 중 오른쪽 아이콘
+      decorSrc = iconBothRight;
+    } else if (rightOnly.includes(parts.main)) {
+      decorSrc = iconSingle;
     }
-    else if (rightOnly.includes(parts.main)) {
-      decorSrc = iconSingle;      // 오른쪽 전용 아이콘
-    }
-    // 나타내기 / 숨기기
+  
     $('.title-decor')
       .attr('src', decorSrc)
       .css('display', decorSrc ? 'block' : 'none');
   
-    // 4) 카운트다운 실행·중지
+    // 4) 카운트다운 실행/중지
     if (allPre && !submittedAt && matches.length) {
       const [h, mi]      = matches[0].startTime.split(':').map(Number);
       const [yy, mo, dd] = key.split('-').map(Number);
