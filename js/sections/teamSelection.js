@@ -360,12 +360,28 @@
   // 14. 제출 핸들러
   // ==============================
     function setupSubmitHandler() {
-    $('#submit-allkill-btn').on('click', function() {
-      const key = dateKeys[currentIndex];
-      window.appState.submissionTimes[key] = new Date();  // 오늘 날짜 기준 제출 시각 저장
-      updateTitleAndCountdown();
+    $('#submit-allkill-btn')
+      .off('click')
+      .on('click', function() {
+        const key     = dateKeys[currentIndex];
+        const matches = window.matchData[key] || [];
+  
+        // 제출 시각 저장 & 타이틀 갱신
+        window.appState.submissionTimes[key] = new Date();
+        updateTitleAndCountdown();
+  
+        // 모든 경기가 아직 시작 전(경기전)이라면 얼럿 띄우기
+        const allPre = matches.every(m => m.status === '경기전');
+        if (allPre) {
+          alert(
+            '제출 완료 !\n\n' +
+            '경기시작 전까지\n' +
+            '수정이 가능합니다.\n\n' +
+            '확인.'
+          );
+        }
       });
-    }
+  }
   
   // ==============================
   // 15. 전체 갱신
