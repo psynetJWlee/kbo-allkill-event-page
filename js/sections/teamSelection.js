@@ -15,35 +15,23 @@
   const initialTitle      = '올킬 도전!';         // (필요 시 동적 변경 로직 추가 가능)
   const submitBtnText     = '다음 경기 도전!';
 
-  // data.js 에 정의된 날짜 키들을 오름차순 정렬
   // 1) matchData에 정의된 날짜 키(YYYY-MM-DD) 배열 구하기
-const rawKeys = Object.keys(window.matchData);
+  const rawKeys = Object.keys(window.matchData);
 
-// 2) 최소·최대 날짜 계산
-const dates   = rawKeys.map(k => new Date(k));
-const minDate = new Date(Math.min(...dates));
-const maxDate = new Date(Math.max(...dates));
+  // 2) rawKeys 중 최소·최대 날짜(Date 객체) 계산
+  const dates   = rawKeys.map(k => new Date(k));
+  const minDate = new Date(Math.min(...dates));
+  const maxDate = new Date(Math.max(...dates));
 
+  // 3) minDate부터 maxDate까지 하루씩 증가시키며
+  //    범위 내 모든 날짜(YYYY-MM-DD)를 dateKeys 배열에 담기
+  const dateKeys = [];
+  for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
+    dateKeys.push(d.toISOString().slice(0,10));
+  }
 
-// 1) matchData에 정의된 날짜 키들(YYYY-MM-DD)만 먼저 꺼내기
-const rawKeys = Object.keys(window.matchData);
-
-// 2) rawKeys 중 최소·최대 날짜(Date 객체) 계산
-const dates   = rawKeys.map(k => new Date(k));
-const minDate = new Date(Math.min(...dates));
-const maxDate = new Date(Math.max(...dates));
-
-// 3) minDate부터 maxDate까지 하루씩 증가시키며
-//    범위 내 모든 날짜(YYYY-MM-DD)를 dateKeys 배열에 담기
-const dateKeys = [];
-for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
-  dateKeys.push(d.toISOString().slice(0,10));
-}
-
-
-  // 실제 오늘 날짜에 해당하는 키를 찾아, 없으면 0번(첫 날짜)으로 시작
-  const todayKey    = new Date().toISOString().slice(0,10);
-  let currentIndex  = dateKeys.indexOf(todayKey);
+  const todayKey   = new Date().toISOString().slice(0,10);
+  let currentIndex = dateKeys.indexOf(todayKey);
   if (currentIndex === -1) currentIndex = 0;
 
   // ==============================
