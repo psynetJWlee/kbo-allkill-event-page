@@ -95,7 +95,6 @@ function renderNav() {
     const sectionHtml = `
       <div class="team-selection-section" id="${sectionId}">
         <h2 class="team-selection-title">${initialTitle}</h2>
-        <img src="${stampImgSrc}" class="allkill-stamp" alt="Stamp" />
         <div class="game-list" id="${gameListId}"></div>
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
