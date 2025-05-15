@@ -33,7 +33,7 @@ function initPrizeRankingSection() {
     <ul class="ranking-list" id="ranking-list"></ul>
 
     <div class="ranking-note">
-      * 랭킹은 매일 마지막 경기 종료 후 30분 후 집계
+      * 랭킹은 매일 마지막 경기 종료 후 30분 후 집계<br/>
       * 누적 상금이 동일 할 경우 먼저 달성한 사용자가 우선 순위      
     </div>
   `;
