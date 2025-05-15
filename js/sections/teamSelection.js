@@ -19,7 +19,7 @@
   const rawKeys = Object.keys(window.matchData);
 
   // 2) rawKeys 중 최소·최대 날짜(Date 객체) 계산
-  const dates   = rawKeys.map(k => new Date(k));
+  const dates   = rawKeys.map(k => new Date(k).getTime());
   const minDate = new Date(Math.min(...dates));
   const maxDate = new Date(Math.max(...dates));
 
@@ -27,7 +27,7 @@
   //    범위 내 모든 날짜(YYYY-MM-DD)를 dateKeys 배열에 담기
   const dateKeys = [];
   for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
-    dateKeys.push(d.toISOString().slice(0,10));
+  dateKeys.push(d.toISOString().slice(0,10));
   }
 
   const todayKey   = new Date().toISOString().slice(0,10);
