@@ -136,7 +136,7 @@ function renderNav() {
         </div>
 
         <!-- ★ 중앙 상태 컬럼 추가 ★ -->
-        ${renderStatusSection(match)}
+        ${statusSection}
 
         <!-- 원정팀 컬럼 -->
         <div class="team-column">
