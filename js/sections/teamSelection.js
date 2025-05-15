@@ -205,22 +205,20 @@
   const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
 
   // ➤ 1) 제출 완료(그 날짜에만)
-  const submittedAt = window.appState.submissionTimes[key];
-  if (submittedAt) {
-    const mm = submittedAt.getMonth() + 1;
-    const dd = String(submittedAt.getDate()).padStart(2,'0');
-    const hh = String(submittedAt.getHours()).padStart(2,'0');
-    const mi = String(submittedAt.getMinutes()).padStart(2,'0');
-    return {
-      main: '제출 완료 !',
-      sub:  `${mm}월 ${dd}일 ${hh}:${mi}`
-    };
-  }
+   // 1) 제출 완료(날짜별 기록) 체크
+   const submittedAt = window.appState.submissionTimes?.[key];
+   if (submittedAt) {
+     const mm = submittedAt.getMonth()+1;
+     const dd = submittedAt.getDate();
+     const hh = String(submittedAt.getHours()).padStart(2,'0');
+     const mi = String(submittedAt.getMinutes()).padStart(2,'0');
+     return { main: '제출 완료 !', sub:  `${mm}월 ${dd}일 ${hh}:${mi}` };
+   }
 
   // ➤ 2) 모두 경기전 & 미선택
-  const allPre  = matches.every(m => m.status === '경기전');
-  const allNone = matches.every(m => (selMap[m.gameId] ?? m.userSelection) === 'none');
-  if (allPre && allNone) {
+   const allPre  = matches.every(m => m.status === '경기전');
+   if (allPre) {
+  
     return { main: '올킬 도전!', sub: '참여시간 ' };
   }
 
