@@ -216,6 +216,16 @@ body {
   margin-top: 0.25em;
 }
 
+.team-selection-title .title-sub countdown-active {
+  display: block;     
+  font-size: 30px;  
+  color: #FF0000;
+  margin-top: 0.25em;
+}
+
+
+
+
 .team-selection-title .pointing-finger-left {
   position: absolute;
   top: 50%;
