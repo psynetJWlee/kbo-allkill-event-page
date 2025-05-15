@@ -1041,6 +1041,27 @@ body {
   100% { opacity:0; transform: translateY(-40px) scale(0); }
 }
 
+/* ① game-item을 오버레이의 positioning context로 만들고, overflow 허용 */
+#game-list .game-item {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* ② 성공/실패 오버레이 스타일 (if you haven’t already) */
+.event-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ③ (선택) 크기 조절 */
+.event-overlay.success { width: 100px; height: auto; }
+.event-overlay.fail    { width: 100px; height: auto; }
+
+
 /* Game status layout overrides */
 .game-item .game-status,
 .match-result .game-status {
