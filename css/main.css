@@ -140,13 +140,13 @@ body {
 .team-selection-title .title-main {
   font-size: 40px;
   color: #FFFFFF;
-  font-weight: bold; /* 필요 시 */
+  font-weight: bold; 
 }
 
 .team-selection-title .title-sub {
   font-size: 30px;
   color: #FFFFFF;
-  font-weight: bold; /* 필요 시 */
+  font-weight: bold; 
 }
 
 .kbo-selection-container {
