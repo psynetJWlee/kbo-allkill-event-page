@@ -121,73 +121,65 @@
   // ==============================
   // 6. 경기 리스트 렌더링
   // ==============================
-function renderGames() {
-  const key     = dateKeys[currentIndex];
-  const matches = window.matchData[key] || [];
-  const $list   = $(`#${gameListId}`).empty();
+  function renderGames() {
+    const key     = dateKeys[currentIndex];
+    const matches = window.matchData[key] || [];
+    const $list   = $(`#${gameListId}`).empty();
 
-  matches.forEach(match => {
-    const homeSelClass  = /* … */;
-    const awaySelClass  = /* … */;
-    const homeHigh      = /* … */;
-    const awayHigh      = /* … */;
-    const statusSection = renderStatusSection(match);
-
-    // ▶ ① fade 처리
-    const fadeClass = match.eventResult === 'fail' ? ' faded' : '';
-
-    // ▶ ② overlay HTML
-    let overlayHtml = '';
-    if (match.eventResult === 'success') {
-      overlayHtml = `
-        <img
-          class="event-overlay success"
-          src="https://lh3.googleusercontent.com/fife/ALs6j_FFtMHE15droPmy1K5AUfB_dicrAxIA0dJaP4i5Np-sVqT0GKSTIPDaCkGv9N1Xvy849k30IDcsLAoc_jHhv3WkbTq6_T2u48QgN9vs4Ex9mv6N4LIHrntb1kDT2lbsZZIFimmFaaoxAO88UhVQv05IB72rOoXEpEc-fzrasELlmycGBBBwbeX7Z9oGw03xVwVvSBIIN4i0XqucZmb4GFMHTJNrZSxvlybFFfKbtK7Db13ozZGEyPhIxiQVEx_wD9kS1ApKm147ksZyb7LOElFGEQmSTPH3AVqNRmu-56Gna2T5P8oMu17qPpNT0SdOZl5DamGzQia4Cqr0x_Fs7FIeZzLSHK2aciShzwwMgRc39DlvE0MNdNaEFNVVOdyzpZB3GMIXkaO1ZGAaAQQeqxd_pgbCPThmRPRxLfxwK-iPXd54gMZBxd0YgsRUkMzbv_G-A0HyLI3gW9HXaNeExA6WhJLYrpXYdD9COaR3fTYeg3DSpuF-yQLp6kLJpy_9II1jap9unEGvCGw0smR8TF2ZjHUPelFuPs3URXQaHLncnQTBc8Ntk843Ikk44gHFmcOQ4IM_G2HEkNEAxsZUlQksh-mttR_8VBG7Q72rGxGmW1-PkXzFddXgc0kfkdWuqN_EwE4taHIN1Vo6tyB2NUmRhJYdj-jnYOIRaKkRjed8b66tKl-424Z6X5zelNFARx-K4mrTzHiTgP94R4tAEqvYBt_DSpdqFIoH9KWKsBLkNRfLudhKc8xu8oSGxy3eYfhOOvq3U6tvg2H0jCs7T8dOtq5ajeTQvreILOiAckoMzy_a3coD0kCulAjam6z5tlB50R6paYcFh7xKwv2Uwz4v9m_EoW0IzZkxogCOFLRF0R0ZkKfs6XEQzbWqjagKiWO9v7c5DXvPD0qv_-uv2TM12CH9inX_KuEtPSX8q0aqOBBpfPG_zke_WCR_nJGRufTnigUdoy9iC7FmVddrY0ppNLn91jJpsYCTysce87NVVIZcvNXABpJOfMVn2ZUcV4rVFhtFP9ytyX6u5wNyXlxDvWz4ZQdYhkpQJ7JScjJi81lw_8-JY121SSJnPBa4C5vsn4H3XibImYJHnJiqZ5FwZj2uWOEELlt0xBMfE8AMRtzLzYLlnwRLE3XA6hqKHsE-n1S3BKyqIVw8uFBoODprs6hiMCn8yVRYJAC1lV07ZJEhaBD2BVuf0HEEcEKwvdigevfCO5jQdWKoRrltvQn-mogQ4aLvloIIIbPjqg-WK2hmCJ3_2c4Z13QShxkbUK1HLedsiMus1SuRqwF_1LSQ41yFHzUoSPLCZH8R2AH63AltFekoFqVNw4nRxFww9j9dNLLi4MBnDuOvlMqk2GWFVd8xGzZjezjq-dE9BMf2fuIC4Mtb29OgM_cXD4wuGR45iQyquBq9upnbINoXOEooKNWPHLEkZUDcIsxU-I5NHKdv7lxykJLEIOneIwTFpRK6ZuujHlB27CG9Adib8oUABx7aYZyLj6VvGCNyrI9gu6sFlj_5j1UpCU76fNf37u4VgeoSoPIRkhS6qmzPrFa3CkprdCwYN-vcc1zxJ8YR5FZRyKWCxGsopmdYzokRRd4WFJYkJx63KqK3r1LrFA0n=w1902-h901?auditContext=prefetch"
-          alt="Success" />`;
-    } else if (match.eventResult === 'fail') {
-      overlayHtml = `
-        <img
-          class="event-overlay fail"
-          src="https://lh3.googleusercontent.com/fife/ALs6j_EZ8lcTFR7TPZDm_8oqD0CngTnZcHLsDBJLw_oc-gUKDV1tk0d8PV8goOLdMl-l1VG_25-VKoMNGmZTpRFJMkA-IQv9qgKGbwT_7GUgMgvPzN6z_rwsJA7c4dyasP3Z5vhOXxRAzEdDMo5wljg7J1dU9TO6XRT6aAh3A4bm38mDwPH0qNq78RicUBE17eM9Fc9BVOuz86Zk8c8cQ_bGxaKPK_-01JUT-3yEe-rwq7OmYnzBzJTjUir-F5ERQfx5R-Wnc5Wws7GhfI9Z3UIDQleS77d6szmFj-oeAZje5junJp3NUomoBgy3l1tIt6DWpMgAYoV5_9wl1I0wvRO4LmxhIByWX9lGjAk2eVyjZiVMi_0HxcDezPpwSOZw2_zCQrqruuIiSG3OA2FjEouKBsRcXjn_VnzR5naVG2Z6rUy9UNtQqOmr_CcNhgw3DeMxXfSRphdMyvGfbX5TPWoBX2S2xiM3ljfvW-7SVkDXDc3hmZNQ8cHXybaww4fOEbDhorxi0zskAxH5bsEynwM2MN0q62cgNB1MZCeU8tsQQ9bVcG7gg8TfyoxucodWXCITHb5xdVuFkt-7c8pLGQJI4EEvjTvAneCy6zo1K5J3Q7SuiXN_UAcvYnZazRYAvtD3YfdWxps2NxCl4c41yGqX44k7puoijjbDg8yuXm3_ck9P0E8jk585G7JP7HFLJOcikb-PmnKWRNYqiBdDvq6J3oBKm8KdY9tSd35RMg0tGvBPyzPuhhZva14pbzS07v1eKli2zhvn_NdEanism5R_DJZCTg8mBe8H5C7gOdgYYJY_13wxABCghlfDENi3_Af6khmLojN4Ne6giNbQxk-NVFPE6yZHjsLkkoQrBitNxGZC5TNEk04JY1RVlQV5ljwvJE0flyYrxty4YHBcIGDgEgIv7boBBSb9oDyTX91Yz8H-9z1DUhXRLTI6vnKKFYiOtcOjSXBCNJ_faJTMznQDMfYinVv3e_j5ZZ1dSdyAFs_TxpOWotqO0vse5TeZS4nYZiR-xCidqpXpBhVrkryouVaIJlSnekEg_a7MtF3OrrlybuiEx1U87OHUdL1uujzULMgnATjRRJjcgdKh9nlpTaZdUOmyuwmELFGLcffYYVuVy-gdDNSoZnb8ejpeAtlkSiY5gcJHmM1ItxZu7kS0ku7fZyNppNqJy9CKSIcDodaTKIhfyZI5xMUhLS7v9NcKb6uVvwLPavQkGXHnHPyU1qkDdTUYrxmwf8Il11D9AquJXu3t9cMDkBcjT-ozVXzSyAAfbh5HnaqH3wRAwQhttUdpSMD5nIiJOIsv7LHIwnh0bPR8ZOty8LJL_4z9458Isvq-S6BCc5GtfJaBE2SqTxcjM1hZH6577zH6n0nvY29FKw5zU1G45lDSWqaPatGYltRVe4l-ESvguZg4mP6OU93FlW-3qSQclYEkLICOz6ZwVKnQ2_8Eg1TvIkTcBv7aZ6Qqd7JK2ozgP0Quh6ryg9v1SWe8hLW9MvGlj_zzXSjJ4-IHAHAH2w8-e-NyYzd2PgoZAfOI3A07OADMpY9vLI0xcGLwtb40xRf0Wosh74eGez6WFt_4VigAbiwSCuwduQ6yKnNcwwLJEq2EfjqC6t89=w1902-h901?auditContext=prefetch"
-          alt="Fail" />`;
-    }
-
-    // ▶ ③ 최종 마크업: statusSection 앞뒤가 아니라 맨 끝에!
-    const itemHtml = `
-      <div class="game-item${fadeClass}" data-game-id="${match.gameId}">
-        <!-- 홈팀 컬럼 -->
-        <div class="team-column">
-          <div class="team-box ${homeSelClass}" data-game-id="${match.gameId}" data-team="home">
-            <img class="team-logo" src="${match.home.logo}" alt="${match.home.teamName}" />
-            <span class="team-name">${match.home.teamName}</span>
+    matches.forEach(match => {
+      const selected     = window.appState.selectedTeams?.[match.gameId] ?? match.userSelection;
+      const homeSelClass = selected === 'home' ? 'selected-home' : '';
+      const awaySelClass = selected === 'away' ? 'selected-away' : '';
+      const homeHigh     = match.home.votes >= match.away.votes ? 'higher' : 'lower';
+      const awayHigh     = match.away.votes >= match.home.votes ? 'higher' : 'lower';
+      const statusSection = renderStatusSection(match);
+      
+      // 2) 오버레이 HTML + 실패 시 페이드 클래스
+       let overlayHtml = '';
+       let fadeClass   = '';
+       if (match.eventResult === 'success') {
+         overlayHtml = `
+           <img
+             class="event-overlay success"
+             src="https://lh3.googleusercontent.com/fife/ALs6j_FFtMHE15droPmy1K5AUfB_dicrAxIA0dJaP4i5Np-sVqT0GKSTIPDaCkGv9N1Xvy849k30IDcsLAoc_jHhv3WkbTq6_T2u48QgN9vs4Ex9mv6N4LIHrntb1kDT2lbsZZIFimmFaaoxAO88UhVQv05IB72rOoXEpEc-fzrasELlmycGBBBwbeX7Z9oGw03xVwVvSBIIN4i0XqucZmb4GFMHTJNrZSxvlybFFfKbtK7Db13ozZGEyPhIxiQVEx_wD9kS1ApKm147ksZyb7LOElFGEQmSTPH3AVqNRmu-56Gna2T5P8oMu17qPpNT0SdOZl5DamGzQia4Cqr0x_Fs7FIeZzLSHK2aciShzwwMgRc39DlvE0MNdNaEFNVVOdyzpZB3GMIXkaO1ZGAaAQQeqxd_pgbCPThmRPRxLfxwK-iPXd54gMZBxd0YgsRUkMzbv_G-A0HyLI3gW9HXaNeExA6WhJLYrpXYdD9COaR3fTYeg3DSpuF-yQLp6kLJpy_9II1jap9unEGvCGw0smR8TF2ZjHUPelFuPs3URXQaHLncnQTBc8Ntk843Ikk44gHFmcOQ4IM_G2HEkNEAxsZUlQksh-mttR_8VBG7Q72rGxGmW1-PkXzFddXgc0kfkdWuqN_EwE4taHIN1Vo6tyB2NUmRhJYdj-jnYOIRaKkRjed8b66tKl-424Z6X5zelNFARx-K4mrTzHiTgP94R4tAEqvYBt_DSpdqFIoH9KWKsBLkNRfLudhKc8xu8oSgxy3eYfhOOvq3U6tvg2H0jCs7T8dOtq5ajeTQvreILOiAckoMzy_a3coD0kCulAjam6z5tlB50R6paYcFh7xKwv2Uwz4v9m_EoW0IzZkxogCOFLRF0R0ZkKfs6XEQzbWqjagKiWO9v7c5DXvPD0qv_-uv2TM12CH9inX_KuEtPSX8q0aqOBBpfPG_zke_WCR_nJGRufTnigUdoy9iC7FmVddrY0ppNLn91jJpsYCTysce87NVVIZcvNXABpJOfMVn2ZUcV4rVFhtFP9ytyX6u5wNyXlxDvWz4ZQdYhkpQJ7JScjJi81lw_8-JY121SSJnPBa4C5vsn4H3XibImYJHnJiqZ5FwZj2uWOEELlt0xBMfE8AMRtzLzYLlnwRLE3XA6hqKHsE-n1S3BKyqIVw8vFBoODprs6hiMCn8yVRYJAC1lV07ZJEhaBD2BVuf0HEEcEKwvdigevfCO5jQdWKoRrltQn-mogQ4aLvloIIIbPjqg-WK2hmCJ3_2c4Z13QShxkbUK1HLedsiMus1SuRqwF_1LSQ41yFHzUoSPLCZH8R2AH63AltFekoFqVNw4nRxFww9j9dNLLi4MBnDuOvlMqk2GWFVd8xGzZjezjq-dE9BMf2fuIC4Mtb29OgM_cXD4wuGR45iQyquBq9upnbINoXOEooKNWPHLEkZUDcIsxU-I5NHKdv7lxykJLEIOneIwTFpRK6ZuujHlB27CG9Adib8oUABx7aYZyLj6VvGCNyrI9gu6sFljLJ0G85HWgcXjQCvjxSv1yOOz6GhsD7rP4o8JZ9U31FHq61WevXqBeJHZb2RU7HrGPaFEwv2FKoV4i9wVyDcrOFnQuTyKmVJoj1lunS4o_Wsitp2jKDvS5NP-mXQbq-zDSYzCW9ZsJQgkgrzZm8v2ayfA7urGMG4fHksqhGfzn_P_8Rsy4HVPv-5pDQj6Brn9074HVlRIc7sCHGetLrtfFuwqd12oucxxbEPBRQEyVR362kui5JyC5hBg3YevOYIztJ_IXtarIgVQK3YljRKFQ49Sk7l_nIyNxLwUQgCGMi2yD-9BfTk5M0YH7w6eAcybOVbsy=w1902-h901?auditContext=prefetch" />`;
+       } else if (match.eventResult === 'fail') {
+         fadeClass   = ' faded';
+         overlayHtml = `
+           <img
+             class="event-overlay fail"
+             src="https://lh3.googleusercontent.com/fife/ALs6j_EZ8lcTFR7TPZDm_8oqD0CngTnZcHLsDBJLw_oc-gUKDV1tk0d8PV8goOLdMl-l1VG_25-VKoMNGmZTpRFJMkA-IQv9qgKGbwT_7GUgMgvPzN6z_rwsJA7c4dyasP3Z5vhOXxRAzEdDMo5wljg7J1dU9TO6XRT6aAh3A4bm38mDwPH0qNq78RicUBE17eM9Fc9BVOuz86Zk8c8cQ_bGxaKPK_-01JUT-3yEe-rwq7OmYnzBzJTjUir-F5ERQfx5R-Wnc5Wws7GhfI9Z3UIDQleS77d6szmFj-oeAZje5junJp3NUomoBgy3l1tIt6DWpMgAYoV5_9wl1I0wvRO4LmxhIByWX9lGjAk2eVyjZiVMi_0HxcDezPpwSOZw2_zCQrqruuIiSG3OA2FjEouKBsRcXjn_VnzR5naVG2Z6rUy9UNtQqOmr_CcNhgw3DeMxXfSRphdMyvGfbX5TPWoBX2S2xiM3ljfvW-7SVkDXDc3hmZNQ8cHXybaww4fOEbDhorxi0zskAxH5bsEynwM2MN0q62cgNB1MZCeU8tsQQ9bVcG7gg8TfyoxucodWXCITHb5xdVuFkt-7c8pLGQJI4EEvjTvAneCy6zo1K5J3Q7SuiXN_UAcvYnZazRYAvtD3YfdWxps2NxCl4c41yGqX44k7puoijjbDg8yuXm3_ck9P0E8jk585G7JP7HFLJOcikb-PmnKWRNYqiBdDvq6J3oBKm8KdY9tSd35RMg0tGvBPyzPuhhZva14pbzS07v1eKli2zhvn_NdEanism5R_DJZCTg8mBe8H5C7gOdgYYJY_13wxABCghlfDENi3_Af6khmLojN4Ne6giNbQxk-NVFPE6yZHjsLkkoQrBitNxGZC5TNEk04JY1RVlQV5ljwvJE0flyYrxty4YHBcIGDgEgIv7boBBSb9oDyTX91Yz8H-9z1DUhXRLTI6vnKKFYiOtcOjSXBCNJ_faJTMznQDMfYinVv3e_j5ZZ1dSdyAFs_TxpOWotqO0vse5TeZS4nYZiR-xCidqpXpBhVrkryouVaIJlSnekEg_a7MtF3OrrlybuiEx1U87OHUdL1uujzULMgnATjRRJjcgdKh9nlpTaZdUOmyuwmELFGLcffYYVuVy-gdDNSoZnb8ejpeAtlkSiY5gcJHmM1ItxZu7kS0ku7fZyNppNqJy9CKSIcDodaTKIhfyZI5xMUhLS7v9NcKb6uVvwLPavQkGXHnHPyU1qkDdTUYrxmwf8Il11D9AquJXu3t9cMDkBcjT-ozVXzSyAAfbh5HnaqH3wRAwQhttUdpSMD5nIiJOIsv7LHIwnh0bPR8ZOty8LJL_4z9458Isvq-S6BCc5GtfJaBE2SqTxcjM1hZH6577zH6n0nvY29FKw5zU1G45lDSWqaPatGYltRVe4l-ESvguZg4mP6OU93FlW-3qSQclYEkLICOz6ZwVKnQ2_8Eg1TvIkTcBv7aZ6Qqd7JK2ozgP0Quh6ryg9v1SWe8hLW9MvGlj_zzXSjJ4-IHAHAH2w8-e-NyYzd2PgoZAfOI3A07OADMpY9vLI0xcGLwtb40xRf0Wosh74eGez6WFt_4VigAbiwSCuwduQ6yKnNcwwLJEq2EfjqC6t89=w1902-h901?auditContext=prefetch" />`;
+       }
+      
+      const itemHtml = `
+        <div class="game-item${fadeClass}" data-game-id="${match.gameId}">
+          <div class="team-column">
+            <div class="team-box ${homeSelClass}" data-game-id="${match.gameId}" data-team="home">
+              <img class="team-logo" src="${match.home.logo}" alt="${match.home.teamName}" />
+              <span class="team-name">${match.home.teamName}</span>
+            </div>
+            <div class="vote-count ${homeHigh}">${match.home.votes}</div>
           </div>
-          <div class="vote-count ${homeHigh}">${match.home.votes}</div>
-        </div>
 
-        <!-- 중앙 상태 컬럼 -->
-        ${statusSection}
-
-        <!-- 원정팀 컬럼 -->
-        <div class="team-column">
-          <div class="team-box ${awaySelClass}" data-game-id="${match.gameId}" data-team="away">
-            <img class="team-logo" src="${match.away.logo}" alt="${match.away.teamName}" />
-            <span class="team-name">${match.away.teamName}</span>
+          <div class="team-column">
+            <div class="team-box ${awaySelClass}" data-game-id="${match.gameId}" data-team="away">
+              <img class="team-logo" src="${match.away.logo}" alt="${match.away.teamName}" />
+              <span class="team-name">${match.away.teamName}</span>
+            </div>
+            <div class="vote-count ${awayHigh}">${match.away.votes}</div>
           </div>
-          <div class="vote-count ${awayHigh}">${match.away.votes}</div>
+
+          ${overlayHtml}
+          
         </div>
+        
+      `;
+      $list.append(itemHtml);
+    });
 
-        <!-- ▶ ④ 오버레이는 무조건 .game-item 맨 마지막 자식으로 -->
-        ${overlayHtml}
-      </div>
-    `;
-    $list.append(itemHtml);
-  });
+    updateSubmitButton();
+    updateTitleAndCountdown();
+  }
 
-  updateSubmitButton();
-  updateTitleAndCountdown();
-}
-
-  
   // ==============================
   // 7. 상태별 UI 분기
   // ==============================
