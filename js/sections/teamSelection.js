@@ -124,25 +124,30 @@ function renderNav() {
       const awayHighClass = match.away.votes >= match.home.votes ? 'higher' : 'lower';
       const statusSection = renderStatusSection(match);
 
-      const itemHtml = `
-        <div class="game-item" data-game-id="${match.gameId}">
-          <div class="team-column">
-            <div class="team-box ${homeSelClass}" data-game-id="${match.gameId}" data-team="home">
-              <img class="team-logo" src="${match.home.logo}" alt="${match.home.teamName}" />
-              <span class="team-name">${match.home.teamName}</span>
-            </div>
-            <div class="vote-count ${homeHighClass}">${match.home.votes}</div>
+      +    const itemHtml = `
+      <div class="game-item" data-game-id="${match.gameId}">
+        <!-- 홈팀 컬럼 -->
+        <div class="team-column">
+          <div class="team-box ${homeSelClass}" data-game-id="${match.gameId}" data-team="home">
+            <img class="team-logo" src="${match.home.logo}" alt="${match.home.teamName}" />
+            <span class="team-name">${match.home.teamName}</span>
           </div>
-          ${statusSection}
-          <div class="team-column">
-            <div class="team-box ${awaySelClass}" data-game-id="${match.gameId}" data-team="away">
-              <img class="team-logo" src="${match.away.logo}" alt="${match.away.teamName}" />
-              <span class="team-name">${match.away.teamName}</span>
-            </div>
-            <div class="vote-count ${awayHighClass}">${match.away.votes}</div>
-          </div>
+          <div class="vote-count ${homeHighClass}">${match.home.votes}</div>
         </div>
-      `;
+
+        <!-- ★ 중앙 상태 컬럼 추가 ★ -->
+        ${renderStatusSection(match)}
+
+        <!-- 원정팀 컬럼 -->
+        <div class="team-column">
+          <div class="team-box ${awaySelClass}" data-game-id="${match.gameId}" data-team="away">
+            <img class="team-logo" src="${match.away.logo}" alt="${match.away.teamName}" />
+            <span class="team-name">${match.away.teamName}</span>
+          </div>
+          <div class="vote-count ${awayHighClass}">${match.away.votes}</div>
+        </div>
+      </div>
+    `;
       $list.append(itemHtml);
     });
 
@@ -154,7 +159,7 @@ function renderNav() {
   // ==============================
 function renderStatusSection(match) {
   // 경기 전
-  if (match.status === 'pre') {
+  if (match.status === '경기전') {
     return `
       <div class="status-column status-pre">
         <div class="status-text">경기전</div>
@@ -164,7 +169,7 @@ function renderStatusSection(match) {
   }
 
   // 경기 중
-  if (match.status === 'live') {
+  if (match.status === '경기중') {
     return `
       <div class="status-column status-live">
         <div class="score">
@@ -178,7 +183,7 @@ function renderStatusSection(match) {
   }
 
   // 종료
-  if (match.status === 'post') {
+  if (match.status === '경기종') {
     return `
       <div class="status-column status-post">
         <div class="score">
