@@ -93,25 +93,14 @@
   // ==============================
   function renderSection() {
     const sectionHtml = `
-      <div class="team-selection-section" id="${sectionId}">
-        <h2 class="team-selection-title">
-        <img src="" class="title-icon left-icon"  alt="" />
-          <div class="title-text">
-          <span class="title-main">올킬 도전!</span>
-          <span class="title-sub"></span>
-          </div>
-        <img src="" class="title-icon right-icon" alt="" />
-        </h2>
-        <div class="game-list" id="${gameListId}"></div>
-        <div class="team-selection-submit">
-        <button id="submit-allkill-btn" class="mega-sparkle-btn">
-          <span class="btn-text">${submitBtnText}</span>
-            <div class="spark"></div>
-            <div class="spark"></div>
-            <div class="spark"></div>
-          </button>
-        </div>
-      </div>
+     <div class="team-selection-section" id="${sectionId}">
+       <div class="title-wrapper">
+         <h2 class="team-selection-title">
+           <span class="title-main">${initialTitle}</span>
+           <span class="title-sub"></span>
+         </h2>
+         <img src="" class="title-decor" alt="" />
+       </div>
     `;
     $(containerSelector).append(sectionHtml);
     renderGames();
