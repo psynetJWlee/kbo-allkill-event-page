@@ -95,6 +95,7 @@
     const sectionHtml = `
       <div class="team-selection-section" id="${sectionId}">
         <div class="title-wrapper">
+          <img src="" class="title-decor" alt="" />
           <h2 class="team-selection-title">
             <span class="title-main">${initialTitle}</span>
             <span class="title-sub"></span>
