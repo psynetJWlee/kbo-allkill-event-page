@@ -267,75 +267,51 @@
   // ==============================
   // 10. 타이틀 & 카운트다운 업데이트
   // ==============================
-function updateTitleAndCountdown() {
-  const key         = dateKeys[currentIndex];
-  const matches     = window.matchData[key] || [];
-  const selMap      = window.appState.selectedTeams || {};
-  const allPre      = matches.every(m => m.status === '경기전');
-  const submittedAt = window.appState.submissionTimes?.[key];
-  const parts       = computeTitleParts();
+  function updateTitleAndCountdown() {
+    const key         = dateKeys[currentIndex];
+    const matches     = window.matchData[key] || [];
+    const allPre      = matches.every(m => m.status === '경기전');
+    const submittedAt = window.appState.submissionTimes?.[key];
+    const parts       = computeTitleParts();
   
-  // 1) 메인/서브 타이틀 설정
-  $('.team-selection-title .title-main')
-    .text(parts.main);
-  $('.team-selection-title .title-sub')
-    .text(parts.sub)
-    .toggleClass('countdown-active', allPre && !submittedAt);
-
-  // 2) 버튼 텍스트 동기화
-  $('.btn-text').text(parts.main);
-
-  // 3) 아이콘 노출 및 소스 제어
-  // 양옆에 표시해야 하는 상태
-  const bothStates = ['채점 중!', '올킬 도전!', '제출 완료 !'];
-  // 오른쪽만 표시해야 하는 상태
-  const rightOnly  = ['다음 경기 도전 !', '올킬 성공 !'];
-
-  if (bothStates.includes(parts.main)) {
-    $('.team-selection-title .left-icon')
-      .css('visibility', 'visible')
-      .attr('src', iconBothLeft);
-    $('.team-selection-title .right-icon')
-      .css('visibility', 'visible')
-      .attr('src', iconBothRight);
-
-  } else if (rightOnly.includes(parts.main)) {
-    $('.team-selection-title .left-icon')
-      .css('visibility', 'hidden');
-    $('.team-selection-title .right-icon')
-      .css('visibility', 'visible')
-      .attr('src', iconSingle);
-
-  } else {
-    // 그 외엔 둘 다 빈 자리만 남김
-    $('.team-selection-title .left-icon, .team-selection-title .right-icon')
-      .css('visibility', 'hidden');
-  }
-
-  // 4) 카운트다운 실행/중지
-  if (allPre && !submittedAt && matches.length) {
-    const [h, mi]      = matches[0].startTime.split(':').map(Number);
-    const [yy, mo, dd] = key.split('-').map(Number);
-    const target       = new Date(yy, mo - 1, dd, h, mi);
-    startCountdown(target);
-  } else {
-    if (countdownTimerId) {
-      clearInterval(countdownTimerId);
-      countdownTimerId = null;
+    // 1) 타이틀 텍스트 갱신
+    $('.team-selection-title .title-main').text(parts.main);
+    $('.team-selection-title .title-sub')
+      .text(parts.sub)
+      .toggleClass('countdown-active', allPre && !submittedAt);
+  
+    // 2) 버튼 텍스트 동기화
+    $('.btn-text').text(parts.main);
+  
+    // 3) 데코 아이콘 제어 (title-decor 하나만)
+    const bothStates = ['채점 중!', '올킬 도전!', '제출 완료 !'];
+    const rightOnly  = ['다음 경기 도전 !', '올킬 성공 !'];
+  
+    let decorSrc = '';
+    if (bothStates.includes(parts.main)) {
+      decorSrc = iconBothRight;   // 양옆용 중 오른쪽 아이콘
+    }
+    else if (rightOnly.includes(parts.main)) {
+      decorSrc = iconSingle;      // 오른쪽 전용 아이콘
+    }
+    // 나타내기 / 숨기기
+    $('.title-decor')
+      .attr('src', decorSrc)
+      .css('display', decorSrc ? 'block' : 'none');
+  
+    // 4) 카운트다운 실행·중지
+    if (allPre && !submittedAt && matches.length) {
+      const [h, mi]      = matches[0].startTime.split(':').map(Number);
+      const [yy, mo, dd] = key.split('-').map(Number);
+      startCountdown(new Date(yy, mo - 1, dd, h, mi));
+    } else {
+      if (countdownTimerId) {
+        clearInterval(countdownTimerId);
+        countdownTimerId = null;
+      }
     }
   }
-    const main = parts.main;
-      let src = '';
-      if (['채점 중!', '올킬 도전!', '제출 완료 !'].includes(main)) {
-        src = iconBothRight;    // 양옆 중 오른쪽용 (원본 150px 아이콘)
-      } else if (['다음 경기 도전 !', '올킬 성공 !'].includes(main)) {
-        src = iconSingle;       // 오른쪽 전용
-      }
-      // 빈 문자열이면 .title-decor 은 숨김
-      $('.title-decor')
-        .attr('src', src)
-        .css('display', src ? 'block' : 'none');
-  }
+
 
 
   // ==============================
