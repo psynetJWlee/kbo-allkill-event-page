@@ -127,6 +127,15 @@
     const $list   = $(`#${gameListId}`).empty();
 
     matches.forEach(match => {
+      // ——— 각 match별 disable 여부 판단 ———
+      const isSuspended = ["서스펜드", "우천중지", "경기취소"].includes(match.status);
+      const isFailed    = match.status === "경기종료" && match.eventResult === "fail";
+
+       // game-item 생성 시 disabled 클래스 토글
+      const $gameItem = $('<div>')
+      .addClass('game-item')
+      .toggleClass('disabled', isSuspended || isFailed);
+      
       const selected     = window.appState.selectedTeams?.[match.gameId] ?? match.userSelection;
       const homeSelClass = selected === 'home' ? 'selected-home' : '';
       const awaySelClass = selected === 'away' ? 'selected-away' : '';
