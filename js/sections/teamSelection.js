@@ -129,7 +129,7 @@
   matches.forEach(match => {
     // 1) disable 여부 판단
     const isSuspended = ["서스펜드", "우천취소", "경기취소"].includes(match.status);
-    const isFailed    = match.status === "경기종료" && match.eventResult === "fail");
+    const isFailed    = match.status === "경기종료" && match.eventResult === "fail";
 
     // 2) fade 여부 판단
     const fadeClass = match.eventResult === 'fail' ? 'faded' : '';
