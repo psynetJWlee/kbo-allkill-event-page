@@ -128,7 +128,7 @@
 
     matches.forEach(match => {
       // ——— 각 match별 disable 여부 판단 ———
-      const isSuspended = ["서스펜드", "우천중지", "경기취소"].includes(match.status);
+      const isSuspended = ["서스펜드", "우천취소", "경기취소"].includes(match.status);
       const isFailed    = match.status === "경기종료" && match.eventResult === "fail";
 
        // game-item 생성 시 disabled 클래스 토글
