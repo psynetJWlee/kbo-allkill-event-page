@@ -116,30 +116,8 @@
     `;
     $(containerSelector).append(sectionHtml);
     renderGames();
-    renderAllKillStamp();
   }
 
-    // 게임 5경기 모두 eventResult==='success' 일 때 #game-list 한가운데에 '올킬 도장' 이미지를 띄웁니다. //
-  function renderAllKillStamp() {
-    const key     = dateKeys[currentIndex];
-    const matches = window.matchData[key] || [];
-  
-    // 모든 경기가 success 여야 올킬
-    const allKill = matches.length > 0
-      && matches.every(m => m.eventResult === 'success');
-  
-    if (!allKill) return;
-  
-    // 도장 이미지 생성
-    const $stamp = $('<img>')
-      .addClass('allkill-stamp')
-      .attr('src', 'https://lh3.googleusercontent.com/fife/ALs6j_H5vYqnR8wyrG5qElixkRvUd71ea5we9Ypq_LZ6ZQJIVax1fFe-CNmlpIcoVQ505FyWKrmMJZ3vKTEx4D8hu92KDskY4IuQRGVBUEMrbemC6e8OC_oQkbW0Jns7ajkompcOcEY-JYq-fEB_7n75ZomwrruLqdWqv5s3MyJz3zx4NVCuBqfBQQ-p2rb_zNYGqMWrnUMyW4PznfDi9mf8yZK6caQfL7Z_tbP890sAv88bkGHQerkQMX_oxlyk8xzzgL7BfywSvywUXK3ZdySsQInuNaPsS-DVMbC2PQQSJkTQsCdHQdgUtnn0og2JDEgdOcen-70E43mtxC8CX9aBUOd_gBMkg1eMt7-tQUREUFfuZc1IEVyR5gWQRDudN-ZdKuzskrAa7K9FXilWfp0gbLlWoqH8-DTuYJqNKWjZODslQFOoPn7GHQuvi3ZsA9098FtW6PmHsEg20kNhIoJHlWOBkEpCNHsUv1HgZuroFPmO9-3xO-1Lp2mVBqTK-qrfAG22pa532U3b1F8kuo5dCkJRKZ96utqjDQVvfrSVX5G0ICldcjhluwyJ2VAsipWxpK5t4fqOxahX3u7FZ2-K7xV77R_55-MFIB_D3WQb10uPNwxqTn18W89xvek1_otVRkH7bE3tlVbRmCYXh9KRvUfWypXVI5FyqLKS-aQ393kP1miIRpXVilnDseJbhhjRpjfKRvdlERyMtjSxs7XX9vhkJRZ6WenCNRCI-23uLF83B7lIWxyo5Xpc1ctfsfKoEOIGPD9eUKJ30a8sCOUEZqbE0AEAWN5vpbTFvGZ7CO-NzRZx-2Pybyn9x7zWrKQYC7PEvGVeaFs-f1BZvnsp_h9n6xGpd1PTeHnzxI7_LmzbJhGd04JlmX_L87bie91wwXLHEptgdBrl1aM0VFAXgtKkLa9gnouMio_9aMqmPTurGBNQ9J4zNADn2EtmWC-IKYDMAJ1c10pySboRsPKO0EetQtiZKr2cooN8cG7LQ9GG55qLe2wpDG62w8uCuKfu57QNpVwCaLiFrKNtNI_DfADJ0claCDVDE3FR3zc3x_J6t0XxK9lWyhZP1zdXjfoloKhalNtRzXMOOEL4ReqFRuBtUtJhAWcBjW1-ONmPnCMbDn4nzG-SDPRGZsohs_0nNyJoFZEZegFo_63nblaMfz6SDP1D_l8LesTPb1S8KYzcgaeMUZcJiilIeZoux86rfMcjnDoek3HhgHflR9oGWab5GSBsuFozm9cVpYDzDOwObmc7qRkCYCNx1oID6jRkeufyW-h9B2eYIfo8wzyNNyJb2IlqGgtAsk3bAuo1oquD2-q3exRpLLK8n-o7nWN6sjOIs5WDH3Kt1UnO-0empA7KuqVwOIOOm6qZuSN_rIs5jqkuWd0hGXhOhK89SK1aXHjvqEpGPLfQ00zJElTMLROZB2sQsUJR5fzOA3YVOt6lL6Se7G3YejdftHq4WM3sVIT1TC5u7uyGy398ccKV0oFMXabva6DoFQ4jzg56L08F1FqFODuv4L0o7-Alb3NiMgp3j63yLFnKby4RTPkGIhdnYwEM7sqTseQCkepGdyS_QF0UIubRGTb2MhzcYSUvHCvQtXmsnXgpFGdPLEvIu9k=w1920-h911?auditContext=prefetch');
-  
-    // .game-list 컨테이너에 추가
-    $(`#${gameListId}`).append($stamp);
-  }
-  
-    
   // ==============================
   // 6. 경기 리스트 렌더링
   // ==============================
