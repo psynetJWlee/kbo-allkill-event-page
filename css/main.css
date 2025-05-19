@@ -137,6 +137,11 @@ body {
 
 /*======================* KBO Team Selection Section - 사용되는 부분만 남김 */
 
+.game-item.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .team-selection-title .title-main {
   font-size: 40px;
   color: #FFFFFF;
