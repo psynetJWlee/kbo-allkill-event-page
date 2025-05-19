@@ -1183,7 +1183,7 @@ body {
   }
 }
 
-.game-item.disabled {
-  opacity: 0.3 !important;
-  pointer-events: none;
-}
+  .game-item.disabled {
+    opacity: 0.3 !important;
+    pointer-events: none;
+  }
