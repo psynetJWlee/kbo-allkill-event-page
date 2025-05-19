@@ -16,7 +16,7 @@ const teamLogos = {
 // 날짜별 경기 데이터 (DAY별로 섹션 구분 ✔)
 window.matchData = {
 
-  "2025-05-12": [
+  "2025-05-16": [
     {
       gameId: "20250512-0",
       home: { teamName: "LG", logo: teamLogos.LG, votes: 3215 },
@@ -74,7 +74,7 @@ window.matchData = {
     }
   ],
 
-  "2025-05-13": [
+  "2025-05-17": [
     {
       gameId: "20250513-0",
       home: { teamName: "LG", logo: teamLogos.LG, votes: 3215 },
@@ -132,7 +132,7 @@ window.matchData = {
     }
   ],
 
-  "2025-05-14": [
+  "2025-05-18": [
     {
       gameId: "20250514-0",
       home: { teamName: "KT", logo: teamLogos.KT, votes: 1111 },
@@ -190,7 +190,7 @@ window.matchData = {
     }
   ],
 
-  "2025-05-15": [
+  "2025-05-19": [
     {
       gameId: "20250515-0",
       home: { teamName: "KT", logo: teamLogos.KT, votes: 1243 },
@@ -240,7 +240,7 @@ window.matchData = {
     },
   ],
 
-  "2025-05-16": [
+  "2025-05-20": [
     {
       gameId: "20250516-0",
       home: { teamName: "KT", logo: teamLogos.KT, votes: 1941 },
