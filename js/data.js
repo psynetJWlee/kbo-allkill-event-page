@@ -72,7 +72,7 @@ const prizeHistory = [
   { date: "2024-05-06", amount: + 50000 },
   { date: "2024-05-05", amount: + 50000 },
   { date: "2024-05-04", amount: + 50000 },
-  { date: "2024-05-03", amount: -300000 },
+  { date: "2024-05-03", amount: - 300000 },
   { date: "2024-05-02", amount: + 50000 },
   { date: "2024-05-01", amount: + 50000 },
   { date: "2024-04-29", amount: + 50000 },
