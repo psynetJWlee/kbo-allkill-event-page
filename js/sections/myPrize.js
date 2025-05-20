@@ -76,6 +76,7 @@ function initMyPrizeSection() {
             <p class="user-text">님 보유상금</p>
           </div>
         </div>
+      </div>
      <div class="prize-history">
        <div class="history-header">
          <p class="history-title">상금 획득 내역 (₩)</p>
