@@ -1,3 +1,5 @@
+// js/sections/myPrize.js
+
 // My Prize Section
 const PAGE_SIZE = 10;
 
@@ -63,17 +65,41 @@ function initMyPrizeSection() {
 
   // ─── Container HTML ─────────────────────────────────────
   const sectionHtml = `
-   <div class="my-prize-container">
-     <div class="flex flex-col items-center">
-       <h2 class="my-prize-title">My 상금</h2>
-     </div>
-     
-     <div class="prize-group">
+    <div class="my-prize-container">
+      <div class="flex flex-col items-center">
+        <h2 class="my-prize-title">My 상금</h2>
+      </div>
+      
+      <div class="prize-group">
         <div class="member-info">
           <img src="/placeholder.svg" class="user-avatar" alt="사용자" />
           <div class="user-info">
             <p class="user-nickname">${userData.nickname}</p>
             <p class="user-text">님 보유상금</p>
+          </div>
+        </div>
+        <p class="prize-amount">${formatNumber(userData.totalAmount)} 원</p>
+        <button class="request-button">상금 지급 신청</button>
+      </div><!-- /.prize-group -->
+      
+      <div class="prize-history">
+        <div class="history-header">
+          <p class="history-title">상금 획득 내역 (₩)</p>
+          <p class="total-prize">누적 ${formatNumber(userData.totalAmount)}</p>
+          <p class="history-count">총 ${totalCount}건</p>
+        </div>
+        
+        <div class="history-items" id="prize-history-items"></div>
+        
+        <div class="pagination">
+          <div class="pagination-content">
+            <div id="prev-page" class="page-item ${userData.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
+            ${Array.from({ length: userData.totalPages }, (_, i) => i + 1).map(page => `
+              <div class="page-item ${userData.currentPage === page ? 'active' : ''}" data-page="${page}">
+                ${page}
+              </div>
+            `).join('')}
+            <div id="next-page" class="page-item ${userData.currentPage === userData.totalPages ? 'disabled' : ''}">&gt;</div>
           </div>
         </div>
       </div>
@@ -101,13 +127,13 @@ function initMyPrizeSection() {
    </div>
  `;
   
-  $('#my-prize-section').html(sectionHtml);
+$('#my-prize-section').html(sectionHtml);
 
   // ─── 3) 히스토리 렌더 ───────────────────────────────────
   const historyItemsHtml = currentHistory.map(item => {
     const d = new Date(item.date);
-    const mm = String(d.getMonth()+1).padStart(2,'0');
-    const dd = String(d.getDate()).padStart(2,'0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
     const weekdayMap = ['일','월','화','수','목','금','토'];
     const wk = weekdayMap[d.getDay()];
 
