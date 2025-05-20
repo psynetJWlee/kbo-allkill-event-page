@@ -945,11 +945,13 @@ body {
   .match-score .vs {
     margin: 0 8px;
   }
+
   .team-selection-title {
     font-size: 32px;
     height: auto;
-    padding: 8px 0;
+    padding: 20px;
   }
+
   .team-selection-title .subtitle {
     font-size: 24px;
   }
