@@ -26,6 +26,16 @@ const members = [
   { id: 8, nickname: "래랜라", profileImage: "/placeholder.svg", amount: 50000 },
   { id: 9, nickname: "하이고", profileImage: "/placeholder.svg", amount: 50000 },
   { id: 10, nickname: "올림픽ㄱㄱ", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 11, nickname: "고량뉴스", profileImage: "/lovable-uploads/85ed9ad3-9c97-4322-9410-b661d4cafb48.png", amount: 50000 },
+  { id: 12, nickname: "컴오라파", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 13, nickname: "홈런왕김탁구", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 14, nickname: "엘지트윈스", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 15, nickname: "두산베어준", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 16, nickname: "라스돌해라", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 17, nickname: "다이노스", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 18, nickname: "래랜라", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 19, nickname: "하이고", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 20, nickname: "올림픽ㄱㄱ", profileImage: "/placeholder.svg", amount: 50000 },
 ];
 
 // Default selected teams for today view
