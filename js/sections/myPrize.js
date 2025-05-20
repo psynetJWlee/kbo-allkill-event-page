@@ -1,9 +1,14 @@
 
 // My Prize Section
 const PAGE_SIZE = 10;
+window.utils = window.utils || {};
+window.utils.formatNumber = window.utils.formatNumber || function(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+
 function initMyPrizeSection() {
   const { formatNumber } = window.utils;
-
   // ─── 페이지 상태 초기화 ─── //
   const allHistory = prizeHistory;
   userData.totalPages  = Math.ceil(allHistory.length / PAGE_SIZE);
