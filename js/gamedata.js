@@ -1,5 +1,5 @@
 (function() {
-  // 날짜별 경기 데이터만 이전
+  
   window.matchData = {
     "2025-05-17": [
       {
