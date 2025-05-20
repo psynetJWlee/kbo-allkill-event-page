@@ -1,4 +1,5 @@
 // state.js
+
 const seoulNow  = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
 const seoulDate = new Date(seoulNow);
 
@@ -7,6 +8,7 @@ let state = {
   currentDay:   seoulDate.getDate(),  // 초기 currentDay도 오늘로
   selectedTeams:{},                  // 여기에 오늘 경기 기본 선택을 채울 예정
   activeTab:    'weekly'
+  weeklyRangeText: '3월 20일 ~ 3월 26일 기준'
 };
 
 // 전역에 노출
