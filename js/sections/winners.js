@@ -79,7 +79,7 @@ function initWinnersSection() {
   
   $sec.find('#member-list').html(memberListHtml + paginationHtml);
 
-  const $sec = $('#winners-section');
+  
     // 이전 페이지
   $sec.find('#prev-page').off('click').on('click', () => {
     if (userData.currentPage > 1) {
