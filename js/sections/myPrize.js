@@ -1,8 +1,18 @@
 
 // My Prize Section
+const PAGE_SIZE = 10;
 function initMyPrizeSection() {
   const { formatNumber } = window.utils;
-  
+
+  // ─── 페이지 상태 초기화 ─── //
+  const allHistory = prizeHistory;
+  userData.totalPages  = Math.ceil(allHistory.length / PAGE_SIZE);
+  userData.currentPage = userData.currentPage || 1;
+
+  const startIdx        = (userData.currentPage - 1) * PAGE_SIZE;
+  const endIdx          = startIdx + PAGE_SIZE;
+  const currentHistory  = allHistory.slice(startIdx, endIdx);
+    
   const sectionHtml = `
     <div class="my-prize-container">
       <div class="flex flex-col items-center">
@@ -58,12 +68,21 @@ function initMyPrizeSection() {
   
   $('#my-prize-section').html(sectionHtml);
   
-  // Render prize history
-  const historyItemsHtml = prizeHistory.map(item => {
+  // Render prize history (이 페이지 분량만)
+  const historyItemsHtml = currentHistory.map(item => {
+  const d = new Date(item.date);
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  const weekdayMap = ['일','월','화','수','목','금','토'];
+  const wk = weekdayMap[d.getDay()];
+  // 금액 앞에 부호
+  const sign = item.amount >= 0 ? '+' : '-';
+  const absAmt = Math.abs(item.amount);
+  
     return `
       <div class="history-item">
-        <p class="history-date">${item.date}</p>
-        <p class="daily-prize">${formatNumber(item.amount)}</p>
+        <p class="history-date">${mm}.${dd} (${wk})</p>
+        <p class="daily-prize">${sign}${formatNumber(absAmt)}</p>
       </div>
     `;
   }).join('');
