@@ -82,7 +82,7 @@ function initMyPrizeSection() {
         <div class="history-header">
           <p class="history-title">상금 획득 내역 (₩)</p>
           <p class="total-prize">누적 ${formatNumber(userData.totalAmount)}</p>
-          <p class="history-count">총 ${totalCount}건</p>
+          
         </div>
         <div class="history-items" id="prize-history-items"></div>
         <div class="pagination">
