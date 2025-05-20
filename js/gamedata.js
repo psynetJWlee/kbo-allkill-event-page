@@ -1,4 +1,3 @@
-
 (function() {
   // 날짜별 경기 데이터만 이전
   window.matchData = {
@@ -265,4 +264,15 @@
       }
     ]
   };
+
+  // 2025-05-21 데이터 복사
+  var lastDayKey = "2025-05-21";
+  var lastDayData = window.matchData[lastDayKey];
+
+  // 2025-05-22 ~ 2025-05-31까지 데이터 추가
+  for (var i = 22; i <= 31; i++) {
+    var dateStr = "2025-05-" + (i < 10 ? "0" + i : i);
+    // 깊은 복사가 아니라 배열/객체를 그대로 복사하면 모든 날짜가 공유되므로, 새 객체와 배열로 복사합니다.
+    window.matchData[dateStr] = JSON.parse(JSON.stringify(lastDayData));
+  }
 })();
