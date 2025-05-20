@@ -221,6 +221,16 @@
   // 10) 제출 버튼·타이틀/카운트다운 업데이트
   updateSubmitButton();
   updateTitleAndCountdown();
+   const okAll = matches.filter(m => m.eventResult === 'success').length === matches.length
+    && matches.length > 0;
+  if (okAll) {
+    $list.append(`
+      <img
+        src="/Group 40338.png"
+        alt="올킬 도장"
+        class="allkill-stamp"
+      />
+    `);
 }
 
 
