@@ -1,4 +1,5 @@
 // js/section/winners.js
+window.userData = window.userData || {};
 const PAGE_SIZE = 10;
 
 // Winners Section
