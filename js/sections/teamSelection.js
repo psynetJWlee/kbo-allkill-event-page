@@ -231,6 +231,7 @@
         class="allkill-stamp"
       />
     `);
+  }
 }
 
 
