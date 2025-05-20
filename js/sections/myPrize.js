@@ -52,16 +52,14 @@ function initMyPrizeSection() {
   const { formatNumber } = window.utils;
 
   // ─── 페이지 상태 초기화 ───
-  const allHistory = prizeHistory;                           // data.js 에 정의된 전체 내역
-  userData.totalPages  = Math.ceil(allHistory.length / PAGE_SIZE);
-  userData.currentPage = userData.currentPage || 1;
+  const allHistory      = prizeHistory;                           // data.js 에 정의된 전체 내역
+  userData.totalPages   = Math.ceil(allHistory.length / PAGE_SIZE);
+  userData.currentPage  = userData.currentPage || 1;
 
-  const startIdx       = (userData.currentPage - 1) * PAGE_SIZE;
-  const endIdx         = startIdx + PAGE_SIZE;
-  const currentHistory = allHistory.slice(startIdx, endIdx);
-
-  // 전체 개수 표시용
-  const totalCount = allHistory.length;
+  const startIdx        = (userData.currentPage - 1) * PAGE_SIZE;
+  const endIdx          = startIdx + PAGE_SIZE;
+  const currentHistory  = allHistory.slice(startIdx, endIdx);
+  const totalCount      = allHistory.length;
 
   // ─── Container HTML ─────────────────────────────────────
   const sectionHtml = `
@@ -69,7 +67,6 @@ function initMyPrizeSection() {
       <div class="flex flex-col items-center">
         <h2 class="my-prize-title">My 상금</h2>
       </div>
-      
       <div class="prize-group">
         <div class="member-info">
           <img src="/placeholder.svg" class="user-avatar" alt="사용자" />
@@ -81,16 +78,13 @@ function initMyPrizeSection() {
         <p class="prize-amount">${formatNumber(userData.totalAmount)} 원</p>
         <button class="request-button">상금 지급 신청</button>
       </div><!-- /.prize-group -->
-      
       <div class="prize-history">
         <div class="history-header">
           <p class="history-title">상금 획득 내역 (₩)</p>
           <p class="total-prize">누적 ${formatNumber(userData.totalAmount)}</p>
           <p class="history-count">총 ${totalCount}건</p>
         </div>
-        
         <div class="history-items" id="prize-history-items"></div>
-        
         <div class="pagination">
           <div class="pagination-content">
             <div id="prev-page" class="page-item ${userData.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
@@ -102,45 +96,19 @@ function initMyPrizeSection() {
             <div id="next-page" class="page-item ${userData.currentPage === userData.totalPages ? 'disabled' : ''}">&gt;</div>
           </div>
         </div>
-      </div>
-     <div class="prize-history">
-       <div class="history-header">
-         <p class="history-title">상금 획득 내역 (₩)</p>
-         <p class="total-prize">누적 ${formatNumber(userData.totalAmount)}</p>
-         <p class="history-count">총 ${totalCount}건</p>
-       </div>
-
-       <div class="history-items" id="prize-history-items"></div>
-
-       <div class="pagination">
-         <div class="pagination-content">
-           <div id="prev-page" class="page-item ${userData.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
-           ${Array.from({ length: userData.totalPages }, (_, i) => i + 1).map(page => `
-             <div class="page-item ${userData.currentPage === page ? 'active' : ''}" data-page="${page}">
-               ${page}
-             </div>
-          `).join('')}
-           <div id="next-page" class="page-item ${userData.currentPage === userData.totalPages ? 'disabled' : ''}">&gt;</div>
-         </div>
-       </div>
-     </div>
-   </div>
- `;
-  
-$('#my-prize-section').html(sectionHtml);
+      </div><!-- /.prize-history -->
+    </div><!-- /.my-prize-container -->
+  `;
+  $('#my-prize-section').html(sectionHtml);
 
   // ─── 3) 히스토리 렌더 ───────────────────────────────────
   const historyItemsHtml = currentHistory.map(item => {
-    const d = new Date(item.date);
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    const weekdayMap = ['일','월','화','수','목','금','토'];
-    const wk = weekdayMap[d.getDay()];
-
-    // 금액 부호
-    const sign   = item.amount >= 0 ? '+' : '-';
+    const d    = new Date(item.date);
+    const mm   = String(d.getMonth() + 1).padStart(2, '0');
+    const dd   = String(d.getDate()).padStart(2, '0');
+    const wk   = ['일','월','화','수','목','금','토'][d.getDay()];
+    const sign = item.amount >= 0 ? '+' : '-';
     const absAmt = Math.abs(item.amount);
-
     return `
       <div class="history-item">
         <p class="history-date">${mm}.${dd} (${wk})</p>
