@@ -4,17 +4,18 @@ const PAGE_SIZE = 10;
 // Winners Section
 function initWinnersSection() {
   const { formatNumber } = window.utils;
-  // ─── 페이지 상태 초기화 ───
-  // data.js 에서 불러온 전체 멤버 배열 (전역 members 변수)
+// ─── 페이지 상태 초기화 ───
+// data.js 에서 불러온 전체 멤버 배열 (전역 members 변수)
+  const allMembers = members;   
   const totalCount = allMembers.length;
 
-  // 총 페이지 수 계산
+// 총 페이지 수 계산
   userData.totalPages  = Math.ceil(allMembers.length / PAGE_SIZE);
   
-  // 현재 페이지가 설정되어 있지 않으면 1로
+// 현재 페이지가 설정되어 있지 않으면 1로
   userData.currentPage = userData.currentPage || 1;
 
-  // 현재 페이지에 보여줄 슬라이스
+// 현재 페이지에 보여줄 슬라이스
   const startIdx = (userData.currentPage - 1) * PAGE_SIZE;
   const endIdx   = startIdx + PAGE_SIZE;
   const currentMembers = allMembers.slice(startIdx, endIdx);
