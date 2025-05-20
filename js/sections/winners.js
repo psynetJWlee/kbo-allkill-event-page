@@ -6,7 +6,7 @@ function initWinnersSection() {
   const { formatNumber } = window.utils;
   // ─── 페이지 상태 초기화 ───
   // data.js 에서 불러온 전체 멤버 배열 (전역 members 변수)
-  const allMembers = members;
+  const totalCount = allMembers.length;
 
   // 총 페이지 수 계산
   userData.totalPages  = Math.ceil(allMembers.length / PAGE_SIZE);
@@ -29,7 +29,7 @@ function initWinnersSection() {
         class="winners-title"
       />
       <p class="winners-count w-full text-center">
-        총 20명
+        총 ${totalCount}명
       </p>
     </div>
     <div class="member-list" id="member-list"></div>
