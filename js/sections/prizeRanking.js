@@ -94,7 +94,9 @@
           <div id="all-tab"    class="tab">전체</div>
         </div>
       </div>
-      <p class="date-range">${state.weeklyRangeText}</p>
+      ${state.activeTab === 'weekly'
+        ? `<p class="date-range">${state.weeklyRangeText}</p>`
+        : ''}
 
       <ul class="ranking-list" id="ranking-list"></ul>
 
