@@ -1,7 +1,7 @@
 // js/sections/myPrize.js
 
 // My Prize Section
-const PAGE_SIZE = 10;
+const MY_PRIZE_PAGE_SIZE = 10;
 
 // 숫자 3자리마다 쉼표 삽입 유틸(폴백)
 window.utils = window.utils || {};
@@ -53,11 +53,11 @@ function initMyPrizeSection() {
 
   // ─── 페이지 상태 초기화 ───
   const allHistory      = prizeHistory;                           // data.js 에 정의된 전체 내역
-  userData.totalPages   = Math.ceil(allHistory.length / PAGE_SIZE);
+  userData.totalPages   = Math.ceil(allHistory.length / MY_PRIZE_PAGE_SIZE);
   userData.currentPage  = userData.currentPage || 1;
 
-  const startIdx        = (userData.currentPage - 1) * PAGE_SIZE;
-  const endIdx          = startIdx + PAGE_SIZE;
+  const startIdx        = (userData.currentPage - 1) * MY_PRIZE_PAGE_SIZE;
+  const endIdx          = startIdx + MY_PRIZE_PAGE_SIZE;
   const currentHistory  = allHistory.slice(startIdx, endIdx);
   const totalCount      = allHistory.length;
 
