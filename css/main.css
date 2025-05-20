@@ -142,12 +142,14 @@ body {
   font-size: 40px;
   color: #FFFFFF;
   font-weight: bold; 
+  padding: 20px;
 }
 
 .team-selection-title .title-sub {
   font-size: 30px;
   color: #FFFFFF;
   font-weight: bold; 
+  padding: 20px;
 }
 
 .kbo-selection-container {
