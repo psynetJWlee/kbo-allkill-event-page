@@ -48,7 +48,7 @@ const defaultSelectedTeams = {
 };
 
 // Mock data for ranking list
-const rankingData = [
+const weeklyrankingData = [
   { rank: 1, name: "올킬챔피언", profileImg: "https://i.pravatar.cc/150?img=1", streak: 5, prize: 1500000, isMe: false },
   { rank: 2, name: "베팅전문가", profileImg: "https://i.pravatar.cc/150?img=2", streak: 4, prize: 1200000, isMe: false },
   { rank: 3, name: "야구의신", profileImg: "https://i.pravatar.cc/150?img=3", streak: 4, prize: 1000000, isMe: false },
@@ -59,6 +59,19 @@ const rankingData = [
   { rank: 8, name: "올킬도전자", profileImg: "https://i.pravatar.cc/150?img=8", streak: 2, prize: 400000, isMe: false },
   { rank: 9, name: "야구매니아", profileImg: "https://i.pravatar.cc/150?img=9", streak: 1, prize: 300000, isMe: false },
   { rank: 10, name: "베팅초보", profileImg: "https://i.pravatar.cc/150?img=10", streak: 1, prize: 200000, isMe: false },
+];
+
+const totalrankingData = [
+  { rank: 1, name: "베팅초", profileImg: "https://i.pravatar.cc/150?img=1", streak: 5, prize: 91500000, isMe: false },
+  { rank: 2, name: "전문가", profileImg: "https://i.pravatar.cc/150?img=2", streak: 4, prize: 81200000, isMe: false },
+  { rank: 3, name: "야구신", profileImg: "https://i.pravatar.cc/150?img=3", streak: 4, prize: 71000000, isMe: false },
+  { rank: 4, name: "KBO스터", profileImg: "https://i.pravatar.cc/150?img=4", streak: 3, prize: 6800000, isMe: false },
+  { rank: 5, name: "승부", profileImg: "https://i.pravatar.cc/150?img=5", streak: 3, prize: 5700000, isMe: false },
+  { rank: 6, name: "야구팬5123", profileImg: "https://i.pravatar.cc/150?img=6", streak: 3, prize: 4600000, isMe: false },
+  { rank: 7, name: "베팅5러버", profileImg: "https://i.pravatar.cc/150?img=7", streak: 2, prize: 3500000, isMe: false },
+  { rank: 8, name: "올킬123도전자", profileImg: "https://i.pravatar.cc/150?img=8", streak: 2, prize: 2400000, isMe: false },
+  { rank: 9, name: "야구55매니아", profileImg: "https://i.pravatar.cc/150?img=9", streak: 1, prize: 1300000, isMe: false },
+  { rank: 10, name: "베팅고수베팅초보", profileImg: "https://i.pravatar.cc/150?img=10", streak: 1, prize: 1200000, isMe: false },
 ];
 
 // Prize history data
