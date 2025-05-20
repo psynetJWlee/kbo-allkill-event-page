@@ -126,6 +126,7 @@ body {
 
 .member-nickname {
   font-size: 20px;
+  font-weight: bold; 
   color: #FFFFFF;
 }
 
