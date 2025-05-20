@@ -720,6 +720,7 @@ body {
 
 .my-ranking {
   font-size: 16px;
+  font-weight: bold;
   color: white;
   margin-top: 8px;
 }
