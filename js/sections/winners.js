@@ -74,6 +74,28 @@ function initWinnersSection() {
   `;
   
   $('#member-list').html(memberListHtml + paginationHtml);
+    // 이전 페이지
+  $('#prev-page').off('click').on('click', () => {
+    if (userData.currentPage > 1) {
+      userData.currentPage--;
+      initWinnersSection();
+    }
+  });
+  // 다음 페이지
+  $('#next-page').off('click').on('click', () => {
+    if (userData.currentPage < userData.totalPages) {
+      userData.currentPage++;
+      initWinnersSection();
+    }
+  });
+  // 페이지 번호 직접 클릭
+  $('.page-item[data-page]').off('click').on('click', function() {
+    const page = Number($(this).data('page'));
+    if (page !== userData.currentPage) {
+      userData.currentPage = page;
+      initWinnersSection();
+    }
+  });
 }
 
 // Export the initialization function
