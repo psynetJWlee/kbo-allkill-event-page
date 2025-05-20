@@ -14,30 +14,27 @@ window.utils.formatNumber = window.utils.formatNumber || function(num) {
 // ==============================
 function setupPaginationHandlers() {
   // 페이지 번호 직접 클릭
-  $('.page-item[data-page]')
-    .off('click')
-    .on('click', function() {
-      const page = parseInt($(this).data('page'), 10);
-      handlePageChange(page);
-    });
+  const $sec = $('#my-prize-section');
+  $sec.find('.page-item[data-page]')
+      .off('click')
+      .on('click', function() {
+  const page = parseInt($(this).data('page'), 10);
+  handlePageChange(page);
+  });
 
   // 이전 페이지 클릭
-  $('#prev-page')
-    .off('click')
-    .on('click', function() {
-      if (userData.currentPage > 1) {
-        handlePageChange(userData.currentPage - 1);
-      }
-    });
+  $sec.find('#prev-page').off('click').on('click', function() {
+    if (userData.currentPage > 1) {
+    handlePageChange(userData.currentPage - 1);
+    }
+  });
 
   // 다음 페이지 클릭
-  $('#next-page')
-    .off('click')
-    .on('click', function() {
-      if (userData.currentPage < userData.totalPages) {
-        handlePageChange(userData.currentPage + 1);
-      }
-    });
+  $sec.find('#next-page').off('click').on('click', function() {
+    if (userData.currentPage < userData.totalPages) {
+      handlePageChange(userData.currentPage + 1);
+    }
+  });
 }
 
 function handlePageChange(page) {
