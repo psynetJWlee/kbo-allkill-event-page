@@ -139,35 +139,47 @@ body {
 /*======================* KBO Team Selection Section - 사용되는 부분만 남김 */
 
 
-/* 1) 게임 리스트 컨테이너 */
+/* ─────────────────────────────────────────
+   1) 게임 리스트 컨테이너 정리
+───────────────────────────────────────── */
 .game-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;        /* 원하는 간격으로 통일 */
-  position: relative; /* stamp 중앙 배치를 위해 필요하다면 추가 */
+  gap: 12px;            /* 원하는 간격으로 통일 */
 }
 
-/* 2) 각 게임 아이템 */
+/* ─────────────────────────────────────────
+   2) 각 게임 아이템 스타일
+───────────────────────────────────────── */
 .game-list .game-item {
-  position: relative;    /* !important 제거 */
-  overflow: visible;     /* !important 제거 */
+  position: relative;   /* !important 제거 */
+  overflow: visible;    /* !important 제거 */
 }
 
-/* 3) 홀수번째 아이템 배경색 */
+/* ─────────────────────────────────────────
+   3) 홀수번째 배경색
+───────────────────────────────────────── */
 .game-list .game-item:nth-child(odd) {
   background-color: #1C1C1C;
 }
 
+/* ─────────────────────────────────────────
+   도장 이미지 스타일
+───────────────────────────────────────── */
+.team-selection-section {
+  position: relative;   /* 스탬프를 이 섹션 중앙에 띄우기 위해 필요 */
+}
 
 .allkill-stamp {
   position: absolute;
-  top: 100%;
-  left: 100%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;    /* 필요에 따라 조절 */
-  pointer-events: none;
-  z-index: 10;     /* 다른 요소 위에 뜨도록 */
+  width: 200px;         /* 도장 크기 조절 */
+  pointer-events: none; /* 클릭 막기 */
+  z-index: 10;          /* 위로 뜨도록 */
 }
+
 
 .team-selection-title .title-main {
   font-size: 40px;
