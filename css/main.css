@@ -175,7 +175,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 200px;         /* 도장 크기 조절 */
+  width: 300px;         /* 도장 크기 조절 */
   pointer-events: none; /* 클릭 막기 */
   z-index: 10;          /* 위로 뜨도록 */
 }
