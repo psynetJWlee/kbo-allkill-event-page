@@ -415,7 +415,10 @@ function updateTitleAndCountdown() {
   function updateSubmitButton() {
     const $btn    = $('#submit-allkill-btn');
     const matches= window.matchData[dateKeys[currentIndex]] || [];
-    const allSel = matches.every(m => window.appState.selectedTeams?.[m.gameId] != null);
+    const allSel   = matches.every(m => {
+    const sel = window.appState.selectedTeams?.[m.gameId] ?? m.userSelection;
+    return sel !== 'none';
+   });
 
     if (allSel) {
       $btn.addClass('enabled').prop('disabled', false)
