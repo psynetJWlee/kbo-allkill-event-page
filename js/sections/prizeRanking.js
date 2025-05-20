@@ -23,10 +23,10 @@
     // 내 아이템(isMe:true) 찾아 랭킹/상금 표시
     const me       = data.find(item => item.isMe);
     const userRank = me ? me.rank : '-';
-    const userPrize= me ? formatNumber(me.prize) : '-';
+    const displayText = `${userRank}위 / 참여자수`;
 
     // 헤더의 내 랭킹 숫자 업데이트
-    $('.my-ranking-number').text(`${userRank}위 / ${userPrize}`);
+    $('.my-ranking-number').text(displayText);
 
     // 실제 리스트 HTML 생성
     const listHtml = data.map(item => `
