@@ -305,6 +305,48 @@
         startTime: "18:00",
         userSelection: "none"
       }
+    ],
+    "2025-05-23": [
+      {
+        gameId: "20250523-0",
+        home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1941 },
+        away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3304 },
+        status: "경기전",
+        startTime: "18:00",
+        userSelection: "none"
+      },
+      {
+        gameId: "20250523-1",
+        home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 4720 },
+        away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 524 },
+        status: "경기전",
+        startTime: "18:00",
+        userSelection: "none"
+      },
+      {
+        gameId: "20250523-2",
+        home: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 0 },
+        away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 5245 },
+        status: "경기전",
+        startTime: "18:00",
+        userSelection: "none"
+      },
+      {
+        gameId: "20250523-3",
+        home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 4458 },
+        away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 787 },
+        status: "경기전",
+        startTime: "18:00",
+        userSelection: "none"
+      },
+      {
+        gameId: "20250523-4",
+        home: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 787 },
+        away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 4458 },
+        status: "경기전",
+        startTime: "18:00",
+        userSelection: "none"
+      }
     ]
   };
 })();
