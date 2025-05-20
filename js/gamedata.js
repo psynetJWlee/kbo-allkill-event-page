@@ -265,14 +265,12 @@
     ]
   };
 
-  // 2025-05-21 데이터 복사
+  // 2025-05-21 데이터 복사하여 2025-05-22 ~ 2025-05-31 각 날짜에 각각 새 배열/객체로 할당
   var lastDayKey = "2025-05-21";
   var lastDayData = window.matchData[lastDayKey];
-
-  // 2025-05-22 ~ 2025-05-31까지 데이터 추가
   for (var i = 22; i <= 31; i++) {
     var dateStr = "2025-05-" + (i < 10 ? "0" + i : i);
-    // 깊은 복사가 아니라 배열/객체를 그대로 복사하면 모든 날짜가 공유되므로, 새 객체와 배열로 복사합니다.
+    // 각 날짜에 새로운 배열과 하위 객체까지 모두 복사
     window.matchData[dateStr] = JSON.parse(JSON.stringify(lastDayData));
   }
 })();
