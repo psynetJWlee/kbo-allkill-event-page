@@ -295,6 +295,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 .ranking-title {
   display: block;
   width: fit-content;
@@ -316,9 +317,7 @@ body {
 }
 
 .my-ranking {
-  display: block;
-  width: fit-content;
-  margin: 8px auto 0;
+  margin-top: 8px;
   font-size: 16px;
   font-weight: bold;
   color: white;
