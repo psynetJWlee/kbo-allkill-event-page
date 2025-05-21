@@ -1,10 +1,10 @@
+
 @font-face {
     font-family: 'GmarketSansMedium';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
-
 
 /* Reset and base styles */
 * {
@@ -19,7 +19,6 @@ body {
   color: #000000;
 }
 
-/* Main container */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -50,14 +49,12 @@ body {
   position: relative;
   overflow: hidden;
 }
-
 .event-logo {
   position: absolute;
   top: 6px;
   left: 7px;
   z-index: 20;
 }
-
 .event-title {
   position: absolute;
   top: 106px;
@@ -65,7 +62,6 @@ body {
   transform: translateX(-50%);
   z-index: 10;
 }
-
 .event-emoticon {
   position: absolute;
   top: 0;
@@ -85,12 +81,9 @@ body {
   align-items: center;
   padding: 24px 0;
 }
-
 .winners-title {
   margin-bottom: 16px;
-  
 }
-
 .winners-count {
   font-size: 35px;
   color: white;
@@ -101,14 +94,12 @@ body {
   text-align: center;
   font-family: 'GmarketSansMedium', sans-serif;
 }
-
 .member-list {
   width: 100%;
   padding: 0 15px;
   margin-top: 15px;
   margin-bottom: 16px;
 }
-
 .member-card {
   display: flex;
   justify-content: space-between;
@@ -120,455 +111,27 @@ body {
   margin-bottom: 10px;
   background-color: #001A29;
 }
-
 .member-profile {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
 .member-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
 }
-
 .member-nickname {
   font-size: 20px;
   font-weight: bold; 
   color: #FFFFFF;
 }
-
 .member-amount {
   font-size: 30px;
   font-weight: bold;
   color: #FFC736;
   font-family: 'GmarketSansMedium', sans-serif;
-  
-}
-
-/*======================* KBO Team Selection Section - 사용되는 부분만 남김 */
-
-
-/* ─────────────────────────────────────────
-   1) 게임 리스트 컨테이너 정리
-───────────────────────────────────────── */
-.game-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;            /* 원하는 간격으로 통일 */
-}
-
-/* ─────────────────────────────────────────
-   2) 각 게임 아이템 스타일
-───────────────────────────────────────── */
-.game-list .game-item {
-  position: relative;   /* !important 제거 */
-  overflow: visible;    /* !important 제거 */
-}
-
-/* ─────────────────────────────────────────
-   3) 홀수번째 배경색
-───────────────────────────────────────── */
-.game-list .game-item:nth-child(odd) {
-  background-color: #1C1C1C;
-}
-
-/* ─────────────────────────────────────────
-   도장 이미지 스타일
-───────────────────────────────────────── */
-.team-selection-section {
-  position: relative;   /* 스탬프를 이 섹션 중앙에 띄우기 위해 필요 */
-}
-
-.allkill-stamp {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;         /* 도장 크기 조절 */
-  pointer-events: none; /* 클릭 막기 */
-  z-index: 10;          /* 위로 뜨도록 */
-}
-
-
-.team-selection-title .title-main {
-  font-size: 40px;
-  color: #FFFFFF;
-  font-weight: bold; 
-}
-
-.team-selection-title .title-sub {
-  font-size: 30px;
-  color: #FFFFFF;
-  font-weight: bold; 
-  padding-bottom: 20px;
-}
-
-.kbo-selection-container {
-  min-height: 1000px;
-  background-color: #121212;
-  width: 100%;
-}
-
-.team-selection-title .title-main,
-.team-selection-title .title-sub {
-  display: block;
-}
-
-.team-selection-section {
-  margin: 0;
-  padding: 0 0 20px 0;
-  background: #121212;
-}
-
-.title-wrapper {
-  position: relative;
-  text-align: center;
-}
-
-
-.title-wrapper .title-decor-left,
-.title-wrapper .title-decor-right {
-  position: absolute;
-  top: 0;
-  width: 100px;
-  height: 100px;
-  pointer-events: none;
-}
-
-.title-wrapper .title-decor-left {
-  left: 0;
-}
-
-.title-wrapper .title-decor-right {
-  right: 0;
-}
-
-
-
-.title-wrapper .title-decor {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 150px;
-  height: 150px;
-  max-width: 100%;
-  height: auto;
-  pointer-events: none;
-}
-
-
-.team-selection-title .countdown-active {
-  display: block;
-  font-size: 30px;
-  color: #FF0000;
-  margin-top: 0.25em;
-}
-
-
-
-.game-item,
-.match-result {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 14px 16px;
-}
-
-.game-item.alternate-bg,
-.match-result.alternate-bg {
-  background-color: #1C1C1C;
-  border-radius: 6px;
-}
-
-.team-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.team-box {
-  width: 90px;
-  height: 80px;
-  background: #1f1f1f;
-  border: 1px solid #545454;
-  border-radius: 5px;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.team-box.selected-home {
-  background-color: #C13D3D;
-  border: 3px solid #FFFFFF;
-}
-
-.team-box.selected-away {
-  background-color: #047DBF;
-  border: 3px solid #FFFFFF;
-}
-
-.team-logo {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 4px;
-}
-
-.team-name {
-  font-weight: bold;
-  font-size: 14px;
-  color: #FFFFFF;
-  text-align: center;
-}
-
-.vote-count {
-  font-size: 14px;
-}
-
-.vote-count.higher {
-  color: #FFC736;
-  font-weight: bold;
-}
-
-.vote-count.lower {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.game-status {
-  position: relative;
-  flex: 0 0 100px;
-  display: block;
-  text-align: center;
-}
-
-.voting-text {
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.game-time {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.score-display {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;  
-}
-
-.score-display .score {
-  display: inline-block;
-  width: 3ch;
-  text-align: center;
-}
-
-/* Team status-column 및 스코어 영역(최소 구성) */
-.status-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.status-column .status-text {
-  font-size: 15px;
-  font-weight: bold;
-  color: #FFFFFF;
-  text-align: center;
-}
-
-.status-column .start-time {
-  font-size: 14px;
-  font-weight: bold;
-  color: #FFFFFF;
-  text-align: center;
-}
-
-.status-column .score {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  grid-column-gap: 8px;
-  width: 100%;
-}
-
-.status-column .score .home-score,
-.status-column .score .away-score {
-  font-size: 30px;
-  font-weight: bold;
-  color: #FFFFFF;
-}
-
-.status-column .score .home-score.higher,
-.status-column .score .away-score.higher {
-  color: #FFC736;
-}
-
-.status-column .score .vs {
-  font-size: 15px;
-  font-weight: bold;
-  color: #555555;
-  justify-self: center;
-}
-.status-column .vs {
-  font-size: 15px;
-  font-weight: bold;
-  color: #555555;
-  margin: 0 8px;
-}
-
-/* 스코어 전용 스타일 */
-.score-display.match-score {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.score-display.match-score .vs {
-  font-size: 15px;
-  color: #555555;
-  margin: 0 10px;
-}
-
-/* 점수 강조 색 */
-.score {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.score.winner {
-  color: #FFC736;
-}
-
-.score.regular {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.status-text {
-  font-size: 14px;
-  color: #FFFFFF;
-}
-
-.red-circle-container {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-
-.red-circle-image {
-  width: 100px;
-}
-
-/* Date Navigation */
-.date-navigation {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 21px;
-  height: 50px;
-  color: white;
-}
-
-.date-navigation .date-nav-prev { justify-self: start; }
-.date-navigation .date-nav-next { justify-self: end; }
-
-.date-nav-prev, .date-nav-next {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.arrow-left {
-  width: 15px;
-  height: 15px;
-  border-top: 7.5px solid transparent;
-  border-bottom: 7.5px solid transparent;
-  border-right: 10px solid white;
-}
-
-.arrow-right {
-  width: 15px;
-  height: 15px;
-  border-top: 7.5px solid transparent;
-  border-bottom: 7.5px solid transparent;
-  border-left: 10px solid white;
-}
-
-.prev-day, .next-day {
-  font-size: 16px;
-}
-
-.prev-day {
-  margin-left: 18px;
-}
-
-.next-day {
-  margin-right: 18px;
-}
-
-.current-day {
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;  
-}
-
-/* Submit Button */
-.team-selection-submit {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: center;
-}
-
-.submit-btn {
-  background-color: #FFD700;
-  opacity: 0.3;
-  color: rgba(18, 18, 18, 0.7);
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px 10px;
-  height: 88px;
-  width: calc(100% - 70px);
-  max-width: 400px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.submit-btn.enabled {
-  opacity: 1;
-  color: #121212;
-}
-
-/* 어제 결과 타이틀 아이콘 */
-.yesterday-icon {
-  width: auto;
-  height: auto;
-  vertical-align: middle;
-  display: inline-block;
-}
-
-.yesterday-icon.right {
-  margin-left: 8px;
-}
-
-.match-result.disabled {
-  opacity: 0.3;
-  pointer-events: none;
 }
 
 /* My Prize Section */
@@ -577,11 +140,9 @@ body {
   background-color: #003B5D;
   padding: 20px 0;
 }
-
 .my-prize-container {
   margin: 0 24px;
 }
-
 .my-prize-title {
   display: inline-block;
   font-size: 30px;
@@ -594,7 +155,6 @@ body {
   width: 100%;
   font-family: 'GmarketSansMedium', sans-serif;
 }
-
 .my-prize-title::after {
   content: '';
   display: block;
@@ -603,7 +163,6 @@ body {
   background-color: #FFC736;
   margin-top: 5px;
 }
-
 .prize-group {
   display: flex;
   flex-direction: column;
@@ -613,45 +172,38 @@ body {
   margin-bottom: 27px;
   background-color: #00283C;
 }
-
 .member-info {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 10px;
 }
-
 .user-avatar {
   height: 32px;
   width: 32px;
   border-radius: 50%;
 }
-
 .user-info {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-
 .user-nickname {
   font-size: 20px;
   color: white;
   margin-left: 10px;
 }
-
 .user-text {
   font-size: 14px;
   color: white;
   margin-left: 5px;
 }
-
 .prize-amount {
   font-size: 30px;
   color: white;
   margin-bottom: 10px;
   font-weight: bold;
 }
-
 .request-button {
   background-color: #FFD700;
   color: #121212;
@@ -663,45 +215,37 @@ body {
   cursor: pointer;
   font-weight: bold;
 }
-
 .prize-history {
   margin-bottom: 20px;
 }
-
 .history-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-
 .history-title {
   font-size: 16px;
   color: white;
   font-weight: bold;
 }
-
 .total-prize {
   font-size: 20px;
   color: #FFD700;
   font-weight: bold;
 }
-
 .history-items {
   margin-bottom: 46px;
 }
-
 .history-item {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
 }
-
 .history-date {
   font-size: 14px;
   color: white;
   opacity: 0.7;
 }
-
 .daily-prize {
   font-size: 20px;
   color: #FFD700;
@@ -714,12 +258,10 @@ body {
   justify-content: center;
   margin-top: 28px;
 }
-
 .pagination-content {
   display: flex;
   gap: 5px;
 }
-
 .page-item {
   width: 30px;
   height: 30px;
@@ -733,12 +275,10 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
 }
-
 .page-item.active {
   background-color: white;
   color: #002032;
 }
-
 .page-item.disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -750,13 +290,11 @@ body {
   background-color: #00283F;
   padding: 30px 16px;
 }
-
 .ranking-header {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .ranking-title {
   display: inline-block;
   font-size: 30px;
@@ -765,7 +303,6 @@ body {
   color: white;
   position: relative;
 }
-
 .ranking-title::after {
   content: '';
   display: block;
@@ -774,32 +311,27 @@ body {
   background-color: #FFC736;
   margin-top: 5px;
 }
-
 .my-ranking {
   font-size: 16px;
   font-weight: bold;
   color: white;
   margin-top: 8px;
 }
-
 .my-ranking-number {
   color: white;
 }
-
 .user-icon {
   display: inline-block;
   margin-left: 8px;
   width: 10px;
   height: 12px;
 }
-
 .ranking-tabs {
   display: flex;
   justify-content: center;
   margin-top: 16px;
   width: 100%;
 }
-
 .tabs-list {
   display: flex;
   background-color: transparent;
@@ -809,7 +341,6 @@ body {
   padding: 4px;
   width: 100%;
 }
-
 .tab {
   flex: 1;
   font-size: 16px;
@@ -818,17 +349,14 @@ body {
   cursor: pointer;
   text-align: center;
 }
-
 .tab.active {
   background-color: white;
   color: #00283F;
 }
-
 .tab.inactive {
   background-color: transparent;
   color: white;
 }
-
 .date-range {
   text-align: center;
   margin-top: 8px;
@@ -836,11 +364,9 @@ body {
   color: white;
   opacity: 0.7;
 }
-
 .ranking-list {
   margin-top: 16px;
 }
-
 .ranking-item {
   display: flex;
   align-items: center;
@@ -849,11 +375,9 @@ body {
   margin-top: 8px;
   padding: 12px;
 }
-
 .ranking-item.is-me {
   border: 3px solid white;
 }
-
 .rank-number {
   width: 32px;
   text-align: center;
@@ -861,13 +385,11 @@ body {
   color: white;
   opacity: 0.7;
 }
-
 .rank-number.top-rank {
   font-size: 20px;
   color: #FFC700;
   opacity: 1;
 }
-
 .profile-img {
   width: 38px;
   height: 38px;
@@ -875,33 +397,28 @@ body {
   margin-left: 13px;
   object-fit: cover;
 }
-
 .ranking-info {
   display: flex;
   flex-direction: column;
   margin-left: 7px;
   flex: 1;
 }
-
 .ranking-nickname {
   font-size: 15px;
   color: white;
 }
-
 .ranking-streak {
   font-size: 14px;
   color: #FFC736;
   opacity: 0.9;
   margin-top: 2px;
 }
-
 .ranking-prize {
   font-size: 15px;
   color: #FFC736;
   text-align: right;
   margin-left: auto;
 }
-
 .ranking-note {
   font-size: 12px;
   color: white;
@@ -916,38 +433,32 @@ body {
   padding: 20px 20px 100px;
   background-color: #00283F;
 }
-
 .info-header {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 15px;
 }
-
 .info-icon {
   width: 16px;
   height: 16px;
 }
-
 .info-title {
   font-size: 13px;
   color: white;
   font-weight: 500;
 }
-
 .info-list {
   list-style-type: disc;
   padding-left: 20px;
   margin-bottom: 25px;
 }
-
 .info-item {
   font-size: 12px;
   color: white;
   margin-bottom: 8px;
   line-height: 1.4;
 }
-
 .download-button {
   display: flex;
   justify-content: center;
@@ -963,65 +474,261 @@ body {
   text-decoration: none;
   line-height: 1.2;  
 }
-
 .download-button:hover {
   background-color: #1d6e8c;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .title-wrapper .title-decor {
-   width: 100px;
-  }
-  .ranking-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .my-ranking {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-  #kbo-selection-container {
-    padding: 0 12px;
-  }
-
-  .game-item,
-  .match-result {
-    padding: 10px;
-  }
-  .team-name {
-    font-size: 12px;
-  }
-  .vote-count {
-    font-size: 12px;
-  }
-  .match-score .score {
-    font-size: 24px;
-  }
-  .match-score .vs {
-    margin: 0 8px;
-  }
-
-  .team-selection-title {
-    font-size: 32px;
-    height: auto;
-    padding: 20px;
-  }
-
-  .team-selection-title .subtitle {
-    font-size: 24px;
-  }
-  .date-navigation {
-    padding: 0 8px;
-  }
-
-  .prev-day, .next-day, .current-day {
-    font-size: 14px;
-  }
+/* Team Selection Section */
+.team-selection-section {
+  position: relative;
+  margin: 0;
+  padding: 0 0 20px 0;
+  background: #121212;
 }
-
-/* Mega sparkle button styles */
+.title-wrapper {
+  position: relative;
+  text-align: center;
+}
+.title-wrapper .title-decor-left,
+.title-wrapper .title-decor-right {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+}
+.title-wrapper .title-decor-left {
+  left: 0;
+}
+.title-wrapper .title-decor-right {
+  right: 0;
+}
+.team-selection-title .title-main,
+.team-selection-title .title-sub {
+  display: block;
+}
+.team-selection-title .title-main {
+  font-size: 40px;
+  color: #FFFFFF;
+  font-weight: bold; 
+}
+.team-selection-title .title-sub {
+  font-size: 30px;
+  color: #FFFFFF;
+  font-weight: bold; 
+  padding-bottom: 20px;
+}
+.kbo-selection-container {
+  min-height: 1000px;
+  background-color: #121212;
+  width: 100%;
+}
+.team-selection-title .countdown-active {
+  display: block;
+  font-size: 30px;
+  color: #FF0000;
+  margin-top: 0.25em;
+}
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.game-item {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 16px;
+}
+.game-item.disabled,
+.match-result.disabled {
+  opacity: 0.3 !important;
+  pointer-events: none;
+}
+.game-item.faded {
+  /* (optional) 시각적 fade 효과가 필요하면 여기 적용 */
+  filter: grayscale(50%) opacity(0.75);
+}
+.game-item.alternate-bg,
+.match-result.alternate-bg {
+  background-color: #1C1C1C;
+  border-radius: 6px;
+}
+.team-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.team-box {
+  width: 90px;
+  height: 80px;
+  background: #1f1f1f;
+  border: 1px solid #545454;
+  border-radius: 5px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.team-box.selected-home {
+  background-color: #C13D3D;
+  border: 3px solid #FFFFFF;
+}
+.team-box.selected-away {
+  background-color: #047DBF;
+  border: 3px solid #FFFFFF;
+}
+.team-logo {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+.team-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #FFFFFF;
+  text-align: center;
+}
+.vote-count {
+  font-size: 14px;
+}
+.vote-count.higher {
+  color: #FFC736;
+  font-weight: bold;
+}
+.vote-count.lower {
+  color: rgba(255, 255, 255, 0.7);
+}
+.game-status {
+  position: relative;
+  flex: 0 0 100px;
+  display: block;
+  text-align: center;
+}
+/* 경기 상태별 .score/.vs 스타일 */
+.status-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.status-column .status-text {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+}
+.status-column .start-time {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+}
+.status-column .score {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  grid-column-gap: 8px;
+  width: 100%;
+}
+.status-column .score .home-score,
+.status-column .score .away-score {
+  font-size: 30px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+.status-column .score .home-score.higher,
+.status-column .score .away-score.higher {
+  color: #FFC736;
+}
+.status-column .score .vs {
+  font-size: 15px;
+  font-weight: bold;
+  color: #555555;
+  justify-self: center;
+}
+/* 점수 강조 색 */
+.score {
+  font-size: 30px;
+  font-weight: bold;
+}
+.score.winner,
+.home-score.higher,
+.away-score.higher {
+  color: #FFC736;
+}
+.score.regular {
+  color: rgba(255, 255, 255, 0.7);
+}
+.status-text {
+  font-size: 14px;
+  color: #FFFFFF;
+}
+.red-circle-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+.red-circle-image {
+  width: 100px;
+}
+.date-navigation {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 21px;
+  height: 50px;
+  color: white;
+}
+.date-navigation .date-nav-prev { justify-self: start; }
+.date-navigation .date-nav-next { justify-self: end; }
+.date-nav-prev, .date-nav-next {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.arrow-left {
+  width: 15px;
+  height: 15px;
+  border-top: 7.5px solid transparent;
+  border-bottom: 7.5px solid transparent;
+  border-right: 10px solid white;
+}
+.arrow-right {
+  width: 15px;
+  height: 15px;
+  border-top: 7.5px solid transparent;
+  border-bottom: 7.5px solid transparent;
+  border-left: 10px solid white;
+}
+.prev-day, .next-day {
+  font-size: 16px;
+}
+.prev-day {
+  margin-left: 18px;
+}
+.next-day {
+  margin-right: 18px;
+}
+.current-day {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;  
+}
+.team-selection-submit {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
 .mega-sparkle-btn {
   background: linear-gradient(45deg, #FFD700, #FFA500, #FFB347);
   background-size: 200% 200%;
@@ -1038,7 +745,6 @@ body {
   box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 0 rgba(255, 165, 0, 0.3);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
-
 @keyframes twinkle {
   0%,100% {
     filter: brightness(1);
@@ -1049,13 +755,11 @@ body {
     box-shadow: 0 0 50px rgba(255,215,0,0.8), 0 0 70px rgba(255,165,0,0.5), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(255,165,0,0.4);
   }
 }
-
 @keyframes gradientShift {
   0%   { background-position: 0% 50%; }
   50%  { background-position:100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
 .mega-sparkle-btn::before {
   content: '';
   position: absolute;
@@ -1064,13 +768,11 @@ body {
   border-radius: 42px;
   animation: megaSparkle 2s infinite;
 }
-
 @keyframes megaSparkle {
   0%   { transform: translateX(-100%) rotateZ(0deg); opacity:0; }
   50%  { opacity:1; }
   100% { transform: translateX(100%) rotateZ(180deg); opacity:0; }
 }
-
 .mega-sparkle-btn::after {
   content: '';
   position: absolute;
@@ -1080,14 +782,12 @@ body {
   border-radius: 50%;
   animation: sparklePoint 2s infinite;
 }
-
 @keyframes sparklePoint {
   0%,100% { opacity:0; transform: scale(0); }
   25%     { opacity:1; transform: scale(1); }
   50%     { opacity:0.7; transform: scale(0.8); }
   75%     { opacity:1; transform: scale(1.2); }
 }
-
 .spark {
   position: absolute;
   width: 4px; height: 4px;
@@ -1095,16 +795,12 @@ body {
   border-radius: 50%;
   animation: sparkFloat 1.5s ease-out infinite;
 }
-
 @keyframes sparkFloat {
   0%   { opacity:0; transform: translateY(0) scale(0); }
   50%  { opacity:1; transform: translateY(-20px) scale(1); }
   100% { opacity:0; transform: translateY(-40px) scale(0); }
 }
-
-
-
-/* ② 성공/실패 오버레이 스타일 (if you haven’t already) */
+/* 상태 오버레이 */
 .event-overlay {
   position: absolute;
   top: 50%;
@@ -1113,128 +809,24 @@ body {
   pointer-events: none;
   z-index: 10;
 }
-
-/* ③ (선택) 크기 조절 */
-.event-overlay.success { width: 100px; height: auto; }
-.event-overlay.fail    { width: 100px; height: auto; }
-
-
-/* Game status layout overrides */
-.game-item .game-status,
-.match-result .game-status {
-  position: static !important;
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex: 0 0 100px !important;
-  padding: 0 !important;
+.event-overlay.success,
+.event-overlay.fail {
+  width: 100px; height: auto;
 }
 
-.game-status .score-display.match-score {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-}
-
-.game-status .score-display {
-  margin-bottom: 4px;
-}
-
-/* Status-specific display rules */
-.game-status[data-status="투표 중"] .score-display,
-.game-status[data-status="경기 취소"] .score-display {
-  display: none;
-}
-
-.game-status[data-status="투표 중"] .game-time,
-.game-status[data-status="경기 취소"] .game-time {
-  display: block;
-}
-
-.game-status[data-status="경기 중"] .game-time,
-.game-status[data-status="종료"] .game-time,
-.game-status[data-status="무승부"] .game-time {
-  display: none;
-}
-/* 경기 스코어 전용 스타일 (@match-score 영역) */
-.match-score {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.match-score .score {
-  font-size: 30px;      /* 폰트 크기 */
-  font-weight: bold;    /* 볼드 처리 */
-}
-
-.match-score .score.winner {
-  color: #FFC736;       /* 더 높은 점수 */
-}
-
-.match-score .score.regular {
-  color: #FFFFFF;       /* 더 낮은 점수 */
-}
-
-.match-score .vs {
-  font-size: 15px;      /* “vs” 크기 */
-  color: #555555;       /* “vs” 색상 */
-  margin: 0 8px;        /* 좌우 여백 */
-}
-
-
-
+/* Responsive adjustments */
 @media (max-width: 480px) {
-  /* 컨테이너 패딩 줘서 좌우 여백 확보 */
-  #kbo-selection-container {
-    padding: 0 12px;
-  }
-
-
-
-  /* 카드 안 여백도 조금 줄여주고 */
-  .game-item,
-  .match-result {
-    padding: 10px;
-  }
-
-  .team-name {
-    font-size: 12px;
-  }
-  .vote-count {
-    font-size: 12px;
-  }
-
-  /* 점수/VS 줄 사이즈 조정 */
-  .match-score .score {
-    font-size: 24px;
-  }
-  .match-score .vs {
-    margin: 0 8px;
-  }
-
-  /* 제목 폰트 줄이기 */
-  .team-selection-title {
-    font-size: 32px;
-    height: auto;
-    padding: 8px 0;
-  }
-  .team-selection-title .subtitle {
-    font-size: 24px;
-  }
-
-  /* 날짜 네비게이션 글씨 줄이기 */
-  .date-navigation {
-    padding: 0 8px;
-  }
-  .prev-day, .next-day, .current-day {
-    font-size: 14px;
-  }
+  .title-wrapper .title-decor { width: 100px; }
+  .ranking-header { flex-direction: column; align-items: flex-start; }
+  .my-ranking { margin-left: 0; margin-top: 10px; }
+  #kbo-selection-container { padding: 0 12px; }
+  .game-item, .match-result { padding: 10px; }
+  .team-name { font-size: 12px; }
+  .vote-count { font-size: 12px; }
+  .match-score .score { font-size: 24px; }
+  .match-score .vs { margin: 0 8px; }
+  .team-selection-title { font-size: 32px; height: auto; padding: 20px; }
+  .team-selection-title .subtitle { font-size: 24px; }
+  .date-navigation { padding: 0 8px; }
+  .prev-day, .next-day, .current-day { font-size: 14px; }
 }
-
-  .game-item.disabled {
-    opacity: 0.3 !important;
-    pointer-events: none;
-  }
