@@ -1010,14 +1010,7 @@ body {
   }
   .date-navigation {
     padding: 0 8px;
-    position: relative;
   }
-
-.date-navigation .current-day {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
 
   .prev-day, .next-day, .current-day {
     font-size: 14px;
