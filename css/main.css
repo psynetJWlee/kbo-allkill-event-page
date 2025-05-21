@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* Reset and base styles */
 * {
   margin: 0;
@@ -80,6 +88,7 @@ body {
 
 .winners-title {
   margin-bottom: 16px;
+  
 }
 
 .winners-count {
@@ -90,6 +99,7 @@ body {
   display: block;
   width: 100%;
   text-align: center;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 
 .member-list {
@@ -134,6 +144,8 @@ body {
   font-size: 30px;
   font-weight: bold;
   color: #FFC736;
+  font-family: 'GmarketSansMedium', sans-serif;
+  
 }
 
 /*======================* KBO Team Selection Section - 사용되는 부분만 남김 */
@@ -576,13 +588,14 @@ body {
   position: relative;
   text-align: center;
   width: 100%;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 
 .my-prize-title::after {
   content: '';
   display: block;
   width: 100%;
-  height: 2px;
+  height: 1.5px;
   background-color: #FFC736;
   margin-top: 5px;
 }
@@ -743,6 +756,7 @@ body {
 .ranking-title {
   display: inline-block;
   font-size: 30px;
+  font-family: 'GmarketSansMedium', sans-serif;
   font-weight: bold;
   color: white;
   position: relative;
@@ -895,7 +909,7 @@ body {
 
 /* Event Description Section */
 .event-description-section {
-  padding: 20px;
+  padding: 20px 20px 100px;
   background-color: #00283F;
 }
 
@@ -934,16 +948,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 87px;
+  height: 100px;
   background-color: #1A5F7A;
   color: white;
-  font-size: 25px;
+  font-size: 30px;
   opacity: 0.9;
   font-weight: bold;
   border-radius: 9999px;
   text-align: center;
   text-decoration: none;
-  line-height: 1.2;
+  line-height: 1.2;  
 }
 
 .download-button:hover {
