@@ -391,7 +391,7 @@ body {
   border-radius: 8px;
   margin-top: 8px;
   padding: 12px;
-  border: 0.5px solid white;
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
 }
 .ranking-item.is-me {
   border: 3px solid white;
