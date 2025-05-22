@@ -489,22 +489,6 @@ body {
 }
 
 /* Team Selection Section */
-.team-selection-section .game-list {
-  position: relative;    /* 절대 위치 기준 */
-}
-
-.team-selection-section .game-list .allkill-stamp {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;  /* 뒤의 버튼/아이템 클릭 방해 안 함 */
-  z-index: 10;           /* 게임 아이템 위에 렌더링 */
-  width: 80%;            /* 필요에 따라 크기 조절 */
-  max-width: 366px;      /* 원본 이미지 너비 기준 */
-  height: auto;
-}
-
 .team-selection-section {
   position: relative;
   margin: 0;

@@ -1,6 +1,6 @@
 // teamSelection.js
 
-;(function($) {
+(function($) {
   // ==============================
   // 1. 설정 및 상태 변수
   // ==============================
@@ -104,15 +104,7 @@
         <img src="" class="title-decor-right" alt="" style="display:none;" />
       </div>
   
-    <div class="game-list" id="${gameListId}">
-
-      <img 
-        class="allkill-stamp" 
-        src="/Group_40338.png" 
-        alt="올킬 도장" 
-        style="display:none;"
-      />
-    </div>
+        <div class="game-list" id="${gameListId}"></div>
   
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
@@ -231,12 +223,16 @@
   updateTitleAndCountdown();
    const okAll = matches.filter(m => m.eventResult === 'success').length === matches.length
     && matches.length > 0;
-  const $stamp = $(`#${gameListId} .allkill-stamp`);
   if (okAll) {
-    $stamp.show();
-  } else {
-    $stamp.hide();
+    $list.append(`
+      <img
+        src="/Group 40338.png"
+        alt="올킬 도장"
+        class="allkill-stamp"
+      />
+    `);
   }
+}
 
 
   // ==============================
