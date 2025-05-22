@@ -115,6 +115,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex: 1;       /* 프로필 부분이 금액쪽과 공간을 나눠 갖도록 */
+  min-width: 0;  /* 이게 있어야 자식(.member-nickname)이 overflow:hidden을 잘 먹음 */
 }
 .member-avatar {
   width: 32px;
@@ -126,7 +128,11 @@ body {
   font-size: 20px;
   font-weight: bold; 
   color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 .member-amount {
   font-size: 30px;
   font-weight: bold;
