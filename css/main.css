@@ -545,11 +545,26 @@ body {
   color: #FF0000;
   margin-top: 0.25em;
 }
+
+
 .game-list {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+
+.game-list img.allkill-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  pointer-events: none;
+  width: 358px;    /* 필요에 따라 조절 */
+  opacity: 0.9;    /* 선택사항 */
+}
+
 .game-item {
   position: relative;
   overflow: visible;
