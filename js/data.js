@@ -38,15 +38,6 @@ const members = [
   { id: 20, nickname: "2올림픽ㄱㄱ", profileImage: "/placeholder.svg", amount: 50000 },
 ];
 
-// Default selected teams for today view
-const defaultSelectedTeams = {
-  0: 'home', // KT
-  1: 'away', // NC
-  2: 'away', // 삼성
-  3: 'home', // KIA
-  4: 'home'  // 키움
-};
-
 // Mock data for ranking list
 const weeklyrankingData = [
   { rank: 1, name: "올킬챔피언", profileImg: "https://i.pravatar.cc/150?img=1", streak: 5, prize: 1500000, isMe: false },
