@@ -1,5 +1,12 @@
 // teamSelection.js
 
+function formatLocalDate(d) {
+  const Y = d.getFullYear();
+  const M = String(d.getMonth() + 1).padStart(2, '0');
+  const D = String(d.getDate()).padStart(2, '0');
+  return `${Y}-${M}-${D}`;
+}
+
 (function($) {
   // ==============================
   // 1. 설정 및 상태 변수
@@ -30,15 +37,26 @@
   // ==============================
   const rawKeys = Object.keys(window.matchData);
   const dates   = rawKeys.map(k => new Date(k).getTime());
-  const minDate = new Date(Math.min(...dates));
-  const maxDate = new Date(Math.max(...dates));
+  const minDateKey = formatLocalDate(minDate);
+  const maxDateKey = formatLocalDate(maxDate);
 
   const dateKeys = [];
-  for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
-    dateKeys.push(d.toISOString().slice(0,10));
+  
+  // minDateKey, maxDateKey 는 "YYYY-MM-DD" 문자열이라 가정
+  const [minY, minM, minD] = minDateKey.split('-').map(Number);
+  const [maxY, maxM, maxD] = maxDateKey.split('-').map(Number);
+  
+  // 로컬 자정 기준 Date 객체 생성
+  let cursor = new Date(minY, minM - 1, minD);
+  const endDate = new Date(maxY, maxM - 1, maxD);
+  
+  while (cursor <= endDate) {
+    dateKeys.push(formatLocalDate(cursor));
+    // 로컬 기준 하루 앞으로
+    cursor.setDate(cursor.getDate() + 1);
   }
 
-  const todayKey   = new Date().toISOString().slice(0,10);
+  const todayKey   = formatLocalDate(new Date());
   let currentIndex = dateKeys.indexOf(todayKey);
   if (currentIndex === -1) currentIndex = 0;
 
