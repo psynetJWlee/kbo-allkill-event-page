@@ -3,7 +3,6 @@ $(document).ready(function() {
   try {
     // Apply default selected teams for today view
     if (window.appState.currentDay === 26) {
-      window.appState.selectedTeams = { ...defaultSelectedTeams };
       window.teamSelectionSection.updateTeamSelections();
     }
 
