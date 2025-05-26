@@ -158,19 +158,22 @@
     updateTitleAndCountdown();
     return;
   }
-    // 빈 슬롯(스켈레톤) 찍기
-    const placeholderCount = 5; // 보여주고 싶은 슬롯 개수
-    for (let i = 0; i < placeholderCount; i++) {
-      $list.append(`
-        <div class="game-item placeholder">
-          <div class="team-column"></div>
-          <div class="status-section"></div>
-          <div class="team-column"></div>
-        </div>
-      `);
-    } 
+ 
     
   matches.forEach(match => {
+    //플레이스홀더(match.gameId === 'null')면 빈 박스만 찍고 넘어감
+    if (match.gameId === 'null') {
+    const $placeholder = $(`
+      <div class="game-item placeholder">
+        <div class="team-column"></div>
+        <div class="status-section"></div>
+        <div class="team-column"></div>
+      </div>
+    `);
+    $list.append($placeholder);
+    return;
+  }
+    
     // 1) disable 여부 판단
     const isSuspended = ["서스펜드", "우천취소", "경기취소"].includes(match.status);
     const isFailed    = match.status === "경기종료" && match.eventResult === "fail";
