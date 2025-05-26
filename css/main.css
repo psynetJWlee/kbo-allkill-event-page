@@ -344,6 +344,7 @@ body {
   display: block;
   width: fit-content;
   position: relative;
+  opacity: 0.7;
 }
 
 .my-ranking-number {
