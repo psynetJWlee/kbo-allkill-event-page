@@ -4,7 +4,7 @@ function initEventDescriptionSection() {
   const sectionHtml = `
     <div class="info-header">
       <img 
-        src="image/info-icon.png" 
+        src="/image/info-icon.png" 
         alt="Info icon" 
         class="info-icon"
       />
