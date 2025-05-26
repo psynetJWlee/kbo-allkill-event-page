@@ -21,8 +21,8 @@
       },
       {
         gameId: "null",
-        home: { teamName: "null", null", votes: null },
-        away: { teamName: "null", null", votes: null },
+        home: { teamName: "null", logo: "null", votes: null },
+        away: { teamName: "null", logo: "null", votes: null },
         status: "null",
         startTime: "null",
         userSelection: "null"
