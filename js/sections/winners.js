@@ -28,7 +28,7 @@ function initWinnersSection() {
   const sectionHtml = `
     <div class="w-full flex flex-col items-center relative">
       <img 
-        src="/winners-title.png" 
+        src="/image/winners-title.png" 
         alt="오늘의 당첨자"
         class="winners-title"
       />
