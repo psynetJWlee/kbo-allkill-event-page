@@ -83,9 +83,8 @@
           <img src="/image/user-icon.png" alt="User icon" class="user-icon" />
         </p>
       </div>
-
+      <p class="unit-label">단위 : 원</p>
       <ul class="ranking-list" id="ranking-list"></ul>
-
       <div id="prize-ranking-pagination"></div>
       <div class="ranking-note-title">
       매일 마지막 경기 종료 후 집계</div>
