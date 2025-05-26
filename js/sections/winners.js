@@ -37,6 +37,7 @@ function initWinnersSection() {
         총 ${totalCount}명
       </p>
     </div>
+    <p class="unit-label">단위 : 원</p>
     <div class="member-list" id="member-list"></div>
   `;
   
