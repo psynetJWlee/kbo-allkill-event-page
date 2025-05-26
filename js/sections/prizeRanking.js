@@ -34,7 +34,7 @@
           <span class="ranking-nickname">${item.name}</span>
           <span class="ranking-streak">올킬 ${item.streak}회</span>
         </div>
-        <div class="ranking-prize">${formatNumber(item.prize)}원</div>
+        <div class="ranking-prize">${formatNumber(item.prize)}</div>
       </li>
     `).join('');
     $('#ranking-list').html(listHtml);
