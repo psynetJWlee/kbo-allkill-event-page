@@ -401,6 +401,11 @@ body {
   outline: 3px solid rgba(255, 215, 0, 1);
   outline-offset: -3px;
 }
+
+.ranking-item.is-me .ranking-nickname {
+  color: #FFD700;
+}
+
 .rank-number {
   width: 32px;
   text-align: center;
