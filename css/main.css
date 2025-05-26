@@ -336,18 +336,20 @@ body {
 }
 
 .my-ranking {
+  font-family: 'GmarketSansMedium', sans-serif;
   margin-top: 8px;
   font-size: 16px;
   font-weight: bold;
-  color: white;
+  color: rgba(255, 255, 255, 0.7);
   align-self: center;
   display: block;
   width: fit-content;
   position: relative;
-}
+  }
 
 .my-ranking-number {
-  color: white;
+  font-family: 'GmarketSansMedium', sans-serif;
+  color: #ffffff;
 }
 
 .user-icon {

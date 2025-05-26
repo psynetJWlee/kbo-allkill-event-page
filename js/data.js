@@ -34,7 +34,7 @@ const members = [
   { id: 17, nickname: "2다이노스", profileImage: "/image/placeholder.svg", amount: 50000 },
   { id: 18, nickname: "2래랜라", profileImage: "/image/placeholder.svg", amount: 50000 },
   { id: 19, nickname: "2하이고", profileImage: "/image/placeholder.svg", amount: 50000 },
-  { id: 20, nickname: "2올림픽ㄱㄱ", profileImage: "/placeholder.svg", amount: 50000 },
+  { id: 20, nickname: "2올림픽ㄱㄱ", profileImage: "/image/placeholder.svg", amount: 50000 },
 ];
 
 // Mock data for ranking list (30명으로 확장)
@@ -50,7 +50,6 @@ const totalrankingData = [
   { rank: 8, name: "올킬123도전자", profileImg: "https://i.pravatar.cc/150?img=8", streak: 2, prize: 2400000, isMe: false },
   { rank: 9, name: "야구55매니아", profileImg: "https://i.pravatar.cc/150?img=9", streak: 1, prize: 1300000, isMe: false },
   { rank: 10, name: "베팅고수베팅초보", profileImg: "https://i.pravatar.cc/150?img=10", streak: 1, prize: 1200000, isMe: false },
-  // 11~30 dummy (중복이름/이미지 허용), 13번째 isMe:true 예시
   { rank: 11, name: "랭킹11", profileImg: "https://i.pravatar.cc/150?img=11", streak: 2, prize: 1100000, isMe: false },
   { rank: 12, name: "랭킹12", profileImg: "https://i.pravatar.cc/150?img=12", streak: 3, prize: 1000000, isMe: false },
   { rank: 13, name: "내닉네임", profileImg: "/image/placeholder.svg", streak: 3, prize: 900000, isMe: true },
