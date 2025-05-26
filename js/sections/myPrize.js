@@ -77,7 +77,7 @@ function initMyPrizeSection() {
       </div><!-- /.prize-group -->
       <div class="prize-history">
         <div class="history-header">
-          <p class="history-title">상금 획득 내역 (₩)</p>
+          <p class="history-title">상금 내역</p>
           <p class="total-prize">누적 ${formatNumber(userData.totalAmount)}</p>
           
         </div>
