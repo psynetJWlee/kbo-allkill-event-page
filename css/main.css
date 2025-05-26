@@ -19,6 +19,10 @@ body {
   color: #000000;
 }
 .unit-label{
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
   font-family: 'GmarketSansMedium', sans-serif;
   font-size: 15px;
   color: white;
