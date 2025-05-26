@@ -18,6 +18,17 @@ body {
   background-color: #FFFFFF;
   color: #000000;
 }
+.unit-label{
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'GmarketSansMedium', sans-serif;
+  font-size: 15px;
+  color: white;
+  text-align: right;
+  
+}
 
 #root {
   max-width: 1280px;
@@ -79,7 +90,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 0;
+  padding: 18px 8px;
 }
 .winners-title {
   margin-bottom: 16px;
@@ -96,7 +107,6 @@ body {
 }
 .member-list {
   width: 100%;
-  padding: 0 15px;
   margin-top: 15px;
   margin-bottom: 16px;
 }
@@ -412,11 +422,13 @@ body {
   font-size: 16px;
   color: white;
   opacity: 0.7;
+  font-weight: 800;
 }
 .rank-number.top-rank {
   font-size: 20px;
   color: #FFC700;
   opacity: 1;
+  font-weight: 800;
 }
 .profile-img {
   width: 38px;
@@ -447,7 +459,16 @@ body {
   text-align: right;
   margin-left: auto;
 }
+.ranking-note-title {
+  font-family: 'GmarketSansMedium', sans-serif;
+  font-size: 14px;
+  text-align: center;
+  margin: 16px 16px;
+  color: white;
+}
+
 .ranking-note {
+  font-family: 'GmarketSansMedium', sans-serif;
   font-size: 12px;
   color: white;
   opacity: 0.7;
@@ -486,6 +507,7 @@ body {
   color: white;
   margin-bottom: 8px;
   line-height: 1.4;
+  font-weight: bold;
 }
 .download-button {
   display: flex;

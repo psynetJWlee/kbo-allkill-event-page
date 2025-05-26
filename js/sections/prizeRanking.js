@@ -83,14 +83,15 @@
           <img src="/image/user-icon.png" alt="User icon" class="user-icon" />
         </p>
       </div>
-
+      <p class="unit-label">단위 : 원</p>
       <ul class="ranking-list" id="ranking-list"></ul>
-
       <div id="prize-ranking-pagination"></div>
-
+      <div class="ranking-note-title">
+      매일 마지막 경기 종료 후 집계</div>
+      
       <div class="ranking-note">
-        * 랭킹은 매일 마지막 경기 종료 후 30분 후 집계<br/>
-        * 누적 상금이 동일 할 경우 먼저 달성한 사용자가 우선 순위
+        * 누적 상금이 동일 할 경우 먼저 달성한 사용자가 우선 순위<br/>
+        * 전체 랭킹은 30일까지 노출됩니다.
       </div>
     `;
     $('#prize-ranking-section').html(sectionHtml);
