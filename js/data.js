@@ -93,10 +93,17 @@ const prizeHistory = [
   { date: "2024-04-20", amount: +50000 }
 ];
 
-// User data
+// User data (섹션별 currentPage, totalPages로 분리)
 const userData = {
   nickname: "닉네임",
   totalAmount: 4500000,
-  currentPage: 1,
-  totalPages: 3
+  // 각 섹션별 페이지 상태 분리
+  myPrize: {
+    currentPage: 1,
+    totalPages: 3
+  },
+  winners: {
+    currentPage: 1,
+    totalPages: 3
+  }
 };

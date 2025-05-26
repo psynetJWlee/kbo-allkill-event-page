@@ -1,3 +1,4 @@
+
 // js/sections/myPrize.js
 
 // My Prize Section
@@ -24,21 +25,21 @@ function setupPaginationHandlers() {
 
   // 이전 페이지 클릭
   $sec.find('#prev-page').off('click').on('click', function() {
-    if (userData.currentPage > 1) {
-    handlePageChange(userData.currentPage - 1);
+    if (userData.myPrize.currentPage > 1) {
+    handlePageChange(userData.myPrize.currentPage - 1);
     }
   });
 
   // 다음 페이지 클릭
   $sec.find('#next-page').off('click').on('click', function() {
-    if (userData.currentPage < userData.totalPages) {
-      handlePageChange(userData.currentPage + 1);
+    if (userData.myPrize.currentPage < userData.myPrize.totalPages) {
+      handlePageChange(userData.myPrize.currentPage + 1);
     }
   });
 }
 
 function handlePageChange(page) {
-  userData.currentPage = page;
+  userData.myPrize.currentPage = page;
   initMyPrizeSection();
 }
 
@@ -50,10 +51,10 @@ function initMyPrizeSection() {
 
   // ─── 페이지 상태 초기화 ───
   const allHistory      = prizeHistory;                           // data.js 에 정의된 전체 내역
-  userData.totalPages   = Math.ceil(allHistory.length / MY_PRIZE_PAGE_SIZE);
-  userData.currentPage  = userData.currentPage || 1;
+  userData.myPrize.totalPages   = Math.ceil(allHistory.length / MY_PRIZE_PAGE_SIZE);
+  userData.myPrize.currentPage  = userData.myPrize.currentPage || 1;
 
-  const startIdx        = (userData.currentPage - 1) * MY_PRIZE_PAGE_SIZE;
+  const startIdx        = (userData.myPrize.currentPage - 1) * MY_PRIZE_PAGE_SIZE;
   const endIdx          = startIdx + MY_PRIZE_PAGE_SIZE;
   const currentHistory  = allHistory.slice(startIdx, endIdx);
   const totalCount      = allHistory.length;
@@ -84,13 +85,13 @@ function initMyPrizeSection() {
         <div class="history-items" id="prize-history-items"></div>
         <div class="pagination">
           <div class="pagination-content">
-            <div id="prev-page" class="page-item ${userData.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
-            ${Array.from({ length: userData.totalPages }, (_, i) => i + 1).map(page => `
-              <div class="page-item ${userData.currentPage === page ? 'active' : ''}" data-page="${page}">
+            <div id="prev-page" class="page-item ${userData.myPrize.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
+            ${Array.from({ length: userData.myPrize.totalPages }, (_, i) => i + 1).map(page => `
+              <div class="page-item ${userData.myPrize.currentPage === page ? 'active' : ''}" data-page="${page}">
                 ${page}
               </div>
             `).join('')}
-            <div id="next-page" class="page-item ${userData.currentPage === userData.totalPages ? 'disabled' : ''}">&gt;</div>
+            <div id="next-page" class="page-item ${userData.myPrize.currentPage === userData.myPrize.totalPages ? 'disabled' : ''}">&gt;</div>
           </div>
         </div>
       </div><!-- /.prize-history -->
