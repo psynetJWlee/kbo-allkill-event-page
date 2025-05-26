@@ -156,6 +156,17 @@
     updateSubmitButton();
     // ✅ computeTitleParts() 결과로 타이틀을 다시 그려준다
     updateTitleAndCountdown();
+    // ─ 플레이스홀더 슬롯 생성 ─
+    const placeholderCount = matches.length;  // 또는 5(고정)
+    for (let i = 0; i < placeholderCount; i++) {
+      $list.append(
+        `<div class="game-item placeholder">
+           <div class="team-column"></div>
+           <div class="status-section"></div>
+           <div class="team-column"></div>
+         </div>`
+      );
+    }
     return;
   }
  
