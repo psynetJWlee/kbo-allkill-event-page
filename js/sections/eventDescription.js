@@ -13,22 +13,22 @@ function initEventDescriptionSection() {
 
     <ul class="info-list">
       <li class="info-item">
-        누적 금액이 3만원 이상일 경우 지급신청이 가능
+        My 상금 금액이 5만원 초과일 경우 지급신청이 가능
       </li>
       <li class="info-item">
         당첨자 세금신고를 위해 신분증 사본 제출 필요
       </li>
       <li class="info-item">
-        상금지급 후 개인정보 즉시 파기
+        상금 지급 후 개인 정보 즉시 파기
       </li>
       <li class="info-item">
         5만원 초과 시 제세공과금 (22%) 선공제 후 지급
       </li>
       <li class="info-item">
-        다중계정은 당첨자 정보 확인 후 당첨 취소 될 수 있음
+        다중 계정은 당첨자 정보 확인 후 당첨 취소 될 수 있음
       </li>
       <li class="info-item">
-        당첨자명과 예금주명 불일치 시 당첨금 지급 불가
+        당첨자 성명과 예금주명 불일치 시 당첨금 지급 불가
       </li>
     </ul>
 
