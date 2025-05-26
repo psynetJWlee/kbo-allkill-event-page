@@ -336,6 +336,7 @@ body {
 }
 
 .my-ranking {
+  font-family: 'GmarketSansMedium', sans-serif;
   margin-top: 8px;
   font-size: 16px;
   font-weight: bold;
@@ -347,6 +348,7 @@ body {
   }
 
 .my-ranking-number {
+  font-family: 'GmarketSansMedium', sans-serif;
   color: #ffffff;
 }
 
