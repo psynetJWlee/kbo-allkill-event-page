@@ -124,7 +124,9 @@
       </div>
     `;
     // sectionId 안의 기존 title-wrapper 아래에 동적 부분만 append
-    $(`#${sectionId}`).append(dynamicHtml);
+    $(`#${sectionId}`).append(dynamicHtml);    
+    
+   renderGames();
   }
 
   // ==============================
