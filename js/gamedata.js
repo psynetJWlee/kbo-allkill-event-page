@@ -2,6 +2,48 @@
 (function() {
   // 날짜별 경기 데이터만 이전
   window.matchData = {
+        "2025-05-24": [
+      {
+        gameId: "null",
+        home: { teamName: "null", logo: "null", votes: null },
+        away: { teamName: "null", logo: "null", votes: null },
+        status: "null",
+        startTime: "null",
+        userSelection: "null"
+      },
+      {
+        gameId: "null",
+        home: { teamName: "null", logo: "null", votes: null },
+        away: { teamName: "null", logo: "null", votes: null },
+        status: "null",
+        startTime: "null",
+        userSelection: "null"
+      },
+      {
+        gameId: "null",
+        home: { teamName: "null", null", votes: null },
+        away: { teamName: "null", null", votes: null },
+        status: "null",
+        startTime: "null",
+        userSelection: "null"
+      },
+      {
+        gameId: "null",
+        home: { teamName: "null", logo: "null", votes: null },
+        away: { teamName: "null", logo: "null", votes: null },
+        status: "null",
+        startTime: "null",
+        userSelection: "null"
+      },
+      {
+        gameId: "null",
+        home: { teamName: "null", logo: "null", votes: null },
+        away: { teamName: "null", logo: "null", votes: null },
+        status: "null",
+        startTime: "null",
+        userSelection: "null"
+      }
+    ],
     "2025-05-23": [
       {
         gameId: "20250512-0",
