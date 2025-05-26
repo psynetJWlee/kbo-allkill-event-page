@@ -257,6 +257,11 @@ body {
   color: #FFD700;  
 }
 
+.daily-prize.negative {
+  font-size: 20px;
+  color: #ffffff;
+}
+
 /* Pagination */
 .pagination {
   display: flex;
