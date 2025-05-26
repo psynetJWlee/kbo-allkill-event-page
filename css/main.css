@@ -398,7 +398,7 @@ body {
   border: 0.5px solid rgba(255, 255, 255, 0.2);
 }
 .ranking-item.is-me {
-  outline: 3px solid rgba(255, 255, 255, 1);
+  outline: 3px solid rgba(255, 215, 0, 1);
   outline-offset: -3px;
 }
 .rank-number {
