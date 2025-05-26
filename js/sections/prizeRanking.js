@@ -84,7 +84,7 @@
         <h2 class="ranking-title">상금 랭킹</h2>
         <p class="my-ranking">
           내 랭킹 <span class="my-ranking-number">-위 / 참여자수 </span>
-          <img src="/user-icon.png" alt="User icon" class="user-icon" />
+          <img src="/image/user-icon.png" alt="User icon" class="user-icon" />
         </p>
       </div>
 

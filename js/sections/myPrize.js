@@ -66,7 +66,7 @@ function initMyPrizeSection() {
       </div>
       <div class="prize-group">
         <div class="member-info">
-          <img src="/placeholder.svg" class="user-avatar" alt="사용자" />
+          <img src="/image/placeholder.svg" class="user-avatar" alt="사용자" />
           <div class="user-info">
             <p class="user-nickname">${userData.nickname}</p>
             <p class="user-text">님 보유상금</p>
