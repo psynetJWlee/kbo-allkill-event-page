@@ -114,30 +114,17 @@
   // 5. 섹션 렌더링
   // ==============================
   function renderSection() {
-    const sectionHtml = `
-      <div class="team-selection-section" id="${sectionId}">
-      <div class="title-wrapper">
-        <h2 class="team-selection-title">
-          <span class="title-main">${initialTitle}</span>
-          <span class="title-sub"></span>
-        </h2>
-        <!-- 왼쪽/오른쪽 데코 자리 -->
-        <img src="" class="title-decor-left"  alt="" style="display:none;" />
-        <img src="" class="title-decor-right" alt="" style="display:none;" />
-      </div>
-  
-        <div class="game-list" id="${gameListId}"></div>
-  
-        <div class="team-selection-submit">
-          <button id="submit-allkill-btn" class="mega-sparkle-btn">
-            <span class="btn-text">${submitBtnText}</span>
-            <div class="spark"></div><div class="spark"></div><div class="spark"></div>
-          </button>
-        </div>
+    const dynamicHtml = `
+      <div class="game-list" id="${gameListId}"></div>
+      <div class="team-selection-submit">
+        <button id="submit-allkill-btn" class="mega-sparkle-btn">
+          <span class="btn-text">${submitBtnText}</span>
+          <div class="spark"></div><div class="spark"></div><div class="spark"></div>
+        </button>
       </div>
     `;
-    $(containerSelector).append(sectionHtml);
-    renderGames();
+    // sectionId 안의 기존 title-wrapper 아래에 동적 부분만 append
+    $(`#${sectionId}`).append(dynamicHtml);
   }
 
   // ==============================
