@@ -436,6 +436,8 @@ body {
   border-radius: 50%;
   margin-left: 13px;
   object-fit: cover;
+    border: 1px solid #ffffff;
+  box-sizing: border-box;
 }
 .ranking-info {
   display: flex;
