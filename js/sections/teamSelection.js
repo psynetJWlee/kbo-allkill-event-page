@@ -148,6 +148,17 @@
   const matches = window.matchData[key] || [];
   const $list   = $(`#${gameListId}`).empty();
 
+    // 2-1) “경기 없음” 처리
+  const isEmptyDay = matches.length > 0 && matches.every(m => m.gameId === 'null');
+  if (isEmptyDay) {
+    // ✅ 제목·부제목은 computeTitleParts() 안의 emptyDay 케이스가 담당
+    // ✅ 버튼 레이블·활성화 상태를 갱신
+    updateSubmitButton();
+    // ✅ computeTitleParts() 결과로 타이틀을 다시 그려준다
+    updateTitleAndCountdown();
+    return;
+  }
+    
   matches.forEach(match => {
     // 1) disable 여부 판단
     const isSuspended = ["서스펜드", "우천취소", "경기취소"].includes(match.status);
@@ -316,6 +327,13 @@
   function computeTitleParts() {
   const key      = dateKeys[currentIndex];
   const matches  = window.matchData[key] || [];
+  const isEmptyDay = matches.length > 0 && matches.every(m => m.gameId === 'null');
+  if (isEmptyDay) {
+    return {
+      main: '경기가 없어요 !',
+      sub:  '다음 올킬 도전!'
+    };
+  }
   const selMap   = window.appState.selectedTeams || {};
   const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
 
