@@ -55,7 +55,7 @@ function initWinnersSection() {
             <span class="member-nickname">${member.nickname}</span>
           </div>
           <span class="member-amount">
-            ${formatNumber(member.amount)}원
+            ${formatNumber(member.amount)}
           </span>
         </div>
       `;
