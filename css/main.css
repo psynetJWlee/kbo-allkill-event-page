@@ -603,9 +603,8 @@ body {
 
 .game-item.placeholder .team-column,
 .game-item.placeholder .status-section {
-  background: rgba(255,255,255,0.1);
   border-radius: 8px;
-  height: 50px;
+  height: 133px;
 }
 
 .team-column {
