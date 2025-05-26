@@ -158,6 +158,17 @@
     updateTitleAndCountdown();
     return;
   }
+    // 빈 슬롯(스켈레톤) 찍기
+    const placeholderCount = 5; // 보여주고 싶은 슬롯 개수
+    for (let i = 0; i < placeholderCount; i++) {
+      $list.append(`
+        <div class="game-item placeholder">
+          <div class="team-column"></div>
+          <div class="status-section"></div>
+          <div class="team-column"></div>
+        </div>
+      `);
+    } 
     
   matches.forEach(match => {
     // 1) disable 여부 판단
