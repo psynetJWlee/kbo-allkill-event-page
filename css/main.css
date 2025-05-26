@@ -23,6 +23,7 @@ body {
   width: 100%;
   box-sizing: border-box;
   margin: 8px 8px;
+  padding: 12px 12px;
   font-family: 'GmarketSansMedium', sans-serif;
   font-size: 15px;
   color: white;
