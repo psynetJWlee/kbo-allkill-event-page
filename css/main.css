@@ -22,7 +22,7 @@ body {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  margin: 0;
+  padding: 12px 12px;
   font-family: 'GmarketSansMedium', sans-serif;
   font-size: 15px;
   color: white;
@@ -115,7 +115,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 8px 16px;
+  padding: 8px 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   margin-bottom: 10px;
@@ -436,6 +436,8 @@ body {
   border-radius: 50%;
   margin-left: 13px;
   object-fit: cover;
+    border: 1px solid #ffffff;
+  box-sizing: border-box;
 }
 .ranking-info {
   display: flex;
