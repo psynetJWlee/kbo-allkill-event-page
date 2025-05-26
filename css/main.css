@@ -448,6 +448,7 @@ body {
   margin-left: auto;
 }
 .ranking-note {
+  font-family: 'GmarketSansMedium', sans-serif;
   font-size: 12px;
   color: white;
   opacity: 0.7;
