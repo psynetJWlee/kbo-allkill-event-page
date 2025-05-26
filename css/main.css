@@ -604,7 +604,7 @@ body {
 .game-item.placeholder .team-column,
 .game-item.placeholder .status-section {
   border-radius: 8px;
-  height: 133px;
+  height: 105px;
 }
 
 .team-column {
