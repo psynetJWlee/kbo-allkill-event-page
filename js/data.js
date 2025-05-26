@@ -1,4 +1,3 @@
-
 // KBO team logo URLs
 const teamLogos = {
   "KT": "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png",
@@ -38,21 +37,9 @@ const members = [
   { id: 20, nickname: "2올림픽ㄱㄱ", profileImage: "/placeholder.svg", amount: 50000 },
 ];
 
-// Mock data for ranking list
-const weeklyrankingData = [
-  { rank: 1, name: "올킬챔피언", profileImg: "https://i.pravatar.cc/150?img=1", streak: 5, prize: 1500000, isMe: false },
-  { rank: 2, name: "베팅전문가", profileImg: "https://i.pravatar.cc/150?img=2", streak: 4, prize: 1200000, isMe: false },
-  { rank: 3, name: "야구의신", profileImg: "https://i.pravatar.cc/150?img=3", streak: 4, prize: 1000000, isMe: false },
-  { rank: 4, name: "KBO마스터", profileImg: "https://i.pravatar.cc/150?img=4", streak: 3, prize: 800000, isMe: false },
-  { rank: 5, name: "승부사", profileImg: "https://i.pravatar.cc/150?img=5", streak: 3, prize: 700000, isMe: false },
-  { rank: 6, name: "야구팬123", profileImg: "https://i.pravatar.cc/150?img=6", streak: 3, prize: 600000, isMe: true },
-  { rank: 7, name: "베팅러버", profileImg: "https://i.pravatar.cc/150?img=7", streak: 2, prize: 500000, isMe: false },
-  { rank: 8, name: "올킬도전자", profileImg: "https://i.pravatar.cc/150?img=8", streak: 2, prize: 400000, isMe: false },
-  { rank: 9, name: "야구매니아", profileImg: "https://i.pravatar.cc/150?img=9", streak: 1, prize: 300000, isMe: false },
-  { rank: 10, name: "베팅초보", profileImg: "https://i.pravatar.cc/150?img=10", streak: 1, prize: 200000, isMe: false },
-];
-
+// Mock data for ranking list (30명으로 확장)
 const totalrankingData = [
+  // 1~10 기존 동일
   { rank: 1, name: "베팅초", profileImg: "https://i.pravatar.cc/150?img=1", streak: 5, prize: 91500000, isMe: false },
   { rank: 2, name: "전문가", profileImg: "https://i.pravatar.cc/150?img=2", streak: 4, prize: 81200000, isMe: false },
   { rank: 3, name: "야구신", profileImg: "https://i.pravatar.cc/150?img=3", streak: 4, prize: 71000000, isMe: false },
@@ -63,6 +50,27 @@ const totalrankingData = [
   { rank: 8, name: "올킬123도전자", profileImg: "https://i.pravatar.cc/150?img=8", streak: 2, prize: 2400000, isMe: false },
   { rank: 9, name: "야구55매니아", profileImg: "https://i.pravatar.cc/150?img=9", streak: 1, prize: 1300000, isMe: false },
   { rank: 10, name: "베팅고수베팅초보", profileImg: "https://i.pravatar.cc/150?img=10", streak: 1, prize: 1200000, isMe: false },
+  // 11~30 dummy (중복이름/이미지 허용), 13번째 isMe:true 예시
+  { rank: 11, name: "랭킹11", profileImg: "https://i.pravatar.cc/150?img=11", streak: 2, prize: 1100000, isMe: false },
+  { rank: 12, name: "랭킹12", profileImg: "https://i.pravatar.cc/150?img=12", streak: 3, prize: 1000000, isMe: false },
+  { rank: 13, name: "내닉네임", profileImg: "/image/placeholder.svg", streak: 3, prize: 900000, isMe: true },
+  { rank: 14, name: "랭킹14", profileImg: "https://i.pravatar.cc/150?img=14", streak: 1, prize: 800000, isMe: false },
+  { rank: 15, name: "랭킹15", profileImg: "https://i.pravatar.cc/150?img=15", streak: 2, prize: 700000, isMe: false },
+  { rank: 16, name: "랭킹16", profileImg: "https://i.pravatar.cc/150?img=16", streak: 4, prize: 600000, isMe: false },
+  { rank: 17, name: "랭킹17", profileImg: "https://i.pravatar.cc/150?img=17", streak: 3, prize: 500000, isMe: false },
+  { rank: 18, name: "랭킹18", profileImg: "https://i.pravatar.cc/150?img=18", streak: 2, prize: 400000, isMe: false },
+  { rank: 19, name: "랭킹19", profileImg: "https://i.pravatar.cc/150?img=19", streak: 1, prize: 300000, isMe: false },
+  { rank: 20, name: "랭킹20", profileImg: "https://i.pravatar.cc/150?img=20", streak: 5, prize: 200000, isMe: false },
+  { rank: 21, name: "랭킹21", profileImg: "https://i.pravatar.cc/150?img=21", streak: 3, prize: 100000, isMe: false },
+  { rank: 22, name: "랭킹22", profileImg: "https://i.pravatar.cc/150?img=22", streak: 2, prize: 95000, isMe: false },
+  { rank: 23, name: "랭킹23", profileImg: "https://i.pravatar.cc/150?img=23", streak: 3, prize: 90000, isMe: false },
+  { rank: 24, name: "랭킹24", profileImg: "https://i.pravatar.cc/150?img=24", streak: 4, prize: 85000, isMe: false },
+  { rank: 25, name: "랭킹25", profileImg: "https://i.pravatar.cc/150?img=25", streak: 2, prize: 80000, isMe: false },
+  { rank: 26, name: "랭킹26", profileImg: "https://i.pravatar.cc/150?img=26", streak: 1, prize: 75000, isMe: false },
+  { rank: 27, name: "랭킹27", profileImg: "https://i.pravatar.cc/150?img=27", streak: 2, prize: 70000, isMe: false },
+  { rank: 28, name: "랭킹28", profileImg: "https://i.pravatar.cc/150?img=28", streak: 3, prize: 65000, isMe: false },
+  { rank: 29, name: "랭킹29", profileImg: "https://i.pravatar.cc/150?img=29", streak: 1, prize: 60000, isMe: false },
+  { rank: 30, name: "랭킹30", profileImg: "https://i.pravatar.cc/150?img=30", streak: 2, prize: 55000, isMe: false }
 ];
 
 // Prize history data
@@ -85,10 +93,17 @@ const prizeHistory = [
   { date: "2024-04-20", amount: +50000 }
 ];
 
-// User data
+// User data (섹션별 currentPage, totalPages로 분리)
 const userData = {
   nickname: "닉네임",
   totalAmount: 4500000,
-  currentPage: 1,
-  totalPages: 3
+  // 각 섹션별 페이지 상태 분리
+  myPrize: {
+    currentPage: 1,
+    totalPages: 3
+  },
+  winners: {
+    currentPage: 1,
+    totalPages: 3
+  }
 };

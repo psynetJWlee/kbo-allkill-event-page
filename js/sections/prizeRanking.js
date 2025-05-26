@@ -1,35 +1,30 @@
-// js/sections/prizeRanking.js
 
 ;(function($){
-  // ────────────────────────────────
-  // 1) 리스트 렌더링 함수
-  // ────────────────────────────────
-  function renderRankingList() {
-    const state         = window.appState;
+  // 페이지당 아이템 개수
+  const PAGE_SIZE = 10;
+
+  // 랭킹 리스트 렌더링
+  function renderRankingList(page) {
     const { formatNumber } = window.utils;
-    // data.js 에 선언된 변수 이름에 맞춤
-    const data = (state.activeTab === 'weekly')
-      ? weeklyrankingData
-      : totalrankingData;
+    const data = totalrankingData;
 
-    // 탭 active/inactive 클래스 토글
-    $('#weekly-tab')
-      .toggleClass('active',   state.activeTab === 'weekly')
-      .toggleClass('inactive', state.activeTab !== 'weekly');
-    $('#all-tab')
-      .toggleClass('active',   state.activeTab === 'all')
-      .toggleClass('inactive', state.activeTab !== 'all');
+    // 페이지 관련 처리
+    const totalPages = Math.ceil(data.length / PAGE_SIZE);
+    const currentPage = page || 1;
+    const startIdx = (currentPage - 1) * PAGE_SIZE;
+    const endIdx = startIdx + PAGE_SIZE;
+    const listItems = data.slice(startIdx, endIdx);
 
-    // 내 아이템(isMe:true) 찾아 랭킹/상금 표시
-    const me       = data.find(item => item.isMe);
+    // 내 아이템 찾아서 헤더 표시값용 랭크
+    const me = data.find(item => item.isMe);
     const userRank = me ? me.rank : '-';
-    const displayText = `${userRank}위 / 참여자수`;
+    const displayText = `${userRank}위 / ${data.length}명`;
 
-    // 헤더의 내 랭킹 숫자 업데이트
+    // 내 랭킹 숫자 갱신
     $('.my-ranking-number').text(displayText);
 
-    // 실제 리스트 HTML 생성
-    const listHtml = data.map(item => `
+    // 리스트 HTML
+    const listHtml = listItems.map(item => `
       <li class="ranking-item ${item.isMe ? 'is-me' : ''}">
         <div class="rank-number ${item.rank <= 3 ? 'top-rank' : ''}">
           ${item.rank}
@@ -39,66 +34,59 @@
           <span class="ranking-nickname">${item.name}</span>
           <span class="ranking-streak">올킬 ${item.streak}회</span>
         </div>
-        <div class="ranking-prize">${formatNumber(item.prize)}원</div>
+        <div class="ranking-prize">${formatNumber(item.prize)}</div>
       </li>
     `).join('');
     $('#ranking-list').html(listHtml);
-  }
 
-  // ────────────────────────────────
-  // 2) 탭 클릭 핸들러
-  // ────────────────────────────────
-  function setupRankingTabHandlers() {
-    const state = window.appState;
+    // 페이징 UI
+    const pagingHtml = `
+      <div class="pagination prize-ranking-pagination">
+        <div class="pagination-content">
+          <div id="prize-ranking-prev-page" class="page-item ${currentPage === 1 ? 'disabled' : ''}">&lt;</div>
+          ${Array.from({ length: totalPages }, (_, i) => i + 1).map(num => `
+            <div class="page-item ${currentPage === num ? 'active' : ''}" data-page="${num}">${num}</div>
+          `).join('')}
+          <div id="prize-ranking-next-page" class="page-item ${currentPage === totalPages ? 'disabled' : ''}">&gt;</div>
+        </div>
+      </div>
+    `;
+    $('#prize-ranking-pagination').html(pagingHtml);
 
-    $('#weekly-tab')
-      .off('click')
-      .on('click', () => {
-        if (state.activeTab !== 'weekly') {
-          state.activeTab = 'weekly';
-          renderRankingList();
-        }
+    // 페이징 이벤트 핸들러 (컨테이너 범위로 중복 방지)
+    $('#prize-ranking-pagination').find('.page-item[data-page]')
+      .off('click').on('click', function() {
+        const page = parseInt($(this).data('page'), 10);
+        renderRankingList(page);
       });
 
-    $('#all-tab')
-      .off('click')
-      .on('click', () => {
-        if (state.activeTab !== 'all') {
-          state.activeTab = 'all';
-          renderRankingList();
-        }
+    $('#prize-ranking-pagination').find('#prize-ranking-prev-page')
+      .off('click').on('click', function() {
+        if (currentPage > 1) renderRankingList(currentPage - 1);
+      });
+
+    $('#prize-ranking-pagination').find('#prize-ranking-next-page')
+      .off('click').on('click', function() {
+        if (currentPage < totalPages) renderRankingList(currentPage + 1);
       });
   }
 
-  // ────────────────────────────────
-  // 3) 섹션 초기화
-  // ────────────────────────────────
+  // 섹션 초기화
   function initPrizeRankingSection() {
-    const state = window.appState;
-    // 최초 진입 시 기본 탭
-    state.activeTab = state.activeTab || 'weekly';
-
-    // 템플릿 HTML (랭킹 노트 포함)
+    const data = totalrankingData;
+    // 헤더 및 기본 구조(탭X, 기간X)
     const sectionHtml = `
       <div class="ranking-header">
         <h2 class="ranking-title">상금 랭킹</h2>
         <p class="my-ranking">
-          내 랭킹 <span class="my-ranking-number">-위 / 참여자수 </span>
+          내 랭킹 <span class="my-ranking-number">-위 / ${data.length}명</span>
           <img src="/image/user-icon.png" alt="User icon" class="user-icon" />
         </p>
       </div>
 
-      <div class="ranking-tabs">
-        <div class="tabs-list">
-          <div id="weekly-tab" class="tab">주간</div>
-          <div id="all-tab"    class="tab">전체</div>
-        </div>
-      </div>
-      ${state.activeTab === 'weekly'
-        ? `<p class="date-range">${state.weeklyRangeText}</p>`
-        : ''}
-
       <ul class="ranking-list" id="ranking-list"></ul>
+
+      <div id="prize-ranking-pagination"></div>
 
       <div class="ranking-note">
         * 랭킹은 매일 마지막 경기 종료 후 30분 후 집계<br/>
@@ -107,8 +95,7 @@
     `;
     $('#prize-ranking-section').html(sectionHtml);
 
-    setupRankingTabHandlers();
-    renderRankingList();
+    renderRankingList(1);
   }
 
   // 외부 호출용
@@ -116,3 +103,4 @@
     init: initPrizeRankingSection
   };
 })(jQuery);
+
