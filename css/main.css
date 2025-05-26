@@ -592,6 +592,15 @@ body {
   border-radius: 6px;
 }
 
+#game-list .game-item:nth-child(odd) {
+  background-color: #1C1C1C;
+}
+
+/* game-list 내 짝수(2,4…) 아이템 */
+#game-list .game-item:nth-child(even) {
+  background-color: #121212;
+}
+
 .game-item.placeholder .team-column,
 .game-item.placeholder .status-section {
   background: rgba(255,255,255,0.1);
