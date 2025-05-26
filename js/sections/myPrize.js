@@ -106,10 +106,12 @@ function initMyPrizeSection() {
     const wk   = ['일','월','화','수','목','금','토'][d.getDay()];
     const sign = item.amount >= 0 ? '+' : '-';
     const absAmt = Math.abs(item.amount);
+    // amount < 0 이면 negative 클래스 추가
+    const prizeClass = item.amount < 0 ? 'daily-prize negative' : 'daily-prize';
     return `
       <div class="history-item">
         <p class="history-date">${mm}.${dd} (${wk})</p>
-        <p class="daily-prize">${sign}${formatNumber(absAmt)}</p>
+        <p class="${prizeClass}">${sign}${formatNumber(absAmt)}</p>
       </div>
     `;
   }).join('');

@@ -206,7 +206,7 @@ body {
 }
 .prize-amount {
   font-size: 30px;
-  color: white;
+  color: #FFD700;
   margin-bottom: 10px;
   font-weight: bold;
 }
@@ -215,8 +215,8 @@ body {
   color: #121212;
   font-size: 24px;
   width: 100%;
-  border-radius: 20px;
-  padding: 8px 16px;
+  border-radius: 50px;
+  padding: 15px 16px;
   border: none;
   cursor: pointer;
   font-weight: bold;
@@ -254,8 +254,12 @@ body {
 }
 .daily-prize {
   font-size: 20px;
-  color: #FFD700;
-  font-weight: bold;
+  color: #FFD700;  
+}
+
+.daily-prize.negative {
+  font-size: 20px;
+  color: #ffffff;
 }
 
 /* Pagination */
@@ -394,9 +398,14 @@ body {
   border: 0.5px solid rgba(255, 255, 255, 0.2);
 }
 .ranking-item.is-me {
-  outline: 3px solid rgba(255, 255, 255, 1);
+  outline: 3px solid rgba(255, 215, 0, 1);
   outline-offset: -3px;
 }
+
+.ranking-item.is-me .ranking-nickname {
+  color: #FFD700;
+}
+
 .rank-number {
   width: 32px;
   text-align: center;
