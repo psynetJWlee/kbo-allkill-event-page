@@ -412,11 +412,13 @@ body {
   font-size: 16px;
   color: white;
   opacity: 0.7;
+  font-weight: bold;
 }
 .rank-number.top-rank {
   font-size: 20px;
   color: #FFC700;
   opacity: 1;
+  font-weight: bold;
 }
 .profile-img {
   width: 38px;
