@@ -1,13 +1,14 @@
 // teamSelection.js
+  
+  function formatLocalDate(d) {
+    const Y = d.getFullYear();
+    const M = String(d.getMonth() + 1).padStart(2, '0');
+    const D = String(d.getDate()).padStart(2, '0');
+    return `${Y}-${M}-${D}`;
+  }
 
-function formatLocalDate(d) {
-  const Y = d.getFullYear();
-  const M = String(d.getMonth() + 1).padStart(2, '0');
-  const D = String(d.getDate()).padStart(2, '0');
-  return `${Y}-${M}-${D}`;
-}
-
-(function($) {
+  (function($) {
+    
   // ==============================
   // 1. 설정 및 상태 변수
   // ==============================
@@ -31,35 +32,38 @@ function formatLocalDate(d) {
   // 제출 시각을 날짜별로 저장할 맵
   window.appState.submissionTimes = window.appState.submissionTimes || {};
 
+// 2-1. rawKeys → minDate, maxDate 계산
+  // ==============================
+  const rawKeys = Object.keys(window.matchData);                  // ["2025-05-25", "2025-05-26", …]
+  const dates   = rawKeys.map(k => new Date(k).getTime());        // UTC 타임스탬프 배열
+  const minDate = new Date(Math.min(...dates));                   // 가장 이른 날
+  const maxDate = new Date(Math.max(...dates));                   // 가장 늦은 날
 
   // ==============================
-  // 2. 날짜 키 배열 생성
+  // 2-2. 날짜 키 배열 생성
   // ==============================
-  const rawKeys = Object.keys(window.matchData);
-  const dates   = rawKeys.map(k => new Date(k).getTime());
   const minDateKey = formatLocalDate(minDate);
   const maxDateKey = formatLocalDate(maxDate);
 
   const dateKeys = [];
-  
-  // minDateKey, maxDateKey 는 "YYYY-MM-DD" 문자열이라 가정
   const [minY, minM, minD] = minDateKey.split('-').map(Number);
   const [maxY, maxM, maxD] = maxDateKey.split('-').map(Number);
-  
-  // 로컬 자정 기준 Date 객체 생성
-  let cursor = new Date(minY, minM - 1, minD);
+
+  let cursor  = new Date(minY, minM - 1, minD);  // 로컬 자정 기준 시작일
   const endDate = new Date(maxY, maxM - 1, maxD);
-  
+
   while (cursor <= endDate) {
     dateKeys.push(formatLocalDate(cursor));
-    // 로컬 기준 하루 앞으로
-    cursor.setDate(cursor.getDate() + 1);
+    cursor.setDate(cursor.getDate() + 1);         // 로컬 기준 +1일
   }
 
+  // ==============================
+  // 2-3. 오늘 인덱스 찾기
+  // ==============================
   const todayKey   = formatLocalDate(new Date());
-  let currentIndex = dateKeys.indexOf(todayKey);
+  let   currentIndex = dateKeys.indexOf(todayKey);
   if (currentIndex === -1) currentIndex = 0;
-
+    
   // ==============================
   // 3. 초기화
   // ==============================
