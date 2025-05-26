@@ -22,7 +22,7 @@ body {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  margin: 0;
+  margin: 8px 8px;
   font-family: 'GmarketSansMedium', sans-serif;
   font-size: 15px;
   color: white;
