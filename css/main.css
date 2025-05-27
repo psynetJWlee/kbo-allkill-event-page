@@ -894,7 +894,7 @@ body {
 }
 .event-overlay.success,
 .event-overlay.fail {
-  width: 100px; height: auto;
+  width: 140px; height: auto;
 }
 
 /* Responsive adjustments */
