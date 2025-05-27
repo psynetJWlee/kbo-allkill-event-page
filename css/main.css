@@ -571,7 +571,7 @@ body {
 }
 .team-selection-title .title-sub {
   font-size: 30px;
-  color: #FFFFFF;
+  color: #FFC736;
   font-weight: bold; 
   padding-bottom: 20px;
 }
@@ -704,80 +704,55 @@ body {
   text-align: center;
 }
 .vote-count {
-  font-size: 14px;
-}
-.vote-count.higher {
-  color: #FFC736;
+  font-size: 15px;
+  color: #BBBBBB;
+  width:90px;
+  text-align: center;
   font-weight: bold;
 }
-.vote-count.lower {
-  color: rgba(255, 255, 255, 0.7);
+
+.vote-count.higher {
+  color: #FFFFFF;
+  font-weight: bold;
 }
+
 .game-status {
   position: relative;
   flex: 0 0 100px;
   display: block;
   text-align: center;
 }
-/* 경기 상태별 .score/.vs 스타일 */
-.status-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+
+/* 1번째 줄 전용 스타일: start-time, status-text, score에 대응 */
+.game-row.row1 .team-logo-small {
+  width: 90px;
+  height: 42px;
+  object-fit: contain;
 }
-.status-column .status-text {
+.game-row.row1 .start-time,
+.game-row.row1 .status-text {
+  display: inline-block;
   font-size: 15px;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #fff;      /* 혹은 원하시는 색 */
+    padding: 4px 8px;
+  border-radius: 4px;
   text-align: center;
 }
-.status-column .start-time {
-  font-size: 14px;
-  font-weight: bold;
-  color: #FFFFFF;
-  text-align: center;
-}
-.status-column .score {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  grid-column-gap: 8px;
-  width: 100%;
-}
-.status-column .score .home-score,
-.status-column .score .away-score {
-  font-size: 30px;
-  font-weight: bold;
-  color: #FFFFFF;
-}
-.status-column .score .home-score.higher,
-.status-column .score .away-score.higher {
-  color: #FFC736;
-}
-.status-column .score .vs {
+
+.game-row.row1 .score {
   font-size: 15px;
   font-weight: bold;
-  color: #555555;
-  justify-self: center;
+  color: #fff;
 }
-/* 점수 강조 색 */
-.score {
-  font-size: 30px;
+
+.game-row.row1 .score.higher {
+  font-size: 15px;
+  color: #FFC736;
   font-weight: bold;
 }
-.score.winner,
-.home-score.higher,
-.away-score.higher {
-  color: #FFC736;
-}
-.score.regular {
-  color: rgba(255, 255, 255, 0.7);
-}
-.status-text {
-  font-size: 14px;
-  color: #FFFFFF;
-}
+
+
 .red-circle-container {
   position: absolute;
   left: 50%;
@@ -910,16 +885,21 @@ body {
 }
 /* 상태 오버레이 */
 .event-overlay {
-  position: absolute;
-  top: 50%;
+  top: auto;
+  transform: none;
+  bottom: 20px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+  position: absolute;
   pointer-events: none;
   z-index: 10;
 }
+
+/* success/fail 공통 크기 */
 .event-overlay.success,
 .event-overlay.fail {
-  width: 100px; height: auto;
+  width: 140px;
+  height: auto;
 }
 
 /* Responsive adjustments */

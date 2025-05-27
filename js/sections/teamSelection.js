@@ -188,13 +188,35 @@
           $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
         );
       } else if (match.score) {
-        $row1.append(
-          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt',match.home.teamName),
-          $('<span>').addClass('score').text(match.score.home),
-          $('<span>').addClass('status-text').text(match.status),
-          $('<span>').addClass('score').text(match.score.away),
-          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
-        );
+    // ◎ 여기서 home/away 점수 중 큰 쪽에만 higher 클래스 부착
+    const homeScore = match.score.home;
+    const awayScore = match.score.away;
+    const maxScore  = Math.max(homeScore, awayScore);
+
+    $row1.append(
+      // 홈 로고
+      $('<img>').addClass('team-logo-small')
+                 .attr('src', match.home.logo)
+                 .attr('alt', match.home.teamName),
+
+      // 홈 점수 (크면 higher)
+      $('<span>')
+        .addClass(`score${homeScore === maxScore ? ' higher' : ''}`)
+        .text(homeScore),
+
+      // 상태 텍스트
+      $('<span>').addClass('status-text').text(match.status),
+
+      // 어웨이 점수 (크면 higher)
+      $('<span>')
+        .addClass(`score${awayScore === maxScore ? ' higher' : ''}`)
+        .text(awayScore),
+
+      // 어웨이 로고
+      $('<img>').addClass('team-logo-small')
+                 .attr('src', match.away.logo)
+                 .attr('alt', match.away.teamName)
+    );
    } else {
           // 우천취소 등 score가 없을 땐 status만 가운데 노출
           $row1.append(
@@ -232,13 +254,22 @@
 
       // ─── 3행: 득표수(home/draw/away) ─────────────────────
       const $row3 = $('<div>').addClass('game-row row3');
+      const voteEntries = [];
       ['home','draw','away'].forEach(key2 => {
-        if (key2==='draw' && !match.draw) return;  //draw 객체가 없으면 건너뛰기
-        const v = key2 === 'draw' ? match.draw.votes : match[key2].votes;
-        $row3.append($('<div>').addClass('vote-count').text(v));
+        if (key2==='draw' && !match.draw) return;
+        const v = key2==='draw' ? match.draw.votes : match[key2].votes;
+        voteEntries.push({ key: key2, value: v });
+      });
+      const maxVote = Math.max(...voteEntries.map(e => e.value));
+      voteEntries.forEach(({ key, value }) => {
+        const highClass = value === maxVote ? 'higher' : '';
+        $row3.append(
+          $('<div>')
+            .addClass(`vote-count ${highClass}`)
+            .text(value)
+        );
       });
       $item.append($row3);
-
       // ─── 오버레이(success/fail) ───────────────────────────
       if (match.eventResult==='success') {
         $item.append(`<img class="event-overlay success" src="/image/event-overlay success.png"/>`);
