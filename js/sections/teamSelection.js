@@ -188,13 +188,35 @@
           $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
         );
       } else if (match.score) {
-        $row1.append(
-          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt',match.home.teamName),
-          $('<span>').addClass('score').text(match.score.home),
-          $('<span>').addClass('status-text').text(match.status),
-          $('<span>').addClass('score').text(match.score.away),
-          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
-        );
+    // ◎ 여기서 home/away 점수 중 큰 쪽에만 higher 클래스 부착
+    const homeScore = match.score.home;
+    const awayScore = match.score.away;
+    const maxScore  = Math.max(homeScore, awayScore);
+
+    $row1.append(
+      // 홈 로고
+      $('<img>').addClass('team-logo-small')
+                 .attr('src', match.home.logo)
+                 .attr('alt', match.home.teamName),
+
+      // 홈 점수 (크면 higher)
+      $('<span>')
+        .addClass(`score${homeScore === maxScore ? ' higher' : ''}`)
+        .text(homeScore),
+
+      // 상태 텍스트
+      $('<span>').addClass('status-text').text(match.status),
+
+      // 어웨이 점수 (크면 higher)
+      $('<span>')
+        .addClass(`score${awayScore === maxScore ? ' higher' : ''}`)
+        .text(awayScore),
+
+      // 어웨이 로고
+      $('<img>').addClass('team-logo-small')
+                 .attr('src', match.away.logo)
+                 .attr('alt', match.away.teamName)
+    );
    } else {
           // 우천취소 등 score가 없을 땐 status만 가운데 노출
           $row1.append(
