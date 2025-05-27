@@ -744,12 +744,15 @@ body {
   font-size: 15px;
   font-weight: bold;
   color: #fff;
+}.
+
+.game-row.row1 .score higher {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFC736;
 }
-.game-row.row1 .vs {
-  margin: 0 6px;
-  color: #aaa;
-  font-size: 12px;
-}
+
+
 
 
 /* 점수 강조 색 */
