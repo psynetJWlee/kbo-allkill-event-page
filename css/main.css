@@ -729,7 +729,7 @@ body {
 .game-row.row1 .start-time,
 .game-row.row1 .status-text {
   display: inline-block;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   color: #fff;      /* 혹은 원하시는 색 */
     padding: 4px 8px;
