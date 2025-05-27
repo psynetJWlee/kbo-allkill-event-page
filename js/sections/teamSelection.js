@@ -211,7 +211,7 @@
               .attr('alt', match.away.teamName)
           );
         }
-    }
+    
       $item.append($row1);
 
       // ─── 2행: 팀 선택박스(home/draw/away) ─────────────────
@@ -555,4 +555,4 @@ function updateTitleAndCountdown() {
   };
 })(jQuery);
 
-+$(document).ready(window.teamSelectionSection.init);
+$(document).ready(window.teamSelectionSection.init);
