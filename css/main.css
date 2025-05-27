@@ -587,21 +587,14 @@ body {
   margin-top: 0.25em;
 }
 
-/* ================================================
-   game-item 을 3개의 .game-row가 세로로 쌓이도록 수정
-   ================================================ */
+
 #game-list .game-item {
-  /* 기존 display:flex; 속성 유지 */
   display: flex;
-  /* row → column 으로 변경 */
   flex-direction: column;
-  /* 각 행 사이 간격 설정 (필요에 따라 값 조절) */
   gap: 12px;
-  /* stretch 로 .game-row가 전체 너비 차지하도록 */
   align-items: stretch;
 }
 
-/* .game-row 는 여전히 가로 flex */
 #game-list .game-row {
   display: flex;
   justify-content: space-between;
@@ -693,6 +686,12 @@ body {
   background-color: #047DBF;
   border: 3px solid #FFFFFF;
 }
+
+.team-box.selected-draw {
+  background-color: #777777;
+  border: 3px solid #ffffff;
+}
+
 .team-logo {
   width: 32px;
   height: 32px;
