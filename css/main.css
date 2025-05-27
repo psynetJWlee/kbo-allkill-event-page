@@ -884,19 +884,13 @@ body {
   100% { opacity:0; transform: translateY(-40px) scale(0); }
 }
 /* 상태 오버레이 */
-.event-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 10;
-}
-.event-overlay.success,
-.event-overlay.fail {
-  width: 140px; height: auto;
+
+.game-item .event-overlay {
+  width: 140px; 
+  height: auto;
   bottom: -20px;
 }
+
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
