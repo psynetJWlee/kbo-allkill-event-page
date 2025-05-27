@@ -887,7 +887,7 @@ body {
 .event-overlay {
   top: auto;
   transform: none;
-  bottom: -20px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   position: absolute;
