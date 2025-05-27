@@ -748,30 +748,11 @@ body {
 
 .game-row.row1 .score.higher {
   font-size: 15px;
-  font-weight: bold;
   color: #FFC736;
-}
-
-
-
-
-/* 점수 강조 색 */
-.score {
-  font-size: 30px;
   font-weight: bold;
 }
-.score.winner,
-.home-score.higher,
-.away-score.higher {
-  color: #FFC736;
-}
-.score.regular {
-  color: rgba(255, 255, 255, 0.7);
-}
-.status-text {
-  font-size: 14px;
-  color: #FFFFFF;
-}
+
+
 .red-circle-container {
   position: absolute;
   left: 50%;
