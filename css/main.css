@@ -145,6 +145,7 @@ body {
 .member-amount {
   font-size: 30px;
   font-weight: bold;
+  letter-spacing: 2px;
   color: #FFC736;
   font-family: 'GmarketSansMedium', sans-serif;
 }
