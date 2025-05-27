@@ -707,15 +707,12 @@ body {
   font-size: 15px;
   color: #fff;
   width:90px;
-  position: absolute;
 }
 
 .vote-count.higher {
   color: #FFC736;
   font-weight: bold;
 }
-
-
 .vote-count.lower {
   color: rgba(255, 255, 255, 0.7);
 }
