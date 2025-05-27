@@ -686,6 +686,11 @@ body {
   background-color: #047DBF;
   border: 3px solid #FFFFFF;
 }
+.team-box.selected-draw {
+  background-color: #047DBF;
+  border: 3px solid #777777;
+}
+
 .team-logo {
   width: 32px;
   height: 32px;
