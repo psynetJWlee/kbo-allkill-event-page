@@ -141,194 +141,134 @@
   }
     
   // ==============================
-  // 6. 경기 리스트 렌더링 (무승부 옵션 추가)
+  // 6. 경기 리스트 렌더링 (3줄 UI)
   // ==============================
   function renderGames() {
     const key     = dateKeys[currentIndex];
     const matches = window.matchData[key] || [];
     const $list   = $(`#${gameListId}`).empty();
 
-    // “경기 없음” 처리 (placeholder)
-    const isEmptyDay = matches.length > 0 && matches.every(m => m.gameId === 'null');
-    if (isEmptyDay) {
+    // “경기 없음” 처리
+    if (!matches.length || matches.every(m => m.gameId === 'null')) {
+      $list.html('<div class="no-game">경기가 없습니다.</div>');
       updateSubmitButton();
       updateTitleAndCountdown();
-      const placeholderCount = matches.length;
-      for (let i = 0; i < placeholderCount; i++) {
-        $list.append(
-          `<div class="game-item placeholder">
-             <div class="team-column"></div>
-             <div class="status-section"></div>
-             <div class="team-column"></div>
-           </div>`
-        );
-      }
       return;
     }
 
     matches.forEach(match => {
-      // 플레이스홀더(match.gameId === 'null')면 빈 박스만 찍고 넘어감
+      // placeholder
       if (match.gameId === 'null') {
         $list.append(`
           <div class="game-item placeholder">
-            <div class="team-column"></div>
-            <div class="status-section"></div>
-            <div class="team-column"></div>
+            <div class="game-row row1"></div>
+            <div class="game-row row2"></div>
+            <div class="game-row row3"></div>
           </div>`);
         return;
       }
 
-      // 1) disabled / fade 판단
-      const isSuspended = ["서스펜드", "우천취소", "경기취소"].includes(match.status);
-      const isFailed    = match.status === "경기종료" && match.eventResult === "fail";
-      const fadeClass   = match.eventResult === 'fail' ? 'faded' : '';
+      // disabled/fade 체크
+      const isSuspended = ["서스펜드","우천취소","경기취소"].includes(match.status);
+      const isFailed    = (match.status==="경기종료" && match.eventResult==="fail");
+      const fadeClass   = match.eventResult==='fail' ? 'faded' : '';
 
-      // 2) game-item 생성
-      const $gameItem = $('<div>')
+      const $item = $('<div>')
         .addClass('game-item')
-        .toggleClass('disabled', isSuspended || isFailed)
+        .toggleClass('disabled', isSuspended||isFailed)
         .addClass(fadeClass)
         .attr('data-game-id', match.gameId);
 
-      // 3) 홈팀 컬럼
-      const selected     = window.appState.selectedTeams?.[match.gameId] ?? match.userSelection;
-      const homeSelClass = selected === 'home' ? 'selected-home' : '';
-      const homeHigh     = match.home.votes >= match.away.votes ? 'higher' : 'lower';
-      const $homeCol = $('<div>').addClass('team-column');
-      const $homeBox = $('<div>')
-        .addClass(`team-box ${homeSelClass}`)
-        .attr('data-game-id', match.gameId)
-        .attr('data-team', 'home')
-        .append(
-          $('<img>').addClass('team-logo')
-            .attr('src', match.home.logo)
-            .attr('alt', match.home.teamName),
-          $('<span>').addClass('team-name').text(match.home.teamName)
+      // ─── 1행: logo – time/status – logo ────────────────────────
+      const $row1 = $('<div>').addClass('game-row row1');
+      if (match.status==='경기전') {
+        $row1.append(
+          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt',match.home.teamName),
+          $('<span>').addClass('start-time').text(match.startTime),
+          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
         );
-      const $homeVote = $('<div>').addClass(`vote-count ${homeHigh}`).text(match.home.votes);
-      $homeCol.append($homeBox, $homeVote);
-
-      // 4) 상태 영역
-      const statusHtml     = renderStatusSection(match);
-      const $statusSection = $(statusHtml);
-
-      // 5) 원정팀 컬럼
-      const awaySelClass = selected === 'away' ? 'selected-away' : '';
-      const awayHigh     = match.away.votes >= match.home.votes ? 'higher' : 'lower';
-      const $awayCol = $('<div>').addClass('team-column');
-      const $awayBox = $('<div>')
-        .addClass(`team-box ${awaySelClass}`)
-        .attr('data-game-id', match.gameId)
-        .attr('data-team', 'away')
-        .append(
-          $('<img>').addClass('team-logo')
-            .attr('src', match.away.logo)
-            .attr('alt', match.away.teamName),
-          $('<span>').addClass('team-name').text(match.away.teamName)
+      } else {
+        $row1.append(
+          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt',match.home.teamName),
+          $('<span>').addClass('score').text(match.score.home),
+          $('<span>').addClass('status-text').text(match.status),
+          $('<span>').addClass('score').text(match.score.away),
+          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
         );
-      const $awayVote = $('<div>').addClass(`vote-count ${awayHigh}`).text(match.away.votes);
-      $awayCol.append($awayBox, $awayVote);
+      }
+      $item.append($row1);
 
-      // 6) 무승부(draw) 컬럼 (logo가 빈 문자열 또는 정의되지 않으면 건너뛰기)
-      if (match.draw && match.draw.logo) {
-        const drawSelClass = selected === 'draw' ? 'selected-draw' : '';
-        const maxVotes     = Math.max(match.home.votes, match.away.votes, match.draw.votes);
-        const drawHigh     = match.draw.votes === maxVotes ? 'higher' : 'lower';
-
-        const $drawCol = $('<div>').addClass('team-column');
-        const $drawBox = $('<div>')
-          .addClass(`team-box ${drawSelClass}`)
+      // ─── 2행: 팀 선택박스(home/draw/away) ─────────────────
+      const selected = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
+      const $row2    = $('<div>').addClass('game-row row2');
+      ['home','draw','away'].forEach(key2 => {
+        const obj = key2 === 'draw' ? match.draw : match[key2];
+        const sel = selected === key2 ? `selected-${key2}` : '';
+        const $btn = $('<div>')
+          .addClass(`team-box ${sel}`)
           .attr('data-game-id', match.gameId)
-          .attr('data-team', 'draw')
-          .append(
-            // draw는 별도 로고가 없으면 teamName만 노출
-            match.draw.logo
-              ? $('<img>').addClass('team-logo').attr('src', match.draw.logo)
-              : null,
-            $('<span>').addClass('team-name').text(match.draw.teamName)
-          );
-        const $drawVote = $('<div>').addClass(`vote-count ${drawHigh}`).text(match.draw.votes);
+          .attr('data-team', key2)
+          .append($('<span>').addClass('team-name').text(obj.teamName));
+        $row2.append($btn);
+      });
+      $item.append($row2);
 
-        $drawCol.append($drawBox, $drawVote);
-        $gameItem.append($drawCol);
+      // ─── 3행: 득표수(home/draw/away) ─────────────────────
+      const $row3 = $('<div>').addClass('game-row row3');
+      ['home','draw','away'].forEach(key2 => {
+        const v = key2 === 'draw' ? match.draw.votes : match[key2].votes;
+        $row3.append($('<div>').addClass('vote-count').text(v));
+      });
+      $item.append($row3);
+
+      // ─── 오버레이(success/fail) ───────────────────────────
+      if (match.eventResult==='success') {
+        $item.append(`<img class="event-overlay success" src="/image/event-overlay success.png"/>`);
+      } else if (match.eventResult==='fail') {
+        $item.append(`<img class="event-overlay fail" src="/image/event-overlay fail.png"/>`);
       }
 
-      // 7) success/fail overlay
-      let overlayHtml = '';
-      if (match.eventResult === 'success') {
-        overlayHtml = `<img class="event-overlay success" src="/image/event-overlay success.png"/>`;
-      } else if (match.eventResult === 'fail') {
-        overlayHtml = `<img class="event-overlay fail" src="/image/event-overlay fail.png"/>`;
-      }
-
-      // 8) 최종 append (home → status → away → [draw] → overlay)
-      $gameItem
-        .append($homeCol)
-        .append($statusSection)
-        .append($awayCol)
-        // drawCol는 위에서 조건부로 append 했습니다
-        .append(overlayHtml);
-
-      // 9) 리스트에 추가
-      $list.append($gameItem);
+      $list.append($item);
     });
 
-    // 10) 버튼·타이틀 업데이트 & 올킬 스탬프
+    // 버튼·타이틀 갱신
     updateSubmitButton();
     updateTitleAndCountdown();
-    const okAll = matches.filter(m => m.eventResult === 'success').length === matches.length
-                  && matches.length > 0;
-    if (okAll) {
-      $list.append(`
-        <img src="/image/allkill_stemp.png"
-             alt="올킬 도장"
-             class="allkill-stamp"/>
-      `);
+
+    // 올킬 스탬프
+    const allOK = matches.length>0 && matches.every(m=>m.eventResult==='success');
+    if (allOK) {
+      $list.append(`<img class="allkill-stamp" src="/image/allkill_stemp.png"/>`);
     }
   }
+
 
   // ==============================
   // 7. 상태별 UI 분기
   // ==============================
   function renderStatusSection(match) {
     const s = match.status;
-    const homeScoreClass = match.score?.home > match.score?.away ? 'higher' : '';
-    const awayScoreClass = match.score?.away > match.score?.home ? 'higher' : '';
+    const hc = match.score?.home > match.score?.away ? 'higher' : '';
+    const ac = match.score?.away > match.score?.home ? 'higher' : '';
 
-    if (s === '경기중') {
+    if (s==='경기전') {
       return `
-        <div class="status-column status-live">
-          <div class="score">
-            <span class="home-score ${homeScoreClass}">${match.score.home}</span>
-            <span class="vs">vs</span>
-            <span class="away-score ${awayScoreClass}">${match.score.away}</span>
-          </div>
-          <div class="status-text">경기중</div>
-        </div>
-      `;
+        <div class="status-column status-pre">
+          <div class="start-time">${match.startTime}</div>
+        </div>`;
     }
-
-    if (s === '경기종료') {
-      return `
-        <div class="status-column status-post">
-          <div class="score">
-            <span class="home-score ${homeScoreClass}">${match.score.home}</span>
-            <span class="vs">vs</span>
-            <span class="away-score ${awayScoreClass}">${match.score.away}</span>
-          </div>
-          <div class="status-text">경기종료</div>
-        </div>
-      `;
-    }
-
-    // 경기전 & 기타 상태
+    // 경기중 / 종료 모두 스코어-상태-스코어
     return `
-      <div class="status-column status-pre">
+      <div class="status-column ${s==='경기중'?'status-live':'status-post'}">
+        <div class="score">
+          <span class="home-score ${hc}">${match.score.home}</span>
+          <span class="vs">vs</span>
+          <span class="away-score ${ac}">${match.score.away}</span>
+        </div>
         <div class="status-text">${s}</div>
-        ${match.startTime ? `<div class="start-time">${match.startTime}</div>` : ''}
-      </div>
-    `;
+      </div>`;
   }
+    
   // ==============================
   // 8. 편집 가능 여부 판단
   // ==============================
@@ -597,3 +537,4 @@ function updateTitleAndCountdown() {
   };
 })(jQuery);
 
++$(document).ready(window.teamSelectionSection.init);

@@ -1,3 +1,4 @@
+
 // Initialize the page when DOM is loaded
 $(document).ready(function() {
   try {
@@ -9,7 +10,7 @@ $(document).ready(function() {
     // Initialize all sections
     window.eventTitleSection.init();
     window.winnersSection.init();
-    window.teamSelectionSection.init();
+    // window.teamSelectionSection.init(); // 중복 실행 제거
     window.myPrizeSection.init();
     window.prizeRankingSection.init();
     window.eventDescriptionSection.init();
@@ -18,3 +19,4 @@ $(document).ready(function() {
     console.error('섹션 초기화 중 오류:', error);
   }
 });
+
