@@ -230,7 +230,7 @@
       $awayCol.append($awayBox, $awayVote);
 
       // 6) 무승부(draw) 컬럼 (logo가 빈 문자열 또는 정의되지 않으면 건너뛰기)
-      if (match.draw && match.draw.logo) {
+      if (match.draw) {
         const drawSelClass = selected === 'draw' ? 'selected-draw' : '';
         const maxVotes     = Math.max(match.home.votes, match.away.votes, match.draw.votes);
         const drawHigh     = match.draw.votes === maxVotes ? 'higher' : 'lower';
@@ -241,9 +241,11 @@
           .attr('data-game-id', match.gameId)
           .attr('data-team', 'draw')
           .append(
-            // draw는 별도 로고가 없으면 teamName만 노출
+            // 로고가 있을 때만 이미지 태그, 없으면 팀명 텍스트만
             match.draw.logo
-              ? $('<img>').addClass('team-logo').attr('src', match.draw.logo)
+              ? $('<img>').addClass('team-logo')
+                  .attr('src', match.draw.logo)
+                  .attr('alt', match.draw.teamName)
               : null,
             $('<span>').addClass('team-name').text(match.draw.teamName)
           );
