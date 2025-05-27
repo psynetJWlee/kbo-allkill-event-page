@@ -232,13 +232,22 @@
 
       // ─── 3행: 득표수(home/draw/away) ─────────────────────
       const $row3 = $('<div>').addClass('game-row row3');
+      const voteEntries = [];
       ['home','draw','away'].forEach(key2 => {
-        if (key2==='draw' && !match.draw) return;  //draw 객체가 없으면 건너뛰기
-        const v = key2 === 'draw' ? match.draw.votes : match[key2].votes;
-        $row3.append($('<div>').addClass('vote-count').text(v));
+        if (key2==='draw' && !match.draw) return;
+        const v = key2==='draw' ? match.draw.votes : match[key2].votes;
+        voteEntries.push({ key: key2, value: v });
+      });
+      const maxVote = Math.max(...voteEntries.map(e => e.value));
+      voteEntries.forEach(({ key, value }) => {
+        const highClass = value === maxVote ? 'higher' : '';
+        $row3.append(
+          $('<div>')
+            .addClass(`vote-count ${highClass}`)
+            .text(value)
+        );
       });
       $item.append($row3);
-
       // ─── 오버레이(success/fail) ───────────────────────────
       if (match.eventResult==='success') {
         $item.append(`<img class="event-overlay success" src="/image/event-overlay success.png"/>`);
