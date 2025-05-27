@@ -202,9 +202,8 @@
       const selected = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
       const $row2    = $('<div>').addClass('game-row row2');
       ['home','draw','away'].forEach(key2 => {
-        if (key2==='draw' && !match.draw) return;
-        const obj = key2==='draw' ? match.draw : match[key2];
-        const sel = selected===key2 ? `selected-${key2}` : '';
+        const obj = key2 === 'draw' ? match.draw : match[key2];
+        const sel = selected === key2 ? `selected-${key2}` : '';
         const $btn = $('<div>')
           .addClass(`team-box ${sel}`)
           .attr('data-game-id', match.gameId)
@@ -217,8 +216,7 @@
       // ─── 3행: 득표수(home/draw/away) ─────────────────────
       const $row3 = $('<div>').addClass('game-row row3');
       ['home','draw','away'].forEach(key2 => {
-        if (key2==='draw' && !match.draw) return;
-        const v = key2==='draw' ? match.draw.votes : match[key2].votes;
+        const v = key2 === 'draw' ? match.draw.votes : match[key2].votes;
         $row3.append($('<div>').addClass('vote-count').text(v));
       });
       $item.append($row3);
