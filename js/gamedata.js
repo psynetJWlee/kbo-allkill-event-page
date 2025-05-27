@@ -298,6 +298,15 @@
         userSelection: "none"
       },
       {
+        gameId: "20250516-6",
+        home: { teamName: "K2T", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1941 },
+        draw: { teamName: "무승부", votes: 6831 },
+        away: { teamName: "L2G", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3304 },
+        status: "경기전",
+        startTime: "18:00",
+        userSelection: "none"
+      },
+      {
         gameId: "20250516-1",
         home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 4720 },
         draw: { teamName: "무승부", votes: 3722 },
