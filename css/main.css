@@ -722,8 +722,8 @@ body {
 
 /* 1번째 줄 전용 스타일: start-time, status-text, score에 대응 */
 .game-row.row1 .team-logo-small {
-  width: 40px;
-  height: 40px;
+  width: 90px;
+  height: 100%;
   object-fit: contain;
 }
 .game-row.row1 .start-time,
