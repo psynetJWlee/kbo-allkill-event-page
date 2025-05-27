@@ -196,13 +196,22 @@
           $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
         );
    } else {
-         // 우천취소, 취소 등 score 가 없는 상태 → status 텍스트만 가운데 노출
-         $row1.append(
-           $('<img>').addClass('team-logo-small')...,
-           $('<span>').addClass('status-text').text(match.status),
-           $('<img>').addClass('team-logo-small')...
-         );
+          // 우천취소 등 score가 없을 땐 status만 가운데 노출
+          $row1.append(
+            // 홈팀 로고
+            $('<img>').addClass('team-logo-small')
+              .attr('src', match.home.logo)
+              .attr('alt', match.home.teamName),
+            // 상태 텍스트
+            $('<span>').addClass('status-text')
+              .text(match.status),
+            // 원정팀 로고
+            $('<img>').addClass('team-logo-small')
+              .attr('src', match.away.logo)
+              .attr('alt', match.away.teamName)
+          );
         }
+    }
       $item.append($row1);
 
       // ─── 2행: 팀 선택박스(home/draw/away) ─────────────────
