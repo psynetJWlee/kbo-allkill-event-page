@@ -16,7 +16,7 @@ const teamLogos = {
 // Winner members data
 const members = [
   { id: 1, nickname: "고량뉴스", profileImage: "/image/placeholder.svg", amount: 50000 },
-  { id: 2, nickname: "컴오라파", profileImage: "/image/placeholder.svg", amount: 50000 },
+  { id: 2, nickname: "컴오라파", profileImage: "/image/placeholder.svg", amount: 1000000 },
   { id: 3, nickname: "홈런왕김탁구탁구", profileImage: "/image/placeholder.svg", amount: 888888 },
   { id: 4, nickname: "엘지트윈스", profileImage: "/image/placeholder.svg", amount: 50000 },
   { id: 5, nickname: "두산베어준", profileImage: "/image/placeholder.svg", amount: 50000 },
