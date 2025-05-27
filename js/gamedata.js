@@ -5,6 +5,7 @@
       {
         gameId: "null",
         home: { teamName: "null", logo: "null", votes: null },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "null", logo: "null", votes: null },
         status: "null",
         startTime: "null",
@@ -13,6 +14,7 @@
       {
         gameId: "null",
         home: { teamName: "null", logo: "null", votes: null },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "null", logo: "null", votes: null },
         status: "null",
         startTime: "null",
@@ -21,6 +23,7 @@
       {
         gameId: "null",
         home: { teamName: "null", logo: "null", votes: null },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "null", logo: "null", votes: null },
         status: "null",
         startTime: "null",
@@ -29,6 +32,7 @@
       {
         gameId: "null",
         home: { teamName: "null", logo: "null", votes: null },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "null", logo: "null", votes: null },
         status: "null",
         startTime: "null",
@@ -37,6 +41,7 @@
       {
         gameId: "null",
         home: { teamName: "null", logo: "null", votes: null },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "null", logo: "null", votes: null },
         status: "null",
         startTime: "null",
@@ -47,6 +52,7 @@
       {
         gameId: "20250512-0",
         home: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3215 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1111 },
         status: "경기종료",
         startTime: "18:00",
@@ -58,6 +64,7 @@
       {
         gameId: "20250512-1",
         home: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 4322 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 227 },
         status: "경기종료",
         startTime: "18:00",
@@ -69,6 +76,7 @@
       {
         gameId: "20250512-2",
         home: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 9324 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 423 },
         status: "경기종료",
         startTime: "18:00",
@@ -80,6 +88,7 @@
       {
         gameId: "20250512-3",
         home: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 5524 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 4218 },
         status: "경기종료",
         startTime: "18:00",
@@ -91,6 +100,7 @@
       {
         gameId: "20250512-4",
         home: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 1230 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 5525 },
         status: "경기종료",
         startTime: "18:00",
@@ -104,6 +114,7 @@
       {
         gameId: "20250513-0",
         home: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3215 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1111 },
         status: "경기종료",
         startTime: "18:00",
@@ -115,6 +126,7 @@
       {
         gameId: "20250513-1",
         home: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 4322 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 227 },
         status: "경기종료",
         startTime: "18:00",
@@ -126,6 +138,7 @@
       {
         gameId: "20250513-2",
         home: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 9324 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 423 },
         status: "경기종료",
         startTime: "18:00",
@@ -137,6 +150,7 @@
       {
         gameId: "20250513-3",
         home: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 5524 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 4218 },
         status: "경기종료",
         startTime: "18:00",
@@ -148,6 +162,7 @@
       {
         gameId: "20250513-4",
         home: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 1230 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 5525 },
         status: "경기종료",
         startTime: "18:00",
@@ -161,6 +176,7 @@
       {
         gameId: "20250514-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1111 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3215 },
         status: "경기종료",
         startTime: "18:00",
@@ -172,6 +188,7 @@
       {
         gameId: "20250514-1",
         home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 227 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 4322 },
         status: "경기종료",
         startTime: "18:00",
@@ -183,6 +200,7 @@
       {
         gameId: "20250514-2",
         home: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 423 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 9324 },
         status: "경기종료",
         startTime: "18:00",
@@ -194,6 +212,7 @@
       {
         gameId: "20250514-3",
         home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 4218 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 5524 },
         status: "경기종료",
         startTime: "18:00",
@@ -205,6 +224,7 @@
       {
         gameId: "20250514-4",
         home: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 5525 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 1230 },
         status: "경기종료",
         startTime: "18:00",
@@ -218,6 +238,7 @@
       {
         gameId: "20250515-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SK", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 4214 },
         status: "우천취소",
         startTime: "18:00",
@@ -226,6 +247,7 @@
       {
         gameId: "20250515-1",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SK", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 4214 },
         status: "경기중",
         startTime: "18:00",
@@ -235,6 +257,7 @@
       {
         gameId: "20250515-2",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SK", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 4214 },
         status: "경기종료",
         startTime: "18:00",
@@ -246,6 +269,7 @@
       {
         gameId: "20250515-3",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SK", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 4214 },
         status: "경기종료",
         startTime: "18:00",
@@ -257,6 +281,7 @@
       {
         gameId: "20250515-4",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SK", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 4214 },
         status: "경기지연",
         startTime: "18:00",
@@ -267,6 +292,7 @@
       {
         gameId: "20250516-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1941 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3304 },
         status: "경기전",
         startTime: "18:00",
@@ -275,6 +301,7 @@
       {
         gameId: "20250516-1",
         home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 4720 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 524 },
         status: "경기전",
         startTime: "18:00",
@@ -283,6 +310,7 @@
       {
         gameId: "20250516-2",
         home: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 5245 },
         status: "경기전",
         startTime: "18:00",
@@ -291,6 +319,7 @@
       {
         gameId: "20250516-3",
         home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 4458 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 787 },
         status: "경기전",
         startTime: "18:00",
@@ -299,6 +328,7 @@
       {
         gameId: "20250516-4",
         home: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 787 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 4458 },
         status: "경기전",
         startTime: "18:00",
@@ -309,6 +339,7 @@
       {
         gameId: "20250522-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -317,6 +348,7 @@
       {
         gameId: "20250522-1",
         home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -325,6 +357,7 @@
       {
         gameId: "20250522-2",
         home: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -333,6 +366,7 @@
       {
         gameId: "20250522-3",
         home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -341,6 +375,7 @@
       {
         gameId: "20250522-4",
         home: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -351,6 +386,7 @@
       {
         gameId: "20250523-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -359,6 +395,7 @@
       {
         gameId: "20250523-1",
         home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -367,6 +404,7 @@
       {
         gameId: "20250523-2",
         home: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -375,6 +413,7 @@
       {
         gameId: "20250523-3",
         home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
@@ -383,6 +422,7 @@
       {
         gameId: "20250523-4",
         home: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 0 },
+        draw: { teamName: "null", votes: null },
         away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 0 },
         status: "경기전",
         startTime: "18:00",
