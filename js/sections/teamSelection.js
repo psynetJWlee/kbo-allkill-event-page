@@ -187,7 +187,7 @@
           $('<span>').addClass('start-time').text(match.startTime),
           $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
         );
-      } else {
+      } else if (match.score) {
         $row1.append(
           $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt',match.home.teamName),
           $('<span>').addClass('score').text(match.score.home),
@@ -195,13 +195,21 @@
           $('<span>').addClass('score').text(match.score.away),
           $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
         );
-      }
+   } else {
+         // 우천취소, 취소 등 score 가 없는 상태 → status 텍스트만 가운데 노출
+         $row1.append(
+           $('<img>').addClass('team-logo-small')...,
+           $('<span>').addClass('status-text').text(match.status),
+           $('<img>').addClass('team-logo-small')...
+         );
+        }
       $item.append($row1);
 
       // ─── 2행: 팀 선택박스(home/draw/away) ─────────────────
       const selected = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
       const $row2    = $('<div>').addClass('game-row row2');
-      ['home','draw','away'].forEach(key2 => {
+      ['home','draw','away'].forEach(key2 => {  //draw 객체가 없으면 건너뛰기
+        if (key2==='draw' && !match.draw) return;
         const obj = key2 === 'draw' ? match.draw : match[key2];
         const sel = selected === key2 ? `selected-${key2}` : '';
         const $btn = $('<div>')
@@ -216,6 +224,7 @@
       // ─── 3행: 득표수(home/draw/away) ─────────────────────
       const $row3 = $('<div>').addClass('game-row row3');
       ['home','draw','away'].forEach(key2 => {
+        if (key2==='draw' && !match.draw) return;  //draw 객체가 없으면 건너뛰기
         const v = key2 === 'draw' ? match.draw.votes : match[key2].votes;
         $row3.append($('<div>').addClass('vote-count').text(v));
       });
