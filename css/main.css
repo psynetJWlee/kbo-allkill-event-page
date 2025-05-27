@@ -884,13 +884,23 @@ body {
   100% { opacity:0; transform: translateY(-40px) scale(0); }
 }
 /* 상태 오버레이 */
-
-.game-item .event-overlay {
-  width: 140px; 
-  height: auto;
+.event-overlay {
+  top: auto;
+  transform: none;
   bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
 }
 
+/* success/fail 공통 크기 */
+.event-overlay.success,
+.event-overlay.fail {
+  width: 140px;
+  height: auto;
+}
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
