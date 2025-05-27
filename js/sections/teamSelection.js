@@ -250,43 +250,27 @@
   // ==============================
   function renderStatusSection(match) {
     const s = match.status;
-    const homeScoreClass = match.score?.home > match.score?.away ? 'higher' : '';
-    const awayScoreClass = match.score?.away > match.score?.home ? 'higher' : '';
+    const hc = match.score?.home > match.score?.away ? 'higher' : '';
+    const ac = match.score?.away > match.score?.home ? 'higher' : '';
 
-    if (s === '경기중') {
+    if (s==='경기전') {
       return `
-        <div class="status-column status-live">
-          <div class="score">
-            <span class="home-score ${homeScoreClass}">${match.score.home}</span>
-            <span class="vs">vs</span>
-            <span class="away-score ${awayScoreClass}">${match.score.away}</span>
-          </div>
-          <div class="status-text">경기중</div>
-        </div>
-      `;
+        <div class="status-column status-pre">
+          <div class="start-time">${match.startTime}</div>
+        </div>`;
     }
-
-    if (s === '경기종료') {
-      return `
-        <div class="status-column status-post">
-          <div class="score">
-            <span class="home-score ${homeScoreClass}">${match.score.home}</span>
-            <span class="vs">vs</span>
-            <span class="away-score ${awayScoreClass}">${match.score.away}</span>
-          </div>
-          <div class="status-text">경기종료</div>
-        </div>
-      `;
-    }
-
-    // 경기전 & 기타 상태
+    // 경기중 / 종료 모두 스코어-상태-스코어
     return `
-      <div class="status-column status-pre">
+      <div class="status-column ${s==='경기중'?'status-live':'status-post'}">
+        <div class="score">
+          <span class="home-score ${hc}">${match.score.home}</span>
+          <span class="vs">vs</span>
+          <span class="away-score ${ac}">${match.score.away}</span>
+        </div>
         <div class="status-text">${s}</div>
-        ${match.startTime ? `<div class="start-time">${match.startTime}</div>` : ''}
-      </div>
-    `;
+      </div>`;
   }
+    
   // ==============================
   // 8. 편집 가능 여부 판단
   // ==============================
