@@ -704,8 +704,11 @@ body {
   text-align: center;
 }
 .vote-count {
-  font-size: 14px;
+  font-size: 15px;
+  color: #fff;
+  width:90px;
 }
+
 .vote-count.higher {
   color: #FFC736;
   font-weight: bold;
