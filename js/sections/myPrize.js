@@ -148,7 +148,7 @@ function initMyPrizeSection() {
       }
     });
   }
-}
+
 
 // Export the initialization function
 window.myPrizeSection = {
