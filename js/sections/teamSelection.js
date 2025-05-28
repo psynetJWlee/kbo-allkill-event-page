@@ -226,7 +226,12 @@
     const now    = new Date();
     let main = '', sub = '';
 
-    if (status === 'PENDING_USER_NOT_SELECTED') {
+    // === [NO_GAMES_EVENT_DISABLED 상태] ===
+    if (status === 'NO_GAMES_EVENT_DISABLED') {
+      main = '경기가 없습니다.';
+      sub = '다음 이벤트에 참여하세요!';
+    }
+    else if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
       // 카운트다운 초(sec) 포함
       if (games.length && games[0].startTime && games[0].startTime !== "null") {
@@ -311,6 +316,13 @@
         countdownTimerId = setInterval(updateTitleAndCountdown, 1000);
       }
     }
+
+    // [NO_GAMES_EVENT_DISABLED] 버튼 숨김
+    if (effStatus === 'NO_GAMES_EVENT_DISABLED') {
+      $('#submit-allkill-btn').hide();
+    } else {
+      $('#submit-allkill-btn').show();
+    }
   }
 
   // ==============================
@@ -319,13 +331,23 @@
   function updateSubmitButton() {
     const key = dateKeys[currentIndex];
     const games = (window.matchData[key]||{}).games||[];
+    const baseStatus = (window.matchData[key]||{}).eventStatus;
+    const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
+
+    // [NO_GAMES_EVENT_DISABLED]일 경우 숨김 처리
+    if (effStatus === 'NO_GAMES_EVENT_DISABLED') {
+      $('#submit-allkill-btn').hide();
+      return;
+    }
+
     const allSel = games.length>0 && games.every(g =>
       (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
     );
     $('#submit-allkill-btn')
       .prop('disabled', !allSel)
       .toggleClass('enabled', allSel)
-      .css('opacity', allSel?1:0.3);
+      .css('opacity', allSel?1:0.3)
+      .show(); // 항상 show (숨김은 위에서 처리)
   }
 
   // ==============================
