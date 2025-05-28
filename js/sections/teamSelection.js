@@ -535,18 +535,36 @@ function updateTitleAndCountdown() {
   // ==============================
   // 15. 제출 핸들러
   // ==============================
-    function setupSubmitHandler() {
+  function setupSubmitHandler() {
     $('#submit-allkill-btn')
       .off('click')
-      .on('click', function() {
+      .on('click', function(e) {
         const key     = dateKeys[currentIndex];
         const matches = window.matchData[key] || [];
   
+        // 1) 현재 버튼 상태 판단을 위해 computeTitleParts() 호출
+        const parts   = computeTitleParts();
+        const mainTxt = parts.main.trim();
+  
+        // 2) 클릭을 차단할 상태 목록
+        const forbidden = [
+          initialTitle,        // '올킬 도전!'
+          '채점 중!',           // 진행 중
+          submitBtnText,       // '다음 경기 도전!'
+          '다음 경기 도전 !'    // computeTitleParts() 에 따라 공백이 들어간 경우 대비
+        ];
+  
+        // 3) 만약 차단 대상에 포함되면, 클릭 무시
+        if (forbidden.includes(mainTxt)) {
+          return;
+        }
+  
+        // — 이하 기존 제출 로직 —
         // 제출 시각 저장 & 타이틀 갱신
         window.appState.submissionTimes[key] = new Date();
         updateTitleAndCountdown();
   
-        // 모든 경기가 아직 시작 전(경기전)이라면 얼럿 띄우기
+        // 모든 경기가 아직 시작 전(경기전)이라면 안내창 띄우기
         const allPre = matches.every(m => m.status === '경기전');
         if (allPre) {
           alert(
