@@ -62,7 +62,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  z-index: -9999 !important;
+  z-index: -1;
 }
 
 /* 2) 로고 */
