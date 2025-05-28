@@ -101,7 +101,7 @@ body {
 /* 5) 컬러 분기 */
 .event-title-line1,
 .event-title-line2 { color: #FFFFFF; }
-.event-title-line3        { color: #FFC736; }
+.event-title-line3 { color: #FFC736; }
 
 /* 6) GIF(이모티콘) */
 .event-emoticon {
