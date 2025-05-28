@@ -1,5 +1,28 @@
 // teamSelection.js
-  
+
+(function($) {
+  // ==============================
+  // 1. 설정 및 상태 변수
+  // ==============================
+  const containerSelector = '#kbo-selection-container';
+  const sectionId         = 'team-selection-section';
+  const gameListId        = 'game-list';
+  const prevBtnId         = 'date-nav-prev';
+  const nextBtnId         = 'date-nav-next';
+  const currentDayId      = 'current-day';
+
+  // PENDING 상태 전/후, 완료 후 재도전 등 버튼 기본 텍스트 (최소 placeholder)
+  const submitBtnPlaceholder = '제출하기';
+
+  // 카운트다운 타이머 ID
+  let countdownTimerId = null;
+
+  // 제출 시각을 날짜별로 저장
+  window.appState.submissionTimes = window.appState.submissionTimes || {};
+
+  // ==============================
+  // 2. 날짜 키 배열 생성
+  // ==============================
   function formatLocalDate(d) {
     const Y = d.getFullYear();
     const M = String(d.getMonth() + 1).padStart(2, '0');
@@ -7,63 +30,27 @@
     return `${Y}-${M}-${D}`;
   }
 
-  (function($) {
-    
-  // ==============================
-  // 1. 설정 및 상태 변수
-  // ==============================
-    // 양옆에 들어갈 아이콘 (채점 중, 올킬 도전, 제출 완료)
-  const iconBothLeft   = '/image/iconBothLeft.gif';
-  const iconBothRight  = '/image/iconBothRight.gif';
-  // 오른쪽에만 들어갈 아이콘 (다음 경기 도전, 올킬 성공)
-  const iconSingle     = '/image/iconSingle.gif';
-  const containerSelector = '#kbo-selection-container';
-  const sectionId         = 'team-selection-section';
-  const gameListId        = 'game-list';
-  const prevBtnId         = 'date-nav-prev';
-  const nextBtnId         = 'date-nav-next';
-  const currentDayId      = 'current-day';
-  const initialTitle      = '올킬 도전!';
-  const submitBtnText     = '다음 경기 도전!';
+  const rawKeys = Object.keys(window.matchData);
+  const dates   = rawKeys.map(k => new Date(k).getTime());
+  const minDate = new Date(Math.min(...dates));
+  const maxDate = new Date(Math.max(...dates));
 
-  // 카운트다운 타이머 ID
-  let countdownTimerId = null;
-  
-  // 제출 시각을 날짜별로 저장할 맵
-  window.appState.submissionTimes = window.appState.submissionTimes || {};
-
-// 2-1. rawKeys → minDate, maxDate 계산
-  // ==============================
-  const rawKeys = Object.keys(window.matchData);                  // ["2025-05-25", "2025-05-26", …]
-  const dates   = rawKeys.map(k => new Date(k).getTime());        // UTC 타임스탬프 배열
-  const minDate = new Date(Math.min(...dates));                   // 가장 이른 날
-  const maxDate = new Date(Math.max(...dates));                   // 가장 늦은 날
-
-  // ==============================
-  // 2-2. 날짜 키 배열 생성
-  // ==============================
-  const minDateKey = formatLocalDate(minDate);
-  const maxDateKey = formatLocalDate(maxDate);
-
+  const minKey = formatLocalDate(minDate);
+  const maxKey = formatLocalDate(maxDate);
   const dateKeys = [];
-  const [minY, minM, minD] = minDateKey.split('-').map(Number);
-  const [maxY, maxM, maxD] = maxDateKey.split('-').map(Number);
-
-  let cursor  = new Date(minY, minM - 1, minD);  // 로컬 자정 기준 시작일
-  const endDate = new Date(maxY, maxM - 1, maxD);
-
-  while (cursor <= endDate) {
-    dateKeys.push(formatLocalDate(cursor));
-    cursor.setDate(cursor.getDate() + 1);         // 로컬 기준 +1일
+  {
+    let cur = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
+    const end = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
+    while (cur <= end) {
+      dateKeys.push(formatLocalDate(cur));
+      cur.setDate(cur.getDate() + 1);
+    }
   }
 
-  // ==============================
-  // 2-3. 오늘 인덱스 찾기
-  // ==============================
-  const todayKey   = formatLocalDate(new Date());
-  let   currentIndex = dateKeys.indexOf(todayKey);
-  if (currentIndex === -1) currentIndex = 0;
-    
+  const todayKey = formatLocalDate(new Date());
+  let currentIndex = dateKeys.indexOf(todayKey);
+  if (currentIndex < 0) currentIndex = 0;
+
   // ==============================
   // 3. 초기화
   // ==============================
@@ -82,73 +69,62 @@
     const prevKey = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
     const nextKey = currentIndex < dateKeys.length - 1 ? dateKeys[currentIndex + 1] : '';
 
-    function dayLabel(key) {
-      if (!key) return '';
-      if (key === todayKey) return 'Today';
-      return key.split('-')[2];
+    function dayLabel(k) {
+      if (!k) return '';
+      if (k === todayKey) return 'Today';
+      return k.split('-')[2];
     }
 
-    const prevLabel    = dayLabel(prevKey);
-    const currentLabel = dayLabel(dateKeys[currentIndex]);
-    const nextLabel    = dayLabel(nextKey);
-
-    const navHtml = `
+    const html = `
       <div class="date-navigation">
-        <div class="date-nav-prev" id="${prevBtnId}">
+        <div id="${prevBtnId}" class="date-nav-prev">
           <div class="arrow-left"></div>
-          <span class="prev-day">${prevLabel}</span>
+          <span class="prev-day">${dayLabel(prevKey)}</span>
         </div>
-        <span class="current-day" id="${currentDayId}">
-          ${currentLabel}
-        </span>
-        <div class="date-nav-next" id="${nextBtnId}">
-          <span class="next-day">${nextLabel}</span>
+        <span id="${currentDayId}" class="current-day">${dayLabel(dateKeys[currentIndex])}</span>
+        <div id="${nextBtnId}" class="date-nav-next">
+          <span class="next-day">${dayLabel(nextKey)}</span>
           <div class="arrow-right"></div>
         </div>
       </div>
     `;
-    $(containerSelector).html(navHtml);
+    $(containerSelector).html(html);
   }
 
   // ==============================
   // 5. 섹션 렌더링
   // ==============================
   function renderSection() {
-    const sectionHtml = `
-      <div class="team-selection-section" id="${sectionId}">
-      <div class="title-wrapper">
-        <h2 class="team-selection-title">
-          <span class="title-main">${initialTitle}</span>
-          <span class="title-sub"></span>
-        </h2>
-        <!-- 왼쪽/오른쪽 데코 자리 -->
-        <img src="" class="title-decor-left"  alt="" style="display:none;" />
-        <img src="" class="title-decor-right" alt="" style="display:none;" />
-      </div>
-  
-        <div class="game-list" id="${gameListId}"></div>
-  
+    const html = `
+      <div id="${sectionId}" class="team-selection-section">
+        <div class="title-wrapper">
+          <h2 class="team-selection-title">
+            <span class="title-main"></span>
+            <span class="title-sub"></span>
+          </h2>
+        </div>
+        <div id="${gameListId}" class="game-list"></div>
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
-            <span class="btn-text">${submitBtnText}</span>
+            <span class="btn-text">${submitBtnPlaceholder}</span>
             <div class="spark"></div><div class="spark"></div><div class="spark"></div>
           </button>
         </div>
       </div>
     `;
-    $(containerSelector).append(sectionHtml);
+    $(containerSelector).append(html);
     renderGames();
   }
-    
+
   // ==============================
-  // 6. 경기 리스트 렌더링 (3줄 UI)
+  // 6. 경기 리스트 렌더링
   // ==============================
   function renderGames() {
     const key     = dateKeys[currentIndex];
-    const matches = window.matchData[key] || [];
+    const data    = window.matchData[key] || { eventStatus: '', games: [] };
+    const matches = data.games || [];
     const $list   = $(`#${gameListId}`).empty();
 
-    // “경기 없음” 처리
     if (!matches.length || matches.every(m => m.gameId === 'null')) {
       $list.html('<div class="no-game">경기가 없습니다.</div>');
       updateSubmitButton();
@@ -157,20 +133,13 @@
     }
 
     matches.forEach(match => {
-      // placeholder
       if (match.gameId === 'null') {
-        $list.append(`
-          <div class="game-item placeholder">
-            <div class="game-row row1"></div>
-            <div class="game-row row2"></div>
-            <div class="game-row row3"></div>
-          </div>`);
+        $list.append(`<div class="game-item placeholder"><div class="game-row row1"></div><div class="game-row row2"></div><div class="game-row row3"></div></div>`);
         return;
       }
 
-      // disabled/fade 체크
       const isSuspended = ["서스펜드","우천취소","경기취소"].includes(match.status);
-      const isFailed    = (match.status==="경기종료" && match.eventResult==="fail");
+      const isFailed    = match.status==="경기종료" && match.eventResult==="fail";
       const fadeClass   = match.eventResult==='fail' ? 'faded' : '';
 
       const $item = $('<div>')
@@ -179,382 +148,235 @@
         .addClass(fadeClass)
         .attr('data-game-id', match.gameId);
 
-      // ─── 1행: logo – time/status – logo ────────────────────────
+      // ─── 1행: 시계/점수 등 ─────────────────────────────
       const $row1 = $('<div>').addClass('game-row row1');
       if (match.status==='경기전') {
         $row1.append(
-          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt',match.home.teamName),
+          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt', match.home.teamName),
           $('<span>').addClass('start-time').text(match.startTime),
-          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt',match.away.teamName)
+          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt', match.away.teamName)
         );
       } else if (match.score) {
-    // ◎ 여기서 home/away 점수 중 큰 쪽에만 higher 클래스 부착
-    const homeScore = match.score.home;
-    const awayScore = match.score.away;
-    const maxScore  = Math.max(homeScore, awayScore);
-
-    $row1.append(
-      // 홈 로고
-      $('<img>').addClass('team-logo-small')
-                 .attr('src', match.home.logo)
-                 .attr('alt', match.home.teamName),
-
-      // 홈 점수 (크면 higher)
-      $('<span>')
-        .addClass(`score${homeScore === maxScore ? ' higher' : ''}`)
-        .text(homeScore),
-
-      // 상태 텍스트
-      $('<span>').addClass('status-text').text(match.status),
-
-      // 어웨이 점수 (크면 higher)
-      $('<span>')
-        .addClass(`score${awayScore === maxScore ? ' higher' : ''}`)
-        .text(awayScore),
-
-      // 어웨이 로고
-      $('<img>').addClass('team-logo-small')
-                 .attr('src', match.away.logo)
-                 .attr('alt', match.away.teamName)
-    );
-   } else {
-          // 우천취소 등 score가 없을 땐 status만 가운데 노출
-          $row1.append(
-            // 홈팀 로고
-            $('<img>').addClass('team-logo-small')
-              .attr('src', match.home.logo)
-              .attr('alt', match.home.teamName),
-            // 상태 텍스트
-            $('<span>').addClass('status-text')
-              .text(match.status),
-            // 원정팀 로고
-            $('<img>').addClass('team-logo-small')
-              .attr('src', match.away.logo)
-              .attr('alt', match.away.teamName)
-          );
-        }
-    
+        const hs=match.score.home, as=match.score.away, mx=Math.max(hs,as);
+        $row1.append(
+          $('<img>').addClass('team-logo-small').attr('src', match.home.logo),
+          $('<span>').addClass(`score${hs===mx?' higher':''}`).text(hs),
+          $('<span>').addClass('status-text').text(match.status),
+          $('<span>').addClass(`score${as===mx?' higher':''}`).text(as),
+          $('<img>').addClass('team-logo-small').attr('src', match.away.logo)
+        );
+      } else {
+        $row1.append(
+          $('<img>').addClass('team-logo-small').attr('src', match.home.logo),
+          $('<span>').addClass('status-text').text(match.status),
+          $('<img>').addClass('team-logo-small').attr('src', match.away.logo)
+        );
+      }
       $item.append($row1);
 
-      // ─── 2행: 팀 선택박스(home/draw/away) ─────────────────
-      const selected = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
-      const $row2    = $('<div>').addClass('game-row row2');
-      ['home','draw','away'].forEach(key2 => {  //draw 객체가 없으면 건너뛰기
-        if (key2==='draw' && !match.draw) return;
-        const obj = key2 === 'draw' ? match.draw : match[key2];
-        const sel = selected === key2 ? `selected-${key2}` : '';
-        const $btn = $('<div>')
-          .addClass(`team-box ${sel}`)
-          .attr('data-game-id', match.gameId)
-          .attr('data-team', key2)
-          .append($('<span>').addClass('team-name').text(obj.teamName));
-        $row2.append($btn);
+      // ─── 2행: 홈/무/원정 선택 박스 ───────────────────
+      const sel = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
+      const $row2 = $('<div>').addClass('game-row row2');
+      ['home','draw','away'].forEach(k => {
+        if (k==='draw' && !match.draw) return;
+        const obj = k==='draw'? match.draw : match[k];
+        const cls = sel===k ? `selected-${k}` : '';
+        $row2.append(
+          $('<div>')
+            .addClass(`team-box ${cls}`)
+            .attr('data-game-id', match.gameId)
+            .attr('data-team', k)
+            .append($('<span>').addClass('team-name').text(obj.teamName))
+        );
       });
       $item.append($row2);
 
-      // ─── 3행: 득표수(home/draw/away) ─────────────────────
+      // ─── 3행: 득표수 ─────────────────────────────────
       const $row3 = $('<div>').addClass('game-row row3');
-      const voteEntries = [];
-      ['home','draw','away'].forEach(key2 => {
-        if (key2==='draw' && !match.draw) return;
-        const v = key2==='draw' ? match.draw.votes : match[key2].votes;
-        voteEntries.push({ key: key2, value: v });
+      const votes = [];
+      ['home','draw','away'].forEach(k => {
+        if (k==='draw' && !match.draw) return;
+        const v = k==='draw'? match.draw.votes : match[k].votes;
+        votes.push(v);
       });
-      const maxVote = Math.max(...voteEntries.map(e => e.value));
-      voteEntries.forEach(({ key, value }) => {
-        const highClass = value === maxVote ? 'higher' : '';
+      const maxV = Math.max(...votes);
+      votes.forEach((v,i) => {
+        const label = ['home','draw','away'][i];
         $row3.append(
-          $('<div>')
-            .addClass(`vote-count ${highClass}`)
-            .text(value)
+          $('<div>').addClass(`vote-count${v===maxV?' higher':''}`).text(v)
         );
       });
       $item.append($row3);
-      // ─── 오버레이(success/fail) ───────────────────────────
-      if (match.eventResult==='success') {
-        $item.append(`<img class="event-overlay success" src="/image/event-overlay success.png"/>`);
-      } else if (match.eventResult==='fail') {
-        $item.append(`<img class="event-overlay fail" src="/image/event-overlay fail.png"/>`);
-      }
 
       $list.append($item);
     });
 
-    // 버튼·타이틀 갱신
     updateSubmitButton();
     updateTitleAndCountdown();
-
-    // 올킬 스탬프
-    const allOK = matches.length>0 && matches.every(m=>m.eventResult==='success');
-    if (allOK) {
-      $list.append(`<img class="allkill-stamp" src="/image/allkill_stemp.png"/>`);
-    }
   }
 
-
   // ==============================
-  // 7. 상태별 UI 분기
-  // ==============================
-  function renderStatusSection(match) {
-    const s = match.status;
-    const hc = match.score?.home > match.score?.away ? 'higher' : '';
-    const ac = match.score?.away > match.score?.home ? 'higher' : '';
-
-    if (s==='경기전') {
-      return `
-        <div class="status-column status-pre">
-          <div class="start-time">${match.startTime}</div>
-        </div>`;
-    }
-    // 경기중 / 종료 모두 스코어-상태-스코어
-    return `
-      <div class="status-column ${s==='경기중'?'status-live':'status-post'}">
-        <div class="score">
-          <span class="home-score ${hc}">${match.score.home}</span>
-          <span class="vs">vs</span>
-          <span class="away-score ${ac}">${match.score.away}</span>
-        </div>
-        <div class="status-text">${s}</div>
-      </div>`;
-  }
-    
-  // ==============================
-  // 8. 편집 가능 여부 판단
-  // ==============================
- function canEditSelections() { 
-   const key     = dateKeys[currentIndex]; 
-   const matches = window.matchData[key] || []; 
-   const allPre  = matches.every(m => m.status === '경기전'); 
-   const canceledCount = matches.filter(m => m.status === '경기취소').length; 
-   return allPre && canceledCount < 2; 
- }
-  
-  // ==============================
-  // 9. 타이틀 파트 계산
+  // 7. eventStatus 기반 title/sub 계산
   // ==============================
   function computeTitleParts() {
-  const key     = dateKeys[currentIndex];
-  const matches = window.matchData[key] || [];
-  const now     = new Date();
+    const key  = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const status = data.eventStatus;
+    const games  = data.games || [];
+    const now    = new Date();
+    let main = '', sub = '';
 
-  // 1) 올킬 성공: 모든 매치가 correct===true
-  const allCorrect   = matches.length > 0 && matches.every(m => m.correct === true);
-  if (allCorrect) {
-    return { main: '올킬 성공!', sub: '' };
-  }
-
-  // 2) 올킬 실패: 하나라도 correct===false
-  const anyIncorrect = matches.some(m => m.correct === false);
-  if (anyIncorrect) {
-    return { main: '아쉽게 실패!', sub: '' };
-  }
-
-  // 3) 제출 완료 상태: 사용자가 이미 제출한 경우
-  const submittedAt = window.appState.submissionTimes?.[key];
-  if (submittedAt) {
-    // 3-a) 경기 전: “제출 완료!” + 남은 카운트다운
-    const allPre = matches.every(m => m.status === '경기전');
-    if (allPre) {
-      const diffSec = Math.floor((new Date(matches[0].startTime) - now) / 1000);
-      const mmss    = formatMmSs(diffSec);
-      return { main: '제출 완료!', sub: `경기 시작까지 ${mmss}` };
+    // 1) PENDING_USER_NOT_SELECTED
+    if (status === 'PENDING_USER_NOT_SELECTED') {
+      main = '올킬 도전 !';
+      // 제일 첫 경기 startTime 으로 카운트다운
+      if (games.length && games[0].startTime) {
+        const [h, m] = games[0].startTime.split(':').map(Number);
+        const [Y,Mo,D]= key.split('-').map(Number);
+        const target = new Date(Y,Mo-1,D,h,m);
+        const diff   = Math.max(0, Math.floor((target - now)/1000));
+        const hh = Math.floor(diff/3600), mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
+        sub = `참여시간 -${hh}:${mm}`;
+      }
     }
-    // 3-b) 경기 시작 후: 다음 도전 안내
-    return { main: '다음 경기 도전!', sub: '' };
-  }
-
-  // 4) 기본 상태: 아직 한 번도 제출 전
-  return { main: '올킬 도전!', sub: '' };
-}
-
-
-  // ==============================
-  // 10. 타이틀 & 카운트다운 업데이트
-  // ==============================
-function updateTitleAndCountdown() {
-  const key         = dateKeys[currentIndex];
-  const matches     = window.matchData[key] || [];
-
-  // 1) 경기 상태 판정 (데코용)
-  const allPre      = matches.every(m => m.status === '경기전');
-  const anyLive     = matches.some(m => m.status === '경기중');
-  const finishedSt  = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
-  const allFinished = matches.length > 0 && matches.every(m => finishedSt.includes(m.status));
-
-  // 2) computeTitleParts() 로 main/sub 결정 (우선순위: 성공 → 실패 → 제출 분기 → 기본)
-  const parts = computeTitleParts();
-
-  // 3) 타이틀 갱신
-  $('.team-selection-title .title-main').text(parts.main);
-  $('.team-selection-title .title-sub')
-    .text(parts.sub)
-    // “경기전 제출 완료” 카운트다운만 깜빡이도록
-    .toggleClass('countdown-active', parts.main === '제출 완료!' && allPre);
-
-  // 4) 버튼 텍스트 동기화
-  $('.btn-text').text(parts.main);
-
-  // 5) 데코 아이콘 제어 (기존 로직 그대로)
-  if (allPre || anyLive) {
-    $('.title-decor-left').attr('src', iconBothLeft).show();
-    $('.title-decor-right').attr('src', iconBothRight).show();
-  } else if (allFinished) {
-    $('.title-decor-left').hide();
-    $('.title-decor-right').attr('src', iconSingle).show();
-  } else {
-    $('.title-decor-left, .title-decor-right').hide();
-  }
-
-  // 6) 카운트다운 실행/중지 (제출 전 경기전만)
-  const submittedAt = window.appState.submissionTimes?.[key];
-  if (allPre && !submittedAt && matches.length) {
-    const [h, mi]      = matches[0].startTime.split(':').map(Number);
-    const [yy, mo, dd] = key.split('-').map(Number);
-    startCountdown(new Date(yy, mo - 1, dd, h, mi));
-  } else if (countdownTimerId) {
-    clearInterval(countdownTimerId);
-    countdownTimerId = null;
-  }
-}
-
-
-
-  // ==============================
-  // 11. 카운트다운 시작 함수
-  // ==============================
-  function startCountdown(targetDate) {
-    if (countdownTimerId) clearInterval(countdownTimerId);
-
-    function update() {
-      const now  = new Date();
-      let diff   = Math.floor((targetDate - now) / 1000);
-      if (diff < 0) diff = 0;
-
-      const h = Math.floor(diff / 3600);
-      const m = Math.floor((diff % 3600) / 60);
-      const text = `-${h}:${String(m).padStart(2, '0')}`;
-
-      $('.team-selection-title .title-sub').text(`참여시간 ${text}`);
+    // 2) PENDING_USER_SELECTED
+    else if (status === 'PENDING_USER_SELECTED') {
+      main = '제출 완료';
+      const st = window.appState.submissionTimes?.[key];
+      if (st) {
+        const d = new Date(st);
+        sub = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+      }
+    }
+    // 3) IN_PROGRESS_USER_NOT_SELECTED
+    else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
+      main = '이벤트 참여 종료!';
+      sub  = '다음 이벤트 도전 !';
+    }
+    // 4) IN_PROGRESS_USER_SELECTED
+    else if (status === 'IN_PROGRESS_USER_SELECTED') {
+      main = '채점 중!';
+      const n = games.filter(g => g.eventResult==='success').length;
+      sub  = `${n}경기 성공 !`;
+    }
+    // 5) COMPLETED_USER_SUCCESS
+    else if (status === 'COMPLETED_USER_SUCCESS') {
+      main = '올킬 성공 !';
+      sub  = '축하합니다 !';
+    }
+    // 6) COMPLETED_USER_FAIL
+    else if (status === 'COMPLETED_USER_FAIL') {
+      main = '다음 경기 도전!';
+      const n = games.filter(g => g.eventResult==='success').length;
+      sub  = `${n}경기 성공 !`;
+    }
+    // 7) COMPLETED_USER_NOT_SELECTED
+    else if (status === 'COMPLETED_USER_NOT_SELECTED') {
+      main = '다음 경기 도전!';
+      sub  = '다음 이벤트는 꼭 참여하세요!';
     }
 
-    update();
-    countdownTimerId = setInterval(update, 1000);
+    return { main, sub };
   }
 
   // ==============================
-  // 12. 제출 버튼 활성화/비활성화
+  // 8. 제목·버튼·카운트다운 동기화
+  // ==============================
+  function updateTitleAndCountdown() {
+    const parts = computeTitleParts();
+    $('.title-main').text(parts.main);
+    $('.title-sub').text(parts.sub);
+
+    // submit 버튼도 title-main 과 동일하게
+    $('.btn-text').text(parts.main);
+
+    // countdown 필요 없는 상태면 타이머 끄기
+    if (countdownTimerId && parts.main !== '올킬 도전 !') {
+      clearInterval(countdownTimerId);
+      countdownTimerId = null;
+    }
+  }
+
+  // ==============================
+  // 9. 제출 버튼 활성화/비활성화
   // ==============================
   function updateSubmitButton() {
-    const $btn    = $('#submit-allkill-btn');
-    const matches= window.matchData[dateKeys[currentIndex]] || [];
-    const allSel   = matches.every(m => {
-    const sel = window.appState.selectedTeams?.[m.gameId] ?? m.userSelection;
-    return sel !== 'none';
-   });
-
-    if (allSel) {
-      $btn.addClass('enabled').prop('disabled', false)
-          .css({ opacity: 1, color: '#121212' });
-    } else {
-      $btn.removeClass('enabled').prop('disabled', true)
-          .css({ opacity: 0.3, color: 'rgba(18,18,18,0.7)' });
-    }
+    const key = dateKeys[currentIndex];
+    const games = (window.matchData[key]||{}).games||[];
+    const allSel = games.length>0 && games.every(g =>
+      (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
+    );
+    $('#submit-allkill-btn')
+      .prop('disabled', !allSel)
+      .toggleClass('enabled', allSel)
+      .css('opacity', allSel?1:0.3);
   }
 
   // ==============================
-  // 13. 내비게이션 핸들러
+  // 10. 내비게이션 핸들러
   // ==============================
   function setupNavHandlers() {
     $(containerSelector)
-      .off('click', `#${prevBtnId}`)
       .on('click', `#${prevBtnId}`, () => {
-        if (currentIndex > 0) {
-          currentIndex--;
-          refreshAll();
+        if (currentIndex>0) {
+          currentIndex--; refreshAll();
         }
-      });
-
-    $(containerSelector)
-      .off('click', `#${nextBtnId}`)
+      })
       .on('click', `#${nextBtnId}`, () => {
-        if (currentIndex < dateKeys.length - 1) {
-          currentIndex++;
-          refreshAll();
+        if (currentIndex<dateKeys.length-1) {
+          currentIndex++; refreshAll();
         }
       });
   }
 
   // ==============================
-  // 14. 팀 선택 핸들러
+  // 11. 팀 선택 핸들러
   // ==============================
+  function canEditSelections() {
+    const key = dateKeys[currentIndex];
+    const status = (window.matchData[key]||{}).eventStatus;
+    return status === 'PENDING_USER_NOT_SELECTED';
+  }
+
   function setupTeamSelectionHandlers() {
-   $(`#${gameListId}`)
-     .off('click', '.team-box')
-     .on('click', '.team-box', function() {
-       // 1) 편집 불가능한 경우 무시
-       if (!canEditSelections()) return;
-
-       // 2) 선택 로직
-       const gameId = $(this).data('game-id');
-       const team   = $(this).data('team');
-       window.appState.selectedTeams = window.appState.selectedTeams || {};
-       window.appState.selectedTeams[gameId] = team;
-
-       // 3) 버튼을 “제출 !” 로 변경
-       $('.btn-text').text('제출 !');
-
-       // 4) 화면 갱신 (타이틀·버튼 활성화 등)
-       renderGames();
-     });
+    $(`#${gameListId}`)
+      .on('click', '.team-box', function() {
+        if (!canEditSelections()) return;
+        const id = $(this).data('game-id'), tm = $(this).data('team');
+        window.appState.selectedTeams[id] = tm;
+        updateSubmitButton();
+      });
   }
 
   // ==============================
-  // 15. 제출 핸들러
+  // 12. 제출 핸들러
   // ==============================
   function setupSubmitHandler() {
-    $('#submit-allkill-btn')
-      .off('click')
-      .on('click', function(e) {
-        const key     = dateKeys[currentIndex];
-        const matches = window.matchData[key] || [];
-  
-        // 1) 현재 버튼 상태 판단을 위해 computeTitleParts() 호출
-        const parts   = computeTitleParts();
-        const mainTxt = parts.main.trim();
-  
-        // 2) 클릭을 차단할 상태 목록
-        const forbidden = [
-          initialTitle,        // '올킬 도전!'
-          '채점 중!',           // 진행 중
-          submitBtnText,       // '다음 경기 도전!'
-          '다음 경기 도전 !'    // computeTitleParts() 에 따라 공백이 들어간 경우 대비
-        ];
-  
-        // 3) 만약 차단 대상에 포함되면, 클릭 무시
-        if (forbidden.includes(mainTxt)) {
-          return;
-        }
-  
-        // — 이하 기존 제출 로직 —
-        // 제출 시각 저장 & 타이틀 갱신
+    $('#submit-allkill-btn').on('click', function() {
+      const key    = dateKeys[currentIndex];
+      const status = window.matchData[key]?.eventStatus;
+      const games  = window.matchData[key]?.games || [];
+
+      // 오직 'PENDING_USER_NOT_SELECTED' 상태에서만 동작
+      if (status === 'PENDING_USER_NOT_SELECTED') {
+        // 1) 메모리상 상태 변경
+        window.matchData[key].eventStatus = 'PENDING_USER_SELECTED';
+        // 2) 제출 시각 저장
         window.appState.submissionTimes[key] = new Date();
+        // 3) UI 갱신
+        updateSubmitButton();
         updateTitleAndCountdown();
-  
-        // 모든 경기가 아직 시작 전(경기전)이라면 안내창 띄우기
-        const allPre = matches.every(m => m.status === '경기전');
-        if (allPre) {
-          alert(
-            '제출 완료 !\n\n' +
-            '경기시작 전까지\n' +
-            '수정이 가능합니다.\n\n' +
-            '확인.'
-          );
+        // 4) 경기 전이라면 alert
+        if (games.every(g => g.status==='경기전')) {
+          alert('제출 완료 !\n\n경기시작 전까지 수정이 가능합니다.\n\n확인.');
         }
-      });
+      }
+      // 그 외 상태에서는 클릭 무시
+    });
   }
-  
+
   // ==============================
-  // 16. 전체 갱신
+  // 13. 전체 갱신
   // ==============================
   function refreshAll() {
     renderNav();
@@ -566,15 +388,15 @@ function updateTitleAndCountdown() {
   }
 
   // ==============================
-  // 17. 외부 API 노출
+  // 14. 외부 API 노출
   // ==============================
   window.teamSelectionSection = {
     init: initTeamSelectionSection,
     updateTeamSelections: (gameId, team) => {
-      window.appState.selectedTeams = window.appState.selectedTeams || {};
       window.appState.selectedTeams[gameId] = team;
     }
   };
-})(jQuery);
 
-$(document).ready(window.teamSelectionSection.init);
+  // 문서 준비 후 초기화
+  $(document).ready(window.teamSelectionSection.init);
+})(jQuery);
