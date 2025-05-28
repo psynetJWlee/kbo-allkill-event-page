@@ -98,12 +98,12 @@ function initMyPrizeSection() {
   $('#my-prize-section').html(sectionHtml);
 
   // ─── 3) 히스토리 렌더 ───────────────────────────────────
-  const historyItemsHtml = currentHistory.map(item => {
+    const historyItemsHtml = currentHistory.map(item => {
     const d     = new Date(item.date);
     const mm    = String(d.getMonth() + 1).padStart(2, '0');
     const dd    = String(d.getDate()).padStart(2, '0');
     const wk    = ['일','월','화','수','목','금','토'][d.getDay()];
-    const sign  = item.amount >= 0 ? '+' : '-';
+    const sign = item.amount >= 0 ? '+' : '';
     const absAmt= Math.abs(item.amount);
     const prizeClass = item.amount < 0 ? 'daily-prize negative' : 'daily-prize';
 
