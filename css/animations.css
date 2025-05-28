@@ -19,7 +19,7 @@
   opacity: 1;
   transform-origin: center;
   animation: fall linear forwards;
-  z-index: 30;
+  z-index: -1;
 }
 
 .star {
@@ -29,7 +29,7 @@
   opacity: 1;
   transform-origin: center;
   animation: fall linear forwards;
-  z-index: 30;
+  z-index: -1;
 }
 
 @keyframes fadeIn {
