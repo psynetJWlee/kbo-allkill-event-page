@@ -1,3 +1,15 @@
+//eventStatus//
+//이벤트 대기, 유저 미선택 	PENDING_USER_NOT_SELECTED//
+//이벤트 대기, 유저 선택 완료  PENDING_USER_SELECTED//
+//이벤트 진행, 유저 미선택 	IN_PROGRESS_USER_NOT_SELECTED//
+//이벤트 진행, 유저 선택 완료 	IN_PROGRESS_USER_SELECTED//
+//이벤트 종료, 유저 성공	COMPLETED_USER_SUCCESS//
+//이벤트 종료, 유저 실패	COMPLETED_USER_FAIL//
+//이벤트 종료, 유저 미선택	COMPLETED_USER_NOT_SELECTED//
+//경기 없음, 이벤트 참여 불가	NO_GAMES_EVENT_DISABLED//
+//2경기 이상 이벤트 취소	EVENT_CANCELLED_MULTI_GAMES//
+
+
 (function() {
   window.matchData = {
     "2025-05-24": {
