@@ -95,11 +95,7 @@ body {
   /* 외곽선 (WebKit + 표준 + 그림자 트릭) */
   -webkit-text-stroke: 6px #001A29;
   text-stroke: 6px #001A29;
-  text-shadow:
-    -3px -3px 0 #001A29,
-     3px -3px 0 #001A29,
-    -3px  3px 0 #001A29,
-     3px  3px 0 #001A29;
+
 }
 
 /* 5) 라인별 컬러 분기 */
