@@ -41,7 +41,6 @@ body {
   align-items: center;
   min-height: 100vh;
   background-color: #fff;
-  z-index: 0;
 }
 
 .max-w-430 {
