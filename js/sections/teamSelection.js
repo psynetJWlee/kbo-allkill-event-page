@@ -288,15 +288,23 @@
   }
 
   // ==============================
-  // 8. 제목·버튼·카운트다운 동기화
+  // 8. 제목·버튼·카운트다운 동기화 (업데이트)
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
     $('.title-main').text(parts.main);
     $('.title-sub').text(parts.sub);
 
-    // submit 버튼도 title-main 과 동일하게
-    $('.btn-text').text(parts.main);
+    // submit 버튼 텍스트: 선택값이 기존과 다르면 '수정 제출'
+    let btnText = parts.main;
+    const key = dateKeys[currentIndex];
+    const effStatus = typeof localEventStatusMap[key] !== 'undefined'
+      ? localEventStatusMap[key] 
+      : (window.matchData[key]?.eventStatus);
+    if (effStatus === 'PENDING_USER_SELECTED' && isSelectionChanged()) {
+      btnText = '수정 제출';
+    }
+    $('.btn-text').text(btnText);
 
     if (countdownTimerId && parts.main !== '올킬 도전 !') {
       clearInterval(countdownTimerId);
@@ -359,19 +367,30 @@
   // ==============================
   function canEditSelections() {
     const key = dateKeys[currentIndex];
-    // [변경] localEventStatusMap 적용, UI 제출직후 반영
     const baseStatus = (window.matchData[key]||{}).eventStatus;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
-    return effStatus === 'PENDING_USER_NOT_SELECTED';
+    // PENDING_USER_NOT_SELECTED 또는 PENDING_USER_SELECTED에서 선택 가능!
+    return effStatus === 'PENDING_USER_NOT_SELECTED' || effStatus === 'PENDING_USER_SELECTED';
+  }
+
+  function isSelectionChanged() {
+    // 제출된 값과 현재 선택값 비교
+    const key = dateKeys[currentIndex];
+    const games = (window.matchData[key]?.games) || [];
+    // 제출된 값 복원: userSelection
+    return games.some(g => 
+      (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== g.userSelection
+    );
   }
 
   function setupTeamSelectionHandlers() {
     $(`#${gameListId}`)
+      .off('click', '.team-box')
       .on('click', '.team-box', function() {
         if (!canEditSelections()) return;
         const id = $(this).data('game-id'), tm = $(this).data('team');
         window.appState.selectedTeams[id] = tm;
-        // 선택 즉시 리스트를 다시 그려 클래스 반영!
+        // 즉시 반영
         renderGames();
       });
   }
@@ -380,31 +399,39 @@
   // 12. 제출 핸들러
   // ==============================
   function setupSubmitHandler() {
-    $('#submit-allkill-btn').on('click', function() {
+    $('#submit-allkill-btn').off('click').on('click', function() {
       const key    = dateKeys[currentIndex];
-      // [변경] eventStatus를 실제로 변경하지 않고 local 변수만 변경(UI만 해당)
       const status = (window.matchData[key]?.eventStatus);
       const games  = window.matchData[key]?.games || [];
 
-      // 오직 'PENDING_USER_NOT_SELECTED' 상태에서만 동작
-      // localEventStatusMap 없거나 PENDING_USER_NOT_SELECTED일 때만
+      // 현재 상태값
       const effStatus = typeof localEventStatusMap[key] !== 'undefined' 
         ? localEventStatusMap[key] 
         : status;
+
+      // (1) 'PENDING_USER_NOT_SELECTED' 최초 제출
       if (effStatus === 'PENDING_USER_NOT_SELECTED') {
-        // 1) 임시상태(UI) 함수 내에서만 사용
         localEventStatusMap[key] = 'PENDING_USER_SELECTED';
-        // 2) 제출 시각 저장
         window.appState.submissionTimes[key] = new Date();
-        // 3) UI 갱신
         updateSubmitButton();
         updateTitleAndCountdown();
-        // 4) 경기 전이라면 알림
         if (games.every(g => g.status==='경기전')) {
           alert('제출 완료 !\n\n경기시작 전까지 수정이 가능합니다.\n\n확인.');
         }
+      // (2) 'PENDING_USER_SELECTED'이면서 선택값이 변경됐으면 "수정 제출"
+      } else if (
+        effStatus === 'PENDING_USER_SELECTED'
+        && isSelectionChanged()
+      ) {
+        // userSelection(원본) 갱신: 실서비스는 서버에 요청해야함
+        games.forEach(g => { g.userSelection = window.appState.selectedTeams?.[g.gameId]; });
+        // 재제출 시간 갱신
+        window.appState.submissionTimes[key] = new Date();
+        updateSubmitButton();
+        updateTitleAndCountdown();
+        alert('수정 제출 완료!\n\n경기시작 전까지 계속 수정 가능합니다.\n\n확인.');
       }
-      // 그 외 상태에서는 클릭 무시
+      // else 클릭 무시
     });
   }
 
