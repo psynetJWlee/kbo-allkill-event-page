@@ -364,7 +364,8 @@
         if (!canEditSelections()) return;
         const id = $(this).data('game-id'), tm = $(this).data('team');
         window.appState.selectedTeams[id] = tm;
-        updateSubmitButton();
+        // 선택 즉시 리스트를 다시 그려 클래스 반영!
+        renderGames();
       });
   }
 
