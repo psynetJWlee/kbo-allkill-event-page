@@ -126,3 +126,28 @@ function initMyPrizeSection() {
 window.myPrizeSection = {
   init: initMyPrizeSection
 };
+
+;(function() {
+  const btn = document.querySelector('.request-button');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    const ua = navigator.userAgent;
+
+    // 1) iOS WKWebView
+    if (/iPhone|iPad|iPod/i.test(ua)) {
+      webkit.messageHandlers.hanpass.postMessage({
+        func: 'requestPrize',
+        data: {}
+      });
+    }
+    // 2) Android WebView
+    else if (/Android/i.test(ua)) {
+      window.hanpass.requestPrize();
+    }
+    // 3) 그 외(웹)
+    else {
+      alert('LIVE스코어 APP 에서만 신청 가능합니다');
+    }
+  });
+})();
