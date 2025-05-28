@@ -1,7 +1,6 @@
 (function() {
   window.matchData = {
     "2025-05-24": [
-      eventStatus: "COMPLETED_USER_NOT_SELECTED"
       {
         gameId: "null",
         home: { teamName: "null", logo: "null", votes: null },
@@ -49,7 +48,6 @@
       }
     ],
     "2025-05-25": [
-      eventStatus: "COMPLETED_USER_FAIL"
       {
         gameId: "20250512-0",
         home: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3215 },
@@ -112,7 +110,6 @@
       }
     ],
     "2025-05-26": [
-      eventStatus:"COMPLETED_USER_SUCCESS"
       {
         gameId: "20250513-0",
         home: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3215 },
@@ -175,7 +172,6 @@
       }
     ],
     "2025-05-27": [
-      eventStatus:"COMPLETED_USER_FAIL"
       {
         gameId: "20250514-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1111 },
@@ -238,7 +234,6 @@
       }
     ],
     "2025-05-28": [
-      eventStatus:"IN_PROGRESS_USER_SELECTED"
       {
         gameId: "20250515-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
@@ -287,13 +282,12 @@
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
         draw: { teamName: "무승부", votes: 754 },
         away: { teamName: "SK", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 4214 },
-        status: "경기전",
+        status: "경기지연",
         startTime: "18:00",
         userSelection: "home"
       }
     ],
     "2025-05-29": [
-      eventStatus:"PENDING_USER_NOT_SELECTED"
       {
         gameId: "20250516-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1941 },
@@ -350,7 +344,6 @@
       }
     ],
     "2025-05-30": [
-      eventStatus:"PENDING_USER_NOT_SELECTED"
       {
         gameId: "20250522-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 0 },
@@ -398,7 +391,6 @@
       }
     ],
     "2025-05-31": [
-      eventStatus:"PENDING_USER_NOT_SELECTED"
       {
         gameId: "20250523-0",
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 0 },
@@ -446,7 +438,6 @@
       }
     ],
     "2025-06-01": [
-      eventStatus:"PENDING_USER_NOT_SELECTED"
       {
         gameId: "20250531-0",
         home: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 2301 },
@@ -476,7 +467,6 @@
       }
     ],
     "2025-06-02": [
-      eventStatus:"PENDING_USER_NOT_SELECTED"
       {
         gameId: "20250601-0",
         home: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 890 },
@@ -506,7 +496,6 @@
       }
     ],
     "2025-06-03": [
-      eventStatus:"PENDING_USER_NOT_SELECTED"
       {
         gameId: "20250602-0",
         home: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 1188 },
