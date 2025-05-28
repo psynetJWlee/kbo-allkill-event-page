@@ -231,6 +231,11 @@
       main = '오늘은 쉬어요';
       sub = '다음 이벤트에 참여하세요!';
     }
+    // === [EVENT_CANCELLED_MULTI_GAMES 상태] ===
+    else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
+      main = '다음 올킬 도전 !';
+      sub = '경기 취소 2개 발생 시 당일 무효 !';
+    }
     else if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
       // 카운트다운 초(sec) 포함
@@ -296,7 +301,6 @@
     $('.title-main').text(parts.main);
     $('.title-sub').text(parts.sub);
 
-    // submit 버튼 텍스트: 선택값이 기존과 다르면 '수정 제출'
     let btnText = parts.main;
     const key = dateKeys[currentIndex];
     const effStatus = typeof localEventStatusMap[key] !== 'undefined'
@@ -317,8 +321,8 @@
       }
     }
 
-    // [NO_GAMES_EVENT_DISABLED] 버튼 숨김
-    if (effStatus === 'NO_GAMES_EVENT_DISABLED') {
+    // === EVENT_CANCELLED_MULTI_GAMES에서는 버튼 숨김 ===
+    if (effStatus === 'NO_GAMES_EVENT_DISABLED' || effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
       $('#submit-allkill-btn').hide();
     } else {
       $('#submit-allkill-btn').show();
@@ -334,8 +338,8 @@
     const baseStatus = (window.matchData[key]||{}).eventStatus;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
 
-    // [NO_GAMES_EVENT_DISABLED]일 경우 숨김 처리
-    if (effStatus === 'NO_GAMES_EVENT_DISABLED') {
+    // [NO_GAMES_EVENT_DISABLED] or [EVENT_CANCELLED_MULTI_GAMES]일 경우 숨김 처리
+    if (effStatus === 'NO_GAMES_EVENT_DISABLED' || effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
       $('#submit-allkill-btn').hide();
       return;
     }
@@ -347,7 +351,7 @@
       .prop('disabled', !allSel)
       .toggleClass('enabled', allSel)
       .css('opacity', allSel?1:0.3)
-      .show(); // 항상 show (숨김은 위에서 처리)
+      .show();
   }
 
   // ==============================
@@ -387,8 +391,12 @@
     const key = dateKeys[currentIndex];
     const baseStatus = (window.matchData[key]||{}).eventStatus;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
-    // PENDING_USER_NOT_SELECTED 또는 PENDING_USER_SELECTED에서 선택 가능!
-    return effStatus === 'PENDING_USER_NOT_SELECTED' || effStatus === 'PENDING_USER_SELECTED';
+    // PENDING_USER_NOT_SELECTED 또는 PENDING_USER_SELECTED에서 선택 가능,
+    // EVENT_CANCELLED_MULTI_GAMES에서는 선택 불가!
+    return (
+      effStatus === 'PENDING_USER_NOT_SELECTED' ||
+      effStatus === 'PENDING_USER_SELECTED'
+    );
   }
 
   function isSelectionChanged() {
