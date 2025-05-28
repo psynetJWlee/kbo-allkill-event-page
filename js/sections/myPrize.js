@@ -135,7 +135,10 @@ function initMyPrizeSection() {
     if (/iPhone|iPad|iPod/i.test(ua)) {
       webkit.messageHandlers.hanpass.postMessage({
         func: 'requestPrize',
-        data: {}
+        data: {
+          amount: userData.totalAmount,   // 신청할 상금 액수
+          nickname: userData.nickname         // 사용자 닉네임
+        }
       });
     }
     // Android WebView
