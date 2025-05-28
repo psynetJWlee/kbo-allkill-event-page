@@ -545,6 +545,15 @@
           status: "경기전",
           startTime: "17:30",
           userSelection: "none"
+        },
+        {
+          gameId: "20250602-2",
+          home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 880 },
+          draw: { teamName: "무승부", votes: 763 },
+          away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 1317 },
+          status: "경기전",
+          startTime: "18:43",
+          userSelection: "none"
         }
       ]
     }
