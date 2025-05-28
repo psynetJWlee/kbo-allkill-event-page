@@ -50,22 +50,38 @@ body {
 }
 
 /* Event Title Section */
-/* 컨테이너 기준 스태킹 컨텍스트 생성 */
+/* 1) 부모 컨테이너 */
 #event-title-section {
   position: relative;
+  height: 382px;
+  width: 100%;
+  background-color: #008ED0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* 텍스트 블록을 GIF 등 위로 띄우고, 하단 8px, 가로 중앙 정렬 */
+/* 2) 로고 */
+.event-logo {
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  z-index: 30;
+}
+
+/* 3) 이벤트 텍스트 (최상위) */
 .event-title-text {
   position: absolute;
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 999;       /* 충분히 높은 값으로 GIF 위에 표시 */
-  text-align: center; /* 가운데 정렬 */
+  z-index: 20;
+  text-align: center;
+  pointer-events: none;
 }
 
-/* 공통 스타일 */
+/* 4) 텍스트 줄별 공통 */
 .event-title-line1,
 .event-title-line2,
 .event-title-line3 {
@@ -73,7 +89,6 @@ body {
   font-size: 50px;
   line-height: 1.1;
   margin: 0;
-  /* 외곽선: WebKit 전용 + 표준 속성 + 모든 브라우저용 그림자 트릭 */
   -webkit-text-stroke: 6px #001A29;
   text-stroke: 6px #001A29;
   text-shadow:
@@ -83,43 +98,12 @@ body {
      3px  3px 0 #001A29;
 }
 
-/* 1,2번째 줄 흰색 글자 */
+/* 5) 컬러 분기 */
 .event-title-line1,
-.event-title-line2 {
-  color: #FFFFFF;
-}
+.event-title-line2 { color: #FFFFFF; }
+.event-title-line3        { color: #FFC736; }
 
-/* 3번째 줄 노란색 글자 */
-.event-title-line3 {
-  color: #FFC736;
-}
-
-.event-title-section {
-  height: 382px;
-  width: 100%;
-  background-color: #008ED0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.event-logo {
-  position: absolute;
-  top: 6px;
-  left: 7px;
-  z-index: 20;
-}
-
-.event-title {
-  position: absolute;
-  top: 106px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-
+/* 6) GIF(이모티콘) */
 .event-emoticon {
   position: absolute;
   top: 0;
@@ -127,8 +111,9 @@ body {
   transform: translateX(-50%);
   width: 238px;
   height: 238px;
-  z-index: 1;
+  z-index: 10;
 }
+
 
 /* Winners Section */
 .winners-section {
