@@ -639,6 +639,16 @@ body {
   margin-top: 0.25em;
 }
 
+.no-game {
+  height: 500px;
+  font-size: 40px;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 
 #game-list .game-item {
   display: flex;
