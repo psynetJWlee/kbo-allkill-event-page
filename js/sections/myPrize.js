@@ -1,4 +1,3 @@
-
 // js/sections/myPrize.js
 
 // My Prize Section
@@ -14,28 +13,29 @@ window.utils.formatNumber = window.utils.formatNumber || function(num) {
 // 1) 페이지 핸들러 정의 (반드시 initMyPrizeSection보다 위에)
 // ==============================
 function setupPaginationHandlers() {
-  // 페이지 번호 직접 클릭
   const $sec = $('#my-prize-section');
   $sec.find('.page-item[data-page]')
-      .off('click')
-      .on('click', function() {
-  const page = parseInt($(this).data('page'), 10);
-  handlePageChange(page);
-  });
+    .off('click')
+    .on('click', function() {
+      const page = parseInt($(this).data('page'), 10);
+      handlePageChange(page);
+    });
 
-  // 이전 페이지 클릭
-  $sec.find('#prev-page').off('click').on('click', function() {
-    if (userData.myPrize.currentPage > 1) {
-    handlePageChange(userData.myPrize.currentPage - 1);
-    }
-  });
+  $sec.find('#prev-page')
+    .off('click')
+    .on('click', function() {
+      if (userData.myPrize.currentPage > 1) {
+        handlePageChange(userData.myPrize.currentPage - 1);
+      }
+    });
 
-  // 다음 페이지 클릭
-  $sec.find('#next-page').off('click').on('click', function() {
-    if (userData.myPrize.currentPage < userData.myPrize.totalPages) {
-      handlePageChange(userData.myPrize.currentPage + 1);
-    }
-  });
+  $sec.find('#next-page')
+    .off('click')
+    .on('click', function() {
+      if (userData.myPrize.currentPage < userData.myPrize.totalPages) {
+        handlePageChange(userData.myPrize.currentPage + 1);
+      }
+    });
 }
 
 function handlePageChange(page) {
@@ -50,14 +50,13 @@ function initMyPrizeSection() {
   const { formatNumber } = window.utils;
 
   // ─── 페이지 상태 초기화 ───
-  const allHistory      = prizeHistory;                           // data.js 에 정의된 전체 내역
-  userData.myPrize.totalPages   = Math.ceil(allHistory.length / MY_PRIZE_PAGE_SIZE);
-  userData.myPrize.currentPage  = userData.myPrize.currentPage || 1;
+  const allHistory     = prizeHistory;
+  userData.myPrize.totalPages  = Math.ceil(allHistory.length / MY_PRIZE_PAGE_SIZE);
+  userData.myPrize.currentPage = userData.myPrize.currentPage || 1;
 
-  const startIdx        = (userData.myPrize.currentPage - 1) * MY_PRIZE_PAGE_SIZE;
-  const endIdx          = startIdx + MY_PRIZE_PAGE_SIZE;
-  const currentHistory  = allHistory.slice(startIdx, endIdx);
-  const totalCount      = allHistory.length;
+  const startIdx       = (userData.myPrize.currentPage - 1) * MY_PRIZE_PAGE_SIZE;
+  const endIdx         = startIdx + MY_PRIZE_PAGE_SIZE;
+  const currentHistory = allHistory.slice(startIdx, endIdx);
 
   // ─── Container HTML ─────────────────────────────────────
   const sectionHtml = `
@@ -80,7 +79,6 @@ function initMyPrizeSection() {
         <div class="history-header">
           <p class="history-title">상금 내역</p>
           <p class="total-prize">누적 ${formatNumber(userData.totalAmount)}</p>
-          
         </div>
         <div class="history-items" id="prize-history-items"></div>
         <div class="pagination">
@@ -101,14 +99,14 @@ function initMyPrizeSection() {
 
   // ─── 3) 히스토리 렌더 ───────────────────────────────────
   const historyItemsHtml = currentHistory.map(item => {
-    const d    = new Date(item.date);
-    const mm   = String(d.getMonth() + 1).padStart(2, '0');
-    const dd   = String(d.getDate()).padStart(2, '0');
-    const wk   = ['일','월','화','수','목','금','토'][d.getDay()];
-    const sign = item.amount >= 0 ? '+' : '-';
-    const absAmt = Math.abs(item.amount);
-    // amount < 0 이면 negative 클래스 추가
+    const d     = new Date(item.date);
+    const mm    = String(d.getMonth() + 1).padStart(2, '0');
+    const dd    = String(d.getDate()).padStart(2, '0');
+    const wk    = ['일','월','화','수','목','금','토'][d.getDay()];
+    const sign  = item.amount >= 0 ? '+' : '-';
+    const absAmt= Math.abs(item.amount);
     const prizeClass = item.amount < 0 ? 'daily-prize negative' : 'daily-prize';
+
     return `
       <div class="history-item">
         <p class="history-date">${mm}.${dd} (${wk})</p>
@@ -120,34 +118,39 @@ function initMyPrizeSection() {
 
   // ─── 4) 페이징 핸들러 바인딩 ───────────────────────────
   setupPaginationHandlers();
-}
 
-// Export the initialization function
-window.myPrizeSection = {
-  init: initMyPrizeSection
-};
+  // ─── 5) '상금 지급 신청' 버튼 클릭 핸들러 ─────────────────
+  const reqBtn = document.querySelector('.request-button');
+  if (reqBtn) {
+  reqBtn.addEventListener('click', () => {
+    // ─── 추가: 총액이 50,000원 이하면 신청 불가 ────────────
+    if (userData.totalAmount <= 50000) {
+      alert('상금 신청은 50,000원 초과부터 가능합니다.');
+      return;
+    }
 
-;(function() {
-  const btn = document.querySelector('.request-button');
-  if (!btn) return;
-
-  btn.addEventListener('click', () => {
     const ua = navigator.userAgent;
 
-    // 1) iOS WKWebView
+    // iOS WKWebView
     if (/iPhone|iPad|iPod/i.test(ua)) {
       webkit.messageHandlers.hanpass.postMessage({
         func: 'requestPrize',
         data: {}
       });
     }
-    // 2) Android WebView
+    // Android WebView
     else if (/Android/i.test(ua)) {
       window.hanpass.requestPrize();
-    }
-    // 3) 그 외(웹)
-    else {
-      alert('LIVE스코어 APP 에서만 신청 가능합니다');
-    }
-  });
-})();
+    }}
+      // 그 외 웹
+      else {
+        alert('LIVE스코어 APP 에서만 신청 가능합니다');
+      }
+    });
+  }
+}
+
+// Export the initialization function
+window.myPrizeSection = {
+  init: initMyPrizeSection
+};
