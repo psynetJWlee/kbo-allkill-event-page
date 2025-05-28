@@ -1,10 +1,14 @@
-
 // teamSelection.js
 
 (function($) {
   // ==============================
   // 1. 설정 및 상태 변수
   // ==============================
+  // 삭제: 미사용 아이콘
+  // const iconBothLeft   = '/image/iconBothLeft.gif';
+  // const iconBothRight  = '/image/iconBothRight.gif'; 
+  // const iconSingle     = '/image/iconSingle.gif';
+  
   const containerSelector = '#kbo-selection-container';
   const sectionId         = 'team-selection-section';
   const gameListId        = 'game-list';
@@ -12,20 +16,15 @@
   const nextBtnId         = 'date-nav-next';
   const currentDayId      = 'current-day';
 
-  // PENDING 상태 전/후, 완료 후 재도전 등 버튼 기본 텍스트 (최소 placeholder)
   const submitBtnPlaceholder = '제출하기';
 
-  // 카운트다운 타이머 ID
   let countdownTimerId = null;
 
-  // 제출 시각을 날짜별로 저장
   window.appState.submissionTimes = window.appState.submissionTimes || {};
-
-  // [변경] UI 임시상태 (실제 데이터 변경 안함) - 제출 후 상태 관리
   let localEventStatusMap = {};
 
   // ==============================
-  // 2. 날짜 키 배열 생성
+  // 2. 날짜 키 배열 생성 (정렬 보장)
   // ==============================
   function formatLocalDate(d) {
     const Y = d.getFullYear();
@@ -33,9 +32,10 @@
     const D = String(d.getDate()).padStart(2, '0');
     return `${Y}-${M}-${D}`;
   }
-
+  // 날짜 처리: key 정렬(오름차순) 보장
   const rawKeys = Object.keys(window.matchData);
-  const dates   = rawKeys.map(k => new Date(k).getTime());
+  const sortedKeys = rawKeys.slice().sort((a, b) => new Date(a) - new Date(b));
+  const dates   = sortedKeys.map(k => new Date(k).getTime());
   const minDate = new Date(Math.min(...dates));
   const maxDate = new Date(Math.max(...dates));
 
@@ -56,7 +56,7 @@
   if (currentIndex < 0) currentIndex = 0;
 
   // ==============================
-  // 3. 초기화
+  // 3~5. 초기화/네비/섹션 렌더링
   // ==============================
   function initTeamSelectionSection() {
     renderNav();
@@ -66,9 +66,6 @@
     setupSubmitHandler();
   }
 
-  // ==============================
-  // 4. 내비게이션 렌더링
-  // ==============================
   function renderNav() {
     const prevKey = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
     const nextKey = currentIndex < dateKeys.length - 1 ? dateKeys[currentIndex + 1] : '';
@@ -95,9 +92,6 @@
     $(containerSelector).html(html);
   }
 
-  // ==============================
-  // 5. 섹션 렌더링
-  // ==============================
   function renderSection() {
     const html = `
       <div id="${sectionId}" class="team-selection-section">
@@ -121,11 +115,10 @@
   }
 
   // ==============================
-  // 6. 경기 리스트 렌더링
+  // 6. 경기 리스트 렌더링 (overlay 복원)
   // ==============================
   function renderGames() {
     const key     = dateKeys[currentIndex];
-    // [변경] 새로운 gamedata 구조 적용
     const data    = window.matchData[key] || { eventStatus: '', games: [] };
     const matches = data.games || [];
     const $list   = $(`#${gameListId}`).empty();
@@ -152,6 +145,13 @@
         .toggleClass('disabled', isSuspended||isFailed)
         .addClass(fadeClass)
         .attr('data-game-id', match.gameId);
+
+      // === overlay logic 복원 ===
+      if (match.eventResult === 'success') {
+        $item.append('<img class="event-overlay-img" src="/image/event-overlay%20success.png" alt="성공" />');
+      } else if (match.eventResult === 'fail') {
+        $item.append('<img class="event-overlay-img" src="/image/event-overlay%20fail.png" alt="실패" />');
+      }
 
       // ─── 1행: 시계/점수 등 ─────────────────────────────
       const $row1 = $('<div>').addClass('game-row row1');
@@ -206,7 +206,6 @@
       });
       const maxV = Math.max(...votes);
       votes.forEach((v,i) => {
-        const label = ['home','draw','away'][i];
         $row3.append(
           $('<div>').addClass(`vote-count${v===maxV?' higher':''}`).text(v)
         );
@@ -221,31 +220,29 @@
   }
 
   // ==============================
-  // 7. eventStatus 기반 title/sub 계산
+  // 7. eventStatus 기반 title/sub 계산 (countdown 초단위)
   // ==============================
   function computeTitleParts() {
     const key  = dateKeys[currentIndex];
     const data = window.matchData[key] || {};
-    // [변경] 실제 eventStatus 대신 제출 후엔 local, 그 외엔 실제값 사용
     let status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
     const games  = data.games || [];
     const now    = new Date();
     let main = '', sub = '';
 
-    // 1) PENDING_USER_NOT_SELECTED
     if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
-      // 경기 시작 카운트다운: 경기 startTime 중 제일 앞 경기 기준
+      // 카운트다운 초(sec) 포함
       if (games.length && games[0].startTime && games[0].startTime !== "null") {
         const [h, m] = games[0].startTime.split(':').map(Number);
         const [Y,Mo,D]= key.split('-').map(Number);
         const target = new Date(Y,Mo-1,D,h,m);
-        const diff   = Math.max(0, Math.floor((target - now)/1000));
+        let diff   = Math.max(0, Math.floor((target - now)/1000));
         const hh = Math.floor(diff/3600), mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
-        sub = `참여시간 -${hh}:${mm}`;
+        const ss = String(diff%60).padStart(2,'0');
+        sub = `참여시간 -${hh}:${mm}:${ss}`;
       }
     }
-    // 2) PENDING_USER_SELECTED
     else if (status === 'PENDING_USER_SELECTED') {
       main = '제출 완료';
       const st = window.appState.submissionTimes?.[key];
@@ -254,37 +251,30 @@
         sub = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
       }
     }
-    // 3) IN_PROGRESS_USER_NOT_SELECTED
     else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
       main = '이벤트 참여 종료!';
       sub  = '다음 이벤트 도전 !';
     }
-    // 4) IN_PROGRESS_USER_SELECTED
     else if (status === 'IN_PROGRESS_USER_SELECTED') {
       main = '채점 중!';
-      // 성공 경기 개수
       const n = games.filter(g => g.eventResult==='success').length;
       sub  = `${n}경기 성공 !`;
     }
-    // 5) COMPLETED_USER_SUCCESS
     else if (status === 'COMPLETED_USER_SUCCESS') {
       main = '올킬 성공 !';
       sub  = '축하합니다 !';
     }
-    // 6) COMPLETED_USER_FAIL
     else if (status === 'COMPLETED_USER_FAIL') {
       main = '다음 경기 도전!';
       const n = games.filter(g => g.eventResult==='success').length;
       sub  = `${n}경기 성공 !`;
     }
-    // 7) COMPLETED_USER_NOT_SELECTED
     else if (status === 'COMPLETED_USER_NOT_SELECTED') {
       main = '다음 경기 도전!';
       sub  = '다음 이벤트는 꼭 참여하세요!';
     }
     else {
-      main = '';
-      sub = '';
+      main = ''; sub = '';
     }
 
     return { main, sub };
@@ -301,12 +291,10 @@
     // submit 버튼도 title-main 과 동일하게
     $('.btn-text').text(parts.main);
 
-    // countdown 필요 없는 상태면 타이머 끄기
     if (countdownTimerId && parts.main !== '올킬 도전 !') {
       clearInterval(countdownTimerId);
       countdownTimerId = null;
     }
-    // "올킬 도전 !"은 시간 카운트다운 자동 갱신
     if (parts.main === '올킬 도전 !') {
       if (!countdownTimerId) {
         countdownTimerId = setInterval(updateTitleAndCountdown, 1000);
@@ -424,4 +412,3 @@
   // 문서 준비 후 초기화
   $(document).ready(window.teamSelectionSection.init);
 })(jQuery);
-
