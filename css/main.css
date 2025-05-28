@@ -126,6 +126,10 @@ body {
   z-index: 10;
 }
 
+.dynamic-count{
+   padding-right: 3px;
+}
+
 /* Winners Section */
 .winners-section {
   width: 100%;
