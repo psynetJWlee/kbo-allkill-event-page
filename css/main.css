@@ -87,7 +87,45 @@ body {
 .event-title-line1,
 .event-title-line2,
 .event-title-line3 {
-  display: block; /* 블록으로 폭*
+  display: block; /* 블록으로 폭 100% 사용 */
+  font-family: 'GmarketSansMedium', sans-serif;
+  font-size: 50px;
+  line-height: 1.1;
+  margin: 0;
+  /* 외곽선 (WebKit + 표준 + 그림자 트릭) */
+  -webkit-text-stroke: 6px #001A29;
+  text-stroke: 6px #001A29;
+  text-shadow:
+    -3px -3px 0 #001A29,
+     3px -3px 0 #001A29,
+    -3px  3px 0 #001A29,
+     3px  3px 0 #001A29;
+}
+
+/* 5) 라인별 컬러 분기 */
+.event-title-line1,
+.event-title-line2 {
+  color: #FFFFFF;
+}
+.event-title-line3 {
+  color: #FFC736;
+}
+
+/* 6) 동적 숫자 강조 (n) */
+.dynamic-count {
+  color: #FFC736;
+}
+
+/* 7) GIF(이모티콘) */
+.event-emoticon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 238px;
+  height: 238px;
+  z-index: 10;
+}
 
 /* Winners Section */
 .winners-section {
