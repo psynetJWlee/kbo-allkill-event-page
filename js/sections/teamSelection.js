@@ -4,11 +4,7 @@
   // ==============================
   // 1. 설정 및 상태 변수
   // ==============================
-  // 삭제: 미사용 아이콘
-  // const iconBothLeft   = '/image/iconBothLeft.gif';
-  // const iconBothRight  = '/image/iconBothRight.gif'; 
-  // const iconSingle     = '/image/iconSingle.gif';
-  
+
   const containerSelector = '#kbo-selection-container';
   const sectionId         = 'team-selection-section';
   const gameListId        = 'game-list';
