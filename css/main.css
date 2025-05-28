@@ -97,10 +97,14 @@ body {
   -webkit-text-stroke: 6px #001A29;
   text-stroke: 6px #001A29;
   text-shadow:
-    -3px -3px 0 #001A29,
-     3px -3px 0 #001A29,
-    -3px  3px 0 #001A29,
-     3px  3px 0 #001A29;
+    -6px  0    0 #001A29,
+     6px  0    0 #001A29,
+     0   -6px 0 #001A29,
+     0    6px 0 #001A29,
+    -6px -6px 0 #001A29,
+     6px -6px 0 #001A29,
+    -6px  6px 0 #001A29,
+     6px  6px 0 #001A29;
 
 }
 
