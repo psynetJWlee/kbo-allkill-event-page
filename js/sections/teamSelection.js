@@ -1,3 +1,4 @@
+
 // teamSelection.js
 
 (function($) {
@@ -19,6 +20,9 @@
 
   // 제출 시각을 날짜별로 저장
   window.appState.submissionTimes = window.appState.submissionTimes || {};
+
+  // [변경] UI 임시상태 (실제 데이터 변경 안함) - 제출 후 상태 관리
+  let localEventStatusMap = {};
 
   // ==============================
   // 2. 날짜 키 배열 생성
@@ -121,6 +125,7 @@
   // ==============================
   function renderGames() {
     const key     = dateKeys[currentIndex];
+    // [변경] 새로운 gamedata 구조 적용
     const data    = window.matchData[key] || { eventStatus: '', games: [] };
     const matches = data.games || [];
     const $list   = $(`#${gameListId}`).empty();
@@ -221,7 +226,8 @@
   function computeTitleParts() {
     const key  = dateKeys[currentIndex];
     const data = window.matchData[key] || {};
-    const status = data.eventStatus;
+    // [변경] 실제 eventStatus 대신 제출 후엔 local, 그 외엔 실제값 사용
+    let status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
     const games  = data.games || [];
     const now    = new Date();
     let main = '', sub = '';
@@ -229,8 +235,8 @@
     // 1) PENDING_USER_NOT_SELECTED
     if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
-      // 제일 첫 경기 startTime 으로 카운트다운
-      if (games.length && games[0].startTime) {
+      // 경기 시작 카운트다운: 경기 startTime 중 제일 앞 경기 기준
+      if (games.length && games[0].startTime && games[0].startTime !== "null") {
         const [h, m] = games[0].startTime.split(':').map(Number);
         const [Y,Mo,D]= key.split('-').map(Number);
         const target = new Date(Y,Mo-1,D,h,m);
@@ -256,6 +262,7 @@
     // 4) IN_PROGRESS_USER_SELECTED
     else if (status === 'IN_PROGRESS_USER_SELECTED') {
       main = '채점 중!';
+      // 성공 경기 개수
       const n = games.filter(g => g.eventResult==='success').length;
       sub  = `${n}경기 성공 !`;
     }
@@ -274,6 +281,10 @@
     else if (status === 'COMPLETED_USER_NOT_SELECTED') {
       main = '다음 경기 도전!';
       sub  = '다음 이벤트는 꼭 참여하세요!';
+    }
+    else {
+      main = '';
+      sub = '';
     }
 
     return { main, sub };
@@ -294,6 +305,12 @@
     if (countdownTimerId && parts.main !== '올킬 도전 !') {
       clearInterval(countdownTimerId);
       countdownTimerId = null;
+    }
+    // "올킬 도전 !"은 시간 카운트다운 자동 갱신
+    if (parts.main === '올킬 도전 !') {
+      if (!countdownTimerId) {
+        countdownTimerId = setInterval(updateTitleAndCountdown, 1000);
+      }
     }
   }
 
@@ -334,8 +351,10 @@
   // ==============================
   function canEditSelections() {
     const key = dateKeys[currentIndex];
-    const status = (window.matchData[key]||{}).eventStatus;
-    return status === 'PENDING_USER_NOT_SELECTED';
+    // [변경] localEventStatusMap 적용, UI 제출직후 반영
+    const baseStatus = (window.matchData[key]||{}).eventStatus;
+    const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
+    return effStatus === 'PENDING_USER_NOT_SELECTED';
   }
 
   function setupTeamSelectionHandlers() {
@@ -354,19 +373,24 @@
   function setupSubmitHandler() {
     $('#submit-allkill-btn').on('click', function() {
       const key    = dateKeys[currentIndex];
-      const status = window.matchData[key]?.eventStatus;
+      // [변경] eventStatus를 실제로 변경하지 않고 local 변수만 변경(UI만 해당)
+      const status = (window.matchData[key]?.eventStatus);
       const games  = window.matchData[key]?.games || [];
 
       // 오직 'PENDING_USER_NOT_SELECTED' 상태에서만 동작
-      if (status === 'PENDING_USER_NOT_SELECTED') {
-        // 1) 메모리상 상태 변경
-        window.matchData[key].eventStatus = 'PENDING_USER_SELECTED';
+      // localEventStatusMap 없거나 PENDING_USER_NOT_SELECTED일 때만
+      const effStatus = typeof localEventStatusMap[key] !== 'undefined' 
+        ? localEventStatusMap[key] 
+        : status;
+      if (effStatus === 'PENDING_USER_NOT_SELECTED') {
+        // 1) 임시상태(UI) 함수 내에서만 사용
+        localEventStatusMap[key] = 'PENDING_USER_SELECTED';
         // 2) 제출 시각 저장
         window.appState.submissionTimes[key] = new Date();
         // 3) UI 갱신
         updateSubmitButton();
         updateTitleAndCountdown();
-        // 4) 경기 전이라면 alert
+        // 4) 경기 전이라면 알림
         if (games.every(g => g.status==='경기전')) {
           alert('제출 완료 !\n\n경기시작 전까지 수정이 가능합니다.\n\n확인.');
         }
@@ -400,3 +424,4 @@
   // 문서 준비 후 초기화
   $(document).ready(window.teamSelectionSection.init);
 })(jQuery);
+
