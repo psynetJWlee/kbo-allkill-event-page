@@ -228,7 +228,7 @@
 
     // === [NO_GAMES_EVENT_DISABLED 상태] ===
     if (status === 'NO_GAMES_EVENT_DISABLED') {
-      main = '경기가 없습니다.';
+      main = '오늘은 쉬어요';
       sub = '다음 이벤트에 참여하세요!';
     }
     else if (status === 'PENDING_USER_NOT_SELECTED') {
