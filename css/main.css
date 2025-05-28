@@ -50,6 +50,7 @@ body {
 }
 
 /* Event Title Section */
+
 /* 1) 부모 컨테이너 */
 #event-title-section {
   position: relative;
@@ -71,49 +72,22 @@ body {
 }
 
 /* 3) 이벤트 텍스트 (최상위) */
+/* 컨테이너 왼쪽 0에 붙이고, 폭 100% 사용하여 자식 블록이 가로 끝까지 퍼지게 함 */
 .event-title-text {
   position: absolute;
   bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
+  left: 0;
+  width: 100%;
   text-align: center;
-  pointer-events: none;
+  z-index: 1000;       /* confetti/GIF(z-index:10) 위로 */
+  pointer-events: none; /* 클릭 방해 방지 */
 }
 
-/* 4) 텍스트 줄별 공통 */
+/* 4) 텍스트 줄별 공통 스타일 */
 .event-title-line1,
 .event-title-line2,
 .event-title-line3 {
-  font-family: 'GmarketSansMedium', sans-serif;
-  font-size: 50px;
-  line-height: 1.1;
-  margin: 0;
-  -webkit-text-stroke: 6px #001A29;
-  text-stroke: 6px #001A29;
-  text-shadow:
-    -3px -3px 0 #001A29,
-     3px -3px 0 #001A29,
-    -3px  3px 0 #001A29,
-     3px  3px 0 #001A29;
-}
-
-/* 5) 컬러 분기 */
-.event-title-line1,
-.event-title-line2 { color: #FFFFFF; }
-.event-title-line3 { color: #FFC736; }
-
-/* 6) GIF(이모티콘) */
-.event-emoticon {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 238px;
-  height: 238px;
-  z-index: 10;
-}
-
+  display: block; /* 블록으로 폭*
 
 /* Winners Section */
 .winners-section {
