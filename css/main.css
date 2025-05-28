@@ -93,8 +93,8 @@ body {
   line-height: 1.1;
   margin: 0;
   /* 외곽선 (WebKit + 표준 + 그림자 트릭) */
-  -webkit-text-stroke: 6px #001A29;
-  text-stroke: 6px #001A29;
+  -webkit-text-stroke: 2px #001A29;
+  text-stroke: 2px #001A29;
 
 }
 
