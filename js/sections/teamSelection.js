@@ -78,12 +78,12 @@
 
     const html = `
       <div class="date-navigation">
-        <div id="${prevBtnId}" class="date-nav-prev">
+        <div id="${prevBtnId}" class="date-nav-prev" ${prevKey ? '' : 'style="visibility:hidden;"'}>
           <div class="arrow-left"></div>
           <span class="prev-day">${dayLabel(prevKey)}</span>
         </div>
-        <span id="${currentDayId}" class="current-day">${dayLabel(dateKeys[currentIndex])}</span>
-        <div id="${nextBtnId}" class="date-nav-next">
+        <span id="${currentDayId}" class="current-day${dateKeys[currentIndex]===todayKey ? ' today-active' : ''}" style="cursor:pointer;">${dayLabel(dateKeys[currentIndex])}</span>
+        <div id="${nextBtnId}" class="date-nav-next" ${nextKey ? '' : 'style="visibility:hidden;"'}>
           <span class="next-day">${dayLabel(nextKey)}</span>
           <div class="arrow-right"></div>
         </div>
@@ -322,14 +322,27 @@
   // ==============================
   function setupNavHandlers() {
     $(containerSelector)
+      .off('click', `#${prevBtnId}`)
+      .off('click', `#${nextBtnId}`)
+      .off('click', `#${currentDayId}`)
       .on('click', `#${prevBtnId}`, () => {
-        if (currentIndex>0) {
-          currentIndex--; refreshAll();
+        if (currentIndex > 0) {
+          currentIndex--;
+          refreshAll();
         }
       })
       .on('click', `#${nextBtnId}`, () => {
-        if (currentIndex<dateKeys.length-1) {
-          currentIndex++; refreshAll();
+        if (currentIndex < dateKeys.length - 1) {
+          currentIndex++;
+          refreshAll();
+        }
+      })
+      .on('click', `#${currentDayId}`, function () {
+        // todayKey의 인덱스로 무조건 이동
+        const todayIdx = dateKeys.indexOf(todayKey);
+        if (todayIdx !== -1 && currentIndex !== todayIdx) {
+          currentIndex = todayIdx;
+          refreshAll();
         }
       });
   }
