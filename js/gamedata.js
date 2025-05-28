@@ -282,7 +282,7 @@
         home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1243 },
         draw: { teamName: "무승부", votes: 754 },
         away: { teamName: "SK", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 4214 },
-        status: "경기지연",
+        status: "경기전",
         startTime: "18:00",
         userSelection: "home"
       }

@@ -337,10 +337,7 @@
   const matches  = window.matchData[key] || [];
   const isEmptyDay = matches.length > 0 && matches.every(m => m.gameId === 'null');
   if (isEmptyDay) {
-    return {
-      main: '경기가 없어요 !',
-      sub:  '다음 올킬 도전!'
-    };
+    return { main: '경기가 없어요 !', sub: '다음 올킬 도전!' }; 
   }
   const selMap   = window.appState.selectedTeams || {};
   const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
