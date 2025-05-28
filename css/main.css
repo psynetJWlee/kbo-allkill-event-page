@@ -117,12 +117,7 @@ body {
   color: #FFC736;
 }
 
-/* 6) 동적 숫자 강조 (n) */
-.dynamic-count {
-  color: #FFC736;
-}
-
-/* 7) GIF(이모티콘) */
+/* 6) GIF(이모티콘) */
 .event-emoticon {
   position: absolute;
   top: 0;
