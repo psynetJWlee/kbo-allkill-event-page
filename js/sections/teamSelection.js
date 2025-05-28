@@ -146,11 +146,11 @@
         .addClass(fadeClass)
         .attr('data-game-id', match.gameId);
 
-      // === overlay logic 복원 ===
+      // === overlay logic (클래스명 통합) ===
       if (match.eventResult === 'success') {
-        $item.append('<img class="event-overlay-success" src="/image/event-overlay%20success.png" alt="성공" />');
+        $item.append('<img class="event-overlay success" src="/image/event-overlay%20success.png" alt="성공" />');
       } else if (match.eventResult === 'fail') {
-        $item.append('<img class="event-overlay-fail" src="/image/event-overlay%20fail.png" alt="실패" />');
+        $item.append('<img class="event-overlay fail" src="/image/event-overlay%20fail.png" alt="실패" />');
       }
 
       // ─── 1행: 시계/점수 등 ─────────────────────────────

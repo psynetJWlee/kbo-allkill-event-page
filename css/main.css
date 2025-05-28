@@ -805,6 +805,20 @@ body {
 }
 
 
+/* 상태 오버레이 클래스 통합 */
+.event-overlay.success,
+.event-overlay.fail {
+  top: auto;
+  transform: translateX(-50%);
+  bottom: 20px;
+  left: 50%;
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  width: 140px;
+  height: auto;
+}
+
 .red-circle-container {
   position: absolute;
   left: 50%;
@@ -934,24 +948,6 @@ body {
   0%   { opacity:0; transform: translateY(0) scale(0); }
   50%  { opacity:1; transform: translateY(-20px) scale(1); }
   100% { opacity:0; transform: translateY(-40px) scale(0); }
-}
-/* 상태 오버레이 */
-.event-overlay {
-  top: auto;
-  transform: none;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* success/fail 공통 크기 */
-.event-overlay.success,
-.event-overlay.fail {
-  width: 140px;
-  height: auto;
 }
 
 /* Responsive adjustments */
