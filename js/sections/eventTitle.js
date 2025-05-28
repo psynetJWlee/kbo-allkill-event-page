@@ -49,7 +49,7 @@ function initEventTitleSection() {
         <span class="dynamic-count">${n}</span>경기 맞추면
       </div>
       <div class="event-title-line3">
-        매일 100/<span class="dynamic-count">${n}</span>만원
+        매일 100/n 만원
       </div>
     </div>
     <img 
