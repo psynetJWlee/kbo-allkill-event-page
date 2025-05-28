@@ -333,53 +333,39 @@
   // 9. 타이틀 파트 계산
   // ==============================
   function computeTitleParts() {
-  const key      = dateKeys[currentIndex];
-  const matches  = window.matchData[key] || [];
-  const isEmptyDay = matches.length > 0 && matches.every(m => m.gameId === 'null');
-  if (isEmptyDay) {
-    return { main: '경기가 없어요 !', sub: '다음 올킬 도전!' }; 
-  }
-  const selMap   = window.appState.selectedTeams || {};
-  const finished = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
+  const key     = dateKeys[currentIndex];
+  const matches = window.matchData[key] || [];
+  const now     = new Date();
 
-  // ➤ 1) 제출 완료(그 날짜에만)
-   // 1) 제출 완료(날짜별 기록) 체크
-   const submittedAt = window.appState.submissionTimes?.[key];
-   if (submittedAt) {
-     const mm = submittedAt.getMonth()+1;
-     const dd = submittedAt.getDate();
-     const hh = String(submittedAt.getHours()).padStart(2,'0');
-     const mi = String(submittedAt.getMinutes()).padStart(2,'0');
-     return { main: '제출 완료 !', sub:  `${mm}월 ${dd}일 ${hh}:${mi}` };
-   }
-
-  // ➤ 2) 모두 경기전 & 미선택
-   const allPre  = matches.every(m => m.status === '경기전');
-   if (allPre) {
-  
-    return { main: '올킬 도전!', sub: '참여시간 ' };
+  // 1) 올킬 성공: 모든 매치가 correct===true
+  const allCorrect   = matches.length > 0 && matches.every(m => m.correct === true);
+  if (allCorrect) {
+    return { main: '올킬 성공!', sub: '' };
   }
 
-  // ➤ 3) 경기중 한 건이라도
-  if (matches.some(m => m.status === '경기중')) {
-    const ok = matches.filter(m => m.eventResult === 'success').length;
-    return { main: '채점 중!', sub: `${ok} 경기 성공 !` };
+  // 2) 올킬 실패: 하나라도 correct===false
+  const anyIncorrect = matches.some(m => m.correct === false);
+  if (anyIncorrect) {
+    return { main: '아쉽게 실패!', sub: '' };
   }
 
-  // ➤ 4) 모두 완료 상태
-  if (matches.length > 0 && matches.every(m => finished.includes(m.status))) {
-    const ok    = matches.filter(m => m.eventResult === 'success').length;
-    const allOK = ok === matches.length;
-    if (allOK) {
-      return { main: '올킬 성공 !', sub: '상금을 확인하세요 !' };
-    } else {
-      return { main: '다음 경기 도전 !', sub: `${ok} 경기 성공 !` };
+  // 3) 제출 완료 상태: 사용자가 이미 제출한 경우
+  const submittedAt = window.appState.submissionTimes?.[key];
+  if (submittedAt) {
+    // 3-a) 경기 전: “제출 완료!” + 남은 카운트다운
+    const allPre = matches.every(m => m.status === '경기전');
+    if (allPre) {
+      const diffSec = Math.floor((new Date(matches[0].startTime) - now) / 1000);
+      const mmss    = formatMmSs(diffSec);
+      return { main: '제출 완료!', sub: `경기 시작까지 ${mmss}` };
     }
+    // 3-b) 경기 시작 후: 다음 도전 안내
+    return { main: '다음 경기 도전!', sub: '' };
   }
 
-  // ➤ 5) 기본
-  return { main: initialTitle, sub: '' };
-  }
+  // 4) 기본 상태: 아직 한 번도 제출 전
+  return { main: '올킬 도전!', sub: '' };
+}
 
 
   // ==============================
@@ -389,48 +375,38 @@ function updateTitleAndCountdown() {
   const key         = dateKeys[currentIndex];
   const matches     = window.matchData[key] || [];
 
-  // 1) 경기 상태 판정
+  // 1) 경기 상태 판정 (데코용)
   const allPre      = matches.every(m => m.status === '경기전');
   const anyLive     = matches.some(m => m.status === '경기중');
   const finishedSt  = ['경기종료','경기취소','경기지연','경기중지','서스펜드','우천취소'];
   const allFinished = matches.length > 0 && matches.every(m => finishedSt.includes(m.status));
 
-  // 2) 제출 여부 & 타이틀 계산
-  const submittedAt = window.appState.submissionTimes?.[key];
-  const parts       = computeTitleParts();
+  // 2) computeTitleParts() 로 main/sub 결정 (우선순위: 성공 → 실패 → 제출 분기 → 기본)
+  const parts = computeTitleParts();
 
-  // 3) 타이틀 텍스트 갱신
+  // 3) 타이틀 갱신
   $('.team-selection-title .title-main').text(parts.main);
   $('.team-selection-title .title-sub')
     .text(parts.sub)
-    .toggleClass('countdown-active', allPre && !submittedAt);
+    // “경기전 제출 완료” 카운트다운만 깜빡이도록
+    .toggleClass('countdown-active', parts.main === '제출 완료!' && allPre);
 
   // 4) 버튼 텍스트 동기화
   $('.btn-text').text(parts.main);
 
-  // 5) 데코 아이콘 제어
+  // 5) 데코 아이콘 제어 (기존 로직 그대로)
   if (allPre || anyLive) {
-    // (경기전 또는 경기중) 양쪽에 아이콘
-    $('.title-decor-left')
-      .attr('src', iconBothLeft)
-      .show();
-    $('.title-decor-right')
-      .attr('src', iconBothRight)
-      .show();
-
+    $('.title-decor-left').attr('src', iconBothLeft).show();
+    $('.title-decor-right').attr('src', iconBothRight).show();
   } else if (allFinished) {
-    // (모두 종료/취소) 오른쪽에 단일 아이콘
     $('.title-decor-left').hide();
-    $('.title-decor-right')
-      .attr('src', iconSingle)
-      .show();
-
+    $('.title-decor-right').attr('src', iconSingle).show();
   } else {
-    // 그 외 상태에는 둘 다 숨김
     $('.title-decor-left, .title-decor-right').hide();
   }
 
-  // 6) 카운트다운 실행/중지
+  // 6) 카운트다운 실행/중지 (제출 전 경기전만)
+  const submittedAt = window.appState.submissionTimes?.[key];
   if (allPre && !submittedAt && matches.length) {
     const [h, mi]      = matches[0].startTime.split(':').map(Number);
     const [yy, mo, dd] = key.split('-').map(Number);
