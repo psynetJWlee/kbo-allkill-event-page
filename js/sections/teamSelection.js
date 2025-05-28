@@ -248,7 +248,14 @@
       const st = window.appState.submissionTimes?.[key];
       if (st) {
         const d = new Date(st);
-        sub = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+        // 기존: 시:분만 표기 
+        // sub = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+        // 변경: 'M월 D일 HH:MM' 표기
+        const month = d.getMonth() + 1;
+        const date = d.getDate();
+        const hour = d.getHours().toString().padStart(2, '0');
+        const min  = d.getMinutes().toString().padStart(2, '0');
+        sub = `${month}월 ${date}일 ${hour}:${min}`;
       }
     }
     else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
