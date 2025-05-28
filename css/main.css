@@ -89,13 +89,10 @@ body {
 .event-title-line3 {
   display: block; /* 블록으로 폭 100% 사용 */
   font-family: 'GmarketSansMedium', sans-serif;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 50px;
   line-height: 1.1;
   margin: 0;
-  /* 외곽선 (WebKit + 표준 + 그림자 트릭) */
-  -webkit-text-stroke: 0px #001A29;
-  text-stroke: 0px #001A29;
   text-shadow:
     -6px  0    0 #001A29,
      6px  0    0 #001A29,
@@ -105,7 +102,7 @@ body {
      6px -6px 0 #001A29,
     -6px  6px 0 #001A29,
      6px  6px 0 #001A29;
-
+  letter-spacing: -0.02em;
 }
 
 /* 5) 라인별 컬러 분기 */
@@ -114,6 +111,7 @@ body {
   color: #FFFFFF;
 }
 .event-title-line3 {
+  margin-top: 8px;
   color: #FFC736;
 }
 
