@@ -139,9 +139,9 @@ function initMyPrizeSection() {
       });
     }
     // Android WebView
-    else if (/Android/i.test(ua)) {
-      window.hanpass.requestPrize();
-    }}
+      else if (/Android/i.test(ua)) {
+        window.hanpass.requestPrize();
+      }
       // 그 외 웹
       else {
         alert('LIVE스코어 APP 에서만 신청 가능합니다');
