@@ -290,7 +290,7 @@
         const secondsTens = ss[0];
         const secondsOnes = ss[1];
         
-        sub = `<span class="time-label">남은 시간  -</span><span class="countdown-hours"><span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span></span>:<span class="countdown-minutes"><span class="minutes-tens flip-container"><span class="flip-card">${minutesTens}</span></span><span class="minutes-ones flip-container"><span class="flip-card">${minutesOnes}</span></span></span>:<span class="countdown-seconds"><span class="seconds-tens flip-container"><span class="flip-card">${secondsTens}</span></span><span class="seconds-ones flip-container"><span class="flip-card">${secondsOnes}</span></span></span>`;
+        sub = `<span class="time-label">남은 시간</span><span class="countdown-hours"><span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span></span>:<span class="countdown-minutes"><span class="minutes-tens flip-container"><span class="flip-card">${minutesTens}</span></span><span class="minutes-ones flip-container"><span class="flip-card">${minutesOnes}</span></span></span>:<span class="countdown-seconds"><span class="seconds-tens flip-container"><span class="flip-card">${secondsTens}</span></span><span class="seconds-ones flip-container"><span class="flip-card">${secondsOnes}</span></span></span>`;
       }
     }
     else if (status === 'PENDING_USER_SELECTED') {
