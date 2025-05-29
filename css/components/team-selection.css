@@ -44,13 +44,11 @@
 
 .team-selection-title .title-sub {
   font-size: var(--font-size-3xl);
-  color: var(--gold);
-  font-weight: bold; 
-  padding-bottom: var(--spacing-xl);
+  color: #FFC736;
+  font-weight: bold;   
 }
 
 .kbo-selection-container {
-  min-height: 1000px;
   background-color: var(--background-dark);
   width: 100%;
 }
