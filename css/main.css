@@ -670,9 +670,19 @@ body {
 
 /* 이벤트 대기, 유저 미선택 */
 .title-wrapper.status-pending-unselected .title-main {
-  color: #00FF00;
-  animation: pulse 2s infinite;
+    font-size: 4rem;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 0px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowFlow 2s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
 }
+
 .title-wrapper.status-pending-unselected .title-sub {
   color: ##ffd93d;
   font-weight: bold;
