@@ -1,5 +1,4 @@
 
-
 /* Title Main Row with Spinner */
 .title-main-row {
   display: flex;
@@ -139,6 +138,7 @@
   margin-bottom: 10px;
   position: relative;
   animation: successBounce 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  color: white;
 }
 
 .title-wrapper.status-completed-success .title-main::before {
@@ -148,7 +148,7 @@
 
 .title-wrapper.status-completed-success .title-main::after {
   content: '🏆';
-   margin-left: 15px;
+  margin-left: 15px;
 }
 
 .title-wrapper.status-completed-success .title-main .allkill-text {
@@ -161,7 +161,6 @@
 }
 
 .title-wrapper.status-completed-success .title-sub {
-  font-size: 2.5rem;
   color: #ffd93d;
   font-weight: 700;
   text-align: center;
@@ -174,7 +173,7 @@
   content: '✨';
   position: absolute;
   top: -10px;
-  left: -50px;
+  left: -15px;
   font-size: 1.8rem;
 }
 
@@ -182,7 +181,7 @@
   content: '⭐';
   position: absolute;
   top: -5px;
-  right: -55px;
+  right: -15px;
   font-size: 1.5rem;
 }
 
@@ -226,12 +225,12 @@
   
   .title-wrapper.status-completed-success .title-sub::before {
     font-size: 1.3rem;
-    left: -35px;
+    left: -12px;
   }
   
   .title-wrapper.status-completed-success .title-sub::after {
     font-size: 1.1rem;
-    right: -40px;
+    right: -12px;
   }
 }
 
@@ -246,12 +245,11 @@
   
   .title-wrapper.status-completed-success .title-sub::before {
     font-size: 1rem;
-    left: -25px;
+    left: -10px;
   }
   
   .title-wrapper.status-completed-success .title-sub::after {
     font-size: 0.9rem;
-    right: -30px;
+    right: -10px;
   }
 }
-

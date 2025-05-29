@@ -327,7 +327,7 @@
       sub  = `${n}경기 성공 !`;
     }
     else if (status === 'COMPLETED_USER_SUCCESS') {
-      main = 'ALL KILL!';
+      main = '<span class="allkill-text">ALL KILL!</span>';
       sub  = '모든 경기 성공 !';
       statusClass = 'status-completed-success';
     }
@@ -354,7 +354,7 @@
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
-    $('.title-main').text(parts.main);
+    $('.title-main').html(parts.main);  // Changed from .text() to .html()
     $('.title-sub').html(parts.sub); // HTML 사용으로 변경
 
     // 기존 status 클래스 제거 후 새로운 클래스 적용
