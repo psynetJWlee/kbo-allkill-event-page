@@ -1,3 +1,4 @@
+
 // teamSelection.js
 
 (function($) {
@@ -89,10 +90,23 @@
   }
 
   function renderSection() {
+    // 현재 날짜의 eventStatus 확인
+    const key = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const effStatus = typeof localEventStatusMap[key] !== 'undefined' 
+      ? localEventStatusMap[key] 
+      : data.eventStatus;
+
+    // IN_PROGRESS_USER_SELECTED일 때만 spinner 추가
+    const spinnerHtml = effStatus === 'IN_PROGRESS_USER_SELECTED' 
+      ? '<div class="spinner"></div>' 
+      : '';
+
     const html = `
       <div id="${sectionId}" class="team-selection-section">
         <div class="title-wrapper">
           <h2 class="team-selection-title">
+            ${spinnerHtml}
             <span class="title-main"></span>
             <span class="title-sub"></span>
           </h2>

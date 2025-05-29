@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: 'GmarketSansMedium';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
@@ -10,6 +11,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 body {
@@ -342,6 +344,7 @@ body {
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 .page-item.active {
   background-color: white;
@@ -429,6 +432,7 @@ body {
   border-radius: 9999px;
   cursor: pointer;
   text-align: center;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 .tab.active {
   background-color: white;
@@ -623,6 +627,37 @@ body {
   color: #FFC736;
   font-weight: bold; 
   padding-bottom: 20px;
+}
+
+/* Spinner for IN_PROGRESS_USER_SELECTED */
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2196F3;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 25px;
+  margin: 0 auto 20px auto;
+  width: fit-content;
+  font-family: 'GmarketSansMedium', sans-serif;
+}
+
+.spinner::before {
+  content: '⚽';
+  margin-right: 8px;
+  animation: spin 1s linear infinite;
+}
+
+.spinner::after {
+  content: '채점중!';
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* ===== EventStatus에 따른 CSS 클래스 ===== */
@@ -860,6 +895,7 @@ body {
   font-size: 14px;
   color: #FFFFFF;
   text-align: center;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 .vote-count {
   font-size: 15px;
@@ -867,6 +903,7 @@ body {
   width:90px;
   text-align: center;
   font-weight: bold;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 
 .vote-count.higher {
@@ -896,12 +933,14 @@ body {
     padding: 4px 8px;
   border-radius: 4px;
   text-align: center;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 
 .game-row.row1 .score {
   font-size: 15px;
   font-weight: bold;
   color: #fff;
+  font-family: 'GmarketSansMedium', sans-serif;
 }
 
 .game-row.row1 .score.higher {
