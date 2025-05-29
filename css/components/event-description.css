@@ -1,0 +1,59 @@
+
+/* Event Description Section */
+.event-description-section {
+  padding: var(--spacing-xl) var(--spacing-xl) 100px;
+  background-color: var(--darkest-blue);
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: 15px;
+}
+
+.info-icon {
+  width: var(--spacing-lg);
+  height: var(--spacing-lg);
+}
+
+.info-title {
+  font-size: var(--font-size-sm);
+  color: var(--white);
+  font-weight: 500;
+}
+
+.info-list {
+  list-style-type: disc;
+  padding-left: var(--spacing-xl);
+  margin-bottom: 25px;
+}
+
+.info-item {
+  font-size: var(--font-size-xs);
+  color: var(--white);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+.download-button {
+  font-family: var(--font-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #1A5F7A;
+  color: var(--white);
+  font-size: var(--font-size-3xl);
+  opacity: 0.9;
+  font-weight: bold;
+  border-radius: var(--radius-full);
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.2;  
+}
+
+.download-button:hover {
+  background-color: #1d6e8c;
+}

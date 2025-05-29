@@ -1,0 +1,74 @@
+
+/* Event Title Section */
+#event-title-section {
+  position: relative;
+  height: var(--event-section-height);
+  width: 100%;
+  background-color: var(--primary-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.event-logo {
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  z-index: 30;
+}
+
+.event-title-text {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.event-title-line1,
+.event-title-line2,
+.event-title-line3 {
+  display: block;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: var(--font-size-6xl);
+  line-height: 1.1;
+  margin: 0;
+  text-shadow:
+    -6px  0    0 var(--navy),
+     6px  0    0 var(--navy),
+     0   -6px 0 var(--navy),
+     0    6px 0 var(--navy),
+    -6px -6px 0 var(--navy),
+     6px -6px 0 var(--navy),
+    -6px  6px 0 var(--navy),
+     6px  6px 0 var(--navy);
+  letter-spacing: -0.02em;
+}
+
+.event-title-line1,
+.event-title-line2 {
+  color: var(--white);
+}
+
+.event-title-line3 {
+  margin-top: 8px;
+  color: var(--gold);
+}
+
+.event-emoticon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 238px;
+  height: 238px;
+  z-index: 10;
+}
+
+.dynamic-count {
+   padding-right: 5px;
+}
