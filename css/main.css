@@ -696,8 +696,7 @@ body {
 
 /* 이벤트 진행, 유저 선택 완료 */
 .title-wrapper.status-progress-selected .title-main {
-  color: #2196F3;
-  animation: pulse 1.5s infinite;
+  color: #FFFFFF;  
 }
 .title-wrapper.status-progress-selected .title-sub {
   color: #64B5F6;
