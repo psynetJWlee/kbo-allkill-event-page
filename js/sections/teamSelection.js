@@ -1,4 +1,3 @@
-
 // teamSelection.js
 
 (function($) {
@@ -265,7 +264,7 @@
         let diff   = Math.max(0, Math.floor((target - now)/1000));
         const hh = Math.floor(diff/3600), mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
         const ss = String(diff%60).padStart(2,'0');
-        sub = `참여시간 -${hh}:${mm}:${ss}`;
+        sub = `남은 시간 -${hh}:${mm}:${ss}`;
       }
     }
     else if (status === 'PENDING_USER_SELECTED') {
