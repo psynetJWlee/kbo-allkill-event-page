@@ -1,3 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
+body {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
 @font-face {
     font-family: 'GmarketSansMedium';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
@@ -13,7 +20,7 @@
 }
 
 body {
-  font-family:  'GmarketSansMedium';
+  font-family: 'Inter', sans-serif;
   background-color: #FFFFFF;
   color: #000000;
 }
@@ -621,6 +628,104 @@ body {
   font-weight: bold; 
   padding-bottom: 20px;
 }
+
+/* ===== EventStatus에 따른 CSS 클래스 ===== */
+
+/* 경기 없음, 이벤트 참여 불가 */
+.title-wrapper.status-no-games .title-main {
+  color: #888888;
+}
+.title-wrapper.status-no-games .title-sub {
+  color: #BBBBBB;
+}
+
+/* 2경기 이상 이벤트 취소 */
+.title-wrapper.status-cancelled .title-main {
+  color: #FF6B6B;
+}
+.title-wrapper.status-cancelled .title-sub {
+  color: #FFB3B3;
+}
+
+/* 이벤트 대기, 유저 미선택 */
+.title-wrapper.status-pending-unselected .title-main {
+  color: #00FF00;
+  animation: pulse 2s infinite;
+}
+.title-wrapper.status-pending-unselected .title-sub {
+  color: #FF4444;
+  font-weight: bold;
+}
+
+/* 이벤트 대기, 유저 선택 완료 */
+.title-wrapper.status-pending-selected .title-main {
+  color: #4CAF50;
+}
+.title-wrapper.status-pending-selected .title-sub {
+  color: #81C784;
+}
+
+/* 이벤트 진행, 유저 미선택 */
+.title-wrapper.status-progress-unselected .title-main {
+  color: #FF9800;
+}
+.title-wrapper.status-progress-unselected .title-sub {
+  color: #FFB74D;
+}
+
+/* 이벤트 진행, 유저 선택 완료 */
+.title-wrapper.status-progress-selected .title-main {
+  color: #2196F3;
+  animation: pulse 1.5s infinite;
+}
+.title-wrapper.status-progress-selected .title-sub {
+  color: #64B5F6;
+}
+
+/* 이벤트 종료, 유저 성공 */
+.title-wrapper.status-completed-success .title-main {
+  color: #FFD700;
+  animation: sparkle 2s infinite;
+}
+.title-wrapper.status-completed-success .title-sub {
+  color: #FFF176;
+}
+
+/* 이벤트 종료, 유저 실패 */
+.title-wrapper.status-completed-fail .title-main {
+  color: #F44336;
+}
+.title-wrapper.status-completed-fail .title-sub {
+  color: #EF5350;
+}
+
+/* 이벤트 종료, 유저 미선택 */
+.title-wrapper.status-completed-unselected .title-main {
+  color: #9E9E9E;
+}
+.title-wrapper.status-completed-unselected .title-sub {
+  color: #BDBDBD;
+}
+
+/* 애니메이션 효과 */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    text-shadow: 0 0 10px #FFD700;
+  }
+  50% {
+    text-shadow: 0 0 20px #FFD700, 0 0 30px #FFA500;
+  }
+}
+
 .kbo-selection-container {
   min-height: 1000px;
   background-color: #121212;
