@@ -700,83 +700,20 @@ body {
   color: #ffd93d;
   font-weight: 700;
   font-size: 2rem;
-}
-
-/* 시간 컨테이너 스타일 추가 */
-.title-wrapper.status-pending-unselected .title-sub .time-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-}
-
-.title-wrapper.status-pending-unselected .title-sub .time-label {
-  font-size: 2rem;
-  color: #ffd93d;
-  font-weight: 700;
-  white-space: nowrap;
-  margin-right: 15px;
-}
-
-/* 디지털 카운트다운 스타일 */
-.title-wrapper.status-pending-unselected .digit-card {
-  width: 30px;
-  height: 80px;
-  perspective: 1000px;
-  position: relative;
-}
-
-.title-wrapper.status-pending-unselected .digit-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease-in-out;
-}
-
-.title-wrapper.status-pending-unselected .digit-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 900;
-  color: #ffd93d;
-  backface-visibility: hidden;
   font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
 }
 
-.title-wrapper.status-pending-unselected .digit-face.back {
-  transform: rotateX(180deg);
-}
-
-.title-wrapper.status-pending-unselected .flipping .digit-inner {
-  transform: rotateX(180deg);
-}
-
-.title-wrapper.status-pending-unselected .colon {
-  font-size: 2rem;
-  font-weight: 900;
-  color: #ffd93d;
-  margin: 0 5px;
-  font-family: 'Courier New', monospace;
-  align-self: center;
-}
-
-/* 긴급 상태 */
-.title-wrapper.status-pending-unselected .urgent .digit-face {
+/* 긴급 상태 (10초 이하) */
+.title-wrapper.status-pending-unselected .title-sub.urgent {
   color: #ff4757 !important;
   animation: urgentPulse 0.4s ease-in-out infinite alternate;
 }
 
-.title-wrapper.status-pending-unselected .urgent .colon {
-  color: #ff4757;
-  animation: urgentBlink 0.4s ease-in-out infinite;
+/* 완료 상태 (0초) */
+.title-wrapper.status-pending-unselected .title-sub.completed {
+  color: #2ed573 !important;
+  animation: completionCelebration 1s ease-in-out infinite;
 }
 
 @keyframes urgentPulse {
@@ -788,21 +725,6 @@ body {
     transform: scale(1.1);
     text-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
   }
-}
-
-@keyframes urgentBlink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0.5; }
-}
-
-/* 완료 상태 */
-.title-wrapper.status-pending-unselected .completed .digit-face {
-  color: #2ed573 !important;
-  animation: completionCelebration 1s ease-in-out infinite;
-}
-
-.title-wrapper.status-pending-unselected .completed .colon {
-  color: #2ed573;
 }
 
 @keyframes completionCelebration {
@@ -832,75 +754,6 @@ body {
   }
   60% { 
     transform: translateY(-10px); 
-  }
-}
-
-/* 이벤트 대기, 유저 선택 완료 */
-.title-wrapper.status-pending-selected .title-main {
-  color: #4CAF50;
-}
-.title-wrapper.status-pending-selected .title-sub {
-  color: #ffd93d;
-}
-
-/* 이벤트 진행, 유저 미선택 */
-.title-wrapper.status-progress-unselected .title-main {
-  color: #FF9800;
-}
-.title-wrapper.status-progress-unselected .title-sub {
-  color: #ffd93d;
-}
-
-/* 이벤트 진행, 유저 선택 완료 */
-.title-wrapper.status-progress-selected .title-main {
-  color: #FFFFFF;
-  font-size: 50px;
-}
-.title-wrapper.status-progress-selected .title-sub {
-  color: #ffd93d;
-}
-
-/* 이벤트 종료, 유저 성공 */
-.title-wrapper.status-completed-success .title-main {
-  color: #FFD700;
-  animation: sparkle 2s infinite;
-}
-.title-wrapper.status-completed-success .title-sub {
-  color: #ffd93d;
-}
-
-/* 이벤트 종료, 유저 실패 */
-.title-wrapper.status-completed-fail .title-main {
-  color: #F44336;
-}
-.title-wrapper.status-completed-fail .title-sub {
-  color: #ffd93d;
-}
-
-/* 이벤트 종료, 유저 미선택 */
-.title-wrapper.status-completed-unselected .title-main {
-  color: #9E9E9E;
-}
-.title-wrapper.status-completed-unselected .title-sub {
-  color: #ffd93d;
-}
-
-/* 애니메이션 효과 */
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    text-shadow: 0 0 10px #FFD700;
-  }
-  50% {
-    text-shadow: 0 0 20px #FFD700, 0 0 30px #FFA500;
   }
 }
 

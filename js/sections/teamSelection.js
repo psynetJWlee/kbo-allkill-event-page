@@ -273,8 +273,6 @@
       const st = window.appState.submissionTimes?.[key];
       if (st) {
         const d = new Date(st);
-        // 기존: 시:분만 표기 
-        // sub = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
         // 변경: 'M월 D일 HH:MM' 표기
         const month = d.getMonth() + 1;
         const date = d.getDate();
@@ -334,8 +332,37 @@
       $titleWrapper.addClass(parts.statusClass);
     }
 
-    let btnText = parts.main;
+    // 카운트다운 상태 클래스 추가
     const key = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
+    
+    if (status === 'PENDING_USER_NOT_SELECTED') {
+      const games = data.games || [];
+      const $titleSub = $('.title-sub');
+      
+      // 기존 상태 클래스 제거
+      $titleSub.removeClass('urgent completed');
+      
+      if (games.length && games[0].startTime && games[0].startTime !== "null") {
+        const [h, m] = games[0].startTime.split(':').map(Number);
+        const [Y,Mo,D]= key.split('-').map(Number);
+        const target = new Date(Y,Mo-1,D,h,m);
+        const now = new Date();
+        let diff = Math.max(0, Math.floor((target - now)/1000));
+        
+        // 10초 이하일 때 urgent 클래스 추가
+        if (diff <= 10 && diff > 0) {
+          $titleSub.addClass('urgent');
+        }
+        // 0초일 때 completed 클래스 추가
+        else if (diff === 0) {
+          $titleSub.addClass('completed');
+        }
+      }
+    }
+
+    let btnText = parts.main;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined'
       ? localEventStatusMap[key] 
       : (window.matchData[key]?.eventStatus);
