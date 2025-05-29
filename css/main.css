@@ -636,8 +636,6 @@ body {
   justify-content: center;
   gap: 15px;
   height: auto;
-  padding-top: 8px;
-  padding-bottom: 8px;
 }
 
 .spinner {
@@ -692,8 +690,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: rainbowFlow 2s ease-in-out infinite, bounce 1.5s ease-in-out infinite;
-  padding: 10px 0; /* 상하 패딩 추가 */
+  animation: rainbowFlow 2s ease-in-out infinite, bounce 1.5s ease-in-out infinite;  
 }
 
 .title-wrapper.status-pending-unselected .title-sub {
