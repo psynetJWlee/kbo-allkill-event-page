@@ -1,15 +1,37 @@
 
 /* Enhanced Countdown Flip Animation Styles for Individual Digits */
-.countdown-seconds {
+.countdown-seconds,
+.countdown-minutes,
+.countdown-hours {
   display: inline-flex;
   align-items: center;
 }
 
-.tens-digit,
-.ones-digit {
+.hours-tens,
+.hours-ones,
+.minutes-tens,
+.minutes-ones,
+.seconds-tens,
+.seconds-ones {
   display: inline-block;
   perspective: 1000px;
   margin: 0 1px;
+}
+
+/* Reduce spacing between digits within same time unit */
+.countdown-hours .hours-tens,
+.countdown-hours .hours-ones {
+  margin: 0 0.5px;
+}
+
+.countdown-minutes .minutes-tens,
+.countdown-minutes .minutes-ones {
+  margin: 0 0.5px;
+}
+
+.countdown-seconds .seconds-tens,
+.countdown-seconds .seconds-ones {
+  margin: 0 0.5px;
 }
 
 .flip-container {
@@ -47,9 +69,4 @@
 .time-label {
   display: inline-block;
   margin-right: 10px;
-}
-
-.countdown-hours,
-.countdown-minutes {
-  display: inline-block;
 }

@@ -15,8 +15,13 @@
   const submitBtnPlaceholder = '제출하기';
 
   let countdownTimerId = null;
-  let previousTensDigit = null; // 10의 자리 추적
-  let previousOnesDigit = null; // 1의 자리 추적
+  // 시, 분, 초의 개별 자릿수 추적
+  let previousHoursTens = null;
+  let previousHoursOnes = null;
+  let previousMinutesTens = null;
+  let previousMinutesOnes = null;
+  let previousSecondsTens = null;
+  let previousSecondsOnes = null;
 
   window.appState.submissionTimes = window.appState.submissionTimes || {};
   let localEventStatusMap = {};
@@ -242,7 +247,7 @@
   }
 
   // ==============================
-  // 7. eventStatus 기반 title/sub 계산 (개별 자릿수 애니메이션)
+  // 7. eventStatus 기반 title/sub 계산 (모든 자릿수 애니메이션)
   // ==============================
   function computeTitleParts() {
     const key  = dateKeys[currentIndex];
@@ -267,21 +272,25 @@
     else if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
       statusClass = 'status-pending-unselected';
-      // 카운트다운 - 개별 자릿수로 분리된 HTML
+      // 카운트다운 - 모든 자릿수를 개별 애니메이션으로 분리
       if (games.length && games[0].startTime && games[0].startTime !== "null") {
         const [h, m] = games[0].startTime.split(':').map(Number);
         const [Y,Mo,D]= key.split('-').map(Number);
         const target = new Date(Y,Mo-1,D,h,m);
         let diff   = Math.max(0, Math.floor((target - now)/1000));
-        const hh = Math.floor(diff/3600);
+        const hh = Math.floor(diff/3600).toString().padStart(2, '0');
         const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
         const ss = String(diff%60).padStart(2,'0');
         
-        // 초를 10의 자리와 1의 자리로 분리
-        const tensDigit = ss[0];
-        const onesDigit = ss[1];
+        // 시, 분, 초를 각각 10의 자리와 1의 자리로 분리
+        const hoursTens = hh[0];
+        const hoursOnes = hh[1];
+        const minutesTens = mm[0];
+        const minutesOnes = mm[1];
+        const secondsTens = ss[0];
+        const secondsOnes = ss[1];
         
-        sub = `<span class="time-label">남은 시간  -</span><span class="countdown-hours">${hh}</span>:<span class="countdown-minutes">${mm}</span>:<span class="countdown-seconds"><span class="tens-digit flip-container"><span class="flip-card">${tensDigit}</span></span><span class="ones-digit flip-container"><span class="flip-card">${onesDigit}</span></span></span>`;
+        sub = `<span class="time-label">남은 시간  -</span><span class="countdown-hours"><span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span></span>:<span class="countdown-minutes"><span class="minutes-tens flip-container"><span class="flip-card">${minutesTens}</span></span><span class="minutes-ones flip-container"><span class="flip-card">${minutesOnes}</span></span></span>:<span class="countdown-seconds"><span class="seconds-tens flip-container"><span class="flip-card">${secondsTens}</span></span><span class="seconds-ones flip-container"><span class="flip-card">${secondsOnes}</span></span></span>`;
       }
     }
     else if (status === 'PENDING_USER_SELECTED') {
@@ -290,7 +299,6 @@
       const st = window.appState.submissionTimes?.[key];
       if (st) {
         const d = new Date(st);
-        // 변경: 'M월 D일 HH:MM' 표기
         const month = d.getMonth() + 1;
         const date = d.getDate();
         const hour = d.getHours().toString().padStart(2, '0');
@@ -333,7 +341,7 @@
   }
 
   // ==============================
-  // 8. 제목·버튼·카운트다운 동기화 (개별 자릿수 애니메이션)
+  // 8. 제목·버튼·카운트다운 동기화 (모든 자릿수 애니메이션)
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
@@ -349,7 +357,7 @@
       $titleWrapper.addClass(parts.statusClass);
     }
 
-    // 카운트다운 상태 클래스 추가 및 개별 자릿수 애니메이션 처리
+    // 카운트다운 상태 클래스 추가 및 모든 자릿수 애니메이션 처리
     const key = dateKeys[currentIndex];
     const data = window.matchData[key] || {};
     const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
@@ -368,55 +376,96 @@
         const now = new Date();
         let diff = Math.max(0, Math.floor((target - now)/1000));
         
+        const hh = Math.floor(diff/3600).toString().padStart(2, '0');
+        const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
         const ss = String(diff%60).padStart(2,'0');
-        const currentTensDigit = ss[0];
-        const currentOnesDigit = ss[1];
         
-        // 10의 자리 애니메이션 처리
-        if (previousTensDigit !== null && previousTensDigit !== currentTensDigit) {
-          const $tensFlipCard = $('.tens-digit .flip-card');
-          if ($tensFlipCard.length) {
-            $tensFlipCard.addClass('flipping');
-            
-            // 애니메이션 중간 지점에서 텍스트 변경
-            setTimeout(() => {
-              $tensFlipCard.text(currentTensDigit);
-            }, 150);
-            
-            // 애니메이션 완료 후 클래스 제거
-            setTimeout(() => {
-              $tensFlipCard.removeClass('flipping');
-            }, 300);
+        const currentHoursTens = hh[0];
+        const currentHoursOnes = hh[1];
+        const currentMinutesTens = mm[0];
+        const currentMinutesOnes = mm[1];
+        const currentSecondsTens = ss[0];
+        const currentSecondsOnes = ss[1];
+        
+        // 시간 - 10의 자리 애니메이션 처리
+        if (previousHoursTens !== null && previousHoursTens !== currentHoursTens) {
+          const $flipCard = $('.hours-tens .flip-card');
+          if ($flipCard.length) {
+            $flipCard.addClass('flipping');
+            setTimeout(() => $flipCard.text(currentHoursTens), 150);
+            setTimeout(() => $flipCard.removeClass('flipping'), 300);
           }
-        } else if (previousTensDigit === null) {
-          // 최초 로드시 애니메이션 없이 텍스트만 설정
-          $('.tens-digit .flip-card').text(currentTensDigit);
+        } else if (previousHoursTens === null) {
+          $('.hours-tens .flip-card').text(currentHoursTens);
         }
         
-        // 1의 자리 애니메이션 처리
-        if (previousOnesDigit !== null && previousOnesDigit !== currentOnesDigit) {
-          const $onesFlipCard = $('.ones-digit .flip-card');
-          if ($onesFlipCard.length) {
-            $onesFlipCard.addClass('flipping');
-            
-            // 애니메이션 중간 지점에서 텍스트 변경
-            setTimeout(() => {
-              $onesFlipCard.text(currentOnesDigit);
-            }, 150);
-            
-            // 애니메이션 완료 후 클래스 제거
-            setTimeout(() => {
-              $onesFlipCard.removeClass('flipping');
-            }, 300);
+        // 시간 - 1의 자리 애니메이션 처리
+        if (previousHoursOnes !== null && previousHoursOnes !== currentHoursOnes) {
+          const $flipCard = $('.hours-ones .flip-card');
+          if ($flipCard.length) {
+            $flipCard.addClass('flipping');
+            setTimeout(() => $flipCard.text(currentHoursOnes), 150);
+            setTimeout(() => $flipCard.removeClass('flipping'), 300);
           }
-        } else if (previousOnesDigit === null) {
-          // 최초 로드시 애니메이션 없이 텍스트만 설정
-          $('.ones-digit .flip-card').text(currentOnesDigit);
+        } else if (previousHoursOnes === null) {
+          $('.hours-ones .flip-card').text(currentHoursOnes);
         }
         
-        // 이전 값 업데이트
-        previousTensDigit = currentTensDigit;
-        previousOnesDigit = currentOnesDigit;
+        // 분 - 10의 자리 애니메이션 처리
+        if (previousMinutesTens !== null && previousMinutesTens !== currentMinutesTens) {
+          const $flipCard = $('.minutes-tens .flip-card');
+          if ($flipCard.length) {
+            $flipCard.addClass('flipping');
+            setTimeout(() => $flipCard.text(currentMinutesTens), 150);
+            setTimeout(() => $flipCard.removeClass('flipping'), 300);
+          }
+        } else if (previousMinutesTens === null) {
+          $('.minutes-tens .flip-card').text(currentMinutesTens);
+        }
+        
+        // 분 - 1의 자리 애니메이션 처리
+        if (previousMinutesOnes !== null && previousMinutesOnes !== currentMinutesOnes) {
+          const $flipCard = $('.minutes-ones .flip-card');
+          if ($flipCard.length) {
+            $flipCard.addClass('flipping');
+            setTimeout(() => $flipCard.text(currentMinutesOnes), 150);
+            setTimeout(() => $flipCard.removeClass('flipping'), 300);
+          }
+        } else if (previousMinutesOnes === null) {
+          $('.minutes-ones .flip-card').text(currentMinutesOnes);
+        }
+        
+        // 초 - 10의 자리 애니메이션 처리
+        if (previousSecondsTens !== null && previousSecondsTens !== currentSecondsTens) {
+          const $flipCard = $('.seconds-tens .flip-card');
+          if ($flipCard.length) {
+            $flipCard.addClass('flipping');
+            setTimeout(() => $flipCard.text(currentSecondsTens), 150);
+            setTimeout(() => $flipCard.removeClass('flipping'), 300);
+          }
+        } else if (previousSecondsTens === null) {
+          $('.seconds-tens .flip-card').text(currentSecondsTens);
+        }
+        
+        // 초 - 1의 자리 애니메이션 처리
+        if (previousSecondsOnes !== null && previousSecondsOnes !== currentSecondsOnes) {
+          const $flipCard = $('.seconds-ones .flip-card');
+          if ($flipCard.length) {
+            $flipCard.addClass('flipping');
+            setTimeout(() => $flipCard.text(currentSecondsOnes), 150);
+            setTimeout(() => $flipCard.removeClass('flipping'), 300);
+          }
+        } else if (previousSecondsOnes === null) {
+          $('.seconds-ones .flip-card').text(currentSecondsOnes);
+        }
+        
+        // 이전 값들 업데이트
+        previousHoursTens = currentHoursTens;
+        previousHoursOnes = currentHoursOnes;
+        previousMinutesTens = currentMinutesTens;
+        previousMinutesOnes = currentMinutesOnes;
+        previousSecondsTens = currentSecondsTens;
+        previousSecondsOnes = currentSecondsOnes;
         
         // 10초 이하일 때 urgent 클래스 추가
         if (diff <= 10 && diff > 0) {
@@ -428,9 +477,13 @@
         }
       }
     } else {
-      // 카운트다운이 아닌 상태에서는 이전 값 리셋
-      previousTensDigit = null;
-      previousOnesDigit = null;
+      // 카운트다운이 아닌 상태에서는 이전 값들 리셋
+      previousHoursTens = null;
+      previousHoursOnes = null;
+      previousMinutesTens = null;
+      previousMinutesOnes = null;
+      previousSecondsTens = null;
+      previousSecondsOnes = null;
     }
 
     let btnText = parts.main;
