@@ -654,18 +654,18 @@ body {
 
 /* 경기 없음, 이벤트 참여 불가 */
 .title-wrapper.status-no-games .title-main {
-  color: #888888;
+  color: #FFFFFF;
 }
 .title-wrapper.status-no-games .title-sub {
-  color: #BBBBBB;
+  color: ##ffd93d;
 }
 
 /* 2경기 이상 이벤트 취소 */
 .title-wrapper.status-cancelled .title-main {
-  color: #FF6B6B;
+  color: #FFFFFF;
 }
 .title-wrapper.status-cancelled .title-sub {
-  color: #FFB3B3;
+  color: ##ffd93d;
 }
 
 /* 이벤트 대기, 유저 미선택 */
@@ -674,7 +674,7 @@ body {
   animation: pulse 2s infinite;
 }
 .title-wrapper.status-pending-unselected .title-sub {
-  color: #FF4444;
+  color: ##ffd93d;
   font-weight: bold;
 }
 
@@ -683,7 +683,7 @@ body {
   color: #4CAF50;
 }
 .title-wrapper.status-pending-selected .title-sub {
-  color: #81C784;
+  color: ##ffd93d;
 }
 
 /* 이벤트 진행, 유저 미선택 */
@@ -691,7 +691,7 @@ body {
   color: #FF9800;
 }
 .title-wrapper.status-progress-unselected .title-sub {
-  color: #FFB74D;
+  color: ##ffd93d;
 }
 
 /* 이벤트 진행, 유저 선택 완료 */
@@ -699,7 +699,7 @@ body {
   color: #FFFFFF;  
 }
 .title-wrapper.status-progress-selected .title-sub {
-  color: #64B5F6;
+  color: ##ffd93d;
 }
 
 /* 이벤트 종료, 유저 성공 */
@@ -708,7 +708,7 @@ body {
   animation: sparkle 2s infinite;
 }
 .title-wrapper.status-completed-success .title-sub {
-  color: #FFF176;
+  color: ##ffd93d;
 }
 
 /* 이벤트 종료, 유저 실패 */
@@ -716,7 +716,7 @@ body {
   color: #F44336;
 }
 .title-wrapper.status-completed-fail .title-sub {
-  color: #EF5350;
+  color: ##ffd93d;
 }
 
 /* 이벤트 종료, 유저 미선택 */
@@ -724,7 +724,7 @@ body {
   color: #9E9E9E;
 }
 .title-wrapper.status-completed-unselected .title-sub {
-  color: #BDBDBD;
+  color: ##ffd93d;
 }
 
 /* 애니메이션 효과 */
