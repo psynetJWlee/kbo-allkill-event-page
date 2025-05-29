@@ -1,10 +1,3 @@
-
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
-
-body {
-  font-family: 'IBM Plex Mono', monospace;
-}
-
 @font-face {
     font-family: 'GmarketSansMedium';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
@@ -20,7 +13,7 @@ body {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'GmarketSansMedium';
   background-color: #FFFFFF;
   color: #000000;
 }
