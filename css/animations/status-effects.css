@@ -22,24 +22,24 @@
   to { transform: rotate(360deg); }
 }
 
-/* EventStatus CSS Classes */
-.title-wrapper.status-no-games .title-main {
-  color: var(--white);
-}
-
-.title-wrapper.status-no-games .title-sub {
-  color: #ffd93d;
-}
-
+/* Common EventStatus CSS Classes - Group of 5 statuses */
+.title-wrapper.status-progress-unselected .title-main,
+.title-wrapper.status-completed-fail .title-main,
+.title-wrapper.status-completed-unselected .title-main,
+.title-wrapper.status-no-games .title-main,
 .title-wrapper.status-cancelled .title-main {
   color: var(--white);
 }
 
+.title-wrapper.status-progress-unselected .title-sub,
+.title-wrapper.status-completed-fail .title-sub,
+.title-wrapper.status-completed-unselected .title-sub,
+.title-wrapper.status-no-games .title-sub,
 .title-wrapper.status-cancelled .title-sub {
   color: #ffd93d;
 }
 
-/* Enhanced Styles for Pending Unselected */
+/* Enhanced Styles for Pending Unselected - Special animations */
 .title-wrapper.status-pending-unselected {
   min-height: 200px;
   display: flex;
