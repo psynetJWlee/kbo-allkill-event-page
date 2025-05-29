@@ -7,7 +7,7 @@
 //이벤트 종료, 유저 실패	COMPLETED_USER_FAIL//
 //이벤트 종료, 유저 미선택	COMPLETED_USER_NOT_SELECTED//
 //경기 없음, 이벤트 참여 불가	NO_GAMES_EVENT_DISABLED//
-//2경기 이상 이벤트 취소	EVENT_CANCELLED_MULTI_GAMES//
+//3경기 이상 이벤트 취소	EVENT_CANCELLED_MULTI_GAMES//
 
 
 (function() {
@@ -551,6 +551,15 @@
         },
         {
           gameId: "20250602-1",
+          home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 721 },
+          draw: { teamName: "무승부", votes: 540 },
+          away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 1640 },
+          status: "우천취소",
+          startTime: "17:30",
+          userSelection: "none"
+        },
+        {
+          gameId: "20250602-4",
           home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 721 },
           draw: { teamName: "무승부", votes: 540 },
           away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 1640 },
