@@ -1,3 +1,4 @@
+
 // teamSelection.js
 
 (function($) {
@@ -89,11 +90,26 @@
   }
 
   function renderSection() {
+    // 현재 날짜의 eventStatus 확인
+    const key = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const effStatus = typeof localEventStatusMap[key] !== 'undefined' 
+      ? localEventStatusMap[key] 
+      : data.eventStatus;
+
+    // IN_PROGRESS_USER_SELECTED일 때만 spinner 추가
+    const spinnerHtml = effStatus === 'IN_PROGRESS_USER_SELECTED' 
+      ? '<div class="spinner"></div>' 
+      : '';
+
     const html = `
       <div id="${sectionId}" class="team-selection-section">
         <div class="title-wrapper">
           <h2 class="team-selection-title">
-            <span class="title-main"></span>
+            <div class="title-main-row">
+              ${spinnerHtml}
+              <span class="title-main"></span>
+            </div>
             <span class="title-sub"></span>
           </h2>
         </div>
@@ -224,20 +240,23 @@
     let status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
     const games  = data.games || [];
     const now    = new Date();
-    let main = '', sub = '';
+    let main = '', sub = '', statusClass = '';
 
     // === [NO_GAMES_EVENT_DISABLED 상태] ===
     if (status === 'NO_GAMES_EVENT_DISABLED') {
       main = '오늘은 쉬어요';
       sub = '다음 이벤트에 참여하세요!';
+      statusClass = 'status-no-games';
     }
     // === [EVENT_CANCELLED_MULTI_GAMES 상태] ===
     else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
       main = '다음 올킬 도전 !';
       sub = '경기 취소 2개 발생 시 당일 무효 !';
+      statusClass = 'status-cancelled';
     }
     else if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
+      statusClass = 'status-pending-unselected';
       // 카운트다운 초(sec) 포함
       if (games.length && games[0].startTime && games[0].startTime !== "null") {
         const [h, m] = games[0].startTime.split(':').map(Number);
@@ -251,6 +270,7 @@
     }
     else if (status === 'PENDING_USER_SELECTED') {
       main = '제출 완료';
+      statusClass = 'status-pending-selected';
       const st = window.appState.submissionTimes?.[key];
       if (st) {
         const d = new Date(st);
@@ -267,30 +287,35 @@
     else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
       main = '이벤트 참여 종료!';
       sub  = '다음 이벤트 도전 !';
+      statusClass = 'status-progress-unselected';
     }
     else if (status === 'IN_PROGRESS_USER_SELECTED') {
       main = '채점 중!';
+      statusClass = 'status-progress-selected';
       const n = games.filter(g => g.eventResult==='success').length;
       sub  = `${n}경기 성공 !`;
     }
     else if (status === 'COMPLETED_USER_SUCCESS') {
       main = '올킬 성공 !';
       sub  = '축하합니다 !';
+      statusClass = 'status-completed-success';
     }
     else if (status === 'COMPLETED_USER_FAIL') {
       main = '다음 경기 도전!';
+      statusClass = 'status-completed-fail';
       const n = games.filter(g => g.eventResult==='success').length;
       sub  = `${n}경기 성공 !`;
     }
     else if (status === 'COMPLETED_USER_NOT_SELECTED') {
       main = '다음 경기 도전!';
       sub  = '다음 이벤트는 꼭 참여하세요!';
+      statusClass = 'status-completed-unselected';
     }
     else {
-      main = ''; sub = '';
+      main = ''; sub = ''; statusClass = '';
     }
 
-    return { main, sub };
+    return { main, sub, statusClass };
   }
 
   // ==============================
@@ -300,6 +325,15 @@
     const parts = computeTitleParts();
     $('.title-main').text(parts.main);
     $('.title-sub').text(parts.sub);
+
+    // 기존 status 클래스 제거 후 새로운 클래스 적용
+    const $titleWrapper = $('.title-wrapper');
+    $titleWrapper.removeClass(function(index, className) {
+      return (className.match(/\bstatus-\S+/g) || []).join(' ');
+    });
+    if (parts.statusClass) {
+      $titleWrapper.addClass(parts.statusClass);
+    }
 
     let btnText = parts.main;
     const key = dateKeys[currentIndex];
