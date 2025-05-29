@@ -127,7 +127,7 @@
 
 /* Enhanced Styles for Completed Success - Trophy and Star animations */
 .title-wrapper.status-completed-success {
-  min-height: 200px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
