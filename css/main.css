@@ -684,7 +684,6 @@ body {
   font-weight: 900;
   text-align: center;
   line-height: 1.2; /* 라인 높이 조정 */
-  margin-bottom: 20px; /* 하단 마진 추가 */
   background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
   background-size: 400% 400%;
   -webkit-background-clip: text;
