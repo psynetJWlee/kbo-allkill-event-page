@@ -619,7 +619,8 @@ body {
 .team-selection-title .title-main {
   font-size: 40px;
   color: #FFFFFF;
-  font-weight: bold; 
+  font-weight: bold;
+  height: auto;
 }
 .team-selection-title .title-sub {
   font-size: 30px;
