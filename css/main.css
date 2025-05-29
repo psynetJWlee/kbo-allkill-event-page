@@ -634,6 +634,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 15px;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .spinner {
