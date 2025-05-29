@@ -1,0 +1,142 @@
+
+/* My Prize Section */
+.my-prize-section {
+  width: 100%;
+  background-color: var(--darker-blue);
+  padding: var(--spacing-xl) 0;
+}
+
+.my-prize-container {
+  margin: 0 var(--spacing-2xl);
+}
+
+.my-prize-title {
+  display: inline-block;
+  font-size: var(--font-size-3xl);
+  font-weight: bold;
+  color: var(--white);
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-3xl);
+  position: relative;
+  text-align: center;
+  width: 100%;
+  font-family: var(--font-primary);
+}
+
+.my-prize-title::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--gold);
+  margin-top: 5px;
+}
+
+.prize-group {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--white);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-lg);
+  margin-bottom: 27px;
+  background-color: var(--background-card);
+}
+
+.member-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-avatar {
+  height: var(--avatar-size);
+  width: var(--avatar-size);
+  border-radius: 50%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user-nickname {
+  font-size: var(--font-size-xl);
+  color: var(--white);
+  margin-left: 10px;
+}
+
+.user-text {
+  font-size: var(--font-size-base);
+  color: var(--white);
+  margin-left: 5px;
+}
+
+.prize-amount {
+  font-size: var(--font-size-3xl);
+  color: var(--gold-alt);
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.request-button {
+  font-family: var(--font-primary);
+  background-color: var(--gold-alt);
+  color: #121212;
+  font-size: var(--font-size-2xl);
+  width: 100%;
+  border-radius: var(--radius-lg);
+  padding: 15px var(--spacing-lg);
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.prize-history {
+  margin-bottom: var(--spacing-xl);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.history-title {
+  font-size: var(--font-size-lg);
+  color: var(--white);
+  font-weight: bold;
+}
+
+.total-prize {
+  font-size: var(--font-size-xl);
+  color: var(--gold-alt);
+  font-weight: bold;
+}
+
+.history-items {
+  margin-bottom: 46px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+
+.history-date {
+  font-size: var(--font-size-base);
+  color: var(--white);
+  opacity: 0.7;
+}
+
+.daily-prize {
+  font-size: var(--font-size-xl);
+  color: var(--gold-alt);  
+}
+
+.daily-prize.negative {
+  font-size: var(--font-size-xl);
+  color: var(--white);
+}

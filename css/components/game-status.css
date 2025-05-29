@@ -1,0 +1,129 @@
+
+/* Game Status and Navigation */
+.game-status {
+  position: relative;
+  flex: 0 0 100px;
+  display: block;
+  text-align: center;
+}
+
+.game-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-row.row1 .team-logo-small {
+  width: var(--team-box-size);
+  height: 42px;
+  object-fit: contain;
+}
+
+.game-row.row1 .start-time,
+.game-row.row1 .status-text {
+  display: inline-block;
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  color: var(--white);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--spacing-xs);
+  text-align: center;
+  font-family: var(--font-primary);
+}
+
+.game-row.row1 .score {
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  color: var(--white);
+  font-family: var(--font-primary);
+}
+
+.game-row.row1 .score.higher {
+  font-size: var(--font-size-md);
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.event-overlay.success,
+.event-overlay.fail {
+  top: auto;
+  transform: translateX(-50%);
+  bottom: var(--spacing-xl);
+  left: 50%;
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  width: 140px;
+  height: auto;
+}
+
+.red-circle-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.red-circle-image {
+  width: 100px;
+}
+
+.date-navigation {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 21px;
+  height: 50px;
+  color: var(--white);
+}
+
+.date-navigation .date-nav-prev { justify-self: start; }
+.date-navigation .date-nav-next { justify-self: end; }
+
+.date-nav-prev, .date-nav-next {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.arrow-left {
+  width: 15px;
+  height: 15px;
+  border-top: 7.5px solid transparent;
+  border-bottom: 7.5px solid transparent;
+  border-right: 10px solid var(--white);
+}
+
+.arrow-right {
+  width: 15px;
+  height: 15px;
+  border-top: 7.5px solid transparent;
+  border-bottom: 7.5px solid transparent;
+  border-left: 10px solid var(--white);
+}
+
+.prev-day, .next-day {
+  font-size: var(--font-size-lg);
+}
+
+.prev-day {
+  margin-left: 18px;
+}
+
+.next-day {
+  margin-right: 18px;
+}
+
+.current-day {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  cursor: pointer;  
+}
+
+.team-selection-submit {
+  margin-top: var(--spacing-3xl);
+  margin-bottom: var(--spacing-3xl);
+  display: flex;
+  justify-content: center;
+}

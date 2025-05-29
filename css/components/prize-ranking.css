@@ -1,0 +1,195 @@
+
+/* Prize Ranking Section */
+.prize-ranking-section {
+  width: 100%;
+  background-color: var(--darkest-blue);
+  padding: var(--spacing-3xl) var(--spacing-lg);
+}
+
+.ranking-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ranking-title {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  font-size: var(--font-size-3xl);
+  font-family: var(--font-primary);
+  font-weight: bold;
+  color: var(--white);
+  position: relative;
+}
+
+.ranking-title::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--gold);
+  margin-top: 5px;
+}
+
+.my-ranking {
+  font-family: var(--font-primary);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.7);
+  align-self: center;
+  display: block;
+  width: fit-content;
+  position: relative;
+}
+
+.my-ranking-number {
+  font-family: var(--font-primary);
+  color: var(--white);
+}
+
+.user-icon {
+  display: inline-block;
+  margin-left: var(--spacing-sm);
+  width: 10px;
+  height: 12px;
+}
+
+.ranking-tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+  width: 100%;
+}
+
+.tabs-list {
+  display: flex;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  height: auto;
+  padding: var(--spacing-xs);
+  width: 100%;
+}
+
+.tab {
+  flex: 1;
+  font-size: var(--font-size-lg);
+  padding: var(--spacing-sm) var(--spacing-2xl);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  text-align: center;
+  font-family: var(--font-primary);
+}
+
+.tab.active {
+  background-color: var(--white);
+  color: var(--darkest-blue);
+}
+
+.tab.inactive {
+  background-color: transparent;
+  color: var(--white);
+}
+
+.date-range {
+  text-align: center;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-base);
+  color: var(--white);
+  opacity: 0.7;
+}
+
+.ranking-list {
+  margin-top: var(--spacing-lg);
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.ranking-item.is-me {
+  outline: 3px solid rgba(255, 215, 0, 1);
+  outline-offset: -3px;
+}
+
+.ranking-item.is-me .ranking-nickname {
+  color: var(--gold-alt);
+}
+
+.rank-number {
+  width: var(--avatar-size);
+  text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--white);
+  opacity: 0.7;
+  font-weight: 800;
+}
+
+.rank-number.top-rank {
+  font-size: var(--font-size-xl);
+  color: #FFC700;
+  opacity: 1;
+  font-weight: 800;
+}
+
+.profile-img {
+  width: var(--profile-img-size);
+  height: var(--profile-img-size);
+  border-radius: 50%;
+  margin-left: 13px;
+  object-fit: cover;
+  border: 1px solid var(--white);
+  box-sizing: border-box;
+}
+
+.ranking-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 7px;
+  flex: 1;
+}
+
+.ranking-nickname {
+  font-size: var(--font-size-md);
+  color: var(--white);
+}
+
+.ranking-streak {
+  font-size: var(--font-size-base);
+  color: var(--gold);
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.ranking-prize {
+  font-size: var(--font-size-md);
+  color: var(--gold);
+  text-align: right;
+  margin-left: auto;
+}
+
+.ranking-note-title {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  text-align: center;
+  margin: var(--spacing-lg);
+  color: var(--white);
+}
+
+.ranking-note {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  color: var(--white);
+  opacity: 0.7;
+  text-align: center;
+  margin: var(--spacing-lg) 0;
+  line-height: 1.4;
+}

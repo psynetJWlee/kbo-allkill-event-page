@@ -1,0 +1,62 @@
+
+:root {
+  /* Colors */
+  --primary-blue: #008ED0;
+  --dark-blue: #004B70;
+  --darker-blue: #003B5D;
+  --darkest-blue: #00283F;
+  --navy: #001A29;
+  --background-dark: #121212;
+  --background-darker: #1C1C1C;
+  --background-card: #00283C;
+  --white: #FFFFFF;
+  --black: #000000;
+  --gold: #FFC736;
+  --gold-alt: #FFD700;
+  --gold-gradient: #FFA500;
+  --gold-light: #FFB347;
+  --red: #C13D3D;
+  --blue-selection: #047DBF;
+  --gray: #777777;
+  --gray-light: #BBBBBB;
+  --gray-border: #545454;
+  --red-urgent: #ff4757;
+  --green-success: #2ed573;
+  
+  /* Typography */
+  --font-primary: 'GmarketSansMedium', sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 35px;
+  --font-size-5xl: 40px;
+  --font-size-6xl: 50px;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 30px;
+  
+  /* Border radius */
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 50px;
+  --radius-full: 9999px;
+  
+  /* Dimensions */
+  --max-width: 430px;
+  --event-section-height: 382px;
+  --team-logo-size: 32px;
+  --team-box-size: 90px;
+  --avatar-size: 32px;
+  --profile-img-size: 38px;
+}

@@ -1,0 +1,121 @@
+
+/* Title Main Row with Spinner */
+.title-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  height: auto;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid var(--gold-alt);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* EventStatus CSS Classes */
+.title-wrapper.status-no-games .title-main {
+  color: var(--white);
+}
+
+.title-wrapper.status-no-games .title-sub {
+  color: #ffd93d;
+}
+
+.title-wrapper.status-cancelled .title-main {
+  color: var(--white);
+}
+
+.title-wrapper.status-cancelled .title-sub {
+  color: #ffd93d;
+}
+
+/* Enhanced Styles for Pending Unselected */
+.title-wrapper.status-pending-unselected {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-wrapper.status-pending-unselected .title-main {
+  font-size: 4rem;
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.2;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowFlow 2s ease-in-out infinite, bounce 1.5s ease-in-out infinite;  
+}
+
+.title-wrapper.status-pending-unselected .title-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  color: #ffd93d;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.title-wrapper.status-pending-unselected .title-sub.urgent {
+  color: var(--red-urgent) !important;
+  animation: urgentPulse 0.4s ease-in-out infinite alternate;
+}
+
+.title-wrapper.status-pending-unselected .title-sub.completed {
+  color: var(--green-success) !important;
+  animation: completionCelebration 1s ease-in-out infinite;
+}
+
+@keyframes urgentPulse {
+  from { 
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+  }
+  to { 
+    transform: scale(1.1);
+    text-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
+  }
+}
+
+@keyframes completionCelebration {
+  0%, 100% { 
+    transform: scale(1);
+    text-shadow: 0 0 15px rgba(46, 213, 115, 0.6);
+  }
+  50% { 
+    transform: scale(1.15);
+    text-shadow: 0 0 25px rgba(46, 213, 115, 0.9);
+  }
+}
+
+@keyframes rainbowFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { 
+    transform: translateY(0); 
+  }
+  40% { 
+    transform: translateY(-20px); 
+  }
+  60% { 
+    transform: translateY(-10px); 
+  }
+}

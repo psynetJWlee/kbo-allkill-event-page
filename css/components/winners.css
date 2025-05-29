@@ -1,0 +1,85 @@
+
+/* Winners Section */
+.winners-section {
+  width: 100%;
+  background-color: var(--dark-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 8px;
+}
+
+.winners-title {
+  margin-bottom: var(--spacing-lg);
+}
+
+.winners-count {
+  font-size: var(--font-size-4xl);
+  color: var(--white);
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-primary);
+}
+
+.member-list {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.member-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  margin-bottom: 10px;
+  background-color: var(--navy);
+}
+
+.member-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.member-avatar {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.member-nickname {
+  font-size: var(--font-size-xl);
+  font-weight: bold; 
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.member-amount {
+  font-size: var(--font-size-3xl);
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-family: var(--font-primary);
+}
+
+.unit-label {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  color: var(--white);
+  text-align: right;
+}

@@ -15,6 +15,8 @@
   const submitBtnPlaceholder = '제출하기';
 
   let countdownTimerId = null;
+  let previousTensDigit = null; // 10의 자리 추적
+  let previousOnesDigit = null; // 1의 자리 추적
 
   window.appState.submissionTimes = window.appState.submissionTimes || {};
   let localEventStatusMap = {};
@@ -66,10 +68,19 @@
     const prevKey = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
     const nextKey = currentIndex < dateKeys.length - 1 ? dateKeys[currentIndex + 1] : '';
 
+    // prev/next 버튼용 함수 (기존 방식 유지)
     function dayLabel(k) {
       if (!k) return '';
       if (k === todayKey) return 'Today';
       return k.split('-')[2];
+    }
+
+    // 가운데 현재 날짜용 함수 (월/일 형식)
+    function currentDayLabel(k) {
+      if (!k) return '';
+      if (k === todayKey) return 'Today';
+      const [year, month, day] = k.split('-');
+      return `${parseInt(month)}/${parseInt(day)}`;
     }
 
     const html = `
@@ -78,7 +89,7 @@
           <div class="arrow-left"></div>
           <span class="prev-day">${dayLabel(prevKey)}</span>
         </div>
-        <span id="${currentDayId}" class="current-day${dateKeys[currentIndex]===todayKey ? ' today-active' : ''}" style="cursor:pointer;">${dayLabel(dateKeys[currentIndex])}</span>
+        <span id="${currentDayId}" class="current-day${dateKeys[currentIndex]===todayKey ? ' today-active' : ''}" style="cursor:pointer;">${currentDayLabel(dateKeys[currentIndex])}</span>
         <div id="${nextBtnId}" class="date-nav-next" ${nextKey ? '' : 'style="visibility:hidden;"'}>
           <span class="next-day">${dayLabel(nextKey)}</span>
           <div class="arrow-right"></div>
@@ -231,7 +242,7 @@
   }
 
   // ==============================
-  // 7. eventStatus 기반 title/sub 계산 (countdown 초단위)
+  // 7. eventStatus 기반 title/sub 계산 (개별 자릿수 애니메이션)
   // ==============================
   function computeTitleParts() {
     const key  = dateKeys[currentIndex];
@@ -256,15 +267,21 @@
     else if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
       statusClass = 'status-pending-unselected';
-      // 카운트다운 초(sec) 포함
+      // 카운트다운 - 개별 자릿수로 분리된 HTML
       if (games.length && games[0].startTime && games[0].startTime !== "null") {
         const [h, m] = games[0].startTime.split(':').map(Number);
         const [Y,Mo,D]= key.split('-').map(Number);
         const target = new Date(Y,Mo-1,D,h,m);
         let diff   = Math.max(0, Math.floor((target - now)/1000));
-        const hh = Math.floor(diff/3600), mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
+        const hh = Math.floor(diff/3600);
+        const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
         const ss = String(diff%60).padStart(2,'0');
-        sub = `남은 시간 -${hh}:${mm}:${ss}`;
+        
+        // 초를 10의 자리와 1의 자리로 분리
+        const tensDigit = ss[0];
+        const onesDigit = ss[1];
+        
+        sub = `<span class="time-label">남은 시간 -</span><span class="countdown-hours">${hh}</span>:<span class="countdown-minutes">${mm}</span>:<span class="countdown-seconds"><span class="tens-digit flip-container"><span class="flip-card">${tensDigit}</span></span><span class="ones-digit flip-container"><span class="flip-card">${onesDigit}</span></span></span>`;
       }
     }
     else if (status === 'PENDING_USER_SELECTED') {
@@ -273,8 +290,6 @@
       const st = window.appState.submissionTimes?.[key];
       if (st) {
         const d = new Date(st);
-        // 기존: 시:분만 표기 
-        // sub = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
         // 변경: 'M월 D일 HH:MM' 표기
         const month = d.getMonth() + 1;
         const date = d.getDate();
@@ -318,12 +333,12 @@
   }
 
   // ==============================
-  // 8. 제목·버튼·카운트다운 동기화 (업데이트)
+  // 8. 제목·버튼·카운트다운 동기화 (개별 자릿수 애니메이션)
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
     $('.title-main').text(parts.main);
-    $('.title-sub').text(parts.sub);
+    $('.title-sub').html(parts.sub); // HTML 사용으로 변경
 
     // 기존 status 클래스 제거 후 새로운 클래스 적용
     const $titleWrapper = $('.title-wrapper');
@@ -334,8 +349,91 @@
       $titleWrapper.addClass(parts.statusClass);
     }
 
-    let btnText = parts.main;
+    // 카운트다운 상태 클래스 추가 및 개별 자릿수 애니메이션 처리
     const key = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
+    
+    if (status === 'PENDING_USER_NOT_SELECTED') {
+      const games = data.games || [];
+      const $titleSub = $('.title-sub');
+      
+      // 기존 상태 클래스 제거
+      $titleSub.removeClass('urgent completed');
+      
+      if (games.length && games[0].startTime && games[0].startTime !== "null") {
+        const [h, m] = games[0].startTime.split(':').map(Number);
+        const [Y,Mo,D]= key.split('-').map(Number);
+        const target = new Date(Y,Mo-1,D,h,m);
+        const now = new Date();
+        let diff = Math.max(0, Math.floor((target - now)/1000));
+        
+        const ss = String(diff%60).padStart(2,'0');
+        const currentTensDigit = ss[0];
+        const currentOnesDigit = ss[1];
+        
+        // 10의 자리 애니메이션 처리
+        if (previousTensDigit !== null && previousTensDigit !== currentTensDigit) {
+          const $tensFlipCard = $('.tens-digit .flip-card');
+          if ($tensFlipCard.length) {
+            $tensFlipCard.addClass('flipping');
+            
+            // 애니메이션 중간 지점에서 텍스트 변경
+            setTimeout(() => {
+              $tensFlipCard.text(currentTensDigit);
+            }, 150);
+            
+            // 애니메이션 완료 후 클래스 제거
+            setTimeout(() => {
+              $tensFlipCard.removeClass('flipping');
+            }, 300);
+          }
+        } else if (previousTensDigit === null) {
+          // 최초 로드시 애니메이션 없이 텍스트만 설정
+          $('.tens-digit .flip-card').text(currentTensDigit);
+        }
+        
+        // 1의 자리 애니메이션 처리
+        if (previousOnesDigit !== null && previousOnesDigit !== currentOnesDigit) {
+          const $onesFlipCard = $('.ones-digit .flip-card');
+          if ($onesFlipCard.length) {
+            $onesFlipCard.addClass('flipping');
+            
+            // 애니메이션 중간 지점에서 텍스트 변경
+            setTimeout(() => {
+              $onesFlipCard.text(currentOnesDigit);
+            }, 150);
+            
+            // 애니메이션 완료 후 클래스 제거
+            setTimeout(() => {
+              $onesFlipCard.removeClass('flipping');
+            }, 300);
+          }
+        } else if (previousOnesDigit === null) {
+          // 최초 로드시 애니메이션 없이 텍스트만 설정
+          $('.ones-digit .flip-card').text(currentOnesDigit);
+        }
+        
+        // 이전 값 업데이트
+        previousTensDigit = currentTensDigit;
+        previousOnesDigit = currentOnesDigit;
+        
+        // 10초 이하일 때 urgent 클래스 추가
+        if (diff <= 10 && diff > 0) {
+          $titleSub.addClass('urgent');
+        }
+        // 0초일 때 completed 클래스 추가
+        else if (diff === 0) {
+          $titleSub.addClass('completed');
+        }
+      }
+    } else {
+      // 카운트다운이 아닌 상태에서는 이전 값 리셋
+      previousTensDigit = null;
+      previousOnesDigit = null;
+    }
+
+    let btnText = parts.main;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined'
       ? localEventStatusMap[key] 
       : (window.matchData[key]?.eventStatus);
