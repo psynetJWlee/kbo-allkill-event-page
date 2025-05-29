@@ -323,7 +323,7 @@
           draw: { teamName: "무승부", votes: 6831 },
           away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 3304 },
           status: "경기전",
-          startTime: "18:00",
+          startTime: "11:43",
           userSelection: "none"
         },
         {
