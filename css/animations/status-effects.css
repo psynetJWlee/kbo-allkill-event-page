@@ -138,6 +138,20 @@
   margin-bottom: 10px;
   position: relative;
   animation: successBounce 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  color: white;
+}
+
+.title-wrapper.status-completed-success .title-main::before {
+  content: '🏆';
+  margin-right: 15px;
+}
+
+.title-wrapper.status-completed-success .title-main::after {
+  content: '🏆';
+  margin-left: 15px;
+}
+
+.title-wrapper.status-completed-success .title-main .allkill-text {
   background: linear-gradient(45deg, #ff6b6b, #ffd93d, #4ecdc4, #45b7d1);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -145,18 +159,6 @@
   background-clip: text;
   animation: gradientShift 3s ease-in-out infinite;
 }
-
-.title-wrapper.status-completed-success .title-main::before {
-  content: '🏆';
-  
-}
-
-.title-wrapper.status-completed-success .title-main::after {
-  content: '🏆';
-  
-}
-
-
 
 .title-wrapper.status-completed-success .title-sub {
   color: #ffd93d;
