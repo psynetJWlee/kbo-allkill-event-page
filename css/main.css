@@ -629,10 +629,17 @@ body {
   padding-bottom: 20px;
 }
 
-/* Countdown Flip Animation Styles */
+/* Enhanced Countdown Flip Animation Styles for Individual Digits */
 .countdown-seconds {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tens-digit,
+.ones-digit {
   display: inline-block;
   perspective: 1000px;
+  margin: 0 1px; /* 자릿수 간 간격 */
 }
 
 .flip-container {
@@ -647,6 +654,8 @@ body {
   transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
   transform-origin: center;
   backface-visibility: hidden;
+  min-width: 1em; /* 자릿수 너비 일정하게 유지 */
+  text-align: center;
 }
 
 .flip-card.flipping {
@@ -1182,18 +1191,13 @@ body {
     margin-right: 10px;
   }
   
-  .title-wrapper.status-pending-unselected .digit-card {
-    width: 25px;
-    height: 65px;
+  .tens-digit,
+  .ones-digit {
+    margin: 0 0.5px;
   }
   
-  .title-wrapper.status-pending-unselected .digit-face {
+  .flip-card {
     font-size: 1.6rem;
-  }
-  
-  .title-wrapper.status-pending-unselected .colon {
-    font-size: 1.6rem;
-    margin: 0 5px;
   }
 }
 
@@ -1218,17 +1222,12 @@ body {
     margin-right: 8px;
   }
   
-  .title-wrapper.status-pending-unselected .digit-card {
-    width: 20px;
-    height: 55px;
+  .tens-digit,
+  .ones-digit {
+    margin: 0 0.5px;
   }
   
-  .title-wrapper.status-pending-unselected .digit-face {
+  .flip-card {
     font-size: 1.4rem;
-  }
-  
-  .title-wrapper.status-pending-unselected .colon {
-    font-size: 1.4rem;
-    margin: 0 5px;
   }
 }
