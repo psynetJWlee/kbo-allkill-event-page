@@ -629,6 +629,52 @@ body {
   padding-bottom: 20px;
 }
 
+/* Countdown Flip Animation Styles */
+.countdown-seconds {
+  display: inline-block;
+  perspective: 1000px;
+}
+
+.flip-container {
+  display: inline-block;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.flip-card {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform-origin: center;
+  backface-visibility: hidden;
+}
+
+.flip-card.flipping {
+  animation: flipVertical 0.3s ease-in-out;
+}
+
+@keyframes flipVertical {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.time-label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.countdown-hours,
+.countdown-minutes {
+  display: inline-block;
+}
+
 /* Spinner for IN_PROGRESS_USER_SELECTED */
 .title-main-row {
   display: flex;
@@ -651,6 +697,8 @@ body {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+// ... keep existing code (EventStatus CSS classes through responsive adjustments) the same ...
 
 /* ===== EventStatus에 따른 CSS 클래스 ===== */
 

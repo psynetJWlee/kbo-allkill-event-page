@@ -15,6 +15,7 @@
   const submitBtnPlaceholder = '제출하기';
 
   let countdownTimerId = null;
+  let previousSecond = null; // 이전 초 값 추적
 
   window.appState.submissionTimes = window.appState.submissionTimes || {};
   let localEventStatusMap = {};
@@ -256,15 +257,16 @@
     else if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
       statusClass = 'status-pending-unselected';
-      // 카운트다운 초(sec) 포함
+      // 카운트다운 초(sec) 포함 - 구조화된 HTML로 변경
       if (games.length && games[0].startTime && games[0].startTime !== "null") {
         const [h, m] = games[0].startTime.split(':').map(Number);
         const [Y,Mo,D]= key.split('-').map(Number);
         const target = new Date(Y,Mo-1,D,h,m);
         let diff   = Math.max(0, Math.floor((target - now)/1000));
-        const hh = Math.floor(diff/3600), mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
+        const hh = Math.floor(diff/3600);
+        const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
         const ss = String(diff%60).padStart(2,'0');
-        sub = `남은 시간 -${hh}:${mm}:${ss}`;
+        sub = `<span class="time-label">남은 시간 -</span><span class="countdown-hours">${hh}</span>:<span class="countdown-minutes">${mm}</span>:<span class="countdown-seconds flip-container"><span class="flip-card">${ss}</span></span>`;
       }
     }
     else if (status === 'PENDING_USER_SELECTED') {
@@ -321,7 +323,7 @@
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
     $('.title-main').text(parts.main);
-    $('.title-sub').text(parts.sub);
+    $('.title-sub').html(parts.sub); // HTML 사용으로 변경
 
     // 기존 status 클래스 제거 후 새로운 클래스 적용
     const $titleWrapper = $('.title-wrapper');
@@ -332,7 +334,7 @@
       $titleWrapper.addClass(parts.statusClass);
     }
 
-    // 카운트다운 상태 클래스 추가
+    // 카운트다운 상태 클래스 추가 및 초 애니메이션 처리
     const key = dateKeys[currentIndex];
     const data = window.matchData[key] || {};
     const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
@@ -351,6 +353,31 @@
         const now = new Date();
         let diff = Math.max(0, Math.floor((target - now)/1000));
         
+        const currentSecond = String(diff%60).padStart(2,'0');
+        
+        // 초가 변경되었을 때 애니메이션 적용
+        if (previousSecond !== null && previousSecond !== currentSecond) {
+          const $flipCard = $('.countdown-seconds .flip-card');
+          if ($flipCard.length) {
+            $flipCard.addClass('flipping');
+            
+            // 애니메이션 중간 지점에서 텍스트 변경
+            setTimeout(() => {
+              $flipCard.text(currentSecond);
+            }, 150); // 애니메이션의 절반 지점
+            
+            // 애니메이션 완료 후 클래스 제거
+            setTimeout(() => {
+              $flipCard.removeClass('flipping');
+            }, 300);
+          }
+        } else if (previousSecond === null) {
+          // 최초 로드시 애니메이션 없이 텍스트만 설정
+          $('.countdown-seconds .flip-card').text(currentSecond);
+        }
+        
+        previousSecond = currentSecond;
+        
         // 10초 이하일 때 urgent 클래스 추가
         if (diff <= 10 && diff > 0) {
           $titleSub.addClass('urgent');
@@ -360,6 +387,9 @@
           $titleSub.addClass('completed');
         }
       }
+    } else {
+      // 카운트다운이 아닌 상태에서는 이전 초 값 리셋
+      previousSecond = null;
     }
 
     let btnText = parts.main;
