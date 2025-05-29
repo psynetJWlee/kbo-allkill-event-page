@@ -106,8 +106,10 @@
       <div id="${sectionId}" class="team-selection-section">
         <div class="title-wrapper">
           <h2 class="team-selection-title">
-            ${spinnerHtml}
-            <span class="title-main"></span>
+            <div class="title-main-row">
+              ${spinnerHtml}
+              <span class="title-main"></span>
+            </div>
             <span class="title-sub"></span>
           </h2>
         </div>
