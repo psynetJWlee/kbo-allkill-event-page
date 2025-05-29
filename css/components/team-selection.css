@@ -49,7 +49,6 @@
 }
 
 .kbo-selection-container {
-  min-height: 1000px;
   background-color: var(--background-dark);
   width: 100%;
 }
