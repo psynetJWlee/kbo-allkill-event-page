@@ -45,8 +45,7 @@
 .team-selection-title .title-sub {
   font-size: var(--font-size-3xl);
   color: var(--gold);
-  font-weight: bold; 
-  padding-bottom: var(--spacing-xl);
+  font-weight: bold;   
 }
 
 .kbo-selection-container {
