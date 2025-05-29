@@ -332,13 +332,13 @@
       statusClass = 'status-completed-success';
     }
     else if (status === 'COMPLETED_USER_FAIL') {
-      main = '다음 경기 도전!';
+      main = '다음 올킬 도전!';
       statusClass = 'status-completed-fail';
       const n = games.filter(g => g.eventResult==='success').length;
       sub  = `${n}경기 성공 !`;
     }
     else if (status === 'COMPLETED_USER_NOT_SELECTED') {
-      main = '다음 경기 도전!';
+      main = '다음 올킬 도전!';
       sub  = '투표 마감!';
       statusClass = 'status-completed-unselected';
     }
