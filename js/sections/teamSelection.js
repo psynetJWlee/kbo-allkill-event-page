@@ -266,7 +266,16 @@
     // === [EVENT_CANCELLED_MULTI_GAMES 상태] ===
     else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
       main = '다음 올킬 도전 !';
-      sub = '경기취소 3개 발생! 당일 무효 !';
+      
+      // 취소된 경기 상태 배열
+      const cancelledStatuses = ['경기지연', '경기중지', '서스펜드', '경기취소'];
+      
+      // 취소된 경기 개수 계산
+      const cancelledCount = games.filter(game => 
+        game.gameId !== 'null' && cancelledStatuses.includes(game.status)
+      ).length;
+      
+      sub = `경기취소 ${cancelledCount}개 발생! 당일 무효 !`;
       statusClass = 'status-cancelled';
     }
     else if (status === 'PENDING_USER_NOT_SELECTED') {
