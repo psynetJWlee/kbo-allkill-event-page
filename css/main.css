@@ -985,6 +985,7 @@ body {
   justify-content: center;
 }
 .mega-sparkle-btn {
+  font-family: 'GmarketSansMedium', sans-serif;
   background: linear-gradient(45deg, #FFD700, #FFA500, #FFB347);
   background-size: 200% 200%;
   color: #222;
