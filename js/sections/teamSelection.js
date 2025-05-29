@@ -266,7 +266,7 @@
     // === [EVENT_CANCELLED_MULTI_GAMES 상태] ===
     else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
       main = '다음 올킬 도전 !';
-      sub = ''경기취소 3개' 발생! 당일 무효 !';
+      sub = '경기취소 3개 발생! 당일 무효 !';
       statusClass = 'status-cancelled';
     }
     else if (status === 'PENDING_USER_NOT_SELECTED') {
