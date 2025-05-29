@@ -132,7 +132,7 @@
 }
 
 .title-wrapper.status-completed-success .title-main {
-  font-size: 4rem;
+  font-size: 40px;
   font-weight: 900;
   text-align: center;
   line-height: 1;
@@ -143,14 +143,12 @@
 
 .title-wrapper.status-completed-success .title-main::before {
   content: '🏆';
-  color: #ffd700;
   margin-right: 15px;
 }
 
 .title-wrapper.status-completed-success .title-main::after {
   content: '🏆';
-  color: #ffd700;
-  margin-left: 15px;
+   margin-left: 15px;
 }
 
 .title-wrapper.status-completed-success .title-main .allkill-text {
