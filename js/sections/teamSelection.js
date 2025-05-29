@@ -259,14 +259,14 @@
 
     // === [NO_GAMES_EVENT_DISABLED 상태] ===
     if (status === 'NO_GAMES_EVENT_DISABLED') {
-      main = '오늘은 쉬어요';
-      sub = '다음 이벤트에 참여하세요!';
+      main = '다음 올킬 도전 !';
+      sub = '경기가 없어요 !';
       statusClass = 'status-no-games';
     }
     // === [EVENT_CANCELLED_MULTI_GAMES 상태] ===
     else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
       main = '다음 올킬 도전 !';
-      sub = '경기 취소 2개 발생 시 당일 무효 !';
+      sub = ''경기취소 3개' 발생! 당일 무효 !';
       statusClass = 'status-cancelled';
     }
     else if (status === 'PENDING_USER_NOT_SELECTED') {
@@ -307,8 +307,8 @@
       }
     }
     else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
-      main = '이벤트 참여 종료!';
-      sub  = '다음 이벤트 도전 !';
+      main = '다음 올킬 도전';
+      sub  = '투표 마감 !';
       statusClass = 'status-progress-unselected';
     }
     else if (status === 'IN_PROGRESS_USER_SELECTED') {
@@ -318,8 +318,8 @@
       sub  = `${n}경기 성공 !`;
     }
     else if (status === 'COMPLETED_USER_SUCCESS') {
-      main = '올킬 성공 !';
-      sub  = '축하합니다 !';
+      main = 'ALL KILL!';
+      sub  = '모든 경기 성공 !';
       statusClass = 'status-completed-success';
     }
     else if (status === 'COMPLETED_USER_FAIL') {
@@ -330,7 +330,7 @@
     }
     else if (status === 'COMPLETED_USER_NOT_SELECTED') {
       main = '다음 경기 도전!';
-      sub  = '다음 이벤트는 꼭 참여하세요!';
+      sub  = '투표 마감!';
       statusClass = 'status-completed-unselected';
     }
     else {
