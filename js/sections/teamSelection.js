@@ -68,10 +68,19 @@
     const prevKey = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
     const nextKey = currentIndex < dateKeys.length - 1 ? dateKeys[currentIndex + 1] : '';
 
+    // prev/next 버튼용 함수 (기존 방식 유지)
     function dayLabel(k) {
       if (!k) return '';
       if (k === todayKey) return 'Today';
       return k.split('-')[2];
+    }
+
+    // 가운데 현재 날짜용 함수 (월/일 형식)
+    function currentDayLabel(k) {
+      if (!k) return '';
+      if (k === todayKey) return 'Today';
+      const [year, month, day] = k.split('-');
+      return `${parseInt(month)}/${parseInt(day)}`;
     }
 
     const html = `
@@ -80,7 +89,7 @@
           <div class="arrow-left"></div>
           <span class="prev-day">${dayLabel(prevKey)}</span>
         </div>
-        <span id="${currentDayId}" class="current-day${dateKeys[currentIndex]===todayKey ? ' today-active' : ''}" style="cursor:pointer;">${dayLabel(dateKeys[currentIndex])}</span>
+        <span id="${currentDayId}" class="current-day${dateKeys[currentIndex]===todayKey ? ' today-active' : ''}" style="cursor:pointer;">${currentDayLabel(dateKeys[currentIndex])}</span>
         <div id="${nextBtnId}" class="date-nav-next" ${nextKey ? '' : 'style="visibility:hidden;"'}>
           <span class="next-day">${dayLabel(nextKey)}</span>
           <div class="arrow-right"></div>
