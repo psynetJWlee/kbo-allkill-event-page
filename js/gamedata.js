@@ -554,7 +554,7 @@
           home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 721 },
           draw: { teamName: "무승부", votes: 540 },
           away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 1640 },
-          status: "우천취소",
+          status: "경기전",
           startTime: "17:30",
           userSelection: "none"
         },
