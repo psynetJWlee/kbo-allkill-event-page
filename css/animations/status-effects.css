@@ -143,12 +143,10 @@
 
 .title-wrapper.status-completed-success .title-main::before {
   content: '🏆';
-  margin-right: 15px;
 }
 
 .title-wrapper.status-completed-success .title-main::after {
   content: '🏆';
-  margin-left: 15px;
 }
 
 .title-wrapper.status-completed-success .title-main .allkill-text {
@@ -174,7 +172,7 @@
   content: '✨';
   position: absolute;
   top: -10px;
-  left: -15px;
+  left: -50px;
   font-size: 1.8rem;
 }
 
@@ -182,7 +180,7 @@
   content: '⭐';
   position: absolute;
   top: -5px;
-  right: -15px;
+  right: -50px;
   font-size: 1.5rem;
 }
 
