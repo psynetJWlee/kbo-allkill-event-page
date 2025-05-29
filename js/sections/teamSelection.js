@@ -281,7 +281,7 @@
         const tensDigit = ss[0];
         const onesDigit = ss[1];
         
-        sub = `<span class="time-label">남은 시간 -</span><span class="countdown-hours">${hh}</span>:<span class="countdown-minutes">${mm}</span>:<span class="countdown-seconds"><span class="tens-digit flip-container"><span class="flip-card">${tensDigit}</span></span><span class="ones-digit flip-container"><span class="flip-card">${onesDigit}</span></span></span>`;
+        sub = `<span class="time-label">남은 시간  -</span><span class="countdown-hours">${hh}</span>:<span class="countdown-minutes">${mm}</span>:<span class="countdown-seconds"><span class="tens-digit flip-container"><span class="flip-card">${tensDigit}</span></span><span class="ones-digit flip-container"><span class="flip-card">${onesDigit}</span></span></span>`;
       }
     }
     else if (status === 'PENDING_USER_SELECTED') {
