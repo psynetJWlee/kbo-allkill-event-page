@@ -13,10 +13,11 @@
 }
 
 body {
-  font-family: 'GmarketSansMedium';
+  font-family: 'GmarketSansMedium', sans-serif;
   background-color: #FFFFFF;
   color: #000000;
 }
+
 .unit-label{
   display: block;
   width: 100%;
@@ -267,6 +268,7 @@ body {
   font-weight: bold;
 }
 .request-button {
+  font-family: 'GmarketSansMedium', sans-serif;
   background-color: #FFD700;
   color: #121212;
   font-size: 24px;
@@ -560,6 +562,7 @@ body {
   font-weight: bold;
 }
 .download-button {
+  font-family: 'GmarketSansMedium', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
