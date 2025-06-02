@@ -537,7 +537,7 @@
         }
       ]
     },
-    "2025-06-09": {
+    "2025-06-08": {
       eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
       games: [
         {
