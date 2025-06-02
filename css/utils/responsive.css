@@ -1,4 +1,5 @@
 
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .title-wrapper .title-decor { width: 100px; }
@@ -16,65 +17,3 @@
   .prev-day, .next-day, .current-day { font-size: var(--font-size-base); }
 }
 
-@media (max-width: 768px) {
-  .title-wrapper.status-pending-unselected {
-    min-height: 160px;
-    padding: var(--spacing-xl) 0;
-  }
-  
-  .title-wrapper.status-pending-unselected .title-main {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    line-height: 1.2;
-    padding: var(--spacing-sm) 0;
-  }
-  
-  .title-wrapper.status-pending-unselected .title-sub {
-    font-size: 1.6rem;
-  }
-  
-  .title-wrapper.status-pending-unselected .title-sub .time-label {
-    font-size: 1.6rem;
-    margin-right: 10px;
-  }
-  
-  .tens-digit,
-  .ones-digit {
-    margin: 0 0.5px;
-  }
-  
-  .flip-card {
-    font-size: 1.6rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .title-wrapper.status-pending-unselected {
-    min-height: 140px;
-    padding: 15px 0;
-  }
-  
-  .title-wrapper.status-pending-unselected .title-main {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    padding: 5px 0;
-  }
-  
-  .title-wrapper.status-pending-unselected .title-sub {
-    font-size: 1.4rem;
-  }
-  
-  .title-wrapper.status-pending-unselected .title-sub .time-label {
-    font-size: 1.4rem;
-    margin-right: var(--spacing-sm);
-  }
-  
-  .tens-digit,
-  .ones-digit {
-    margin: 0 0.5px;
-  }
-  
-  .flip-card {
-    font-size: 1.4rem;
-  }
-}
