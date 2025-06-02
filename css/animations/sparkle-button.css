@@ -8,7 +8,7 @@
   border: none;
   padding: var(--spacing-3xl) 60px;
   border-radius: 40px;
-  font-size: var(--font-size-5xl);
+  font-size: var(--font-size-3xl);
   font-weight: bold;
   cursor: pointer;
   position: relative;
