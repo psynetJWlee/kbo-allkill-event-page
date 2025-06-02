@@ -499,7 +499,12 @@
     const effStatus = typeof localEventStatusMap[key] !== 'undefined'
       ? localEventStatusMap[key] 
       : (window.matchData[key]?.eventStatus);
-    if (effStatus === 'PENDING_USER_SELECTED' && isSelectionChanged()) {
+    
+    // COMPLETED_USER_SUCCESS 상태일 때 "올킬 성공 !" 텍스트 설정
+    if (effStatus === 'COMPLETED_USER_SUCCESS') {
+      btnText = '올킬 성공 !';
+    }
+    else if (effStatus === 'PENDING_USER_SELECTED' && isSelectionChanged()) {
       btnText = '수정 제출';
     }
     $('.btn-text').text(btnText);
