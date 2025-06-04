@@ -63,7 +63,7 @@
       ]
     },
     "2025-06-01": {
-      eventStatus: "COMPLETED_USER_FAIL",
+      eventStatus: "COMPLETED_USER_SUCCESS",
       games: [
         {
           gameId: "20250512-0",
