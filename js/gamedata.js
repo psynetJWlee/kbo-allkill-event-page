@@ -63,7 +63,7 @@
       ]
     },
     "2025-06-01": {
-      eventStatus: "COMPLETED_USER_FAIL",
+      eventStatus: "COMPLETED_USER_SUCCESS",
       games: [
         {
           gameId: "20250512-0",
@@ -94,12 +94,12 @@
           home: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 9324 },
           draw: { teamName: "무승부", votes: 153 },
           away: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 423 },
-          status: "경기종료",
+          status: "경기취소",
           startTime: "18:00",
-          score: { home: 7, away: 2 },
+          score: { home: 0, away: 0 },
           userSelection: "away",
-          gameResult: "home",
-          eventResult: "fail"
+          gameResult: "draw",
+          eventResult: "success"
         },
         {
           gameId: "20250512-3",

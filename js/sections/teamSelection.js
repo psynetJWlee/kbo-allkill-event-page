@@ -15,7 +15,8 @@
   const submitBtnPlaceholder = '제출하기';
 
   let countdownTimerId = null;
-  // 시, 분, 초의 개별 자릿수 추적
+  // 시, 분, 초의 개별 자릿수 추적 (100의 자리 추가)
+  let previousHoursHundreds = null;
   let previousHoursTens = null;
   let previousHoursOnes = null;
   let previousMinutesTens = null;
@@ -247,7 +248,7 @@
   }
 
   // ==============================
-  // 7. eventStatus 기반 title/sub 계산 (모든 자릿수 애니메이션)
+  // 7. eventStatus 기반 title/sub 계산 (동적 시간 자릿수 지원)
   // ==============================
   function computeTitleParts() {
     const key  = dateKeys[currentIndex];
@@ -281,25 +282,39 @@
     else if (status === 'PENDING_USER_NOT_SELECTED') {
       main = '올킬 도전 !';
       statusClass = 'status-pending-unselected';
-      // 카운트다운 - 모든 자릿수를 개별 애니메이션으로 분리
+      // 카운트다운 - 동적 시간 자릿수 지원
       if (games.length && games[0].startTime && games[0].startTime !== "null") {
         const [h, m] = games[0].startTime.split(':').map(Number);
         const [Y,Mo,D]= key.split('-').map(Number);
         const target = new Date(Y,Mo-1,D,h,m);
         let diff   = Math.max(0, Math.floor((target - now)/1000));
-        const hh = Math.floor(diff/3600).toString().padStart(2, '0');
+        const totalHours = Math.floor(diff/3600);
         const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
         const ss = String(diff%60).padStart(2,'0');
         
-        // 시, 분, 초를 각각 10의 자리와 1의 자리로 분리
-        const hoursTens = hh[0];
-        const hoursOnes = hh[1];
+        // 시간이 100시간 이상인지 확인하여 자릿수 결정
+        let hoursHtml = '';
+        if (totalHours >= 100) {
+          // 3자리 시간 표시 (000~999)
+          const hh = totalHours.toString().padStart(3, '0');
+          const hoursHundreds = hh[0];
+          const hoursTens = hh[1];
+          const hoursOnes = hh[2];
+          hoursHtml = `<span class="hours-hundreds flip-container"><span class="flip-card">${hoursHundreds}</span></span><span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span>`;
+        } else {
+          // 2자리 시간 표시 (00~99)
+          const hh = totalHours.toString().padStart(2, '0');
+          const hoursTens = hh[0];
+          const hoursOnes = hh[1];
+          hoursHtml = `<span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span>`;
+        }
+        
         const minutesTens = mm[0];
         const minutesOnes = mm[1];
         const secondsTens = ss[0];
         const secondsOnes = ss[1];
         
-        sub = `<span class="time-label">남은 시간</span><span class="countdown-hours"><span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span></span>:<span class="countdown-minutes"><span class="minutes-tens flip-container"><span class="flip-card">${minutesTens}</span></span><span class="minutes-ones flip-container"><span class="flip-card">${minutesOnes}</span></span></span>:<span class="countdown-seconds"><span class="seconds-tens flip-container"><span class="flip-card">${secondsTens}</span></span><span class="seconds-ones flip-container"><span class="flip-card">${secondsOnes}</span></span></span>`;
+        sub = `<span class="time-label">남은 시간</span><span class="countdown-hours">${hoursHtml}</span>:<span class="countdown-minutes"><span class="minutes-tens flip-container"><span class="flip-card">${minutesTens}</span></span><span class="minutes-ones flip-container"><span class="flip-card">${minutesOnes}</span></span></span>:<span class="countdown-seconds"><span class="seconds-tens flip-container"><span class="flip-card">${secondsTens}</span></span><span class="seconds-ones flip-container"><span class="flip-card">${secondsOnes}</span></span></span>`;
       }
     }
     else if (status === 'PENDING_USER_SELECTED') {
@@ -350,7 +365,7 @@
   }
 
   // ==============================
-  // 8. 제목·버튼·카운트다운 동기화 (모든 자릿수 애니메이션)
+  // 8. 제목·버튼·카운트다운 동기화 (동적 시간 자릿수 애니메이션)
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
@@ -366,7 +381,7 @@
       $titleWrapper.addClass(parts.statusClass);
     }
 
-    // 카운트다운 상태 클래스 추가 및 모든 자릿수 애니메이션 처리
+    // 카운트다운 상태 클래스 추가 및 동적 시간 자릿수 애니메이션 처리
     const key = dateKeys[currentIndex];
     const data = window.matchData[key] || {};
     const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
@@ -385,12 +400,41 @@
         const now = new Date();
         let diff = Math.max(0, Math.floor((target - now)/1000));
         
-        const hh = Math.floor(diff/3600).toString().padStart(2, '0');
+        const totalHours = Math.floor(diff/3600);
         const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
         const ss = String(diff%60).padStart(2,'0');
         
-        const currentHoursTens = hh[0];
-        const currentHoursOnes = hh[1];
+        // 동적 시간 자릿수 처리
+        let currentHoursHundreds = null;
+        let currentHoursTens = null;
+        let currentHoursOnes = null;
+        
+        if (totalHours >= 100) {
+          // 3자리 시간
+          const hh = totalHours.toString().padStart(3, '0');
+          currentHoursHundreds = hh[0];
+          currentHoursTens = hh[1];
+          currentHoursOnes = hh[2];
+          
+          // 100의 자리 애니메이션 처리
+          if (previousHoursHundreds !== null && previousHoursHundreds !== currentHoursHundreds) {
+            const $flipCard = $('.hours-hundreds .flip-card');
+            if ($flipCard.length) {
+              $flipCard.addClass('flipping');
+              setTimeout(() => $flipCard.text(currentHoursHundreds), 150);
+              setTimeout(() => $flipCard.removeClass('flipping'), 300);
+            }
+          } else if (previousHoursHundreds === null) {
+            $('.hours-hundreds .flip-card').text(currentHoursHundreds);
+          }
+        } else {
+          // 2자리 시간
+          const hh = totalHours.toString().padStart(2, '0');
+          currentHoursTens = hh[0];
+          currentHoursOnes = hh[1];
+          currentHoursHundreds = null; // 100시간 미만이므로 리셋
+        }
+        
         const currentMinutesTens = mm[0];
         const currentMinutesOnes = mm[1];
         const currentSecondsTens = ss[0];
@@ -469,6 +513,7 @@
         }
         
         // 이전 값들 업데이트
+        previousHoursHundreds = currentHoursHundreds;
         previousHoursTens = currentHoursTens;
         previousHoursOnes = currentHoursOnes;
         previousMinutesTens = currentMinutesTens;
@@ -487,6 +532,7 @@
       }
     } else {
       // 카운트다운이 아닌 상태에서는 이전 값들 리셋
+      previousHoursHundreds = null;
       previousHoursTens = null;
       previousHoursOnes = null;
       previousMinutesTens = null;
