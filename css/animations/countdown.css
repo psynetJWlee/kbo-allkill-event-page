@@ -7,6 +7,7 @@
   align-items: center;
 }
 
+.hours-hundreds,
 .hours-tens,
 .hours-ones,
 .minutes-tens,
@@ -19,6 +20,7 @@
 }
 
 /* Reduce spacing between digits within same time unit */
+.countdown-hours .hours-hundreds,
 .countdown-hours .hours-tens,
 .countdown-hours .hours-ones {
   margin: 0 0.5px;
