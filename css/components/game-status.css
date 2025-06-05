@@ -78,13 +78,21 @@
   color: var(--white);
 }
 
-.date-navigation .date-nav-prev { justify-self: start; }
-.date-navigation .date-nav-next { justify-self: end; }
+.date-navigation .date-nav-prev { 
+  justify-self: start;
+  height: 100%; 
+}
+    
+.date-navigation .date-nav-next { 
+  justify-self: end; 
+  height: 100%;
+}
 
 .date-nav-prev, .date-nav-next {
   display: flex;
   align-items: center;
   cursor: pointer;
+  height: 100%; 
 }
 
 .arrow-left {
@@ -109,16 +117,19 @@
 
 .prev-day {
   margin-left: 18px;
+  height: 100%; 
 }
 
 .next-day {
   margin-right: 18px;
+  height: 100%; 
 }
 
 .current-day {
   font-size: var(--font-size-lg);
   font-weight: bold;
   cursor: pointer;  
+  height: 100%; 
 }
 
 .team-selection-submit {
