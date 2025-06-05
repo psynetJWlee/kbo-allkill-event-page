@@ -1,3 +1,10 @@
+.title-wrapper.status-progress-unselected,
+.title-wrapper.status-completed-fail,
+.title-wrapper.status-completed-unselected,
+.title-wrapper.status-no-games,
+.title-wrapper.status-cancelled {
+  padding-bottom: var(--spacing-lg);
+}
 
 /* Title Main Row with Spinner */
 .title-main-row {
