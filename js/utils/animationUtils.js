@@ -11,6 +11,7 @@ function createConfetti(container) {
   const size = Math.random() * 8 + 6;
   const animationDuration = Math.random() * 3 + 2;
   const delay = Math.random() * 2;
+
   
   confetti.style.cssText = `
     position: absolute;
