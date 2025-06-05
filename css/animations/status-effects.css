@@ -2,6 +2,7 @@
 .title-wrapper.status-completed-fail,
 .title-wrapper.status-completed-unselected,
 .title-wrapper.status-no-games,
+.title-wrapper status-progress-selected,
 .title-wrapper.status-cancelled {
   padding-bottom: var(--spacing-lg);
 }
