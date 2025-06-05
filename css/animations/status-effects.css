@@ -78,17 +78,20 @@
   transition: all 0.3s ease;
   max-width: 100%;
   padding: 0 var(--spacing-sm);
+  padding-bottom: var(--spacing-lg)
   box-sizing: border-box;
 }
 
 .title-wrapper.status-pending-unselected .title-sub.urgent {
   color: var(--red-urgent) !important;
   animation: urgentPulse 0.4s ease-in-out infinite alternate;
+  padding-bottom: var(--spacing-lg)
 }
 
 .title-wrapper.status-pending-unselected .title-sub.completed {
   color: var(--green-success) !important;
   animation: completionCelebration 1s ease-in-out infinite;
+  padding-bottom: var(--spacing-lg)
 }
 
 @keyframes urgentPulse {
@@ -138,6 +141,7 @@
   justify-content: center;
   align-items: center;
   padding: 0 var(--spacing-md);
+  padding-bottom: var(--spacing-lg)
   box-sizing: border-box;
 }
 
@@ -158,6 +162,7 @@
   max-width: 100%;
   overflow: hidden;
   padding: 0 var(--spacing-sm);
+  padding-bottom: var(--spacing-lg)
   box-sizing: border-box;
 }
 
@@ -298,6 +303,7 @@
   .title-wrapper.status-completed-success {
     min-height: 130px;
     padding: 0 8px;
+    padding-bottom: var(--spacing-lg)
     max-width: calc(100% - 16px);
     margin: 0 auto;
   }
