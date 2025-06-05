@@ -8,6 +8,9 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "jquery": "^3.7.0"
+  },
   "devDependencies": {
     "vite": "^5.0.0"
   }
