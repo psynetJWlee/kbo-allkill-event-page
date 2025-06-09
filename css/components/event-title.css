@@ -50,6 +50,15 @@
      6px  6px 0 var(--navy);
 }
 
+@media (max-width: 375px) {
+  .event-title-line1,
+  .event-title-line2,
+  .event-title-line3 {
+    text-shadow: none;
+    -webkit-text-stroke: 3px var(--navy);
+    text-stroke: 3px var(--navy);
+    color: white; /* 내부 텍스트 흰색 */
+  
 .event-title-line1,
 .event-title-line2 {
   color: var(--white);
