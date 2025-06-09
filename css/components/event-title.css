@@ -33,23 +33,20 @@
 .event-title-line3 {
   display: block;
   font-family: var(--font-primary);
-  font-weight: 900;
+  font-weight: 700;
   font-size: var(--font-size-6xl);
   line-height: 1.1;
   margin: 0;
-  letter-spacing: -0.02em;
-  color: white;
-
-  /* 핵심 속성 */
-  -webkit-text-stroke: 6px var(--navy);
-  paint-order: stroke fill;
-
-  /* Firefox fallback */
   text-shadow:
+    -6px  0    0 var(--navy),
+     6px  0    0 var(--navy),
+     0   -6px 0 var(--navy),
+     0    6px 0 var(--navy),
     -6px -6px 0 var(--navy),
      6px -6px 0 var(--navy),
     -6px  6px 0 var(--navy),
      6px  6px 0 var(--navy);
+  letter-spacing: -0.02em;
 }
   
 .event-title-line1,
