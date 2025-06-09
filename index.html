@@ -11,11 +11,11 @@
   <meta name="keywords" content="LIVE스코어, KBO, 올킬, 야구 이벤트, 베팅 이벤트, 라이브 스코어, 경품">
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="LIVE스코어 KBO 올킬 이벤트 – 매일매일 경품 도전">
-  <meta property="og:description" content="실시간 경기 예측하고 ‘올킬’ 달성 시 스페셜 보너스까지! 지금 참여하세요.">
+  <meta property="og:description" content="실시간 경기 예측하고 '올킬' 달성 시 스페셜 보너스까지! 지금 참여하세요.">
   <meta property="og:image"       content="/image/metaimage.png">
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="LIVE스코어 KBO 올킬 이벤트">
-  <meta name="twitter:description" content="실시간 경기 예측하고 ‘올킬’ 달성 시 경품을 GET!">
+  <meta name="twitter:description" content="실시간 경기 예측하고 '올킬' 달성 시 경품을 GET!">
   <meta name="twitter:image"       content="/image/metaimage.png">
   <meta name="robots" content="index,follow">
   <!-- Styles -->
@@ -61,17 +61,22 @@
       </div>
     </div>
   </div>
-  <!-- Application scripts -->
+  
+  <!-- 기본 유틸리티와 데이터 파일들을 먼저 로드 -->
   <script src="js/utils/animationUtils.js"></script>
   <script src="js/data.js"></script>
   <script src="js/gamedata.js"></script>
   <script src="js/state.js"></script>
+  
+  <!-- 섹션별 스크립트들을 순차적으로 로드 -->
   <script src="js/sections/eventTitle.js"></script>
   <script src="js/sections/winners.js"></script>
   <script src="js/sections/teamSelection.js"></script>
   <script src="js/sections/myPrize.js"></script>
   <script src="js/sections/prizeRanking.js"></script>
   <script src="js/sections/eventDescription.js"></script>
+  
+  <!-- 메인 앱 스크립트를 마지막에 로드 -->
   <script src="js/app.js"></script>
 </body>
 </html>

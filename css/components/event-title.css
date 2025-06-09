@@ -33,10 +33,12 @@
 .event-title-line3 {
   display: block;
   font-family: var(--font-primary);
-  font-weight: 700;
+  font-weight: 900;
   font-size: var(--font-size-6xl);
   line-height: 1.1;
   margin: 0;
+  letter-spacing: -0.02em;
+  color: white;
   text-shadow:
     -6px  0    0 var(--navy),
      6px  0    0 var(--navy),
@@ -46,9 +48,32 @@
      6px -6px 0 var(--navy),
     -6px  6px 0 var(--navy),
      6px  6px 0 var(--navy);
-  letter-spacing: -0.02em;
 }
 
+@media (max-width: 375px) {
+  .event-title-line1,
+.event-title-line2,
+.event-title-line3 {
+  display: block;
+  font-family: var(--font-primary);
+  font-weight: 900;
+  font-size: var(--font-size-6xl);
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: white;
+  text-shadow:
+      -1px -1px 0 var(--navy),
+       1px -1px 0 var(--navy),
+      -1px  1px 0 var(--navy),
+       1px  1px 0 var(--navy),
+      -2px -2px 0 var(--navy),
+       2px -2px 0 var(--navy),
+      -2px  2px 0 var(--navy),
+       2px  2px 0 var(--navy);
+  }
+}
+  
 .event-title-line1,
 .event-title-line2 {
   color: var(--white);
