@@ -37,16 +37,9 @@
   font-size: var(--font-size-6xl);
   line-height: 1.1;
   margin: 0;
-  text-shadow:
-    -6px  0    0 var(--navy),
-     6px  0    0 var(--navy),
-     0   -6px 0 var(--navy),
-     0    6px 0 var(--navy),
-    -6px -6px 0 var(--navy),
-     6px -6px 0 var(--navy),
-    -6px  6px 0 var(--navy),
-     6px  6px 0 var(--navy);
   letter-spacing: -0.02em;
+  -webkit-text-stroke: 3px var(--navy);
+  text-stroke: 3px var(--navy);
 }
 
 .event-title-line1,
