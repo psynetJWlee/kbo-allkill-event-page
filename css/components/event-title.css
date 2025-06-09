@@ -38,15 +38,10 @@
   line-height: 1.1;
   margin: 0;
   letter-spacing: -0.02em;
+  color: white;
   text-shadow:
-    -1px -1px 0 var(--navy),
-     1px -1px 0 var(--navy),
-    -1px  1px 0 var(--navy),
-     1px  1px 0 var(--navy),
-    -2px  0   0 var(--navy),
-     2px  0   0 var(--navy),
-     0  -2px  0 var(--navy),
-     0   2px  0 var(--navy);
+  -webkit-text-stroke: 4px var(--navy);
+  text-stroke: 4px var(--navy);
 }
 
 .event-title-line1,
