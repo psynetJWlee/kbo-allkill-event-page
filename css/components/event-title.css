@@ -40,18 +40,14 @@
   letter-spacing: -0.02em;
   color: white;
   text-shadow:
-    -1px -1px 0 var(--navy),
-     1px -1px 0 var(--navy),
-    -1px  1px 0 var(--navy),
-     1px  1px 0 var(--navy),
-    -2px -2px 0 var(--navy),
-     2px -2px 0 var(--navy),
-    -2px  2px 0 var(--navy),
-     2px  2px 0 var(--navy),
-    -3px -3px 0 var(--navy),
-     3px -3px 0 var(--navy),
-    -3px  3px 0 var(--navy),
-     3px  3px 0 var(--navy);
+    -6px  0    0 var(--navy),
+     6px  0    0 var(--navy),
+     0   -6px 0 var(--navy),
+     0    6px 0 var(--navy),
+    -6px -6px 0 var(--navy),
+     6px -6px 0 var(--navy),
+    -6px  6px 0 var(--navy),
+     6px  6px 0 var(--navy);
 }
 
 .event-title-line1,
