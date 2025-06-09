@@ -41,15 +41,15 @@
   color: white;
 
   /* 핵심 속성 */
-  -webkit-text-stroke: 2px var(--navy);
+  -webkit-text-stroke: 6px var(--navy);
   paint-order: stroke fill;
 
   /* Firefox fallback */
   text-shadow:
-    -1px -1px 0 var(--navy),
-     1px -1px 0 var(--navy),
-    -1px  1px 0 var(--navy),
-     1px  1px 0 var(--navy);
+    -6px -6px 0 var(--navy),
+     6px -6px 0 var(--navy),
+    -6px  6px 0 var(--navy),
+     6px  6px 0 var(--navy);
 }
   
 .event-title-line1,
