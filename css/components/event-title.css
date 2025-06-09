@@ -51,7 +51,7 @@
 }
 
 @media (max-width: 375px) {
-  .event-title-line1,
+.event-title-line1,
 .event-title-line2,
 .event-title-line3 {
   display: block;
