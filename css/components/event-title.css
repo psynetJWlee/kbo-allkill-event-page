@@ -39,7 +39,6 @@
   margin: 0;
   letter-spacing: -0.02em;
   color: white;
-  text-shadow:
   -webkit-text-stroke: 4px var(--navy);
   text-stroke: 4px var(--navy);
 }
