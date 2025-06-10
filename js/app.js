@@ -17,6 +17,14 @@ $(document).ready(function() {
 
     console.log('Dependencies loaded successfully');
 
+    // Update meta tags with today's teams
+    if (window.metaUtils && typeof window.metaUtils.updateAllMetaTags === 'function') {
+      console.log('Updating meta tags with today\'s teams');
+      window.metaUtils.updateAllMetaTags();
+    } else {
+      console.warn('metaUtils not available');
+    }
+
     // Apply default selected teams for today view
     if (window.appState.currentDay === 26) {
       console.log('Applying default team selections for today');
