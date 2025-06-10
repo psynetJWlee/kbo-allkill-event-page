@@ -1,6 +1,6 @@
 //eventStatus//
 //이벤트 대기, 유저 미선택 	PENDING_USER_NOT_SELECTED//
-//이벤트 대기, 유저 선택 완료   PENDING_USER_SELECTED//
+//이벤트 대기, 유저 선택 완료  PENDING_USER_SELECTED//
 //이벤트 진행, 유저 미선택 	IN_PROGRESS_USER_NOT_SELECTED//
 //이벤트 진행, 유저 선택 완료 	IN_PROGRESS_USER_SELECTED//
 //이벤트 종료, 유저 성공	COMPLETED_USER_SUCCESS//
