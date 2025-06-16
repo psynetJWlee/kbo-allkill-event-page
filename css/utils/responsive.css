@@ -14,6 +14,6 @@
   .team-selection-title { font-size: 32px; height: auto; width: 100%; box-sizing: border-box; }
   .team-selection-title .subtitle { font-size: var(--font-size-2xl); }
   .date-navigation { padding: 0 var(--spacing-sm); }
-  .prev-day, .next-day, .current-day { font-size: var(--font-size-base); }
+  .prev-day, .next-day, .current-day { font-size: var(--font-size-lg); }
 }
 
