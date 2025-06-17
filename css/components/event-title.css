@@ -39,14 +39,14 @@
   margin: 0;
   color: #FFFFFF;
   filter: 
-    drop-shadow(-2px -2px 0 var(--navy))
-    drop-shadow(2px -2px 0 var(--navy))
-    drop-shadow(-2px 2px 0 var(--navy))
-    drop-shadow(2px 2px 0 var(--navy))
-    drop-shadow(-2px 0 0 var(--navy))
-    drop-shadow(2px 0 0 var(—navy))
-    drop-shadow(0 -2px 0 var(—navy))
-    drop-shadow(0 2px 0 var(—navy));
+    drop-shadow(-6px -6px 0 var(--navy))
+    drop-shadow(6px -6px 0 var(--navy))
+    drop-shadow(-6px 6px 0 var(--navy))
+    drop-shadow(6px 6px 0 var(--navy))
+    drop-shadow(-6px 0 0 var(--navy))
+    drop-shadow(6px 0 0 var(—navy))
+    drop-shadow(0 -6px 0 var(—navy))
+    drop-shadow(0 6px 0 var(—navy));
   letter-spacing: -0.02em;
 }
   
