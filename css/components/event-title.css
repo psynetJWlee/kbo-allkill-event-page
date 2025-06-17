@@ -37,15 +37,8 @@
   font-size: var(--font-size-6xl);
   line-height: 1.1;
   margin: 0;
-  text-shadow:
-    -6px  0    0 var(--navy),
-     6px  0    0 var(--navy),
-     0   -6px 0 var(--navy),
-     0    6px 0 var(--navy),
-    -6px -6px 0 var(--navy),
-     6px -6px 0 var(--navy),
-    -6px  6px 0 var(--navy),
-     6px  6px 0 var(--navy);
+  color: #FFFFFF;
+    filter: drop-shadow(-2px -2px 0 #001a29) drop-shadow(2px -2px 0 #001a29) drop-shadow(-2px 2px 0 #001a29) drop-shadow(2px 2px 0 #001a29) drop-shadow(-2px 0 0 #001a29) drop-shadow(2px 0 0 #001a29) drop-shadow(0 -2px 0 #001a29) drop-shadow(0 2px 0 #001a29);
   letter-spacing: -0.02em;
 }
   
