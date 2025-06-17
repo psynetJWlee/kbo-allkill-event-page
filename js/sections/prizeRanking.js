@@ -77,7 +77,10 @@
     // 헤더 및 기본 구조(탭X, 기간X)
     const sectionHtml = `
       <div class="ranking-header">
-        <h2 class="ranking-title">상금 랭킹</h2>
+        <div class="ranking-title">
+          <span class="title-text">상금 랭킹</span>
+          <div class="title-underline"></div>
+        </div>
         <p class="my-ranking">
           내 랭킹 <span class="my-ranking-number">-위 / ${data.length}명</span>
           <img src="/image/user-icon.png" alt="User icon" class="user-icon" />
@@ -104,4 +107,3 @@
     init: initPrizeRankingSection
   };
 })(jQuery);
-

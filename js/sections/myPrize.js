@@ -1,3 +1,4 @@
+
 // js/sections/myPrize.js
 
 // My Prize Section
@@ -62,7 +63,10 @@ function initMyPrizeSection() {
   const sectionHtml = `
     <div class="my-prize-container">
       <div class="flex flex-col items-center">
-        <h2 class="my-prize-title">My 상금</h2>
+        <div class="my-prize-title">
+          <span class="title-text">My 상금</span>
+          <div class="title-underline"></div>
+        </div>
       </div>
       <div class="prize-group">
         <div class="member-info">
