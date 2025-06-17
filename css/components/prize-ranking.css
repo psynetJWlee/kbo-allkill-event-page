@@ -170,7 +170,7 @@
 }
 
 .ranking-prize {
-  font-size: var(--font-size-xl) !important;
+  font-size: var(--font-size-xl);
   color: var(--gold);
   text-align: right;
   margin-left: auto;
