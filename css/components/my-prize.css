@@ -1,4 +1,3 @@
-
 /* My Prize Section */
 .my-prize-section {
   width: 100%;
@@ -11,15 +10,13 @@
 }
 
 .my-prize-title {
-  display: inline-block;
+  display: block;
   font-size: var(--font-size-3xl);
   font-weight: bold;
   color: var(--white);
-  margin-top: var(--spacing-xl);
-  margin-bottom: var(--spacing-3xl);
+  margin: var(--spacing-xl) auto var(--spacing-3xl) auto;
   position: relative;
-  text-align: center;
-  width: 100%;
+  width: fit-content;
   font-family: var(--font-primary);
 }
 
