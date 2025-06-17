@@ -32,7 +32,7 @@
 .event-title-line2,
 .event-title-line3 {
   display: block;
-  font-family: "Malgun Gothic", "맑은 고딕", var(--font-primary);
+  font-family: var(--font-primary);
   font-weight: 700;
   font-size: var(--font-size-6xl);
   line-height: 1.1;
@@ -72,3 +72,4 @@
 .dynamic-count {
    padding-right: 5px;
 }
+

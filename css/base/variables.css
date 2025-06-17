@@ -24,7 +24,7 @@
   --green-success: #2ed573;
   
   /* Typography */
-  --font-primary: 'GmarketSansMedium', -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", "Noto Sans KR", "Noto Sans CJK KR", "Apple SD Gothic Neo", "애플 SD 고딕 Neo", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-primary: 'GmarketSansMedium', sans-serif;
   --font-size-xs: 12px;
   --font-size-sm: 13px;
   --font-size-base: 14px;
