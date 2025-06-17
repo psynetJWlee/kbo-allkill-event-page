@@ -1,3 +1,4 @@
+
 // js/section/winners.js
 window.userData = window.userData || {};
 const PAGE_SIZE = 10;
@@ -27,7 +28,10 @@ function initWinnersSection() {
   // Container HTML
   const sectionHtml = `
     <div class="w-full flex flex-col items-center relative">
-      <h2 class="winners-title">오늘의 당첨자</h2>
+      <div class="winners-title">
+        <span class="title-text">오늘의 당첨자</span>
+        <div class="title-underline"></div>
+      </div>
       <p class="winners-count w-full text-center">
         총 ${totalCount}명
       </p>
