@@ -170,12 +170,12 @@
 }
 
 .ranking-prize {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-xl) !important ;
   color: var(--gold);
   text-align: right;
   margin-left: auto;
 }
-
+ 
 .ranking-note-title {
   font-family: var(--font-primary);
   font-size: var(--font-size-base);
