@@ -1,5 +1,4 @@
 
-
 /* Event Title Section */
 #event-title-section {
   position: relative;
@@ -10,6 +9,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  container-type: inline-size;
+  container-name: event-title;
 }
 
 .event-logo {
@@ -42,6 +43,15 @@
   filter: drop-shadow(-2px -2px 0 #001a29) drop-shadow(2px -2px 0 #001a29) drop-shadow(-2px 2px 0 #001a29) drop-shadow(2px 2px 0 #001a29) drop-shadow(-2px 0 0 #001a29) drop-shadow(2px 0 0 #001a29) drop-shadow(0 -2px 0 #001a29) drop-shadow(0 2px 0 #001a29);
   letter-spacing: -0.02em;
 }
+
+/* Container Query for small screens */
+@container event-title (max-width: 344px) {
+  .event-title-line1,
+  .event-title-line2,
+  .event-title-line3 {
+    filter: drop-shadow(-1px -1px 0 #001a29) drop-shadow(1px -1px 0 #001a29) drop-shadow(-1px 1px 0 #001a29) drop-shadow(1px 1px 0 #001a29) drop-shadow(-1px 0 0 #001a29) drop-shadow(1px 0 0 #001a29) drop-shadow(0 -1px 0 #001a29) drop-shadow(0 1px 0 #001a29);
+  }
+}
   
 .event-title-line1,
 .event-title-line2 {
@@ -51,21 +61,6 @@
 .event-title-line3 {
   margin-top: 8px;
   color: var(--gold);
-}
-
-@media (max-width: 344px) {
-  .event-title-line1,
-  .event-title-line2,
-  .event-title-line3 {
-    filter: drop-shadow(-1px -1px 0 #001a29)
-            drop-shadow(1px -1px 0 #001a29)
-            drop-shadow(-1px 1px 0 #001a29)
-            drop-shadow(1px 1px 0 #001a29)
-            drop-shadow(-1px 0 0 #001a29)
-            drop-shadow(1px 0 0 #001a29)
-            drop-shadow(0 -1px 0 #001a29)
-            drop-shadow(0 1px 0 #001a29);
-  }
 }
 
 .event-fx-image {
