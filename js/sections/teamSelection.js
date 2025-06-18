@@ -276,7 +276,7 @@
         game.gameId !== 'null' && cancelledStatuses.includes(game.status)
       ).length;
       
-      sub = `경기취소 ${cancelledCount}개 발생! 당일 무효 !`;
+      sub = `경기취소 ${cancelledCount}개 발생! 당일 무효!`;
       statusClass = 'status-cancelled';
     }
     else if (status === 'PENDING_USER_NOT_SELECTED') {
