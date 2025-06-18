@@ -113,7 +113,7 @@ function initMyPrizeSection() {
 
     return `
       <div class="history-item">
-        <p class="history-date">${mm}.${dd} (${wk})</p>
+        <p class="history-date">${mm}.${dd} ( ${wk} )</p>
         <p class="${prizeClass}">${sign}${formatNumber(absAmt)}</p>
       </div>
     `;
