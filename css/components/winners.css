@@ -23,6 +23,17 @@
   color: var(--white);
   font-family: var(--font-primary);
 }
+.winners-title .title-text{
+  filter: 
+  drop-shadow(-1px -1px 0 #001a29) 
+  drop-shadow(1px -1px 0 #001a29)
+  drop-shadow(-1px 1px 0 #001a29)
+  drop-shadow(1px 1px 0 #001a29)
+  drop-shadow(-1px 0 0 #001a29)
+  drop-shadow(1px 0 0 #001a29) 
+  drop-shadow(0 -1px 0 #001a29) 
+  drop-shadow(0 1px 0 #001a29);
+}
 
 .title-underline {
   display: block;
