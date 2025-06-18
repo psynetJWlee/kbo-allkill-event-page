@@ -339,8 +339,11 @@
   }
 }
 
-.title-wrapper.status-completed-fail .title-main-row .title-main.
-.title-wrapper status-cancelled .title-main-row .title-main {
+.title-wrapper.status-completed-fail .title-main-row .title-main {
+  animation: energyBounce 1.5s ease-in-out infinite;
+}
+
+.title-wrapper.status-cancelled .title-main-row .title-main {
   animation: energyBounce 1.5s ease-in-out infinite;
 }
 
