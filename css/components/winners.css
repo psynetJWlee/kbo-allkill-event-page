@@ -93,6 +93,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  position: relative;
+  top: 3px;
 }
 
 .member-amount {
