@@ -72,15 +72,16 @@ function startAnimation(container) {
     return;
   }
   
-  // Continuous animation - generate 2 confetti and 1 star each interval
-  let counter = 0;
+  // Continuous animation - generate 4 confetti and 2 stars each interval
   setInterval(() => {
-    // Generate 2 confetti at once for double density
+    // Generate 4 confetti at once for quadruple density
+    createConfetti(container);
+    createConfetti(container);
     createConfetti(container);
     createConfetti(container);
     
-    counter++;
-    // Generate star every time instead of every 2nd time
+    // Generate 2 stars at once for double star density
+    createStar(container);
     createStar(container);
   }, 300);
 }
