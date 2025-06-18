@@ -91,6 +91,8 @@
   letter-spacing: 2px;
   color: var(--gold);
   font-family: var(--font-primary);
+  position: relative;
+  top: 3px;
 }
 
 .unit-label {
