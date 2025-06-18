@@ -24,6 +24,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--white);
   font-family: var(--font-primary);
+  padding-top: 2px;
 }
 
 .page-item.active {
