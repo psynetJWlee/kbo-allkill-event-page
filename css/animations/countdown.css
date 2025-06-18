@@ -70,5 +70,6 @@
 
 .time-label {
   display: inline-block;
-  margin-right: 10px;
+//  margin-right: 10px;
+  min-width: 106px;
 }
