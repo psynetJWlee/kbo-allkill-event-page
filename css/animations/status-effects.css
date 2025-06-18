@@ -357,3 +357,19 @@
     transform: translateY(-10px) scale(1.03);
   }
 }
+
+.title-wrapper.status-pending-selected .title-main::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  vertical-align: middle;
+}
