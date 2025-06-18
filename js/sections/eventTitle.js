@@ -47,6 +47,11 @@ function initEventTitleSection() {
       </div>
     </div>
     <img 
+      src="/image/image_fx.png"
+      alt="Event FX"
+      class="event-fx-image"
+    />
+    <img 
       src="/image/event-emoticon.gif"
       alt="Event Emoticon"
       class="event-emoticon"
@@ -63,4 +68,3 @@ function initEventTitleSection() {
 window.eventTitleSection = {
   init: initEventTitleSection
 };
-
