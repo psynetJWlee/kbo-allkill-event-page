@@ -18,7 +18,13 @@ body {
   font-family: var(--font-primary);
   background-color: var(--white);
   color: var(--black);
+  overflow-x: hidden;
+  scrollbar-width: none;
+
+body::-webkit-scrollbar {
+  display: none; 
 }
+
 
 #root {
   max-width: 1280px;
