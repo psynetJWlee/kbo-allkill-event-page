@@ -48,11 +48,11 @@
   pointer-events: none;
 }
 
-body {
+.body {
   overflow-x: hidden; /* 가로 스크롤바 숨김 */
   scrollbar-width: none; /* Firefox */
 }
 
-body::-webkit-scrollbar {
+.body::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
