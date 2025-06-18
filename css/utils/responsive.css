@@ -15,6 +15,6 @@
   .team-selection-title .subtitle { font-size: var(--font-size-2xl); }
   .date-navigation { padding: 0 var(--spacing-sm); }
   .prev-day, .next-day, .current-day { font-size: var(--font-size-lg); }  
-  .ranking-prize { font-size: var(--font-size-xl) !important; padding-top: 4px; }
+  .ranking-prize { font-size: var(--font-size-2xl) !important; padding-top: 4px; }
 }
 
