@@ -1,4 +1,3 @@
-
 // Event Description Section
 function initEventDescriptionSection() {
   const sectionHtml = `
@@ -40,9 +39,53 @@ function initEventDescriptionSection() {
     >
       LIVE스코어<br />다운 받기
     </a>
+    <a 
+      href="javascript:void(0);" 
+      class="download-button copy-link-button"
+      style="margin-top:28px;"
+    >
+      링크 복사
+    </a>
   `;
   
   $('#event-description-section').html(sectionHtml);
+
+  // 링크 복사 버튼 클릭 시 클립보드에 URL 복사
+  $(document).off('click.copylink').on('click.copylink', '.copy-link-button', function() {
+    const urlToCopy = window.location.href;
+
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      // 최신 브라우저, HTTPS 환경
+      navigator.clipboard.writeText(urlToCopy)
+        .then(function() {
+          alert('링크가 복사되었습니다!');
+        })
+        .catch(function(err) {
+          alert('복사에 실패했습니다. 브라우저를 확인해주세요.');
+        });
+    } else {
+      // 구형 브라우저 또는 HTTP 환경
+      const textArea = document.createElement('textarea');
+      textArea.value = urlToCopy;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          alert('링크가 복사되었습니다!');
+        } else {
+          alert('복사에 실패했습니다. 브라우저를 확인해주세요.');
+        }
+      } catch (err) {
+        alert('복사에 실패했습니다. 브라우저를 확인해주세요.');
+      }
+      document.body.removeChild(textArea);
+    }
+  });
 }
 
 // Export the initialization function
