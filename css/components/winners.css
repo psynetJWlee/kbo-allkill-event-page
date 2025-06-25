@@ -55,7 +55,7 @@
 
 .member-list {
   width: 100%;
-  margin-top: 15px;
+  margin-top: 8px;
   margin-bottom: var(--spacing-lg);
 }
 
@@ -111,7 +111,7 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: var(--spacing-md);
+  padding: 0px 12px 0px 0px;
   font-family: var(--font-primary);
   font-size: var(--font-size-md);
   color: var(--white);
