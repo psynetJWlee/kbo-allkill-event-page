@@ -1,4 +1,3 @@
-
 // js/sections/myPrize.js
 
 // My Prize Section
@@ -7,7 +6,7 @@ const MY_PRIZE_PAGE_SIZE = 10;
 // 숫자 3자리마다 쉼표 삽입 유틸(폴백)
 window.utils = window.utils || {};
 window.utils.formatNumber = window.utils.formatNumber || function(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return num.toString().replace(/\B(?=(\d{3})+ (?!\d))/g, ',');
 };
 
 // ==============================
@@ -107,14 +106,14 @@ function initMyPrizeSection() {
     const mm    = String(d.getMonth() + 1).padStart(2, '0');
     const dd    = String(d.getDate()).padStart(2, '0');
     const wk    = ['일','월','화','수','목','금','토'][d.getDay()];
-    const sign = item.amount >= 0 ? '+' : '';
+    const sign = item.amount >= 0 ? '+' : '-';
     const absAmt= Math.abs(item.amount);
     const prizeClass = item.amount < 0 ? 'daily-prize negative' : 'daily-prize';
 
     return `
       <div class="history-item">
         <p class="history-date">${mm}.${dd} ( ${wk} )</p>
-        <p class="${prizeClass}">${sign}${formatNumber(absAmt)}</p>
+        <p class="${prizeClass}">${sign} ${formatNumber(absAmt)}</p>
       </div>
     `;
   }).join('');
