@@ -33,8 +33,7 @@
   font-size: var(--font-size-xs);
   color: var(--white);
   margin-bottom: var(--spacing-sm);
-  line-height: 1.4;
-  font-weight: bold;
+  line-height: 1.4;  
 }
 
 .download-button {

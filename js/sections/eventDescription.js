@@ -1,6 +1,24 @@
 // Event Description Section
 function initEventDescriptionSection() {
   const sectionHtml = `
+    <!-- 올킬 이벤트 안내 -->
+    <div class="info-header">
+      <img 
+        src="/image/info-icon.png" 
+        alt="Info icon" 
+        class="info-icon"
+      />
+      <h3 class="info-title">올킬 이벤트 안내</h3>
+    </div>
+    <ul class="info-list">
+      <li class="info-item">당일 대상 경기의 승/무/패를 모두 예측하여 제출</li>
+      <li class="info-item">매일 100만원을 올킬 성공자 수 N명에 따라 1/N 분배 지급</li>
+      <li class="info-item">1 ~ 2개 경기 취소 시 나머지 경기 결과로 올킬 선정</li>
+      <li class="info-item">3개 이상 경기 취소 시 해당일 이벤트 무효</li>
+      <li class="info-item">당일 첫 경기 시작전까지 제출 가능</li>
+    </ul>
+
+    <!-- 상금 지급 안내 -->
     <div class="info-header">
       <img 
         src="/image/info-icon.png" 
@@ -9,26 +27,13 @@ function initEventDescriptionSection() {
       />
       <h3 class="info-title">상금 지급 안내</h3>
     </div>
-
     <ul class="info-list">
-      <li class="info-item">
-        My 상금 금액이 5만원 초과일 경우 지급신청이 가능
-      </li>
-      <li class="info-item">
-        당첨자 세금신고를 위해 신분증 사본 제출 필요
-      </li>
-      <li class="info-item">
-        상금 지급 후 개인 정보 즉시 파기
-      </li>
-      <li class="info-item">
-        5만원 초과 시 제세공과금 (22%) 선공제 후 지급
-      </li>
-      <li class="info-item">
-        다중 계정은 당첨자 정보 확인 후 당첨 취소 될 수 있음
-      </li>
-      <li class="info-item">
-        당첨자 성명과 예금주명 불일치 시 당첨금 지급 불가
-      </li>
+      <li class="info-item">My 상금 금액이 5만원 초과일 경우 지급신청이 가능</li>
+      <li class="info-item">당첨자 세금신고를 위해 신분증 사본 제출 필요</li>
+      <li class="info-item">상금 지급 후 개인 정보 즉시 파기</li>
+      <li class="info-item">5만원 초과 시 제세공과금 (22%) 선공제 후 지급</li>
+      <li class="info-item">다중 계정은 당첨자 정보 확인 후 당첨 취소 될 수 있음</li>
+      <li class="info-item">당첨자 성명과 예금주명 불일치 시 당첨금 지급 불가</li>
     </ul>
 
     <a 
