@@ -80,10 +80,10 @@
 }
 
 .member-avatar {
-  width: var(--avatar-size);
-  height: var(--avatar-size);
+  width: var(--profile-img-size);  
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid var(--white);
 }
 
 .member-nickname {

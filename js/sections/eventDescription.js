@@ -47,7 +47,7 @@ function initEventDescriptionSection() {
     <a 
       href="javascript:void(0);" 
       class="download-button copy-link-button"
-      style="margin-top:28px;"
+      style="margin-top:20px;"
     >
       링크 복사
     </a>

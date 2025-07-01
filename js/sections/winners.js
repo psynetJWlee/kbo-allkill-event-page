@@ -49,7 +49,7 @@ function initWinnersSection() {
         <div class="member-card" style="border: 0.5px solid #FFFFFF;">
           <div class="member-profile">
             <img
-              src="${member.profileImage || '/placeholder.svg'}"
+              src="${member.profileImage || '/image/profile.png'}"
               alt="${member.nickname} 프로필"
               class="member-avatar"
             />

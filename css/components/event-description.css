@@ -50,7 +50,8 @@
   border-radius: var(--radius-full);
   text-align: center;
   text-decoration: none;
-  line-height: 1.2;  
+  line-height: 1.2;
+  margin-top: 50px;  
 }
 
 .download-button:hover {
