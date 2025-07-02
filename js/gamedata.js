@@ -538,7 +538,7 @@
       ]
     },
     "2025-07-01": {
-      eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
+      eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
           gameId: "20250602-0",
@@ -563,7 +563,7 @@
           home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 721 },
           draw: { teamName: "무승부", votes: 540 },
           away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 1640 },
-          status: "경기취소",
+          status: "경기전",
           startTime: "17:30",
           userSelection: "none"
         },
@@ -572,7 +572,7 @@
           home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 880 },
           draw: { teamName: "무승부", votes: 763 },
           away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 1317 },
-          status: "경기취소",
+          status: "경기전",
           startTime: "18:43",
           userSelection: "none"
         }

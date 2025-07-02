@@ -44,6 +44,25 @@ function handlePageChange(page) {
 }
 
 // ==============================
+// 공통 페이지네이션 번호 계산 함수
+// ==============================
+function getPaginationPages(currentPage, totalPages, maxPages = 5) {
+  const pages = [];
+  if (totalPages <= maxPages) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+    return pages;
+  }
+  let start = Math.max(1, currentPage - Math.floor(maxPages / 2));
+  let end = start + maxPages - 1;
+  if (end > totalPages) {
+    end = totalPages;
+    start = end - maxPages + 1;
+  }
+  for (let i = start; i <= end; i++) pages.push(i);
+  return pages;
+}
+
+// ==============================
 // 2) 실제 섹션 초기화 함수
 // ==============================
 function initMyPrizeSection() {
@@ -87,7 +106,7 @@ function initMyPrizeSection() {
         <div class="pagination">
           <div class="pagination-content">
             <div id="prev-page" class="page-item ${userData.myPrize.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
-            ${Array.from({ length: userData.myPrize.totalPages }, (_, i) => i + 1).map(page => `
+            ${getPaginationPages(userData.myPrize.currentPage, userData.myPrize.totalPages, 5).map(page => `
               <div class="page-item ${userData.myPrize.currentPage === page ? 'active' : ''}" data-page="${page}">
                 ${page}
               </div>

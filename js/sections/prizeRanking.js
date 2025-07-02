@@ -1,4 +1,3 @@
-
 ;(function($){
   // 페이지당 아이템 개수
   const PAGE_SIZE = 10;
@@ -44,7 +43,7 @@
       <div class="pagination prize-ranking-pagination">
         <div class="pagination-content">
           <div id="prize-ranking-prev-page" class="page-item ${currentPage === 1 ? 'disabled' : ''}">&lt;</div>
-          ${Array.from({ length: totalPages }, (_, i) => i + 1).map(num => `
+          ${getPaginationPages(currentPage, totalPages, 5).map(num => `
             <div class="page-item ${currentPage === num ? 'active' : ''}" data-page="${num}">${num}</div>
           `).join('')}
           <div id="prize-ranking-next-page" class="page-item ${currentPage === totalPages ? 'disabled' : ''}">&gt;</div>
@@ -100,6 +99,25 @@
     $('#prize-ranking-section').html(sectionHtml);
 
     renderRankingList(1);
+  }
+
+  // ==============================
+  // 공통 페이지네이션 번호 계산 함수
+  // ==============================
+  function getPaginationPages(currentPage, totalPages, maxPages = 5) {
+    const pages = [];
+    if (totalPages <= maxPages) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+      return pages;
+    }
+    let start = Math.max(1, currentPage - Math.floor(maxPages / 2));
+    let end = start + maxPages - 1;
+    if (end > totalPages) {
+      end = totalPages;
+      start = end - maxPages + 1;
+    }
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
   }
 
   // 외부 호출용

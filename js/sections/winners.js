@@ -1,4 +1,3 @@
-
 // js/section/winners.js
 window.userData = window.userData || {};
 const PAGE_SIZE = 10;
@@ -63,12 +62,31 @@ function initWinnersSection() {
     })
     .join('');
   
+  // ==============================
+  // 공통 페이지네이션 번호 계산 함수
+  // ==============================
+  function getPaginationPages(currentPage, totalPages, maxPages = 5) {
+    const pages = [];
+    if (totalPages <= maxPages) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+      return pages;
+    }
+    let start = Math.max(1, currentPage - Math.floor(maxPages / 2));
+    let end = start + maxPages - 1;
+    if (end > totalPages) {
+      end = totalPages;
+      start = end - maxPages + 1;
+    }
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
+  }
+
   // 3) 페이징 HTML (한 번만!)
   const paginationHtml = `
     <div class="pagination">
       <div class="pagination-content">
         <div id="prev-page" class="page-item ${userData.winners.currentPage === 1 ? 'disabled' : ''}">&lt;</div>
-        ${Array.from({ length: userData.winners.totalPages }, (_, i) => i + 1).map(page => `
+        ${getPaginationPages(userData.winners.currentPage, userData.winners.totalPages, 5).map(page => `
           <div class="page-item ${userData.winners.currentPage === page ? 'active' : ''}" data-page="${page}">
             ${page}
           </div>
