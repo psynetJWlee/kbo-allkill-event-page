@@ -15,7 +15,7 @@ const teamLogos = {
 
 // Winner members data
 const members = [
-  { id: 1, nickname: "고량뉴스", profileImage: "/image/profile.png", amount: 50000 },
+  { id: 1, nickname: "고량뉴스", profileImage: "/image/profile.jpg", amount: 50000 },
   { id: 2, nickname: "컴오라파", profileImage: "/image/profile.png", amount: 1000000 },
   { id: 3, nickname: "홈런왕김탁구탁구", profileImage: "/image/profile.png", amount: 888888 },
   { id: 4, nickname: "엘지트윈스", profileImage: "/image/profile.png", amount: 50000 },
@@ -72,6 +72,7 @@ const prizeHistory = Array.from({length: 500}, (_, i) => {
 const userData = {
   nickname: "풀스택기획자라니",
   totalAmount: 4500000,
+  
   // 각 섹션별 페이지 상태 분리
   myPrize: {
     currentPage: 1,
