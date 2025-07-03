@@ -55,6 +55,7 @@
   width: var(--avatar-size);
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid var(--white);
 }
 
 .user-info {
