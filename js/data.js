@@ -16,10 +16,10 @@ const teamLogos = {
 // Winner members data
 const members = [
   { id: 1, nickname: "고량뉴스", profileImage: "/image/profile.jpg", amount: 50000 },
-  { id: 2, nickname: "컴오라파", profileImage: "/image/profile.png", amount: 1000000 },
-  { id: 3, nickname: "홈런왕김탁구탁구", profileImage: "/image/profile.png", amount: 888888 },
-  { id: 4, nickname: "엘지트윈스", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 5, nickname: "두산베어준", profileImage: "/image/profile.png", amount: 50000 },
+  { id: 2, nickname: "컴오라파", profileImage: "/image/event-emoticon.gif", amount: 1000000 },
+  { id: 3, nickname: "홈런왕김탁구탁구", profileImage: "/image/giphy.gif", amount: 888888 },
+  { id: 4, nickname: "엘지트윈스", profileImage: "/image/giphy2.gif", amount: 50000 },
+  { id: 5, nickname: "두산베어준", profileImage: "/image/giphy3.gif", amount: 50000 },
   { id: 6, nickname: "라스돌해라", profileImage: "/image/profile.png", amount: 50000 },
   { id: 7, nickname: "다이노스", profileImage: "/image/profile.png", amount: 50000 },
   { id: 8, nickname: "래랜라", profileImage: "/image/profile.png", amount: 50000 },

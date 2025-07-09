@@ -681,6 +681,7 @@
 
       // (1) 'PENDING_USER_NOT_SELECTED' 최초 제출
       if (effStatus === 'PENDING_USER_NOT_SELECTED') {
+        games.forEach(g => { g.userSelection = window.appState.selectedTeams?.[g.gameId]; });
         localEventStatusMap[key] = 'PENDING_USER_SELECTED';
         window.appState.submissionTimes[key] = new Date();
         updateSubmitButton();

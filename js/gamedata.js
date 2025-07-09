@@ -314,7 +314,7 @@
         }
       ]
     },
-    "2025-06-26": {
+    "2025-07-09": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -373,7 +373,7 @@
         }
       ]
     },
-    "2025-06-27": {
+    "2025-07-10": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -423,7 +423,7 @@
         }
       ]
     },
-    "2025-06-28": {
+    "2025-07-11": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -473,7 +473,7 @@
         }
       ]
     },
-    "2025-06-29": {
+    "2025-07-12": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -505,7 +505,7 @@
         }
       ]
     },
-    "2025-06-30": {
+    "2025-07-13": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -537,7 +537,7 @@
         }
       ]
     },
-    "2025-07-01": {
+    "2025-07-14": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
