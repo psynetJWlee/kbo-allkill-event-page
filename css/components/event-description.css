@@ -41,7 +41,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: auto;
+  padding: 24px 20px 20px 20px;
   background-color: #1A5F7A;
   color: var(--white);
   font-size: var(--font-size-3xl);

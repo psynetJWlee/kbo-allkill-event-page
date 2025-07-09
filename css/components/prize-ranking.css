@@ -168,8 +168,7 @@
 .ranking-streak {
   font-size: var(--font-size-xl);
   color: var(--gold);
-  opacity: 0.9;
-  margin-top: 2px;
+  opacity: 0.9;  
 }
 
 .ranking-prize {
