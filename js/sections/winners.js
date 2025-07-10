@@ -104,6 +104,7 @@ function initWinnersSection() {
     if (userData.winners.currentPage > 1) {
       userData.winners.currentPage--;
       initWinnersSection();
+      scrollWinnersSectionToBottom();
     }
   });
   // 다음 페이지
@@ -111,6 +112,7 @@ function initWinnersSection() {
     if (userData.winners.currentPage < userData.winners.totalPages) {
       userData.winners.currentPage++;
       initWinnersSection();
+      scrollWinnersSectionToBottom();
     }
   });
   // 페이지 번호 직접 클릭
@@ -119,8 +121,17 @@ function initWinnersSection() {
     if (page !== userData.winners.currentPage) {
       userData.winners.currentPage = page;
       initWinnersSection();
+      scrollWinnersSectionToBottom();
     }
   });
+}
+
+function scrollWinnersSectionToBottom() {
+  const section = $('#winners-section');
+  const sectionBottom = section.offset().top + section.outerHeight();
+  const viewportHeight = window.innerHeight;
+  const scrollTo = sectionBottom - viewportHeight;
+  window.scrollTo({ top: Math.max(0, scrollTo), behavior: 'auto' });
 }
 
 // Export the initialization function

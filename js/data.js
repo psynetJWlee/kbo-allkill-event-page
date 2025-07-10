@@ -35,7 +35,7 @@ const members = [
   { id: 18, nickname: "2래랜라", profileImage: "/image/profile.png", amount: 50000 },
   { id: 19, nickname: "2하이고", profileImage: "/image/profile.png", amount: 50000 },
   { id: 20, nickname: "2올림픽ㄱㄱ", profileImage: "/image/profile.png", amount: 50000 },
-  ...Array.from({length: 480}, (_, i) => ({
+  ...Array.from({length: 5}, (_, i) => ({
     id: i + 21,
     nickname: `유저${i + 21}`,
     profileImage: "/image/profile.png",
@@ -45,18 +45,18 @@ const members = [
 
 // Mock data for ranking list (500명으로 확장)
 const totalrankingData = [
-  ...Array.from({length: 500}, (_, i) => ({
+  ...Array.from({length: 97}, (_, i) => ({
     rank: i + 1,
     name: `랭킹${i + 1}`,
     profileImg: `https://i.pravatar.cc/150?img=${(i % 70) + 1}`,
     streak: (i % 5) + 1,
-    prize: 1000000 * (500 - i),
+    prize: 1000000 * (97 - i),
     isMe: i === 12 // 13번째(내닉네임)만 true, 나머지는 false
   }))
 ];
 
 // Prize history data (최근 500일, amount +50000)
-const prizeHistory = Array.from({length: 500}, (_, i) => {
+const prizeHistory = Array.from({length: 15}, (_, i) => {
   const d = new Date();
   d.setDate(d.getDate() - i);
   const yyyy = d.getFullYear();

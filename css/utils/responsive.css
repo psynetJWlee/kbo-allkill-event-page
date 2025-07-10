@@ -8,7 +8,7 @@
   #kbo-selection-container { padding: 0 var(--spacing-md); }
   .game-item, .match-result { padding: 10px; }
   .team-name { font-size: var(--font-size-base); padding-top: 4px; }
-  .vote-count { font-size: var(--font-size-xs); }
+  .vote-count { font-size: var(--font-size-lg); }
   .match-score .score { font-size: var(--font-size-2xl); }
   .match-score .vs { margin: 0 var(--spacing-sm); }
   .team-selection-title { font-size: 32px; height: auto; width: 100%; box-sizing: border-box; }

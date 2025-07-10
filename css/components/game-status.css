@@ -32,14 +32,14 @@
 }
 
 .game-row.row1 .score {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-xl);
   font-weight: bold;
   color: var(--white);
   font-family: var(--font-primary);
 }
 
 .game-row.row1 .score.higher {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-xl);
   color: var(--gold);
   font-weight: bold;
 }

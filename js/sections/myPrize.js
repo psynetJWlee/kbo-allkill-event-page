@@ -12,6 +12,14 @@ window.utils.formatNumber = window.utils.formatNumber || function(num) {
 // ==============================
 // 1) 페이지 핸들러 정의 (반드시 initMyPrizeSection보다 위에)
 // ==============================
+function scrollMyPrizeSectionToBottom() {
+  const section = $('#my-prize-section');
+  const sectionBottom = section.offset().top + section.outerHeight();
+  const viewportHeight = window.innerHeight;
+  const scrollTo = sectionBottom - viewportHeight;
+  window.scrollTo({ top: Math.max(0, scrollTo), behavior: 'auto' });
+}
+
 function setupPaginationHandlers() {
   const $sec = $('#my-prize-section');
   $sec.find('.page-item[data-page]')
@@ -19,6 +27,7 @@ function setupPaginationHandlers() {
     .on('click', function() {
       const page = parseInt($(this).data('page'), 10);
       handlePageChange(page);
+      scrollMyPrizeSectionToBottom();
     });
 
   $sec.find('#prev-page')
@@ -26,6 +35,7 @@ function setupPaginationHandlers() {
     .on('click', function() {
       if (userData.myPrize.currentPage > 1) {
         handlePageChange(userData.myPrize.currentPage - 1);
+        scrollMyPrizeSectionToBottom();
       }
     });
 
@@ -34,6 +44,7 @@ function setupPaginationHandlers() {
     .on('click', function() {
       if (userData.myPrize.currentPage < userData.myPrize.totalPages) {
         handlePageChange(userData.myPrize.currentPage + 1);
+        scrollMyPrizeSectionToBottom();
       }
     });
 }

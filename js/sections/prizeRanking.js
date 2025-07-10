@@ -57,17 +57,32 @@
       .off('click').on('click', function() {
         const page = parseInt($(this).data('page'), 10);
         renderRankingList(page);
+        scrollRankingSectionToBottom();
       });
 
     $('#prize-ranking-pagination').find('#prize-ranking-prev-page')
       .off('click').on('click', function() {
-        if (currentPage > 1) renderRankingList(currentPage - 1);
+        if (currentPage > 1) {
+          renderRankingList(currentPage - 1);
+          scrollRankingSectionToBottom();
+        }
       });
 
     $('#prize-ranking-pagination').find('#prize-ranking-next-page')
       .off('click').on('click', function() {
-        if (currentPage < totalPages) renderRankingList(currentPage + 1);
+        if (currentPage < totalPages) {
+          renderRankingList(currentPage + 1);
+          scrollRankingSectionToBottom();
+        }
       });
+  }
+
+  function scrollRankingSectionToBottom() {
+    const section = $('#prize-ranking-section');
+    const sectionBottom = section.offset().top + section.outerHeight();
+    const viewportHeight = window.innerHeight;
+    const scrollTo = sectionBottom - viewportHeight;
+    window.scrollTo({ top: Math.max(0, scrollTo), behavior: 'auto' });
   }
 
   // 섹션 초기화
