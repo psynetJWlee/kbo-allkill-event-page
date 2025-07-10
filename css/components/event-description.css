@@ -36,6 +36,11 @@
   line-height: 1.4;  
 }
 
+.info-item.no-marker {
+  list-style: none;
+  padding-left: 0;
+}
+
 .download-button {
   font-family: var(--font-primary);
   display: flex;
