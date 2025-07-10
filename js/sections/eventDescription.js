@@ -36,6 +36,8 @@ function initEventDescriptionSection() {
       <li class="info-item">당첨자 세금신고를 위해 신분증 사본 제출 필요</li>
       <li class="info-item">상금 지급 후 개인 정보 즉시 파기</li>
       <li class="info-item">5만원 초과 시 제세공과금 (22%) 선공제 후 지급</li>
+      <li class="info-item">지급 완료까지는 영업일 기준 약 1일 ~ 2일 소요</li>
+      <li class="info-item">금요일, 토요일 신청 건은 차주 월요일 순차 처리</li>
       <li class="info-item">다중 계정은 당첨자 정보 확인 후 당첨 취소 될 수 있음</li>
       <li class="info-item">당첨자 성명과 예금주명 불일치 시 당첨금 지급 불가</li>
       <li class="info-item">이벤트 종료 후 미신청 상금은 소멸을 원칙으로 함</li>
