@@ -679,6 +679,18 @@
         ? localEventStatusMap[key] 
         : status;
 
+      // 현재 버튼 텍스트 확인
+      const currentBtnText = $('.btn-text').text();
+      
+      // "다음 올킬 도전"으로 시작하는 경우 다음 날로 이동
+      if (currentBtnText.startsWith('다음 올킬 도전')) {
+        if (currentIndex < dateKeys.length - 1) {
+          currentIndex++;
+          refreshAll();
+        }
+        return;
+      }
+
       // (1) 'PENDING_USER_NOT_SELECTED' 최초 제출
       if (effStatus === 'PENDING_USER_NOT_SELECTED') {
         games.forEach(g => { g.userSelection = window.appState.selectedTeams?.[g.gameId]; });
