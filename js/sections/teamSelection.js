@@ -682,10 +682,15 @@
       // 현재 버튼 텍스트 확인
       const currentBtnText = $('.btn-text').text();
       
-      // "다음 올킬 도전"으로 시작하는 경우 다음 날로 이동
+      // "다음 올킬 도전"으로 시작하는 경우 오늘+1일로 이동
       if (currentBtnText.startsWith('다음 올킬 도전')) {
-        if (currentIndex < dateKeys.length - 1) {
-          currentIndex++;
+        const today = new Date();
+        const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+        const tomorrowKey = formatLocalDate(tomorrow);
+        const tomorrowIndex = dateKeys.indexOf(tomorrowKey);
+        
+        if (tomorrowIndex !== -1) {
+          currentIndex = tomorrowIndex;
           refreshAll();
         }
         return;
