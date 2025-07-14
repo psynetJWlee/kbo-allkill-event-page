@@ -85,7 +85,6 @@
 }
 
 .request-button {
-  font-family: var(--font-primary);
   background-color: var(--gold-alt);
   color: #121212;
   font-size: var(--font-size-2xl);

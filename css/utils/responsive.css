@@ -11,7 +11,7 @@
     flex-wrap: wrap;
     align-content: center;
     align-items: center;}
-  .game-item, .match-result { padding: 10px; }
+  .game-item, .match-result { padding: 20px 10px; }
   .team-name { font-size: var(--font-size-lg); padding-top: 4px; }
   .vote-count { font-family: var(--font-primary); font-size: var(--font-size-lg); }
   .match-score .score { font-size: var(--font-size-2xl); }
