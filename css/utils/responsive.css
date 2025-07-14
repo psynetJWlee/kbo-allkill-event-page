@@ -4,17 +4,21 @@
 @media (max-width: 480px) {
   .title-wrapper .title-decor { width: 100px; }
   .ranking-header { flex-direction: column; align-items: flex-start; }
-  .my-ranking { margin-left: 0; margin-top: 10px; margin-bottom: 8px;}
-  #kbo-selection-container { padding: 0 var(--spacing-md); }
+  .my-ranking {        margin-left: 0;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;}
   .game-item, .match-result { padding: 10px; }
-  .team-name { font-size: var(--font-size-base); padding-top: 4px; }
-  .vote-count { font-size: var(--font-size-lg); }
+  .team-name { font-size: var(--font-size-lg); padding-top: 4px; }
+  .vote-count { font-family: var(--font-primary); font-size: var(--font-size-lg); }
   .match-score .score { font-size: var(--font-size-2xl); }
   .match-score .vs { margin: 0 var(--spacing-sm); }
   .team-selection-title { font-size: 32px; height: auto; width: 100%; box-sizing: border-box; }
   .team-selection-title .subtitle { font-size: var(--font-size-2xl); }
-  .date-navigation { padding: 0 var(--spacing-sm); }
-  .prev-day, .next-day, .current-day { font-size: var(--font-size-lg); }  
-  .ranking-prize { font-size: var(--font-size-2xl) !important; padding-top: 4px; }
+  .prev-day, .next-day, .current-day { font-size: 18px; }  
+  .ranking-prize { font-family: var(--font-primary); font-size: var(--font-size-2xl) !important; padding-top: 4px; }
 }
 

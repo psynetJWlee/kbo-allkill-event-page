@@ -42,7 +42,6 @@
 }
 
 .download-button {
-  font-family: var(--font-primary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,14 +49,15 @@
   padding: 24px 20px 20px 20px;
   background-color: #1A5F7A;
   color: var(--white);
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-5xl);
   opacity: 0.9;
   font-weight: bold;
   border-radius: var(--radius-full);
   text-align: center;
   text-decoration: none;
-  line-height: 1.2;
-  margin-top: 50px;  
+  line-height: 1.5;
+  margin-top: 50px;
+  font-family: var(--font-primary);  
 }
 
 .download-button:hover {

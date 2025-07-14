@@ -56,17 +56,20 @@ const totalrankingData = [
 ];
 
 // Prize history data (최근 500일, amount +50000)
-const prizeHistory = Array.from({length: 15}, (_, i) => {
-  const d = new Date();
-  d.setDate(d.getDate() - i);
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return {
-    date: `${yyyy}-${mm}-${dd}`,
-    amount: +50000
-  };
-});
+const prizeHistory = [
+  { date: (() => { const d = new Date(); const yyyy = d.getFullYear(); const mm = String(d.getMonth() + 1).padStart(2, '0'); const dd = String(d.getDate()); return `${yyyy}-${mm}-${dd}`; })(), amount: -400000 },
+  ...Array.from({length: 15}, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return {
+      date: `${yyyy}-${mm}-${dd}`,
+      amount: +50000
+    };
+  })
+];
 
 // User data (섹션별 currentPage, totalPages로 분리)
 const userData = {

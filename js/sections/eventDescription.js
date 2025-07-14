@@ -50,7 +50,7 @@ function initEventDescriptionSection() {
       rel="noopener noreferrer"
       class="download-button"
     >
-      LIVE스코어<br />다운 받기
+      LIVE 스코어<br />다운 받기
     </a>
     <a 
       href="javascript:void(0);" 

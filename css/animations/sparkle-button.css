@@ -1,14 +1,14 @@
 
 /* Mega Sparkle Button Animation */
 .mega-sparkle-btn {
-  font-family: var(--font-primary);
   background: linear-gradient(45deg, var(--gold-alt), var(--gold-gradient), var(--gold-light));
   background-size: 200% 200%;
   color: #222;
   border: none;
   padding: 29px 60px 30px 60px;
   border-radius: 40px;
-  font-size: var(--font-size-3xl);
+  font-family: noto sans-serif;
+  font-size: var(--font-size-5xl);
   font-weight: bold;
   cursor: pointer;
   position: relative;

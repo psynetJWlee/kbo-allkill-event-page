@@ -12,8 +12,8 @@
 
 (function() {
   window.matchData = {
-    "2025-07-06": {
-      eventStatus: "COMPLETED_USER_NOT_SELECTED",
+    "2025-07-10": {
+      eventStatus: "NO_GAMES_EVENT_DISABLED",
       games: [
         {
           gameId: "null",
@@ -62,7 +62,7 @@
         }
       ]
     },
-    "2025-07-07": {
+    "2025-07-11": {
       eventStatus: "COMPLETED_USER_SUCCESS",
       games: [
         {
@@ -127,7 +127,7 @@
         }
       ]
     },
-    "2025-07-08": {
+    "2025-07-12": {
       eventStatus: "COMPLETED_USER_SUCCESS",
       games: [
         {
@@ -192,7 +192,7 @@
         }
       ]
     },
-    "2025-07-09": {
+    "2025-07-13": {
       eventStatus: "COMPLETED_USER_FAIL",
       games: [
         {
@@ -257,7 +257,7 @@
         }
       ]
     },
-    "2025-07-10": {
+    "2025-07-14": {
       eventStatus: "IN_PROGRESS_USER_SELECTED",
       games: [
         {
@@ -314,7 +314,7 @@
         }
       ]
     },
-    "2025-07-11": {
+    "2025-07-15": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -355,7 +355,7 @@
         }
       ]
     },
-    "2025-07-12": {
+    "2025-07-16": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -405,7 +405,7 @@
         }
       ]
     },
-    "2025-07-13": {
+    "2025-07-17": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -455,7 +455,7 @@
         }
       ]
     },
-    "2025-07-14": {
+    "2025-07-18": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -487,7 +487,7 @@
         }
       ]
     },
-    "2025-07-15": {
+    "2025-07-19": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -519,7 +519,7 @@
         }
       ]
     },
-    "2025-07-16": {
+    "2025-07-20": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       games: [
         {
@@ -551,7 +551,7 @@
         }
       ]
     },
-    "2025-07-17": {
+    "2025-07-21": {
       eventStatus: "NO_GAMES_EVENT_DISABLED",
       games: [
         

@@ -34,7 +34,6 @@
 .event-title-line2,
 .event-title-line3 {
   display: block;
-  font-family: var(--font-primary);
   font-weight: 700;
   font-size: var(--font-size-6xl);
   line-height: 1.1;

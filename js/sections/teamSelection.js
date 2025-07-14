@@ -118,6 +118,10 @@
       ? '<div class="spinner"></div>' 
       : '';
 
+    // NO_GAMES_EVENT_DISABLED 상태면 숨김 처리용 스타일 추가
+    const hideGameList = effStatus === 'NO_GAMES_EVENT_DISABLED' ? 'style="display:none"' : '';
+    // team-selection-submit 숨김 코드는 삭제 (항상 노출)
+
     const html = `
       <div id="${sectionId}" class="team-selection-section">
         <div class="title-wrapper">
@@ -129,7 +133,7 @@
             <span class="title-sub"></span>
           </h2>
         </div>
-        <div id="${gameListId}" class="game-list"></div>
+        <div id="${gameListId}" class="game-list" ${hideGameList}></div>
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
             <span class="btn-text">${submitBtnPlaceholder}</span>
@@ -566,7 +570,7 @@
     }
 
     // === EVENT_CANCELLED_MULTI_GAMES에서는 버튼 숨김 ===
-    if (effStatus === 'NO_GAMES_EVENT_DISABLED' || effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
+    if (effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
       $('#submit-allkill-btn').hide();
     } else {
       $('#submit-allkill-btn').show();
@@ -582,8 +586,8 @@
     const baseStatus = (window.matchData[key]||{}).eventStatus;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
 
-    // [NO_GAMES_EVENT_DISABLED] or [EVENT_CANCELLED_MULTI_GAMES]일 경우 숨김 처리
-    if (effStatus === 'NO_GAMES_EVENT_DISABLED' || effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
+    // [EVENT_CANCELLED_MULTI_GAMES]일 경우만 숨김 처리 (NO_GAMES_EVENT_DISABLED는 숨기지 않음)
+    if (effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
       $('#submit-allkill-btn').hide();
       return;
     }
@@ -692,6 +696,11 @@
         if (tomorrowIndex !== -1) {
           currentIndex = tomorrowIndex;
           refreshAll();
+          // 스크롤 이동 추가
+          setTimeout(() => {
+            const el = document.getElementById('kbo-selection-container');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
         }
         return;
       }

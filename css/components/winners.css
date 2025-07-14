@@ -13,7 +13,6 @@
   margin: 0 auto var(--spacing-lg) auto;
   position: relative;
   width: fit-content;
-  font-family: var(--font-primary);
 }
 
 .title-text {
@@ -21,7 +20,6 @@
   font-size: var(--font-size-3xl);
   font-weight: bold;
   color: var(--white);
-  font-family: var(--font-primary);
 }
 .winners-title .title-text{
   filter: 
@@ -44,13 +42,13 @@
 }
 
 .winners-count {
+  font-family: var(--font-primary);
   font-size: var(--font-size-4xl);
   color: var(--white);
   font-weight: bold;
   display: block;
   width: 100%;
   text-align: center;
-  font-family: var(--font-primary);
 }
 
 .member-list {
@@ -95,15 +93,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
-  top: 3px;
+  top: -1px;
 }
 
 .member-amount {
+  font-family: var(--font-primary);
   font-size: var(--font-size-3xl);
   font-weight: bold;
   letter-spacing: 2px;
   color: var(--gold);
-  font-family: var(--font-primary);
   position: relative;
   top: 3px;
 }
@@ -113,7 +111,6 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0px 12px 0px 0px;
-  font-family: var(--font-primary);
   font-size: var(--font-size-md);
   color: var(--white);
   text-align: right;
