@@ -17,7 +17,7 @@
     // 내 아이템 찾아서 헤더 표시값용 랭크
     const me = data.find(item => item.isMe);
     const userRank = me ? me.rank : '-';
-    const displayText = `${userRank}위 / ${data.length}명`;
+    const displayText = `${userRank}위 / ${data.length}`;
 
     // 내 랭킹 숫자 갱신
     $('.my-ranking-number').text(displayText);
@@ -96,7 +96,7 @@
           <div class="title-underline"></div>
         </div>
         <p class="my-ranking">
-          내 랭킹 <span class="my-ranking-number">-위 / ${data.length}명</span>
+          내 랭킹 <span class="my-ranking-number">-위 / ${data.length}</span>
           <img src="/image/user-icon.png" alt="User icon" class="user-icon" />
         </p>
       </div>

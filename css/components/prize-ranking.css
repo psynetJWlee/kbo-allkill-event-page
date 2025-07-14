@@ -53,7 +53,7 @@
 
 .user-icon {
   display: inline-block;
-  margin-left: var(--spacing-sm);
+  margin-left: 4px;
   width: 10px;
   height: 12px;
 }
