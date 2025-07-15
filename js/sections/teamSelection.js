@@ -68,6 +68,7 @@
     setupNavHandlers();
     setupTeamSelectionHandlers();
     setupSubmitHandler();
+    setupCopyLinkButton();
   }
 
   function renderNav() {
@@ -136,6 +137,12 @@
             <div class="spark"></div><div class="spark"></div><div class="spark"></div>
           </button>
         </div>
+        <a 
+          href="javascript:void(0);" 
+          class="download-button copy-link-button team-selection-copy-link"
+        >
+          링크 복사
+        </a>
       </div>
     `;
     $(containerSelector).append(html);

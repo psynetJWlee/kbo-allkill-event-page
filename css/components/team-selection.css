@@ -110,6 +110,10 @@
   border-bottom: 1.5px solid #D9D9D9;
 }
 
+#game-list .game-item:last-child {
+  border-bottom: none;
+}
+
 .game-item.disabled,
 .match-result.disabled {
   opacity: 0.3 !important;
@@ -253,5 +257,24 @@ span.cancelled{
 
 .team-score {
   font-size: 27px;
+}
+
+.team-selection-copy-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  padding: 24px 20px 20px 20px;
+  background-color: #1A5F7A;
+  color: var(--white);
+  font-size: var(--font-size-5xl);
+  opacity: 0.9;
+  font-weight: 400;
+  border-radius: var(--radius-full);
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.5;
+  margin: 50px 35px 50px 35px;
+  font-family: var(--font-primary);
 }
 

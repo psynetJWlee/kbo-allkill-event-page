@@ -52,13 +52,7 @@ function initEventDescriptionSection() {
     >
       LIVE 스코어<br />다운 받기
     </a>
-    <a 
-      href="javascript:void(0);" 
-      class="download-button copy-link-button"
-      style="margin-top:20px;"
-    >
-      링크 복사
-    </a>
+
   `;
   
   $('#event-description-section').html(sectionHtml);
