@@ -22,9 +22,9 @@
 .game-row.row1 .start-time,
 .game-row.row1 .status-text {
   display: inline-block;
-  font-size: var(--font-size-lg);
-  font-weight: bold;
-  color: var(--white);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--black);
   padding: 3px 8px 8px 8px;
   border-radius: var(--spacing-xs);
   text-align: center;
@@ -73,11 +73,11 @@
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   justify-content: space-between;  
-  height: 50px;
+  height: 60px;
   color: var(--white);
   background-color: #1c1c1c;
   padding: 0 60px;
-  margin-bottom: 16px;
+  margin-bottom: 40px;
 }
 
 .date-navigation .date-nav-prev { 
@@ -129,7 +129,6 @@
 
 .current-day {
   font-size: var(--font-size-lg);
-  font-weight: bold;
   cursor: pointer;  
   
 }

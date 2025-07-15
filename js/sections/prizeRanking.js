@@ -17,7 +17,7 @@
     // 내 아이템 찾아서 헤더 표시값용 랭크
     const me = data.find(item => item.isMe);
     const userRank = me ? me.rank : '-';
-    const displayText = `${userRank}위 / ${data.length}`;
+    const displayText = `${userRank} 위 / ${data.length} 명`;
 
     // 내 랭킹 숫자 갱신
     $('.my-ranking-number').text(displayText);
@@ -96,20 +96,15 @@
           <div class="title-underline"></div>
         </div>
         <p class="my-ranking">
-          내 랭킹 <span class="my-ranking-number">-위 / ${data.length}</span>
-          <img src="/image/user-icon.png" alt="User icon" class="user-icon" />
+          내 랭킹 <span class="my-ranking-number">- 위 / ${data.length} 명</span>          
         </p>
       </div>
       <p class="unit-label">단위 : 원</p>
       <ul class="ranking-list" id="ranking-list"></ul>
       <div id="prize-ranking-pagination"></div>
       <div class="ranking-note-title">
-      매일 마지막 경기 종료 후 집계</div>
-      
-      <div class="ranking-note">
-        * 누적 상금이 동일 할 경우 먼저 제출한 사용자가 우선 순위<br/>
-        * 전체 랭킹은 30일까지 노출됩니다.
-      </div>
+      ※ 매일 마지막 경기 종료 후 집계</div>
+    
     `;
     $('#prize-ranking-section').html(sectionHtml);
 

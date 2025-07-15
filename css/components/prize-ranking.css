@@ -20,10 +20,9 @@
 
 .title-text {
   display: block;
-  font-size: var(--font-size-3xl);
-  font-weight: bold;
-  color: var(--white);
-  filter: drop-shadow(-1px -1px 0 #001a29) drop-shadow(1px -1px 0 #001a29) drop-shadow(-1px 1px 0 #001a29) drop-shadow(1px 1px 0 #001a29) drop-shadow(-1px 0 0 #001a29) drop-shadow(1px 0 0 #001a29) drop-shadow(0 -1px 0 #001a29) drop-shadow(0 1px 0 #001a29);
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--white);  
 }
 
 .title-underline {
@@ -37,7 +36,6 @@
 .my-ranking {
   margin-top: var(--spacing-sm);
   font-size: var(--font-size-lg);
-  font-weight: bold;
   color: rgba(255, 255, 255, 0.7);
   align-self: center;
   display: block;
@@ -112,7 +110,7 @@
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: var(--radius-md);
   margin-top: var(--spacing-sm);
-  padding: var(--spacing-md);
+  padding: 12px 20px 12px 12px;
   border: 0.5px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -159,12 +157,12 @@
 }
 
 .ranking-nickname {
-  font-size: var(--font-size-md);
+  font-size: 18px;
   color: var(--white);
 }
 
 .ranking-streak {
-  font-size: var(--font-size-xl);
+  font-size: 18px;
   color: var(--gold);
   opacity: 0.9;  
 }
@@ -177,7 +175,7 @@
 }
  
 .ranking-note-title {
-  font-size: var(--font-size-base);
+  font-size: 18px;
   text-align: center;
   margin: var(--spacing-lg);
   color: var(--white);

@@ -4,14 +4,15 @@
   position: relative;
   margin: 0;
   padding: 0 0 var(--spacing-xl) 0;
-  background: var(--background-dark);
+  
 }
+
 
 .title-wrapper {
   position: relative;
   text-align: center;
 }
-
+/*
 .title-wrapper .title-decor-left,
 .title-wrapper .title-decor-right {
   position: absolute;
@@ -40,24 +41,36 @@
   color: var(--white);
   font-weight: bold;
   height: auto;
-}
+}*/
 
 .team-selection-title .title-sub {
-  font-size: var(--font-size-3xl);
-  color: #FFC736;
-  font-weight: bold;   
+  font-size: 35px;
+  font-weight: 400;   
 }
-
-.kbo-selection-container {
-  background-color: var(--background-dark);
-  width: 100%;
-}
-
+/*
 .team-selection-title .countdown-active {
   display: block;
   font-size: var(--font-size-3xl);
   color: #FF0000;
   margin-top: 0.25em;
+}
+
+.status-no-games {}
+.status-cancelled {}
+.status-pending-unselected {}
+.status-pending-selected {}
+.status-progress-unselected {}
+.status-progress-selected {}
+.status-completed-success {}
+.status-completed-fail {}
+.status-completed-unselected {}
+
+.allkill-text {}
+*/
+
+.kbo-selection-container {
+  background-color: var(--white);
+  width: 100%;
 }
 
 .no-game {
@@ -76,7 +89,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-  padding: 0 12px;
+  background-color: var(--white);
 }
 
 .game-list img.allkill-stamp {
@@ -93,11 +106,8 @@
 .game-item {
   position: relative;
   overflow: visible;
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-xl);
-  padding: 14px var(--spacing-lg);
+  border-bottom: 1.5px solid #D9D9D9;
 }
 
 .game-item.disabled,
@@ -115,15 +125,6 @@
   background-color: var(--background-darker);
   border-radius: 6px;
 }
-
-#game-list .game-item:nth-child(odd) {
-  background-color: var(--background-darker);
-}
-
-#game-list .game-item:nth-child(even) {
-  background-color: var(--background-dark);
-}
-
 .game-item.placeholder .team-column,
 .game-item.placeholder .status-section {
   border-radius: var(--radius-md);
@@ -140,8 +141,7 @@
 .team-box {
   width: var(--team-box-size);
   height: 80px;
-  background: #1f1f1f;
-  border: 1px solid var(--gray-border);
+  border: 3px solid #545454;
   border-radius: var(--radius-sm);
   padding: var(--spacing-sm);
   display: flex;
@@ -149,21 +149,29 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  gap: 5px;
 }
 
-.team-box.selected-home {
-  background-color: var(--red);
-  border: 3px solid var(--white);
-}
-
-.team-box.selected-away {
-  background-color: var(--blue-selection);
-  border: 3px solid var(--white);
-}
-
+.team-box.selected-home,
+.team-box.selected-away,
 .team-box.selected-draw {
-  background-color: var(--gray);
-  border: 3px solid var(--white);
+  /* 배경색, 테두리 효과 제거 */
+  background-color: unset;
+  border: 1px solid #545454;
+}
+
+.team-box.selected {
+  position: relative;
+}
+.team-box.selected .check-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 56px;
+  height: 52px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .team-logo {
@@ -173,15 +181,19 @@
 }
 
 .team-name {
-  font-weight: bold;
-  font-size: var(--font-size-base);
-  color: var(--white);
+  font-weight: 400;
+  color: var(--black);
   text-align: center;
+  width: 90px;             
+  white-space: nowrap;     
+  overflow: hidden;        
+  text-overflow: ellipsis; 
+  text-align: center;      
+  display: block;          
 }
 
 .vote-count {
-  font-size: var(--font-size-md);
-  color: var(--gray-light);
+  color: var(--black);
   width: var(--team-box-size);
   text-align: center;
   font-weight: bold;
@@ -190,5 +202,56 @@
 .vote-count.higher {
   color: var(--white);
   font-weight: bold;
+}
+
+.win.button, .draw.button, .lose.button {
+  font-size: 27px;
+  color: #000000;
+  opacity: 0.4;
+}
+
+.title-main {
+  font-size: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.title-main img[alt="check"] {
+  display: inline-block;
+  vertical-align: middle;
+  width: 36px;
+  height: 33px;
+  margin-left: 6px;
+  margin-bottom: 10px;
+}
+
+span.success {
+  color: #CA0B0B;
+  font-size: 48px;
+  margin-left: 16px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+span.fail {
+  color: #0066B3;
+  font-size: 48px;
+  margin-left: 16px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+span.cancelled{
+  color: #878787;
+  font-size: 48px;
+  margin-left: 16px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.team-score {
+  font-size: 27px;
 }
 

@@ -10,7 +10,6 @@
 
 .winners-title {
   display: block;
-  margin: 0 auto var(--spacing-lg) auto;
   position: relative;
   width: fit-content;
 }
@@ -20,17 +19,6 @@
   font-size: var(--font-size-3xl);
   font-weight: bold;
   color: var(--white);
-}
-.winners-title .title-text{
-  filter: 
-  drop-shadow(-1px -1px 0 #001a29) 
-  drop-shadow(1px -1px 0 #001a29)
-  drop-shadow(-1px 1px 0 #001a29)
-  drop-shadow(1px 1px 0 #001a29)
-  drop-shadow(-1px 0 0 #001a29)
-  drop-shadow(1px 0 0 #001a29) 
-  drop-shadow(0 -1px 0 #001a29) 
-  drop-shadow(0 1px 0 #001a29);
 }
 
 .title-underline {
@@ -43,9 +31,9 @@
 
 .winners-count {
   font-family: var(--font-primary);
-  font-size: var(--font-size-4xl);
+  font-size: 42px;
   color: var(--white);
-  font-weight: bold;
+  font-weight: 400;
   display: block;
   width: 100%;
   text-align: center;
@@ -86,8 +74,7 @@
 }
 
 .member-nickname {
-  font-size: var(--font-size-xl);
-  font-weight: bold; 
+  font-size: 25px ;
   color: var(--white);
   white-space: nowrap;
   overflow: hidden;
@@ -97,13 +84,12 @@
 }
 
 .member-amount {
-  font-family: var(--font-primary);
-  font-size: var(--font-size-3xl);
-  font-weight: bold;
+  font-size: 36px;
+  font-weight: 400;
   letter-spacing: 2px;
   color: var(--gold);
   position: relative;
-  top: 3px;
+  top: -1px;
 }
 
 .unit-label {

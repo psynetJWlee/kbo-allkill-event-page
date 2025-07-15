@@ -101,8 +101,7 @@ function initMyPrizeSection() {
         <div class="member-info">
           <img src="/image/profile.jpg" class="user-avatar" alt="사용자" />
           <div class="user-info">
-            <p class="user-nickname">${userData.nickname}</p>
-            <p class="user-text">님 보유상금</p>
+            <p class="user-nickname">${userData.nickname}</p>            
           </div>
         </div>
         <p class="prize-amount">${formatNumber(userData.totalAmount)} 원</p>

@@ -11,14 +11,14 @@
     flex-wrap: wrap;
     align-content: center;
     align-items: center;}
-  .game-item, .match-result { padding: 20px 10px; }
-  .team-name { font-size: var(--font-size-lg); padding-top: 4px; }
-  .vote-count { font-family: var(--font-primary); font-size: var(--font-size-lg); }
+  .game-item, .match-result { padding: 20px 30px 40px 30px; }
+  .team-name { font-size: var(--font-size-2xl); padding-top: 4px; }
+  .vote-count { font-family: var(--font-primary); font-size: 16px; }
   .match-score .score { font-size: var(--font-size-2xl); }
   .match-score .vs { margin: 0 var(--spacing-sm); }
-  .team-selection-title { font-size: 32px; height: auto; width: 100%; box-sizing: border-box; }
+  /*.team-selection-title { font-size: 32px; height: auto; width: 100%; box-sizing: border-box; }*/
   .team-selection-title .subtitle { font-size: var(--font-size-2xl); }
-  .prev-day, .next-day, .current-day { font-size: 18px; }  
+  .prev-day, .next-day, .current-day { font-size: 30px; }  
   .ranking-prize { font-family: var(--font-primary); font-size: var(--font-size-2xl) !important; padding-top: 4px; }
 }
 

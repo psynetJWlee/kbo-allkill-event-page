@@ -1,4 +1,5 @@
 
+/*
 .title-wrapper.status-progress-unselected,
 .title-wrapper.status-completed-fail,
 .title-wrapper.status-completed-unselected,
@@ -10,7 +11,7 @@
 }
 
 /* Title Main Row with Spinner */
-.title-main-row {
+/*.title-main-row {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,15 +34,15 @@
 }
 
 /* Common EventStatus CSS Classes - Group of 5 statuses */
-.title-wrapper.status-progress-unselected .title-main,
+/*.title-wrapper.status-progress-unselected .title-main,
 .title-wrapper.status-completed-fail .title-main,
 .title-wrapper.status-completed-unselected .title-main,
 .title-wrapper.status-no-games .title-main,
 .title-wrapper.status-cancelled .title-main {
-  color: var(--white);
+  color: #000;
 }
 
-.title-wrapper.status-progress-unselected .title-sub,
+/*.title-wrapper.status-progress-unselected .title-sub,
 .title-wrapper.status-completed-fail .title-sub,
 .title-wrapper.status-completed-unselected .title-sub,
 .title-wrapper.status-no-games .title-sub,
@@ -50,7 +51,7 @@
 }
 
 /* Enhanced Styles for Pending Unselected - Special animations */
-.title-wrapper.status-pending-unselected {
+/*.title-wrapper.status-pending-unselected {
   min-height: 200px;
   display: flex;
   flex-direction: column;
@@ -61,8 +62,9 @@
   padding-bottom: var(--spacing-lg);
 }
 
-.title-wrapper.status-pending-unselected .title-main {
-  font-size: 3.5rem;
+/*.title-wrapper.status-pending-unselected .title-main /
+  font-size: 36px;
+  text-align: center;
   font-weight: 900;
   text-align: center;
   line-height: 1.2;
@@ -76,8 +78,8 @@
   word-break: keep-all;
   padding: 0 var(--spacing-sm);
   box-sizing: border-box;
-}
-
+}*/
+/*
 .title-wrapper.status-pending-unselected .title-sub {
   display: flex;
   flex-direction: column;
@@ -92,7 +94,7 @@
   padding: 0 var(--spacing-sm);
   box-sizing: border-box;
 }
-
+/*
 .title-wrapper.status-pending-unselected .title-sub.urgent {
   color: var(--red-urgent) !important;
   animation: urgentPulse 0.4s ease-in-out infinite alternate;
@@ -143,7 +145,7 @@
 }
 
 /* Enhanced Styles for Completed Success - Trophy and Star animations */
-.title-wrapper.status-completed-success {
+/*.title-wrapper.status-completed-success {
   min-height: 150px;
   display: flex;
   flex-direction: column;
@@ -254,19 +256,19 @@
 }
 
 /* Responsive adjustments for enhanced mobile experience */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
   .title-wrapper.status-pending-unselected {
     min-height: 180px;
     padding: 0 var(--spacing-xs);
   padding-bottom: var(--spacing-lg);
   }
   
-  .title-wrapper.status-pending-unselected .title-main {
+  /*.title-wrapper.status-pending-unselected .title-main {
     font-size: 3.4rem;
     padding: 0 var(--spacing-xs);
-  }
+  }*/
   
-  .title-wrapper.status-pending-unselected .title-sub {
+  /*.title-wrapper.status-pending-unselected .title-sub {
     font-size: 1.7rem;
     padding: 0 var(--spacing-xs);
   }
@@ -288,9 +290,9 @@
     gap: 0.4rem;
     padding: 0 var(--spacing-xs);
   }
-}
+}*/
 
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {
   .title-wrapper.status-pending-unselected {
     min-height: 160px;
     padding: 0 8px;
@@ -299,7 +301,7 @@
     padding-bottom: var(--spacing-lg);
   }
   
-  .title-wrapper.status-pending-unselected .title-main {
+  /*.title-wrapper.status-pending-unselected .title-main {
     font-size: 3.2rem;
     padding: 20px 4px;
     line-height: 1.1;
@@ -338,16 +340,15 @@
   .title-wrapper.status-completed-success .title-sub::after {
     font-size: 0.7em;
   }
-}
 
-.title-wrapper.status-completed-fail .title-main-row .title-main,
+/*.title-wrapper.status-completed-fail .title-main-row .title-main,
 .title-wrapper.status-completed-unselected .title-main-row .title-main,
 .title-wrapper.status-no-games .title-main-row .title-main,
 .title-wrapper.status-cancelled .title-main-row .title-main {
   animation: energyBounce 1.5s ease-in-out infinite;
-}
+}*/
 
-@keyframes energyBounce {
+/*@keyframes energyBounce {
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0) scale(1);
   }
@@ -377,3 +378,4 @@
   border-radius: 50%;
   vertical-align: middle;
 }
+*/

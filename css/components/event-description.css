@@ -1,7 +1,7 @@
 
 /* Event Description Section */
 .event-description-section {
-  padding: var(--spacing-xl) var(--spacing-xl) 100px;
+  padding: 20px 16px 100px 16px;
   background-color: var(--darkest-blue);
 }
 
@@ -18,7 +18,7 @@
 }
 
 .info-title {
-  font-size: var(--font-size-base);
+  font-size: 18px;
   color: var(--white);
   font-weight: 500;
 }
@@ -30,7 +30,7 @@
 }
 
 .info-item {
-  font-size: var(--font-size-xs);
+  font-size: 16px;
   color: var(--white);
   margin-bottom: var(--spacing-sm);
   line-height: 1.4;  
@@ -51,7 +51,7 @@
   color: var(--white);
   font-size: var(--font-size-5xl);
   opacity: 0.9;
-  font-weight: bold;
+  font-weight: 400;
   border-radius: var(--radius-full);
   text-align: center;
   text-decoration: none;

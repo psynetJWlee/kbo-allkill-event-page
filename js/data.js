@@ -15,31 +15,32 @@ const teamLogos = {
 
 // Winner members data
 const members = [
-  { id: 1, nickname: "고량뉴스", profileImage: "/image/profile.jpg", amount: 50000 },
-  { id: 2, nickname: "컴오라파", profileImage: "/image/event-emoticon.gif", amount: 1000000 },
-  { id: 3, nickname: "홈런왕김탁구탁구", profileImage: "/image/giphy.gif", amount: 888888 },
-  { id: 4, nickname: "엘지트윈스", profileImage: "/image/giphy2.gif", amount: 50000 },
-  { id: 5, nickname: "두산베어준", profileImage: "/image/giphy3.gif", amount: 50000 },
-  { id: 6, nickname: "라스돌해라", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 7, nickname: "다이노스", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 8, nickname: "래랜라", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 9, nickname: "하이고", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 10, nickname: "올림픽ㄱㄱ", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 11, nickname: "2고량뉴스", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 12, nickname: "2컴오라파", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 13, nickname: "2홈런왕김탁구", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 14, nickname: "2엘지트윈스", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 15, nickname: "2두산베어준", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 16, nickname: "2라스돌해라", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 17, nickname: "2다이노스", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 18, nickname: "2래랜라", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 19, nickname: "2하이고", profileImage: "/image/profile.png", amount: 50000 },
-  { id: 20, nickname: "2올림픽ㄱㄱ", profileImage: "/image/profile.png", amount: 50000 },
+  { id: 1, nickname: "고량뉴스", profileImage: "/image/profile.jpg", amount: 50000, date: '2025-07-01' },
+  { id: 2, nickname: "컴오라파", profileImage: "/image/event-emoticon.gif", amount: 1000000, date: '2025-07-01' },
+  { id: 3, nickname: "홈런왕김탁구탁구", profileImage: "/image/giphy.gif", amount: 888888, date: '2025-07-01' },
+  { id: 4, nickname: "엘지트윈스", profileImage: "/image/giphy2.gif", amount: 50000, date: '2025-07-01' },
+  { id: 5, nickname: "두산베어준", profileImage: "/image/giphy3.gif", amount: 50000, date: '2025-07-01' },
+  { id: 6, nickname: "라스돌해라", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 7, nickname: "다이노스", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 8, nickname: "래랜라", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 9, nickname: "하이고", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 10, nickname: "올림픽ㄱㄱ", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 11, nickname: "2고량뉴스", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 12, nickname: "2컴오라파", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 13, nickname: "2홈런왕김탁구", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 14, nickname: "2엘지트윈스", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 15, nickname: "2두산베어준", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 16, nickname: "2라스돌해라", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 17, nickname: "2다이노스", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 18, nickname: "2래랜라", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 19, nickname: "2하이고", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
+  { id: 20, nickname: "2올림픽ㄱㄱ", profileImage: "/image/profile.png", amount: 50000, date: '2025-07-01' },
   ...Array.from({length: 5}, (_, i) => ({
     id: i + 21,
     nickname: `유저${i + 21}`,
     profileImage: "/image/profile.png",
-    amount: 50000
+    amount: 50000,
+    date: '2025-07-01'
   }))
 ];
 

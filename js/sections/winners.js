@@ -24,11 +24,13 @@ function initWinnersSection() {
   const currentMembers = allMembers.slice(startIdx, endIdx);
   
 
-  // Container HTML
+  // members 배열에서 날짜 추출 (가장 첫 번째 멤버의 date 사용)
+  const winnerDateRaw = (members[0]?.date || '').split('-')[2];
+  const winnerDate = winnerDateRaw ? String(parseInt(winnerDateRaw, 10)) : '';
   const sectionHtml = `
     <div class="w-full flex flex-col items-center relative">
       <div class="winners-title">
-        <span class="title-text">오늘의 당첨자</span>
+        <span class="title-text">${winnerDate ? winnerDate + '일 당첨자' : '오늘의 당첨자'}</span>
         <div class="title-underline"></div>
       </div>
       <p class="winners-count w-full text-center">
@@ -44,15 +46,21 @@ function initWinnersSection() {
   // Render member list (현재 페이지 멤버만)
   const memberListHtml = currentMembers
     .map(member => {
+      // 닉네임이 한글 6글자 이상이면 6글자+..으로 표기
+      let displayName = member.nickname;
+      const hangulMatch = displayName.match(/^[가-힣]{6,}$/);
+      if (hangulMatch) {
+        displayName = displayName.slice(0, 5) + '..';
+      }
       return `
-        <div class="member-card" style="border: 0.5px solid #FFFFFF;">
+        <div class="member-card">
           <div class="member-profile">
             <img
               src="${member.profileImage || '/image/profile.png'}"
               alt="${member.nickname} 프로필"
               class="member-avatar"
             />
-            <span class="member-nickname">${member.nickname}</span>
+            <span class="member-nickname">${displayName}</span>
           </div>
           <span class="member-amount">
             ${formatNumber(member.amount)}

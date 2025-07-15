@@ -74,17 +74,17 @@
     const prevKey = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
     const nextKey = currentIndex < dateKeys.length - 1 ? dateKeys[currentIndex + 1] : '';
 
-    // prev/next 버튼용 함수 (기존 방식 유지)
+    // prev/next 버튼용 함수 (dd 형식)
     function dayLabel(k) {
       if (!k) return '';
-      if (k === todayKey) return 'Today';
-      return k.split('-')[2];
+      const [year, month, day] = k.split('-');
+      return `${parseInt(day)}`;
     }
 
-    // 가운데 현재 날짜용 함수 (월/일 형식)
+    // 가운데 현재 날짜용 함수 (오늘만 Today, 그 외 MM/DD)
     function currentDayLabel(k) {
       if (!k) return '';
-      if (k === todayKey) return 'Today';
+      if (dateKeys[currentIndex] === todayKey) return 'Today';
       const [year, month, day] = k.split('-');
       return `${parseInt(month)}/${parseInt(day)}`;
     }
@@ -114,20 +114,16 @@
       : data.eventStatus;
 
     // IN_PROGRESS_USER_SELECTED일 때만 spinner 추가
-    const spinnerHtml = effStatus === 'IN_PROGRESS_USER_SELECTED' 
-      ? '<div class="spinner"></div>' 
-      : '';
 
     // NO_GAMES_EVENT_DISABLED 상태면 숨김 처리용 스타일 추가
     const hideGameList = effStatus === 'NO_GAMES_EVENT_DISABLED' ? 'style="display:none"' : '';
-    // team-selection-submit 숨김 코드는 삭제 (항상 노출)
+    
 
     const html = `
       <div id="${sectionId}" class="team-selection-section">
         <div class="title-wrapper">
           <h2 class="team-selection-title">
             <div class="title-main-row">
-              ${spinnerHtml}
               <span class="title-main"></span>
             </div>
             <span class="title-sub"></span>
@@ -164,7 +160,7 @@
 
     matches.forEach(match => {
       if (match.gameId === 'null') {
-        $list.append(`<div class="game-item placeholder"><div class="game-row row1"></div><div class="game-row row2"></div><div class="game-row row3"></div></div>`);
+        $list.append(`<div class="game-item placeholder"><div class="game-row row1"></div><div class="game-row row2"></div></div>`);
         return;
       }
 
@@ -185,64 +181,83 @@
         $item.append('<img class="event-overlay fail" src="/image/event-overlay%20fail.png" alt="실패" />');
       }
 
-      // ─── 1행: 시계/점수 등 ─────────────────────────────
+      // ─── row1: 홈/시간/원정 ─────────────────────────────
       const $row1 = $('<div>').addClass('game-row row1');
-      if (match.status==='경기전') {
-        $row1.append(
-          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt', match.home.teamName),
-          $('<span>').addClass('start-time').text(match.startTime),
-          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt', match.away.teamName)
-        );
-      } else if (match.score) {
-        const hs=match.score.home, as=match.score.away, mx=Math.max(hs,as);
-        $row1.append(
-          $('<img>').addClass('team-logo-small').attr('src', match.home.logo),
-          $('<span>').addClass(`score${hs===mx?' higher':''}`).text(hs),
-          $('<span>').addClass('status-text').text(match.status),
-          $('<span>').addClass(`score${as===mx?' higher':''}`).text(as),
-          $('<img>').addClass('team-logo-small').attr('src', match.away.logo)
-        );
-      } else {
-        $row1.append(
-          $('<img>').addClass('team-logo-small').attr('src', match.home.logo),
-          $('<span>').addClass('status-text').text(match.status),
-          $('<img>').addClass('team-logo-small').attr('src', match.away.logo)
-        );
+      // score 표시
+      let homeScore = null, awayScore = null, isDraw = false;
+      if (match.score && typeof match.score.home === 'number' && typeof match.score.away === 'number') {
+        homeScore = match.score.home;
+        awayScore = match.score.away;
+        isDraw = homeScore === awayScore;
       }
+      // home
+      const $home = $('<div>').addClass('home')
+        .append(
+          $('<img>').addClass('team-logo-small').attr('src', match.home.logo).attr('alt', match.home.teamName),
+          $('<div>').addClass('team-name').text(match.home.teamName)
+        );
+      // team-score(home)
+      let $homeScore = $('<div>').addClass('team-score');
+      if (homeScore !== null) {
+        $homeScore.text(homeScore)
+          .css('color', isDraw ? '#000' : (homeScore > awayScore ? '#FF3B30' : '#000'));
+      }
+      // start-time 또는 status-text
+      let $center;
+      if (match.status === '경기전') {
+        $center = $('<div>').addClass('start-time').text(match.startTime);
+      } else {
+        $center = $('<div>').addClass('status-text').text(match.status);
+      }
+      // team-score(away)
+      let $awayScore = $('<div>').addClass('team-score');
+      if (awayScore !== null) {
+        $awayScore.text(awayScore)
+          .css('color', isDraw ? '#000' : (awayScore > homeScore ? '#FF3B30' : '#000'));
+      }
+      // away
+      const $away = $('<div>').addClass('away')
+        .append(
+          $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt', match.away.teamName),
+          $('<div>').addClass('team-name').text(match.away.teamName)
+        );
+      $row1.append($home, $homeScore, $center, $awayScore, $away);
       $item.append($row1);
 
-      // ─── 2행: 홈/무/원정 선택 박스 ───────────────────
-      const sel = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
+      // ─── row2: 팀 선택 박스 3개(승/무/패, 내부에 팀명+득표수) ─────────────
+      let sel = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
       const $row2 = $('<div>').addClass('game-row row2');
       ['home','draw','away'].forEach(k => {
         if (k==='draw' && !match.draw) return;
         const obj = k==='draw'? match.draw : match[k];
-        const cls = sel===k ? `selected-${k}` : '';
-        $row2.append(
-          $('<div>')
-            .addClass(`team-box ${cls}`)
-            .attr('data-game-id', match.gameId)
-            .attr('data-team', k)
-            .append($('<span>').addClass('team-name').text(obj.teamName))
-        );
+        let isSelected = sel===k;
+        let cls = isSelected ? 'selected' : '';
+        // 승/무/패 텍스트 및 team-name 클래스 지정
+        let label, nameClass;
+        if (k === 'home') {
+          label = '승';
+          nameClass = 'win button';
+        } else if (k === 'draw') {
+          label = '무';
+          nameClass = 'draw button';
+        } else {
+          label = '승';
+          nameClass = 'lose button';
+        }
+        const $box = $('<div>')
+          .addClass(`team-box ${cls}`)
+          .attr('data-game-id', match.gameId)
+          .attr('data-team', k)
+          .append(
+            $('<div>').addClass(nameClass).text(label),
+            $('<div>').addClass('vote-count').text(obj.votes)
+          );
+        if (isSelected) {
+          $box.append('<img class="check-icon" src="/image/check.png" alt="check" />');
+        }
+        $row2.append($box);
       });
       $item.append($row2);
-
-      // ─── 3행: 득표수 ─────────────────────────────────
-      const $row3 = $('<div>').addClass('game-row row3');
-      const votes = [];
-      ['home','draw','away'].forEach(k => {
-        if (k==='draw' && !match.draw) return;
-        const v = k==='draw'? match.draw.votes : match[k].votes;
-        votes.push(v);
-      });
-      const maxV = Math.max(...votes);
-      votes.forEach((v,i) => {
-        $row3.append(
-          $('<div>').addClass(`vote-count${v===maxV?' higher':''}`).text(v)
-        );
-      });
-      $item.append($row3);
 
       $list.append($item);
     });
@@ -260,112 +275,94 @@
     let status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
     const games  = data.games || [];
     const now    = new Date();
-    let main = '', sub = '', statusClass = '';
+    let main = '', sub = '', statusClass = '', btnText = '';
 
-    // === [NO_GAMES_EVENT_DISABLED 상태] ===
-    if (status === 'NO_GAMES_EVENT_DISABLED') {
-      main = '다음 올킬 도전 !';
-      sub = '경기가 없어요 !';
-      statusClass = 'status-no-games';
-    }
-    // === [EVENT_CANCELLED_MULTI_GAMES 상태] ===
-    else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
-      main = '다음 올킬 도전 !';
-      
-      // 취소된 경기 상태 배열
-      const cancelledStatuses = ['경기지연', '경기중지', '서스펜드', '경기취소'];
-      
-      // 취소된 경기 개수 계산
-      const cancelledCount = games.filter(game => 
-        game.gameId !== 'null' && cancelledStatuses.includes(game.status)
-      ).length;
-      
-      sub = `경기취소 ${cancelledCount}개 발생! 당일 무효!`;
-      statusClass = 'status-cancelled';
-    }
-    else if (status === 'PENDING_USER_NOT_SELECTED') {
-      main = '올킬 도전 !';
+    // 날짜 포맷 (예: 7월 15일)
+    const [year, month, day] = key.split('-');
+    const dateStr = `${parseInt(month)}월${parseInt(day)}일`;
+    // 내일 날짜 (예: 7월 16일) - 실제 오늘 날짜 기준
+    let tomorrowStr = '';
+    const today = new Date();
+    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    tomorrowStr = `${tomorrow.getMonth() + 1}월 ${tomorrow.getDate()}일`;
+
+    // === PENDING_USER_NOT_SELECTED ===
+    if (status === 'PENDING_USER_NOT_SELECTED') {
+      main = `${dateStr} 올킬 <img src="/image/check.png" alt="check" />`;
+      sub = '';
+      btnText = '올킬 제출';
       statusClass = 'status-pending-unselected';
-      // 카운트다운 - 동적 시간 자릿수 지원
-      if (games.length && games[0].startTime && games[0].startTime !== "null") {
-        const [h, m] = games[0].startTime.split(':').map(Number);
-        const [Y,Mo,D]= key.split('-').map(Number);
-        const target = new Date(Y,Mo-1,D,h,m);
-        let diff   = Math.max(0, Math.floor((target - now)/1000));
-        const totalHours = Math.floor(diff/3600);
-        const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
-        const ss = String(diff%60).padStart(2,'0');
-        
-        // 시간이 100시간 이상인지 확인하여 자릿수 결정
-        let hoursHtml = '';
-        if (totalHours >= 100) {
-          // 3자리 시간 표시 (000~999)
-          const hh = totalHours.toString().padStart(3, '0');
-          const hoursHundreds = hh[0];
-          const hoursTens = hh[1];
-          const hoursOnes = hh[2];
-          hoursHtml = `<span class="hours-hundreds flip-container"><span class="flip-card">${hoursHundreds}</span></span><span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span>`;
-        } else {
-          // 2자리 시간 표시 (00~99)
-          const hh = totalHours.toString().padStart(2, '0');
-          const hoursTens = hh[0];
-          const hoursOnes = hh[1];
-          hoursHtml = `<span class="hours-tens flip-container"><span class="flip-card">${hoursTens}</span></span><span class="hours-ones flip-container"><span class="flip-card">${hoursOnes}</span></span>`;
-        }
-        
-        const minutesTens = mm[0];
-        const minutesOnes = mm[1];
-        const secondsTens = ss[0];
-        const secondsOnes = ss[1];
-        
-        sub = `<span class="time-label">남은 시간</span>\n<span class="countdown-row"><span class="countdown-hours">${hoursHtml}</span>:<span class="countdown-minutes"><span class="minutes-tens flip-container"><span class="flip-card">${minutesTens}</span></span><span class="minutes-ones flip-container"><span class="flip-card">${minutesOnes}</span></span></span>:<span class="countdown-seconds"><span class="seconds-tens flip-container"><span class="flip-card">${secondsTens}</span></span><span class="seconds-ones flip-container"><span class="flip-card">${secondsOnes}</span></span></span></span>`;
-      }
     }
+    // === PENDING_USER_SELECTED ===
     else if (status === 'PENDING_USER_SELECTED') {
-      main = '제출 완료';
-      statusClass = 'status-pending-selected';
-      const st = window.appState.submissionTimes?.[key];
-      if (st) {
-        const d = new Date(st);
-        const month = d.getMonth() + 1;
-        const date = d.getDate();
-        const hour = d.getHours().toString().padStart(2, '0');
-        const min  = d.getMinutes().toString().padStart(2, '0');
-        sub = `${month}월 ${date}일 ${hour}:${min}`;
+      main = `${dateStr} 올킬 <img src="/image/check.png" alt="check" />`;
+      // 수정 제출 여부
+      if (isSelectionChanged()) {
+        sub = '수정 제출';
+        btnText = '수정 제출';
+      } else {
+        sub = '제출 완료';
+        btnText = '제출 완료';
       }
+      statusClass = 'status-pending-selected';
     }
+    // === IN_PROGRESS_USER_NOT_SELECTED ===
     else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
-      main = '다음 올킬 도전';
-      sub  = '투표 마감 !';
+      main = `${dateStr} 올킬`;
+      sub = '제출 마감';
+      btnText = '제출 마감';
       statusClass = 'status-progress-unselected';
     }
+    // === IN_PROGRESS_USER_SELECTED ===
     else if (status === 'IN_PROGRESS_USER_SELECTED') {
-      main = '채점 중!';
+      main = `${dateStr} 올킬`;
+      sub = '제출 마감';
+      btnText = '제출 마감';
       statusClass = 'status-progress-selected';
-      const n = games.filter(g => g.eventResult==='success').length;
-      sub  = `${n}경기 성공 !`;
     }
+    // === COMPLETED_USER_SUCCESS ===
     else if (status === 'COMPLETED_USER_SUCCESS') {
-      main = '<span class="allkill-text">ALL KILL!</span>';
-      sub  = '모든 경기 성공 !';
-      statusClass = 'status-completed-success';
+      main = `${dateStr} 올킬 <span class="success">당첨</span>`;
+      sub = '';
+      btnText = '올킬 성공';
+      statusClass = '';
     }
+    // === COMPLETED_USER_FAIL ===
     else if (status === 'COMPLETED_USER_FAIL') {
-      main = '다음 올킬 도전!';
-      statusClass = 'status-completed-fail';
-      const n = games.filter(g => g.eventResult==='success').length;
-      sub  = `${n}경기 성공 !`;
+      main = `${dateStr} 올킬 <span class="fail">땡</span>`;
+      sub = '';
+      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
+      statusClass = '';
     }
+    // === COMPLETED_USER_NOT_SELECTED ===
     else if (status === 'COMPLETED_USER_NOT_SELECTED') {
-      main = '다음 올킬 도전!';
-      sub  = '투표 마감!';
+      main = `${dateStr} 올킬`;
+      sub = '제출 마감';
+      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
       statusClass = 'status-completed-unselected';
     }
+    // === NO_GAMES_EVENT_DISABLED ===
+    else if (status === 'NO_GAMES_EVENT_DISABLED') {
+      main = `${dateStr} 올킬`;
+      sub = '경기 없음';
+      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
+      statusClass = 'status-no-games';
+    }
+    // === EVENT_CANCELLED_MULTI_GAMES ===
+    else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
+      main = `${dateStr} 올킬 <span class="cancelled">무효</span>`;
+      sub = '3경기 이상 취소';
+      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
+      statusClass = 'status-cancelled';
+    }
     else {
-      main = ''; sub = ''; statusClass = '';
+      main = '';
+      sub = '';
+      btnText = '';
+      statusClass = '';
     }
 
-    return { main, sub, statusClass };
+    return { main, sub, statusClass, btnText };
   }
 
   // ==============================
@@ -385,196 +382,10 @@
       $titleWrapper.addClass(parts.statusClass);
     }
 
-    // 카운트다운 상태 클래스 추가 및 동적 시간 자릿수 애니메이션 처리
-    const key = dateKeys[currentIndex];
-    const data = window.matchData[key] || {};
-    const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
-    
-    if (status === 'PENDING_USER_NOT_SELECTED') {
-      const games = data.games || [];
-      const $titleSub = $('.title-sub');
-      
-      // 기존 상태 클래스 제거
-      $titleSub.removeClass('urgent completed');
-      
-      if (games.length && games[0].startTime && games[0].startTime !== "null") {
-        const [h, m] = games[0].startTime.split(':').map(Number);
-        const [Y,Mo,D]= key.split('-').map(Number);
-        const target = new Date(Y,Mo-1,D,h,m);
-        const now = new Date();
-        let diff = Math.max(0, Math.floor((target - now)/1000));
-        
-        const totalHours = Math.floor(diff/3600);
-        const mm = Math.floor((diff%3600)/60).toString().padStart(2,'0');
-        const ss = String(diff%60).padStart(2,'0');
-        
-        // 동적 시간 자릿수 처리
-        let currentHoursHundreds = null;
-        let currentHoursTens = null;
-        let currentHoursOnes = null;
-        
-        if (totalHours >= 100) {
-          // 3자리 시간
-          const hh = totalHours.toString().padStart(3, '0');
-          currentHoursHundreds = hh[0];
-          currentHoursTens = hh[1];
-          currentHoursOnes = hh[2];
-          
-          // 100의 자리 애니메이션 처리
-          if (previousHoursHundreds !== null && previousHoursHundreds !== currentHoursHundreds) {
-            const $flipCard = $('.hours-hundreds .flip-card');
-            if ($flipCard.length) {
-              $flipCard.addClass('flipping');
-              setTimeout(() => $flipCard.text(currentHoursHundreds), 150);
-              setTimeout(() => $flipCard.removeClass('flipping'), 300);
-            }
-          } else if (previousHoursHundreds === null) {
-            $('.hours-hundreds .flip-card').text(currentHoursHundreds);
-          }
-        } else {
-          // 2자리 시간
-          const hh = totalHours.toString().padStart(2, '0');
-          currentHoursTens = hh[0];
-          currentHoursOnes = hh[1];
-          currentHoursHundreds = null; // 100시간 미만이므로 리셋
-        }
-        
-        const currentMinutesTens = mm[0];
-        const currentMinutesOnes = mm[1];
-        const currentSecondsTens = ss[0];
-        const currentSecondsOnes = ss[1];
-        
-        // 시간 - 10의 자리 애니메이션 처리
-        if (previousHoursTens !== null && previousHoursTens !== currentHoursTens) {
-          const $flipCard = $('.hours-tens .flip-card');
-          if ($flipCard.length) {
-            $flipCard.addClass('flipping');
-            setTimeout(() => $flipCard.text(currentHoursTens), 150);
-            setTimeout(() => $flipCard.removeClass('flipping'), 300);
-          }
-        } else if (previousHoursTens === null) {
-          $('.hours-tens .flip-card').text(currentHoursTens);
-        }
-        
-        // 시간 - 1의 자리 애니메이션 처리
-        if (previousHoursOnes !== null && previousHoursOnes !== currentHoursOnes) {
-          const $flipCard = $('.hours-ones .flip-card');
-          if ($flipCard.length) {
-            $flipCard.addClass('flipping');
-            setTimeout(() => $flipCard.text(currentHoursOnes), 150);
-            setTimeout(() => $flipCard.removeClass('flipping'), 300);
-          }
-        } else if (previousHoursOnes === null) {
-          $('.hours-ones .flip-card').text(currentHoursOnes);
-        }
-        
-        // 분 - 10의 자리 애니메이션 처리
-        if (previousMinutesTens !== null && previousMinutesTens !== currentMinutesTens) {
-          const $flipCard = $('.minutes-tens .flip-card');
-          if ($flipCard.length) {
-            $flipCard.addClass('flipping');
-            setTimeout(() => $flipCard.text(currentMinutesTens), 150);
-            setTimeout(() => $flipCard.removeClass('flipping'), 300);
-          }
-        } else if (previousMinutesTens === null) {
-          $('.minutes-tens .flip-card').text(currentMinutesTens);
-        }
-        
-        // 분 - 1의 자리 애니메이션 처리
-        if (previousMinutesOnes !== null && previousMinutesOnes !== currentMinutesOnes) {
-          const $flipCard = $('.minutes-ones .flip-card');
-          if ($flipCard.length) {
-            $flipCard.addClass('flipping');
-            setTimeout(() => $flipCard.text(currentMinutesOnes), 150);
-            setTimeout(() => $flipCard.removeClass('flipping'), 300);
-          }
-        } else if (previousMinutesOnes === null) {
-          $('.minutes-ones .flip-card').text(currentMinutesOnes);
-        }
-        
-        // 초 - 10의 자리 애니메이션 처리
-        if (previousSecondsTens !== null && previousSecondsTens !== currentSecondsTens) {
-          const $flipCard = $('.seconds-tens .flip-card');
-          if ($flipCard.length) {
-            $flipCard.addClass('flipping');
-            setTimeout(() => $flipCard.text(currentSecondsTens), 150);
-            setTimeout(() => $flipCard.removeClass('flipping'), 300);
-          }
-        } else if (previousSecondsTens === null) {
-          $('.seconds-tens .flip-card').text(currentSecondsTens);
-        }
-        
-        // 초 - 1의 자리 애니메이션 처리
-        if (previousSecondsOnes !== null && previousSecondsOnes !== currentSecondsOnes) {
-          const $flipCard = $('.seconds-ones .flip-card');
-          if ($flipCard.length) {
-            $flipCard.addClass('flipping');
-            setTimeout(() => $flipCard.text(currentSecondsOnes), 150);
-            setTimeout(() => $flipCard.removeClass('flipping'), 300);
-          }
-        } else if (previousSecondsOnes === null) {
-          $('.seconds-ones .flip-card').text(currentSecondsOnes);
-        }
-        
-        // 이전 값들 업데이트
-        previousHoursHundreds = currentHoursHundreds;
-        previousHoursTens = currentHoursTens;
-        previousHoursOnes = currentHoursOnes;
-        previousMinutesTens = currentMinutesTens;
-        previousMinutesOnes = currentMinutesOnes;
-        previousSecondsTens = currentSecondsTens;
-        previousSecondsOnes = currentSecondsOnes;
-        
-        // 10초 이하일 때 urgent 클래스 추가
-        if (diff <= 10 && diff > 0) {
-          $titleSub.addClass('urgent');
-        }
-        // 0초일 때 completed 클래스 추가
-        else if (diff === 0) {
-          $titleSub.addClass('completed');
-        }
-      }
-    } else {
-      // 카운트다운이 아닌 상태에서는 이전 값들 리셋
-      previousHoursHundreds = null;
-      previousHoursTens = null;
-      previousHoursOnes = null;
-      previousMinutesTens = null;
-      previousMinutesOnes = null;
-      previousSecondsTens = null;
-      previousSecondsOnes = null;
-    }
+    // 버튼 텍스트도 상태별로 변경
+    $('.btn-text').html(parts.btnText.replace(/\n/g, '<br>'));
 
-    let btnText = parts.main;
-    const effStatus = typeof localEventStatusMap[key] !== 'undefined'
-      ? localEventStatusMap[key] 
-      : (window.matchData[key]?.eventStatus);
-    
-    // COMPLETED_USER_SUCCESS 상태일 때 "올킬 성공 !" 텍스트 설정
-    if (effStatus === 'COMPLETED_USER_SUCCESS') {
-      btnText = '올킬 성공 !';
-    }
-    else if (effStatus === 'PENDING_USER_SELECTED' && isSelectionChanged()) {
-      btnText = '수정 제출';
-    }
-    $('.btn-text').text(btnText);
-
-    if (countdownTimerId && parts.main !== '올킬 도전 !') {
-      clearInterval(countdownTimerId);
-      countdownTimerId = null;
-    }
-    if (parts.main === '올킬 도전 !') {
-      if (!countdownTimerId) {
-        countdownTimerId = setInterval(updateTitleAndCountdown, 1000);
-      }
-    }
-
-    // === EVENT_CANCELLED_MULTI_GAMES에서는 버튼 숨김 ===
-    if (effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
-      $('#submit-allkill-btn').hide();
-    } else {
-      $('#submit-allkill-btn').show();
-    }
+    // 카운트다운 등 기존 로직은 모두 생략(불필요)
   }
 
   // ==============================
@@ -586,20 +397,12 @@
     const baseStatus = (window.matchData[key]||{}).eventStatus;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
 
-    // [EVENT_CANCELLED_MULTI_GAMES]일 경우만 숨김 처리 (NO_GAMES_EVENT_DISABLED는 숨기지 않음)
-    if (effStatus === 'EVENT_CANCELLED_MULTI_GAMES') {
-      $('#submit-allkill-btn').hide();
-      return;
-    }
+    // [EVENT_CANCELLED_MULTI_GAMES]일 경우 숨김 처리 코드 삭제
 
     const allSel = games.length>0 && games.every(g =>
       (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
     );
-    $('#submit-allkill-btn')
-      .prop('disabled', !allSel)
-      .toggleClass('enabled', allSel)
-      .css('opacity', allSel?1:0.3)
-      .show();
+    $('#submit-allkill-btn').show();
   }
 
   // ==============================
@@ -663,7 +466,12 @@
       .on('click', '.team-box', function() {
         if (!canEditSelections()) return;
         const id = $(this).data('game-id'), tm = $(this).data('team');
-        window.appState.selectedTeams[id] = tm;
+        // 이미 선택한 팀을 다시 클릭하면 해제
+        if (window.appState.selectedTeams[id] === tm) {
+          delete window.appState.selectedTeams[id];
+        } else {
+          window.appState.selectedTeams[id] = tm;
+        }
         // 즉시 반영
         renderGames();
       });
@@ -685,14 +493,16 @@
 
       // 현재 버튼 텍스트 확인
       const currentBtnText = $('.btn-text').text();
-      
-      // "다음 올킬 도전"으로 시작하는 경우 오늘+1일로 이동
-      if (currentBtnText.startsWith('다음 올킬 도전')) {
+      // '다음 올킬 도전', '올킬 도전', 또는 '날짜\n올킬 도전'으로 시작하는 경우 오늘+1일로 이동 (최우선)
+      const isGoToTomorrow =
+        currentBtnText.startsWith('다음 올킬 도전') ||
+        currentBtnText.startsWith('올킬 도전') ||
+        /\d+월\s*\d+일\s*올킬 도전/.test(currentBtnText.replace(/\n/g, ''));
+      if (isGoToTomorrow) {
         const today = new Date();
         const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
         const tomorrowKey = formatLocalDate(tomorrow);
         const tomorrowIndex = dateKeys.indexOf(tomorrowKey);
-        
         if (tomorrowIndex !== -1) {
           currentIndex = tomorrowIndex;
           refreshAll();
@@ -705,8 +515,11 @@
         return;
       }
 
-      // (1) 'PENDING_USER_NOT_SELECTED' 최초 제출
-      if (effStatus === 'PENDING_USER_NOT_SELECTED') {
+      // 모든 팀 선택 여부 확인 (팀 선택 필요 상태에서만 체크)
+      const allSelected = games.length > 0 && games.every(g =>
+        (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
+      );
+      if (allSelected) {
         games.forEach(g => { g.userSelection = window.appState.selectedTeams?.[g.gameId]; });
         localEventStatusMap[key] = 'PENDING_USER_SELECTED';
         window.appState.submissionTimes[key] = new Date();
@@ -715,20 +528,9 @@
         if (games.every(g => g.status==='경기전')) {
           alert('제출 완료 !\n\n경기시작 전까지 수정이 가능합니다.\n\n확인.');
         }
-      // (2) 'PENDING_USER_SELECTED'이면서 선택값이 변경됐으면 "수정 제출"
-      } else if (
-        effStatus === 'PENDING_USER_SELECTED'
-        && isSelectionChanged()
-      ) {
-        // userSelection(원본) 갱신: 실서비스는 서버에 요청해야함
-        games.forEach(g => { g.userSelection = window.appState.selectedTeams?.[g.gameId]; });
-        // 재제출 시간 갱신
-        window.appState.submissionTimes[key] = new Date();
-        updateSubmitButton();
-        updateTitleAndCountdown();
-        alert('수정 제출 완료!\n\n경기시작 전까지 계속 수정 가능합니다.\n\n확인.');
+      } else {
+        alert('모든 팀을 선택해 주세요.');
       }
-      // else 클릭 무시
     });
   }
 
