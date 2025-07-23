@@ -3,7 +3,7 @@
 /* Event Title Section */
 #event-title-section {
   position: relative;
-  height: var(--event-section-height);
+  height: 490px;
   width: 100%;
   background-color: var(--primary-blue);
   display: flex;
@@ -17,12 +17,12 @@
   top: 6px;
   left: 7px;
   z-index: 30;
-  width: 78px;
+  width: 90px;
 }
 
 .event-title-text {
   position: absolute;
-  bottom: 8px;
+  bottom: 20px;
   left: 0;
   width: 100%;
   text-align: center;
@@ -35,29 +35,49 @@
 .event-title-line3 {
   display: block;
   font-weight: 700;
-  font-size: var(--font-size-6xl);
   line-height: 1.1;
   margin: 0;
   color: #FFFFFF;
-  filter: drop-shadow(-1px -1px 0 #001a29) drop-shadow(1px -1px 0 #001a29) drop-shadow(-1px 1px 0 #001a29) drop-shadow(1px 1px 0 #001a29) drop-shadow(-1px 0 0 #001a29) drop-shadow(1px 0 0 #001a29) drop-shadow(0 -1px 0 #001a29) drop-shadow(0 1px 0 #001a29);
   letter-spacing: -0.02em;
+}
+
+.event-title-line1{
+  font-size: 80px;
+  padding-bottom: 20px;
+  filter: drop-shadow(-3px -3px 0 #760000) drop-shadow(3px -3px 0 #760000) drop-shadow(-3px 3px 0 #760000) drop-shadow(3px 3px 0 #760000) drop-shadow(-3px 0 0 #760000) drop-shadow(3px 0 0 #760000) drop-shadow(0 -3px 0 #760000) drop-shadow(0 3px 0 #760000);
+}
+
+.event-title-line2,
+.event-title-line3{
+  font-size: 36px;
+  filter: drop-shadow(-1px -1px 0 #001a29) drop-shadow(1px -1px 0 #001a29) drop-shadow(-1px 1px 0 #001a29) drop-shadow(1px 1px 0 #001a29) drop-shadow(-1px 0 0 #001a29) drop-shadow(1px 0 0 #001a29) drop-shadow(0 -1px 0 #001a29) drop-shadow(0 1px 0 #001a29);
 }
   
 .event-title-line1,
-.event-title-line2 {
+.event-title-line2,
+.event-title-line3,
+.event-title-line4 {
   color: var(--white);
+  font-family: 'KBO-Dia-Gothic';
+  font-weight: 500;
+  letter-spacing: -2px;
 }
 
 .event-title-line3 {
-  margin-top: 8px;
   color: var(--gold);
+  margin-top: 9px; 
 }
 
+.event-title-line4 {
+  color: #FFFFFF;
+  font-size: 48px;
+  filter: drop-shadow(-1px -1px 0 #001a29) drop-shadow(1px -1px 0 #001a29) drop-shadow(-1px 1px 0 #001a29) drop-shadow(1px 1px 0 #001a29) drop-shadow(-1px 0 0 #001a29) drop-shadow(1px 0 0 #001a29) drop-shadow(0 -1px 0 #001a29) drop-shadow(0 1px 0 #001a29);
+}
 
 .event-fx-image {
   position: absolute;
-  bottom: 53px;
-  left: 70%;
+  bottom: 140px;
+  left: 75%;
   transform: translateX(-50%);
   z-index: 500;
 }
@@ -67,8 +87,8 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 238px;
-  height: 238px;
+  width: 240px;
+  height: 240px;
   z-index: 10;
 }
 

@@ -15,7 +15,7 @@
 
 .game-row.row1 .team-logo-small {
   width: var(--team-box-size);
-  height: 42px;
+  height: 52px;
   object-fit: contain;
 }
 
@@ -56,6 +56,11 @@
   width: 260px;
   height: auto;
 }
+.event-overlay.fail {
+  top:24%;
+  width: 140px;
+  height: auto;
+}
 
 .red-circle-container {
   position: absolute;
@@ -76,8 +81,9 @@
   height: 60px;
   color: var(--white);
   background-color: #1c1c1c;
-  padding: 0 60px;
-  margin-bottom: 40px;
+  padding: 0 50px;
+  margin-bottom: 20px;
+  padding-bottom: 1px;
 }
 
 .date-navigation .date-nav-prev { 
@@ -97,20 +103,23 @@
   height: 100%; 
 }
 
-.arrow-left {
-  width: 15px;
-  height: 15px;
-  border-top: 7.5px solid transparent;
-  border-bottom: 7.5px solid transparent;
-  border-right: 10px solid var(--white);
+.arrow-left, .arrow-right {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
 }
-
+.arrow-left {
+  background-image: url('/image/Polygon.png');
+  /* 기존 border 스타일 제거 */
+}
 .arrow-right {
-  width: 15px;
-  height: 15px;
-  border-top: 7.5px solid transparent;
-  border-bottom: 7.5px solid transparent;
-  border-left: 10px solid var(--white);
+  background-image: url('/image/Polygon.png');
+  transform: scaleX(-1);
+  /* 기존 border 스타일 제거 */
 }
 
 .prev-day, .next-day {
@@ -138,4 +147,8 @@
   margin-bottom: var(--spacing-3xl);
   display: flex;
   justify-content: center;
+}
+
+.game-item.disabled .game-row.row2 {
+  opacity: 0.2;
 }

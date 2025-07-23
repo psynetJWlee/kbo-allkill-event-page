@@ -84,12 +84,12 @@
 }
 
 .member-amount {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 400;
-  letter-spacing: 2px;
   color: var(--gold);
   position: relative;
   top: -1px;
+  letter-spacing: -0.6px;
 }
 
 .unit-label {

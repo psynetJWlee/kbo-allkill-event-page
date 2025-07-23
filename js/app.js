@@ -33,7 +33,8 @@ $(document).ready(function() {
       { name: 'winnersSection', obj: window.winnersSection },
       { name: 'myPrizeSection', obj: window.myPrizeSection },
       { name: 'prizeRankingSection', obj: window.prizeRankingSection },
-      { name: 'eventDescriptionSection', obj: window.eventDescriptionSection }
+      { name: 'eventDescriptionSection', obj: window.eventDescriptionSection },
+      { name: 'eventCompletionSection', obj: window.eventCompletionSection }
     ];
 
     sections.forEach(section => {
@@ -83,6 +84,26 @@ function scrollToMyPrizeIfNeeded() {
         elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         console.warn('My Prize section not found for auto-scroll');
+      }
+    }
+    // 팀 선택 영역 스크롤 추가
+    if (params.get('scrollToTeamSelection')) {
+      console.log('Auto-scrolling to Team Selection section');
+      const elem = document.querySelector('.kbo-selection-container');
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        console.warn('Team Selection section not found for auto-scroll');
+      }
+    }
+    // 우승자 영역 스크롤 추가
+    if (params.get('scrollToWinnersSection')) {
+      console.log('Auto-scrolling to Winners section');
+      const elem = document.querySelector('.winners-section');
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        console.warn('Winners section not found for auto-scroll');
       }
     }
   } catch (e) {

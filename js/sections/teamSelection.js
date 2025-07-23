@@ -26,6 +26,7 @@
 
   window.appState.submissionTimes = window.appState.submissionTimes || {};
   let localEventStatusMap = {};
+  let originalSelections = {};
 
   // ==============================
   // 2. 날짜 키 배열 생성 (정렬 보장)
@@ -36,24 +37,8 @@
     const D = String(d.getDate()).padStart(2, '0');
     return `${Y}-${M}-${D}`;
   }
-  // 날짜 처리: key 정렬(오름차순) 보장
-  const rawKeys = Object.keys(window.matchData);
-  const sortedKeys = rawKeys.slice().sort((a, b) => new Date(a) - new Date(b));
-  const dates   = sortedKeys.map(k => new Date(k).getTime());
-  const minDate = new Date(Math.min(...dates));
-  const maxDate = new Date(Math.max(...dates));
-
-  const minKey = formatLocalDate(minDate);
-  const maxKey = formatLocalDate(maxDate);
-  const dateKeys = [];
-  {
-    let cur = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
-    const end = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
-    while (cur <= end) {
-      dateKeys.push(formatLocalDate(cur));
-      cur.setDate(cur.getDate() + 1);
-    }
-  }
+  // 개선: 실제 데이터가 있는 날짜만 사용
+  const dateKeys = Object.keys(window.matchData).sort((a, b) => new Date(a) - new Date(b));
 
   const todayKey = formatLocalDate(new Date());
   let currentIndex = dateKeys.indexOf(todayKey);
@@ -79,7 +64,7 @@
     function dayLabel(k) {
       if (!k) return '';
       const [year, month, day] = k.split('-');
-      return `${parseInt(day)}`;
+      return `${parseInt(day, 10)}`;
     }
 
     // 가운데 현재 날짜용 함수 (오늘만 Today, 그 외 MM/DD)
@@ -87,7 +72,7 @@
       if (!k) return '';
       if (dateKeys[currentIndex] === todayKey) return 'Today';
       const [year, month, day] = k.split('-');
-      return `${parseInt(month)}/${parseInt(day)}`;
+      return `${parseInt(month, 10)}/${parseInt(day, 10)}`;
     }
 
     const html = `
@@ -158,6 +143,15 @@
     const matches = data.games || [];
     const $list   = $(`#${gameListId}`).empty();
 
+    // 오늘과 내일 날짜 계산
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const keyDate = new Date(key);
+    keyDate.setHours(0,0,0,0);
+    let showVoteCount = keyDate <= tomorrow;
+
     if (!matches.length || matches.every(m => m.gameId === 'null')) {
       $list.html('<div class="no-game">경기가 없습니다.</div>');
       updateSubmitButton();
@@ -172,12 +166,11 @@
       }
 
       const isSuspended = ["서스펜드","우천취소","경기취소"].includes(match.status);
-      const isFailed    = match.status==="경기종료" && match.eventResult==="fail";
       const fadeClass   = match.eventResult==='fail' ? 'faded' : '';
 
       const $item = $('<div>')
         .addClass('game-item')
-        .toggleClass('disabled', isSuspended||isFailed)
+        .toggleClass('disabled', isSuspended)
         .addClass(fadeClass)
         .attr('data-game-id', match.gameId);
 
@@ -190,6 +183,11 @@
 
       // ─── row1: 홈/시간/원정 ─────────────────────────────
       const $row1 = $('<div>').addClass('game-row row1');
+      // league 표시 div 생성
+      let $leagueDiv = null;
+      if (match.league) {
+        $leagueDiv = $('<div>').addClass('league').text(match.league);
+      }
       // score 표시
       let homeScore = null, awayScore = null, isDraw = false;
       if (match.score && typeof match.score.home === 'number' && typeof match.score.away === 'number') {
@@ -209,13 +207,6 @@
         $homeScore.text(homeScore)
           .css('color', isDraw ? '#000' : (homeScore > awayScore ? '#FF3B30' : '#000'));
       }
-      // start-time 또는 status-text
-      let $center;
-      if (match.status === '경기전') {
-        $center = $('<div>').addClass('start-time').text(match.startTime);
-      } else {
-        $center = $('<div>').addClass('status-text').text(match.status);
-      }
       // team-score(away)
       let $awayScore = $('<div>').addClass('team-score');
       if (awayScore !== null) {
@@ -228,17 +219,48 @@
           $('<img>').addClass('team-logo-small').attr('src', match.away.logo).attr('alt', match.away.teamName),
           $('<div>').addClass('team-name').text(match.away.teamName)
         );
-      $row1.append($home, $homeScore, $center, $awayScore, $away);
+      // start-time 또는 status-text와 league를 묶어서 표시
+      let $leagueStatusWrap;
+      if (match.status === '경기전') {
+        $leagueStatusWrap = $('<div>').addClass('league-status-wrap')
+          .append(
+            $leagueDiv ? $leagueDiv : '',
+            $('<div>').addClass('start-time').text(match.startTime)
+          );
+      } else {
+        $leagueStatusWrap = $('<div>').addClass('league-status-wrap')
+          .append(
+            $leagueDiv ? $leagueDiv : '',
+            $('<div>').addClass('status-text').text(match.status)
+          );
+      }
+      // home 다음에 team-score(home), league-status-wrap, team-score(away), away 순서로 추가
+      $row1.append($home, $homeScore, $leagueStatusWrap, $awayScore, $away);
+      // 반드시 $item에 $row1 append
       $item.append($row1);
 
       // ─── row2: 팀 선택 박스 3개(승/무/패, 내부에 팀명+득표수) ─────────────
-      let sel = window.appState.selectedTeams?.[match.gameId] || match.userSelection;
+      let sel = window.appState.selectedTeams?.[match.gameId];
+      if (!sel || sel === 'none') sel = match.userSelection;
       const $row2 = $('<div>').addClass('game-row row2');
+      // vote-count 배열 준비
+      const voteArr = [
+        { key: 'home', value: match.home.votes },
+        { key: 'draw', value: match.draw ? match.draw.votes : null },
+        { key: 'away', value: match.away.votes }
+      ].filter(v => v.value !== null);
+      const maxVote = Math.max(...voteArr.map(v => v.value));
+      // 동점 모두 top-vote
       ['home','draw','away'].forEach(k => {
         if (k==='draw' && !match.draw) return;
         const obj = k==='draw'? match.draw : match[k];
         let isSelected = sel===k;
         let cls = isSelected ? 'selected' : '';
+        // top-vote 클래스 조건: 최대값이 1개만 있을 때만 적용
+        const maxVoteCount = voteArr.filter(v => v.value === maxVote).length;
+        if (obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
+          cls += ' top-vote';
+        }
         // 승/무/패 텍스트 및 team-name 클래스 지정
         let label, nameClass;
         if (k === 'home') {
@@ -252,13 +274,15 @@
           nameClass = 'lose button';
         }
         const $box = $('<div>')
-          .addClass(`team-box ${cls}`)
+          .addClass(`team-box${cls ? ' ' + cls : ''}`)
           .attr('data-game-id', match.gameId)
           .attr('data-team', k)
           .append(
-            $('<div>').addClass(nameClass).text(label),
-            $('<div>').addClass('vote-count').text(obj.votes)
+            $('<div>').addClass(nameClass).text(label)
           );
+        if (showVoteCount) {
+          $box.append($('<div>').addClass('vote-count').text(obj.votes));
+        }
         if (isSelected) {
           $box.append('<img class="check-icon" src="/image/check.png" alt="check" />');
         }
@@ -284,9 +308,19 @@
     const now    = new Date();
     let main = '', sub = '', statusClass = '', btnText = '';
 
-    // 날짜 포맷 (예: 7월 15일)
+    // 날짜 포맷 분기 (PENDING/IN_PROGRESS는 7월 17일, 그 외는 7 / 17)
     const [year, month, day] = key.split('-');
-    const dateStr = `${parseInt(month)}월${parseInt(day)}일`;
+    let dateStr = '';
+    if ([
+      'PENDING_USER_NOT_SELECTED',
+      'PENDING_USER_SELECTED',
+      'IN_PROGRESS_USER_NOT_SELECTED',
+      'IN_PROGRESS_USER_SELECTED'
+    ].includes(status)) {
+      dateStr = `${parseInt(month, 10)}월 ${parseInt(day, 10)}일`;
+    } else {
+      dateStr = `${parseInt(month, 10)} / ${parseInt(day, 10)}`;
+    }
     // 내일 날짜 (예: 7월 16일) - 실제 오늘 날짜 기준
     let tomorrowStr = '';
     const today = new Date();
@@ -305,61 +339,61 @@
       main = `${dateStr} 올킬 <img src="/image/check.png" alt="check" />`;
       // 수정 제출 여부
       if (isSelectionChanged()) {
-        sub = '수정 제출';
-        btnText = '수정 제출';
+        sub = '첫 경기 시작 전까지 수정 가능';
+        btnText = '';
       } else {
-        sub = '제출 완료';
-        btnText = '제출 완료';
+        sub = '첫 경기 시작 전까지 수정 가능';
+        btnText = '';
       }
       statusClass = 'status-pending-selected';
     }
     // === IN_PROGRESS_USER_NOT_SELECTED ===
     else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
       main = `${dateStr} 올킬`;
-      sub = '제출 마감';
-      btnText = '제출 마감';
+      sub = '제출 마감 : 총 447,388 명 참여';
+      btnText = getNextPendingAllkillText();
       statusClass = 'status-progress-unselected';
     }
     // === IN_PROGRESS_USER_SELECTED ===
     else if (status === 'IN_PROGRESS_USER_SELECTED') {
       main = `${dateStr} 올킬`;
-      sub = '제출 마감';
-      btnText = '제출 마감';
+      sub = '제출 마감 : 총 447,388 명 참여';
+      btnText = getNextPendingAllkillText();
       statusClass = 'status-progress-selected';
     }
     // === COMPLETED_USER_SUCCESS ===
     else if (status === 'COMPLETED_USER_SUCCESS') {
-      main = `${dateStr} 올킬 <span class="success">당첨</span>`;
-      sub = '';
-      btnText = '올킬 성공';
-      statusClass = '';
+      main = `${dateStr}   올킬 <span class="success">당첨</span>`;
+      sub = '당첨금 : 100/20 = 50,000 원';
+      btnText = getNextPendingAllkillText();
+      statusClass = 'COMPLETED_USER_SUCCESS';
     }
     // === COMPLETED_USER_FAIL ===
     else if (status === 'COMPLETED_USER_FAIL') {
       main = `${dateStr} 올킬 <span class="fail">땡</span>`;
-      sub = '';
-      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
-      statusClass = '';
+      sub = '당첨금 : 100/20 = 50,000 원';
+      btnText = getNextPendingAllkillText();
+      statusClass = 'COMPLETED_USER_FAIL';
     }
     // === COMPLETED_USER_NOT_SELECTED ===
     else if (status === 'COMPLETED_USER_NOT_SELECTED') {
       main = `${dateStr} 올킬`;
-      sub = '제출 마감';
-      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
+      sub = '당첨금 : 100/20 = 50,000 원';
+      btnText = getNextPendingAllkillText();
       statusClass = 'status-completed-unselected';
     }
     // === NO_GAMES_EVENT_DISABLED ===
     else if (status === 'NO_GAMES_EVENT_DISABLED') {
       main = `${dateStr} 올킬`;
       sub = '경기 없음';
-      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
+      btnText = getNextPendingAllkillText();
       statusClass = 'status-no-games';
     }
     // === EVENT_CANCELLED_MULTI_GAMES ===
     else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
       main = `${dateStr} 올킬 <span class="cancelled">무효</span>`;
       sub = '3경기 이상 취소';
-      btnText = tomorrowStr ? `${tomorrowStr}\n올킬 도전` : '올킬 도전';
+      btnText = getNextPendingAllkillText();
       statusClass = 'status-cancelled';
     }
     else {
@@ -473,10 +507,26 @@
       .on('click', '.team-box', function() {
         if (!canEditSelections()) return;
         const id = $(this).data('game-id'), tm = $(this).data('team');
-        // 이미 선택한 팀을 다시 클릭하면 해제
+        // 이미 선택한 팀을 다시 클릭하면 해제 (vote-count는 그대로)
         if (window.appState.selectedTeams[id] === tm) {
+          // 선택 취소 시 vote-count -1
+          const match = window.matchData[dateKeys[currentIndex]].games.find(g => g.gameId === id);
+          if (match[tm]) match[tm].votes = Math.max(0, (match[tm].votes || 0) - 1);
           delete window.appState.selectedTeams[id];
+          match.userSelection = 'none'; // 선택 해제 시 userSelection도 none으로
+          // check-icon 강제 제거(혹시 남아있을 경우)
+          $(this).find('.check-icon').remove();
+          renderGames();
+          return;
         } else {
+          // 기존 선택이 있으면 vote-count 복원
+          const match = window.matchData[dateKeys[currentIndex]].games.find(g => g.gameId === id);
+          if (window.appState.selectedTeams[id]) {
+            const prevTeam = window.appState.selectedTeams[id];
+            if (match[prevTeam]) match[prevTeam].votes = Math.max(0, match[prevTeam].votes - 1);
+          }
+          // 새로 선택한 팀 vote-count +1
+          if (match[tm]) match[tm].votes = (match[tm].votes || 0) + 1;
           window.appState.selectedTeams[id] = tm;
         }
         // 즉시 반영
@@ -532,11 +582,82 @@
         window.appState.submissionTimes[key] = new Date();
         updateSubmitButton();
         updateTitleAndCountdown();
-        if (games.every(g => g.status==='경기전')) {
-          alert('제출 완료 !\n\n경기시작 전까지 수정이 가능합니다.\n\n확인.');
+        // 제출 직전 선택값 저장
+        originalSelections = {};
+        games.forEach(g => { originalSelections[g.gameId] = window.appState.selectedTeams[g.gameId]; });
+        // 기존 제출 버튼 숨기고, 취소/수정 버튼 추가
+        $('.team-selection-submit').hide();
+        if ($('.edit-btn-row').length === 0) {
+          const btnRow = `
+            <div class="edit-btn-row">
+              <button class="edit-btn cancel-btn">취소</button>
+              <button class="edit-btn submit-edit-btn">수정</button>
+            </div>
+          `;
+          $('.team-selection-copy-link').before(btnRow);
         }
-      } else {
-        alert('모든 팀을 선택해 주세요.');
+        // 수정 버튼 상태 갱신 함수
+        function updateEditBtnState() {
+          let changed = false;
+          games.forEach(g => {
+            if ((window.appState.selectedTeams[g.gameId] || 'none') !== (originalSelections[g.gameId] || 'none')) changed = true;
+          });
+          if (changed) {
+            $('.submit-edit-btn').addClass('active');
+            $('.cancel-btn').addClass('active');
+          } else {
+            $('.submit-edit-btn').removeClass('active');
+            $('.cancel-btn').removeClass('active');
+          }
+        }
+        // 팀 선택 변경 시 수정 버튼 색상 갱신
+        $(document).off('click.editBtn').on('click.editBtn', '.team-box', function() {
+          setTimeout(updateEditBtnState, 0);
+        });
+        // 취소 버튼 클릭 시 원래 선택값 복원
+        $(document).off('click.cancelBtn').on('click.cancelBtn', '.cancel-btn', function() {
+          games.forEach(g => {
+            window.appState.selectedTeams[g.gameId] = originalSelections[g.gameId];
+          });
+          renderGames();
+          updateEditBtnState();
+        });
+        // 수정 버튼 클릭 시 재제출 및 토스트
+        $(document).off('click.submitEditBtn').on('click.submitEditBtn', '.submit-edit-btn', function() {
+          let changed = false;
+          games.forEach(g => {
+            if ((window.appState.selectedTeams[g.gameId] || 'none') !== (originalSelections[g.gameId] || 'none')) changed = true;
+          });
+          // 미선택 경기 검사
+          const hasUnselected = games.some(g => (window.appState.selectedTeams[g.gameId] || 'none') === 'none');
+          if (hasUnselected) {
+            showToast(`${games.length} 경기 모두 체크 필요`, '', 1500, 'toast-warning');
+            return;
+          }
+          if (!changed) return;
+          games.forEach(g => { g.userSelection = window.appState.selectedTeams?.[g.gameId]; });
+          // 선택값을 다시 저장
+          originalSelections = {};
+          games.forEach(g => { originalSelections[g.gameId] = window.appState.selectedTeams[g.gameId]; });
+          showToast('수정 완료', '첫경기 시작 전까지 수정 가능');
+          updateEditBtnState();
+          scrollToTeamSelectionBottom();
+        });
+        // 최초 상태 갱신
+        updateEditBtnState();
+        // 스크롤
+        scrollToTeamSelectionBottom();
+        showToast('제출 완료', '첫 경기 시작 전까지 수정 가능');
+        return;
+      }
+      // 실패 시 기존 제출 버튼 보이기, edit-btn-row 제거
+      else {
+        const games = window.matchData[key]?.games || [];
+        const totalGames = games.length;
+        showToast(`${totalGames} 경기 모두 체크 필요`, '', 1500, 'toast-warning');
+        scrollToTeamSelectionBottom();
+        $('.team-selection-submit').show();
+        $('.edit-btn-row').remove();
       }
     });
   }
@@ -562,6 +683,36 @@
       window.appState.selectedTeams[gameId] = team;
     }
   };
+
+  // ===== 토스트 팝업 함수 추가 =====
+  function showToast(mainText, subText = '', duration = 1500, extraClass = '') {
+    // 기존 토스트 제거
+    $("#toast-popup").remove();
+    // 토스트 HTML 생성
+    const toastHtml = `
+      <div id="toast-popup" class="toast-popup${extraClass ? ' ' + extraClass : ''}">
+        <div class="toast-main-text">${mainText}</div>
+        ${subText ? `<div class="toast-sub-text">${subText}</div>` : ''}
+      </div>
+    `;
+    $("body").append(toastHtml);
+    // 1.5초 후 자동 제거
+    let toastTimeout = setTimeout(() => {
+      $("#toast-popup").fadeOut(200, function() { $(this).remove(); });
+    }, duration);
+    // 1.5초 내 터치 시 즉시 제거
+    $("#toast-popup").on('touchstart mousedown', function() {
+      clearTimeout(toastTimeout);
+      $(this).fadeOut(100, function() { $(this).remove(); });
+    });
+  }
+
+  function scrollToTeamSelectionBottom() {
+    const section = document.getElementById('kbo-selection-container');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }
 
   // 문서 준비 후 초기화
   $(document).ready(window.teamSelectionSection.init);

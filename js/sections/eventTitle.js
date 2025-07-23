@@ -9,7 +9,7 @@ function formatLocalDate(d) {
   return `${Y}-${M}-${D}`;
 }
 
-// Event Title Section
+// 이벤트 타이틀 섹션 초기화 함수
 function initEventTitleSection() {
   const rawKeys = Object.keys(window.matchData);
   const dates = rawKeys.map(k => new Date(k).getTime());
@@ -40,11 +40,14 @@ function initEventTitleSection() {
     <div class="event-title-text">
       <div class="event-title-line1">라스 올킬</div>
       <div class="event-title-line2">
-        <span class="dynamic-count">${n}</span>경기 맞추면
+        <span class="dynamic-count">매일 '${n}</span>경기' 맞추면
       </div>
       <div class="event-title-line3">
-        매일 100/n 만원
+        매일 100 / n 만원 !
       </div>
+      <div class="event-title-line4">
+      총 3천만원
+    </div>
     </div>
     <img 
       src="/image/image_fx.png"
@@ -60,11 +63,13 @@ function initEventTitleSection() {
 
   $('#event-title-section').html(sectionHtml);
 
+  // 타이틀 섹션에 애니메이션 적용
   window.animationUtils.startAnimation(
     document.getElementById('event-title-section')
   );
 }
 
+// 초기화 함수 내보내기
 window.eventTitleSection = {
   init: initEventTitleSection
 };

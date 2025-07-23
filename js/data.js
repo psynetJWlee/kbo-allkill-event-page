@@ -58,24 +58,27 @@ const totalrankingData = [
 
 // Prize history data (최근 500일, amount +50000)
 const prizeHistory = [
-  { date: (() => { const d = new Date(); const yyyy = d.getFullYear(); const mm = String(d.getMonth() + 1).padStart(2, '0'); const dd = String(d.getDate()); return `${yyyy}-${mm}-${dd}`; })(), amount: -400000 },
-  ...Array.from({length: 15}, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    return {
-      date: `${yyyy}-${mm}-${dd}`,
-      amount: +50000
-    };
-  })
+  { date: "2024-06-11", amount: 50000, history: "상금 지급 신청" },
+  { date: "2024-06-10", amount: 50000, history: "올킬 당첨" },
+  { date: "2024-06-09", amount: 50000, history: "올킬 당첨" },
+  { date: "2024-06-08", amount: 100000, history: "상금 지급 신청" },
+  { date: "2024-06-07", amount: -100000, history: "상금 지급 완료" },
+  { date: "2024-06-06", amount: 50000, history: "올킬 당첨" },
+  { date: "2024-06-05", amount: 50000, history: "올킬 당첨" },
+  { date: "2024-06-04", amount: 200000, history: "상금 지급 신청" },
+  { date: "2024-06-03", amount: -200000, history: "올킬 당첨" },
+  { date: "2024-06-02", amount: 50000, history: "올킬 당첨" },
+  { date: "2024-06-01", amount: 50000, history: "올킬 당첨" },
+  { date: "2024-05-31", amount: 50000, history: "지급 정보 불일치" },
+  { date: "2024-05-30", amount: 150000, history: "상금 지급 신청" },
+  { date: "2024-05-29", amount: -150000, history: "상금 지급 완료" },
+  { date: "2024-05-28", amount: 50000, history: "올킬 당첨" }
 ];
 
 // User data (섹션별 currentPage, totalPages로 분리)
 const userData = {
   nickname: "풀스택기획자라니",
-  totalAmount: 4500000,
+  totalAmount: 10000,
   
   // 각 섹션별 페이지 상태 분리
   myPrize: {
@@ -86,4 +89,10 @@ const userData = {
     currentPage: 1,
     totalPages: 3
   }
+};
+
+// Event completion data
+const eventCompletionData = {
+  totalPrizeAmount: 30000000,    // 누적 총 상금: 30,000,000원
+  totalParticipants: 547388      // 누적 총 참여 인원: 547,388명
 };

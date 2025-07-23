@@ -2,13 +2,13 @@
 window.userData = window.userData || {};
 const PAGE_SIZE = 10;
 
-// Winners Section
+// Winners(당첨자) 섹션 초기화 함수
 function initWinnersSection() {
   const { formatNumber } = window.utils;
   // 이 섹션 전용으로 범위를 좁혀 사용할 변수
   const $sec = $('#winners-section');
-  // ─── 페이지 상태 초기화 ───
-  // data.js 에서 불러온 전체 멤버 배열 (전역 members 변수)
+  // ───── 페이지 상태 초기화 ─────
+  // data.js에서 불러온 전체 멤버 배열 (전역 members 변수)
   const allMembers = members;   
   const totalCount = allMembers.length;
 
@@ -25,8 +25,12 @@ function initWinnersSection() {
   
 
   // members 배열에서 날짜 추출 (가장 첫 번째 멤버의 date 사용)
-  const winnerDateRaw = (members[0]?.date || '').split('-')[2];
-  const winnerDate = winnerDateRaw ? String(parseInt(winnerDateRaw, 10)) : '';
+  const winnerDateRaw = (members[0]?.date || '');
+  let winnerDate = '';
+  if (winnerDateRaw) {
+    const [yyyy, mm, dd] = winnerDateRaw.split('-');
+    winnerDate = `${parseInt(mm, 10)} / ${parseInt(dd, 10)}`;
+  }
   const sectionHtml = `
     <div class="w-full flex flex-col items-center relative">
       <div class="winners-title">
@@ -37,18 +41,17 @@ function initWinnersSection() {
         총 ${totalCount}명
       </p>
     </div>
-    <p class="unit-label">단위 : 원</p>
     <div class="member-list" id="member-list"></div>
   `;
   
   $sec.html(sectionHtml);
   
-  // Render member list (현재 페이지 멤버만)
+  // 당첨자 리스트 렌더 (현재 페이지 멤버만)
   const memberListHtml = currentMembers
     .map(member => {
-      // 닉네임이 한글 6글자 이상이면 6글자+..으로 표기
+      // 닉네임이 한글 6글자 이상이면 6글자+..으로 표시
       let displayName = member.nickname;
-      const hangulMatch = displayName.match(/^[가-힣]{6,}$/);
+      const hangulMatch = displayName.match(/^[\uac00-\ud7a3]{6,}$/);
       if (hangulMatch) {
         displayName = displayName.slice(0, 5) + '..';
       }
@@ -63,7 +66,7 @@ function initWinnersSection() {
             <span class="member-nickname">${displayName}</span>
           </div>
           <span class="member-amount">
-            ${formatNumber(member.amount)}
+            ${formatNumber(member.amount)} 원
           </span>
         </div>
       `;
@@ -106,6 +109,41 @@ function initWinnersSection() {
   
   $sec.find('#member-list').html(memberListHtml + paginationHtml);
 
+  // PENDING_USER_NOT_SELECTED 상태의 가장 가까운 날짜로 올킬 도전 버튼 텍스트 반환
+  function getNextPendingAllkillText() {
+    let btnText = '올킬 도전';
+    if (window.matchData) {
+      const pendingDates = Object.entries(window.matchData)
+        .filter(([date, data]) => data.eventStatus === 'PENDING_USER_NOT_SELECTED')
+        .map(([date]) => date);
+      const today = new Date();
+      const closest = pendingDates
+        .map(dateStr => ({ dateStr, dateObj: new Date(dateStr) }))
+        .filter(({ dateObj }) => dateObj >= today)
+        .sort((a, b) => a.dateObj - b.dateObj)[0];
+      if (closest) {
+        const [yyyy, mm, dd] = closest.dateStr.split('-');
+        btnText = `${parseInt(mm)}월 ${parseInt(dd)}일<br>올킬 도전`;
+      }
+    }
+    return btnText;
+  }
+
+  // 페이징 하단에 올킬 도전 버튼 추가
+  if ($sec.find('.go-to-team-selection-btn').length === 0) {
+    const btnText = getNextPendingAllkillText();
+    $sec.append(`<button id="go-to-team-selection" class="go-to-team-selection-btn">${btnText}</button>`);
+  }
+  // 버튼 클릭 시 team selection 상단으로 스크롤
+  const goToBtn = document.getElementById('go-to-team-selection');
+  if (goToBtn) {
+    goToBtn.addEventListener('click', () => {
+      const section = document.getElementById('kbo-selection-container');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
 
     // 이전 페이지
   $sec.find('#prev-page').off('click').on('click', () => {
@@ -134,6 +172,7 @@ function initWinnersSection() {
   });
 }
 
+// 당첨자 섹션 하단으로 스크롤
 function scrollWinnersSectionToBottom() {
   const section = $('#winners-section');
   const sectionBottom = section.offset().top + section.outerHeight();
@@ -142,7 +181,7 @@ function scrollWinnersSectionToBottom() {
   window.scrollTo({ top: Math.max(0, scrollTo), behavior: 'auto' });
 }
 
-// Export the initialization function
+// 초기화 함수 내보내기
 window.winnersSection = {
   init: initWinnersSection
 };

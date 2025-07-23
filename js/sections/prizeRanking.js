@@ -2,7 +2,7 @@
   // 페이지당 아이템 개수
   const PAGE_SIZE = 10;
 
-  // 랭킹 리스트 렌더링
+  // 랭킹 리스트 렌더링 함수
   function renderRankingList(page) {
     const { formatNumber } = window.utils;
     const data = totalrankingData;
@@ -77,6 +77,7 @@
       });
   }
 
+  // 랭킹 섹션 하단으로 스크롤
   function scrollRankingSectionToBottom() {
     const section = $('#prize-ranking-section');
     const sectionBottom = section.offset().top + section.outerHeight();
@@ -85,7 +86,7 @@
     window.scrollTo({ top: Math.max(0, scrollTo), behavior: 'auto' });
   }
 
-  // 섹션 초기화
+  // 섹션 초기화 함수
   function initPrizeRankingSection() {
     const data = totalrankingData;
     // 헤더 및 기본 구조(탭X, 기간X)
