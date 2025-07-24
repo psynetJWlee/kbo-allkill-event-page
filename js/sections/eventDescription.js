@@ -19,6 +19,68 @@ function getNextPendingAllkillText() {
   return btnText;
 }
 
+// 공통 go-to-team-selection 버튼 생성 함수
+function createGoToTeamSelectionButton(targetSelector) {
+  const todayKey = formatLocalDate(new Date());
+  const todayStatus = window.matchData?.[todayKey]?.eventStatus;
+
+  const hideStatuses = [
+    'PENDING_USER_SELECTED',
+    'IN_PROGRESS_USER_NOT_SELECTED',
+    'IN_PROGRESS_USER_SELECTED'
+  ];
+  const greyStatuses = [
+    'COMPLETED_USER_SUCCESS',
+    'COMPLETED_USER_FAIL',
+    'COMPLETED_USER_NOT_SELECTED',
+    'NO_GAMES_EVENT_DISABLED',
+    'EVENT_CANCELLED_MULTI_GAMES'
+  ];
+
+  let showGoToBtn = false;
+  let goToBtnClass = 'go-to-team-selection-btn';
+  let goToBtnText = '';
+
+  if (todayStatus === 'PENDING_USER_NOT_SELECTED') {
+    showGoToBtn = true;
+    goToBtnClass = 'go-to-team-selection-btn yellow-btn';
+    const today = new Date();
+    const todayDisplay = `${today.getMonth() + 1}월 ${today.getDate()}일`;
+    goToBtnText = `<span class="btn-date">${todayDisplay}</span><br><span class="btn-challenge">올킬 도전</span>`;
+  } else if (greyStatuses.includes(todayStatus)) {
+    showGoToBtn = true;
+    goToBtnClass = 'go-to-team-selection-btn grey-btn';
+    const today = new Date();
+    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    const tomorrowDisplay = `${tomorrow.getMonth() + 1}월 ${tomorrow.getDate()}일 올킬`;
+    goToBtnText = `<span class="btn-date">${tomorrowDisplay}</span><br><span class="btn-open">당일 00시 오픈</span>`;
+  } else if (hideStatuses.includes(todayStatus)) {
+    showGoToBtn = false;
+  }
+
+  if (showGoToBtn) {
+    // 기존 버튼 제거
+    $(targetSelector + ' #go-to-team-selection').remove();
+    const btnHtml = `<button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button>`;
+    $(targetSelector).append(btnHtml);
+    // 반드시 enabled 상태로 렌더링
+    $('#go-to-team-selection').prop('disabled', false);
+    // 기존 직접 바인딩 삭제
+    // $('#go-to-team-selection').off('click').on('click', function(e) {
+    //   e.preventDefault();
+    //   const section = document.getElementById('kbo-selection-container');
+    //   if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // });
+    // document 위임 방식으로 바인딩 (중복 방지)
+    $(document).off('click.goToTeamSelection').on('click.goToTeamSelection', '#go-to-team-selection', function(e) {
+      e.preventDefault();
+      console.log('버튼 클릭됨! (위임)');
+      const section = document.getElementById('kbo-selection-container');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+}
+
 // 이벤트 설명 섹션 초기화 함수
 function initEventDescriptionSection() {
   const btnText = getNextPendingAllkillText();
@@ -65,8 +127,15 @@ function initEventDescriptionSection() {
       <li class="info-item">이벤트 종료 후 미신청 상금은 소멸을 원칙으로 함</li>
       <li class="info-item">단, 추후 유사 이벤트 진행 시 이월될 수 있음</li>
     </ul>
+  `;
+  
+  $('#event-description-section').html(sectionHtml);
 
-    <button id="go-to-team-selection" class="go-to-team-selection-btn">${btnText}</button>
+  // 올킬 도전 버튼 추가 (템플릿 내가 아니라 여기서!)
+  createGoToTeamSelectionButton('#event-description-section');
+
+  // 다운로드 버튼을 제일 아래에 추가
+  $('#event-description-section').append(`
     <a 
       href="https://play.google.com/store/apps/details?id=kr.co.psynet&hl=ko" 
       target="_blank" 
@@ -75,21 +144,9 @@ function initEventDescriptionSection() {
     >
       LIVE 스코어<br />다운 받기
     </a>
-  `;
-  
-  $('#event-description-section').html(sectionHtml);
+  `);
 
   // 올킬 도전 버튼 클릭 시 team selection 상단으로 스크롤 이동
-  const goToBtn = document.getElementById('go-to-team-selection');
-  if (goToBtn) {
-    goToBtn.addEventListener('click', () => {
-      const section = document.getElementById('kbo-selection-container');
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  }
-
   // 링크 복사 버튼 클릭 시 클립보드에 URL 복사
   $(document).off('click.copylink').on('click.copylink', '.copy-link-button', function() {
     const urlToCopy = window.location.href;

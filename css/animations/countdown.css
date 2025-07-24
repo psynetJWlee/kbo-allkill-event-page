@@ -1,6 +1,5 @@
-
 /* Enhanced Countdown Flip Animation Styles for Individual Digits */
-.countdown-seconds,
+/*.countdown-seconds,
 .countdown-minutes,
 .countdown-hours {
   display: inline-flex;
@@ -20,6 +19,7 @@
 }
 
 /* Reduce spacing between digits within same time unit */
+/*
 .countdown-hours .hours-hundreds,
 .countdown-hours .hours-tens,
 .countdown-hours .hours-ones {
@@ -74,3 +74,5 @@
   bottom: 3px;
   position: relative;
 }
+
+*/

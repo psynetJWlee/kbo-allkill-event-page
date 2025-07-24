@@ -48,44 +48,74 @@
   // 3~5. 초기화/네비/섹션 렌더링
   // ==============================
   function initTeamSelectionSection() {
-    renderNav();
+    renderDateNavigation();
     renderSection();
-    setupNavHandlers();
+    setupDateNavHandlers();
     setupTeamSelectionHandlers();
     setupSubmitHandler();
-    setupCopyLinkButton();
+    
   }
 
-  function renderNav() {
-    const prevKey = currentIndex > 0 ? dateKeys[currentIndex - 1] : '';
-    const nextKey = currentIndex < dateKeys.length - 1 ? dateKeys[currentIndex + 1] : '';
+  // 오늘 이전 날짜만 추출
+  function getPastDateKeys() {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    return dateKeys.filter(k => {
+      const d = new Date(k);
+      d.setHours(0,0,0,0);
+      return d < today;
+    });
+  }
 
-    // prev/next 버튼용 함수 (dd 형식)
-    function dayLabel(k) {
-      if (!k) return '';
-      const [year, month, day] = k.split('-');
-      return `${parseInt(day, 10)}`;
-    }
+  // 날짜 포맷 변환 (mm월 dd일)
+  function getDisplayDate(dateKey) {
+    const [year, month, day] = dateKey.split('-');
+    return `${parseInt(month, 10)}월 ${parseInt(day, 10)}일`;
+  }
 
-    // 가운데 현재 날짜용 함수 (오늘만 Today, 그 외 MM/DD)
-    function currentDayLabel(k) {
-      if (!k) return '';
-      if (dateKeys[currentIndex] === todayKey) return 'Today';
-      const [year, month, day] = k.split('-');
-      return `${parseInt(month, 10)}/${parseInt(day, 10)}`;
+  // 체크 아이콘 노출 조건
+  function shouldShowCheckIcon(eventStatus) {
+    return [
+      'PENDING_USER_NOT_SELECTED',
+      'PENDING_USER_SELECTED'
+    ].includes(eventStatus);
+  }
+
+  // 날짜 내비게이션 렌더링
+  function renderDateNavigation() {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const key = dateKeys[currentIndex];
+    const d = new Date(key);
+    d.setHours(0,0,0,0);
+    const isToday = d.getTime() === today.getTime();
+    const pastDateKeys = getPastDateKeys();
+    const prevKey = pastDateKeys.filter(k => new Date(k) < d).pop();
+    const nextKey = (currentIndex < dateKeys.length - 1) ? dateKeys[currentIndex + 1] : null;
+    const data = window.matchData[key] || {};
+    const eventStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
+
+    // 좌측: 과거 이동 화살표 (이전 날짜가 있을 때만, 없으면 placeholder)
+    const prevArrow = prevKey
+      ? `<div class="nav-arrow prev" data-key="${prevKey}"></div>`
+      : `<div class="nav-arrow-placeholder"></div>`;
+    // 중앙: 날짜 + 올킬 텍스트
+    const centerText = `<span class="nav-date">${getDisplayDate(key)} 올킬</span>`;
+    // 우측: 체크 아이콘 또는 다음 날짜 이동 화살표 또는 placeholder
+    let rightIcon = '';
+    if (isToday && shouldShowCheckIcon(eventStatus)) {
+      rightIcon = '<div class="nav-check"><img src="/image/check2.png" alt="check" /></div>';
+    } else if (!isToday && nextKey) {
+      rightIcon = `<div class="nav-arrow next" data-key="${nextKey}"></div>`;
+    } else {
+      rightIcon = '<div class="nav-arrow-placeholder"></div>';
     }
 
     const html = `
       <div class="date-navigation">
-        <div id="${prevBtnId}" class="date-nav-prev" ${prevKey ? '' : 'style="visibility:hidden;"'}>
-          <div class="arrow-left"></div>
-          <span class="prev-day">${dayLabel(prevKey)}</span>
-        </div>
-        <span id="${currentDayId}" class="current-day${dateKeys[currentIndex]===todayKey ? ' today-active' : ''}" style="cursor:pointer;">${currentDayLabel(dateKeys[currentIndex])}</span>
-        <div id="${nextBtnId}" class="date-nav-next" ${nextKey ? '' : 'style="visibility:hidden;"'}>
-          <span class="next-day">${dayLabel(nextKey)}</span>
-          <div class="arrow-right"></div>
-        </div>
+        ${prevArrow}
+        ${centerText}
+        ${rightIcon}
       </div>
     `;
     $(containerSelector).html(html);
@@ -141,6 +171,7 @@
     const key     = dateKeys[currentIndex];
     const data    = window.matchData[key] || { eventStatus: '', games: [] };
     const matches = data.games || [];
+    const eventStatus = data.eventStatus;
     const $list   = $(`#${gameListId}`).empty();
 
     // 오늘과 내일 날짜 계산
@@ -175,10 +206,12 @@
         .attr('data-game-id', match.gameId);
 
       // === overlay logic (클래스명 통합) ===
-      if (match.eventResult === 'success') {
-        $item.append('<img class="event-overlay success" src="/image/event-overlay%20success.png" alt="성공" />');
-      } else if (match.eventResult === 'fail') {
-        $item.append('<img class="event-overlay fail" src="/image/event-overlay%20fail.png" alt="실패" />');
+      if (eventStatus !== 'EVENT_CANCELLED_MULTI_GAMES') {
+        if (match.eventResult === 'success') {
+          $item.append('<img class="event-overlay success" src="/image/event-overlay%20success.png" alt="성공" />');
+        } else if (match.eventResult === 'fail') {
+          $item.append('<img class="event-overlay fail" src="/image/event-overlay%20fail.png" alt="실패" />');
+        }
       }
 
       // ─── row1: 홈/시간/원정 ─────────────────────────────
@@ -301,109 +334,108 @@
   // 7. eventStatus 기반 title/sub 계산 (동적 시간 자릿수 지원)
   // ==============================
   function computeTitleParts() {
-    const key  = dateKeys[currentIndex];
+    const key = dateKeys[currentIndex];
     const data = window.matchData[key] || {};
-    let status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
-    const games  = data.games || [];
-    const now    = new Date();
-    let main = '', sub = '', statusClass = '', btnText = '';
+    const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
+    const totalParticipants = data.totalParticipants || 0;
+    const winners = data.winners;
+    let main = '', sub = '', statusClass = '', btnText = '', mainClass = '', btnTextClass = '', subClass = '';
 
-    // 날짜 포맷 분기 (PENDING/IN_PROGRESS는 7월 17일, 그 외는 7 / 17)
-    const [year, month, day] = key.split('-');
-    let dateStr = '';
-    if ([
-      'PENDING_USER_NOT_SELECTED',
-      'PENDING_USER_SELECTED',
+    const smallTextStatuses = [
       'IN_PROGRESS_USER_NOT_SELECTED',
-      'IN_PROGRESS_USER_SELECTED'
-    ].includes(status)) {
-      dateStr = `${parseInt(month, 10)}월 ${parseInt(day, 10)}일`;
-    } else {
-      dateStr = `${parseInt(month, 10)} / ${parseInt(day, 10)}`;
-    }
-    // 내일 날짜 (예: 7월 16일) - 실제 오늘 날짜 기준
-    let tomorrowStr = '';
+      'IN_PROGRESS_USER_SELECTED',
+      'COMPLETED_USER_SUCCESS',
+      'COMPLETED_USER_FAIL',
+      'COMPLETED_USER_NOT_SELECTED',
+      'NO_GAMES_EVENT_DISABLED',
+      'EVENT_CANCELLED_MULTI_GAMES'
+    ];
+
+    // 내일 날짜 계산 및 표기 (현실 오늘 기준)
     const today = new Date();
     const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-    tomorrowStr = `${tomorrow.getMonth() + 1}월 ${tomorrow.getDate()}일`;
+    const tomorrowKey = formatLocalDate(tomorrow);
+    const tomorrowDisplay = getDisplayDate(tomorrowKey);
 
-    // === PENDING_USER_NOT_SELECTED ===
-    if (status === 'PENDING_USER_NOT_SELECTED') {
-      main = `${dateStr} 올킬 <img src="/image/check.png" alt="check" />`;
-      sub = '';
-      btnText = '올킬 제출';
-      statusClass = 'status-pending-unselected';
-    }
-    // === PENDING_USER_SELECTED ===
-    else if (status === 'PENDING_USER_SELECTED') {
-      main = `${dateStr} 올킬 <img src="/image/check.png" alt="check" />`;
-      // 수정 제출 여부
-      if (isSelectionChanged()) {
-        sub = '첫 경기 시작 전까지 수정 가능';
+    switch (status) {
+      case 'PENDING_USER_NOT_SELECTED':
+        main = '';
+        sub = '';
+        mainClass = '';
+        btnText = '올킬 제출';
+        btnTextClass = '';
+        break;
+      case 'PENDING_USER_SELECTED':
+        main = '';
+        sub = '첫 경기 시작전까지 수정 가능';
+        mainClass = '';
         btnText = '';
-      } else {
-        sub = '첫 경기 시작 전까지 수정 가능';
+        btnTextClass = '';
+        break;
+      case 'IN_PROGRESS_USER_NOT_SELECTED':
+        main = '';
+        sub = `총 ${totalParticipants.toLocaleString()} 명 참여`;
+        mainClass = '';
+        btnText = `제출 마감`;
+        btnTextClass = 'small-text';
+        break;
+      case 'IN_PROGRESS_USER_SELECTED':
+        main = '';
+        sub = `제출 마감 : 총 ${totalParticipants.toLocaleString()} 명 참여`;
+        mainClass = '';
+        btnText = `제출 마감`;
+        btnTextClass = 'small-text';
+        break;
+      case 'COMPLETED_USER_SUCCESS':
+        main = '당첨';
+        mainClass = 'success';
+        if (winners && winners > 0) {
+          const displayPrize = Math.floor(100 / winners).toLocaleString();
+          const realPrize = Math.floor(1000000 / winners); // 실제 지급액(내부용)
+          sub = `<span class="prize-label">당첨금 : 100/${winners} = </span><span class="real-prize-amount">${realPrize.toLocaleString()} 원</span>`;
+        } else {
+          sub = '당첨자 없음';
+        }
+        btnText = `<span class="btn-date">${tomorrowDisplay} 올킬</span><br><span class="btn-open">당일 00시 오픈</span>`;
+        btnTextClass = 'small-text';
+        break;
+      case 'COMPLETED_USER_FAIL':
+      case 'COMPLETED_USER_NOT_SELECTED':
+        main = '땡';
+        mainClass = 'fail';
+        if (winners && winners > 0) {
+          const displayPrize = Math.floor(100 / winners).toLocaleString();
+          const realPrize = Math.floor(1000000 / winners); // 실제 지급액(내부용)
+          sub = `<span class="prize-label">당첨금 : 100/${winners} = </span><span class="real-prize-amount">${realPrize.toLocaleString()} 원</span>`;
+        } else {
+          sub = '당첨자 없음';
+        }
+        btnText = `<span class="btn-date">${tomorrowDisplay} 올킬</span><br><span class="btn-open">당일 00시 오픈</span>`;
+        btnTextClass = 'small-text';
+        break;
+      case 'NO_GAMES_EVENT_DISABLED':
+        main = '';
+        sub = '';
+        mainClass = '';
+        btnText = `<span class="btn-date">${tomorrowDisplay} 올킬</span><br><span class="btn-open">당일 00시 오픈</span>`;
+        btnTextClass = 'small-text';
+        break;
+      case 'EVENT_CANCELLED_MULTI_GAMES':
+        main = '무효';
+        sub = '3 경기 이상 취소';
+        mainClass = 'cancelled';
+        btnText = `<span class="btn-date">${tomorrowDisplay} 올킬</span><br><span class="btn-open">당일 00시 오픈</span>`;
+        btnTextClass = 'small-text';
+        subClass = 'cancelled-subtitle';
+        break;
+      default:
+        main = '';
+        sub = '';
+        mainClass = '';
         btnText = '';
-      }
-      statusClass = 'status-pending-selected';
+        btnTextClass = '';
     }
-    // === IN_PROGRESS_USER_NOT_SELECTED ===
-    else if (status === 'IN_PROGRESS_USER_NOT_SELECTED') {
-      main = `${dateStr} 올킬`;
-      sub = '제출 마감 : 총 447,388 명 참여';
-      btnText = getNextPendingAllkillText();
-      statusClass = 'status-progress-unselected';
-    }
-    // === IN_PROGRESS_USER_SELECTED ===
-    else if (status === 'IN_PROGRESS_USER_SELECTED') {
-      main = `${dateStr} 올킬`;
-      sub = '제출 마감 : 총 447,388 명 참여';
-      btnText = getNextPendingAllkillText();
-      statusClass = 'status-progress-selected';
-    }
-    // === COMPLETED_USER_SUCCESS ===
-    else if (status === 'COMPLETED_USER_SUCCESS') {
-      main = `${dateStr}   올킬 <span class="success">당첨</span>`;
-      sub = '당첨금 : 100/20 = 50,000 원';
-      btnText = getNextPendingAllkillText();
-      statusClass = 'COMPLETED_USER_SUCCESS';
-    }
-    // === COMPLETED_USER_FAIL ===
-    else if (status === 'COMPLETED_USER_FAIL') {
-      main = `${dateStr} 올킬 <span class="fail">땡</span>`;
-      sub = '당첨금 : 100/20 = 50,000 원';
-      btnText = getNextPendingAllkillText();
-      statusClass = 'COMPLETED_USER_FAIL';
-    }
-    // === COMPLETED_USER_NOT_SELECTED ===
-    else if (status === 'COMPLETED_USER_NOT_SELECTED') {
-      main = `${dateStr} 올킬`;
-      sub = '당첨금 : 100/20 = 50,000 원';
-      btnText = getNextPendingAllkillText();
-      statusClass = 'status-completed-unselected';
-    }
-    // === NO_GAMES_EVENT_DISABLED ===
-    else if (status === 'NO_GAMES_EVENT_DISABLED') {
-      main = `${dateStr} 올킬`;
-      sub = '경기 없음';
-      btnText = getNextPendingAllkillText();
-      statusClass = 'status-no-games';
-    }
-    // === EVENT_CANCELLED_MULTI_GAMES ===
-    else if (status === 'EVENT_CANCELLED_MULTI_GAMES') {
-      main = `${dateStr} 올킬 <span class="cancelled">무효</span>`;
-      sub = '3경기 이상 취소';
-      btnText = getNextPendingAllkillText();
-      statusClass = 'status-cancelled';
-    }
-    else {
-      main = '';
-      sub = '';
-      btnText = '';
-      statusClass = '';
-    }
-
-    return { main, sub, statusClass, btnText };
+    return { main, sub, statusClass, btnText, mainClass, btnTextClass, subClass };
   }
 
   // ==============================
@@ -411,9 +443,26 @@
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
-    $('.title-main').html(parts.main);  // Changed from .text() to .html()
-    $('.title-sub').html(parts.sub); // HTML 사용으로 변경
-
+    // 메인 타이틀 처리
+    if (parts.main) {
+      $('.title-main')
+        .html(parts.main)
+        .removeClass('success fail cancelled')
+        .addClass(parts.mainClass || '')
+        .show();
+    } else {
+      $('.title-main').removeClass('success fail cancelled').hide();
+    }
+    // 서브타이틀 처리
+    if (parts.sub) {
+      $('.title-sub')
+        .removeClass('cancelled-subtitle')
+        .addClass(parts.subClass || '')
+        .html(parts.sub)
+        .show();
+    } else {
+      $('.title-sub').removeClass('cancelled-subtitle').hide();
+    }
     // 기존 status 클래스 제거 후 새로운 클래스 적용
     const $titleWrapper = $('.title-wrapper');
     $titleWrapper.removeClass(function(index, className) {
@@ -422,11 +471,11 @@
     if (parts.statusClass) {
       $titleWrapper.addClass(parts.statusClass);
     }
-
-    // 버튼 텍스트도 상태별로 변경
-    $('.btn-text').html(parts.btnText.replace(/\n/g, '<br>'));
-
-    // 카운트다운 등 기존 로직은 모두 생략(불필요)
+    // 버튼 텍스트도 상태별로 변경 및 클래스 적용
+    $('.btn-text')
+      .removeClass('small-text')
+      .addClass(parts.btnTextClass || '')
+      .html(parts.btnText || '');
   }
 
   // ==============================
@@ -438,39 +487,57 @@
     const baseStatus = (window.matchData[key]||{}).eventStatus;
     const effStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : baseStatus;
 
-    // [EVENT_CANCELLED_MULTI_GAMES]일 경우 숨김 처리 코드 삭제
+    // 비활성화해야 하는 상태값 목록
+    const alwaysDisabledStatuses = [
+      'IN_PROGRESS_USER_NOT_SELECTED',
+      'IN_PROGRESS_USER_SELECTED',
+      'COMPLETED_USER_SUCCESS',
+      'COMPLETED_USER_FAIL',
+      'COMPLETED_USER_NOT_SELECTED',
+      'NO_GAMES_EVENT_DISABLED',
+      'EVENT_CANCELLED_MULTI_GAMES'
+    ];
 
-    const allSel = games.length>0 && games.every(g =>
-      (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
-    );
-    $('#submit-allkill-btn').show();
+    if (alwaysDisabledStatuses.includes(effStatus)) {
+      $('#submit-allkill-btn').attr('disabled', true).removeClass('active');
+      return;
+    }
+
+    if (effStatus === 'PENDING_USER_NOT_SELECTED') {
+      const allSel = games.length > 0 && games.every(g =>
+        (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
+      );
+      if (allSel) {
+        $('#submit-allkill-btn').removeAttr('disabled').addClass('active');
+      } else {
+        $('#submit-allkill-btn').attr('disabled', true).removeClass('active');
+      }
+      $('#submit-allkill-btn').show();
+    } else {
+      $('#submit-allkill-btn').removeAttr('disabled').addClass('active').show();
+    }
   }
 
   // ==============================
   // 10. 내비게이션 핸들러
   // ==============================
-  function setupNavHandlers() {
+  function setupDateNavHandlers() {
     $(containerSelector)
-      .off('click', `#${prevBtnId}`)
-      .off('click', `#${nextBtnId}`)
-      .off('click', `#${currentDayId}`)
-      .on('click', `#${prevBtnId}`, () => {
-        if (currentIndex > 0) {
-          currentIndex--;
+      .off('click', '.nav-arrow.prev')
+      .off('click', '.nav-arrow.next')
+      .on('click', '.nav-arrow.prev', function() {
+        const key = $(this).data('key');
+        const idx = dateKeys.indexOf(key);
+        if (idx !== -1) {
+          currentIndex = idx;
           refreshAll();
         }
       })
-      .on('click', `#${nextBtnId}`, () => {
-        if (currentIndex < dateKeys.length - 1) {
-          currentIndex++;
-          refreshAll();
-        }
-      })
-      .on('click', `#${currentDayId}`, function () {
-        // todayKey의 인덱스로 무조건 이동
-        const todayIdx = dateKeys.indexOf(todayKey);
-        if (todayIdx !== -1 && currentIndex !== todayIdx) {
-          currentIndex = todayIdx;
+      .on('click', '.nav-arrow.next', function() {
+        const key = $(this).data('key');
+        const idx = dateKeys.indexOf(key);
+        if (idx !== -1) {
+          currentIndex = idx;
           refreshAll();
         }
       });
@@ -666,10 +733,10 @@
   // 13. 전체 갱신
   // ==============================
   function refreshAll() {
-    renderNav();
+    renderDateNavigation();
     $(`#${sectionId}`).remove();
     renderSection();
-    setupNavHandlers();
+    setupDateNavHandlers();
     setupTeamSelectionHandlers();
     setupSubmitHandler();
   }

@@ -178,7 +178,7 @@
   font-size: 36px;
   border-radius: 58px;
   border: 1px solid var(--black);
-  padding-bottom: 5px;
+  padding-bottom: 1px;
   line-height: 40px;
   color: #121212;
 }
@@ -192,7 +192,7 @@
   width: 382px;
   height: 245px;
   background-color: var(--white);
-  border-radius: var(--radius-lg);
+  border-radius: 20px;
   border: 1px solid var(--black);
   display: flex;
   flex-direction: column;

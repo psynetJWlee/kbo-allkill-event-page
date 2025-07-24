@@ -7,7 +7,6 @@
 }
 
 body {
-  background-color: var(--white);
   color: var(--black);
   overflow-x: hidden;
   overflow-y: scroll;
@@ -20,7 +19,6 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -31,7 +29,6 @@ body::-webkit-scrollbar {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: var(--white);
 }
 
 .max-w-430 {

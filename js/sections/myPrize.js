@@ -183,6 +183,44 @@ function initMyPrizeSection() {
 
   // ───── 컨테이너 HTML ─────
   const expireDateStr = getLastGameDateStr();
+  // 버튼 노출/비노출 및 상태별 텍스트/비활성화 처리
+  const todayKey = formatLocalDate(new Date());
+  const todayStatus = window.matchData?.[todayKey]?.eventStatus;
+
+  const hideStatuses = [
+    'PENDING_USER_SELECTED',
+    'IN_PROGRESS_USER_NOT_SELECTED',
+    'IN_PROGRESS_USER_SELECTED'
+  ];
+  const greyStatuses = [
+    'COMPLETED_USER_SUCCESS',
+    'COMPLETED_USER_FAIL',
+    'COMPLETED_USER_NOT_SELECTED',
+    'NO_GAMES_EVENT_DISABLED',
+    'EVENT_CANCELLED_MULTI_GAMES'
+  ];
+
+  let showGoToBtn = false;
+  let goToBtnClass = 'go-to-team-selection-btn';
+  let goToBtnText = '';
+
+  if (todayStatus === 'PENDING_USER_NOT_SELECTED') {
+    showGoToBtn = true;
+    goToBtnClass = 'go-to-team-selection-btn yellow-btn';
+    const today = new Date();
+    const todayDisplay = `${today.getMonth() + 1}월 ${today.getDate()}일`;
+    goToBtnText = `<span class="btn-date">${todayDisplay}</span><br><span class="btn-challenge">올킬 도전</span>`;
+  } else if (greyStatuses.includes(todayStatus)) {
+    showGoToBtn = true;
+    goToBtnClass = 'go-to-team-selection-btn grey-btn';
+    const today = new Date();
+    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    const tomorrowDisplay = `${tomorrow.getMonth() + 1}월 ${tomorrow.getDate()}일 올킬`;
+    goToBtnText = `<span class="btn-date">${tomorrowDisplay}</span><br><span class="btn-open">당일 00시 오픈</span>`;
+  } else if (hideStatuses.includes(todayStatus)) {
+    showGoToBtn = false;
+  }
+
   const sectionHtml = `
     <div class="my-prize-container">
       <div class="flex flex-col items-center">
@@ -229,7 +267,7 @@ function initMyPrizeSection() {
           </div>
         </div>
       </div><!-- /.prize-history -->
-      <button id="go-to-team-selection" class="go-to-team-selection-btn">${btnText}</button>
+      ${showGoToBtn ? `<button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button>` : ''}
     </div><!-- /.my-prize-container -->
   `;
   $('#my-prize-section').html(sectionHtml);

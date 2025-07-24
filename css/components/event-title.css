@@ -3,31 +3,45 @@
 /* Event Title Section */
 #event-title-section {
   position: relative;
-  height: 490px;
+  height: 284px;
   width: 100%;
-  background-color: var(--primary-blue);
+  background-color: #003E5B;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  
+}
+
+.event-title-section {
+  position: relative;
+  z-index: 10;
+}
+
+.kbo-selection-container {
+  position: relative;
+  z-index: 1;
 }
 
 .event-logo {
   position: absolute;
-  top: 6px;
-  left: 7px;
+  top: 13px;
+  left: 13px;
   z-index: 30;
-  width: 90px;
+  width: 86px;
 }
 
 .event-title-text {
   position: absolute;
   bottom: 20px;
-  left: 0;
+  TOP: 14PX;
+  right: 12px;
   width: 100%;
   text-align: center;
   z-index: 1000;
   pointer-events: none;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .event-title-line1,
@@ -43,7 +57,7 @@
 
 .event-title-line1{
   font-size: 80px;
-  padding-bottom: 20px;
+  padding-bottom: 17px;
   filter: drop-shadow(-3px -3px 0 #760000) drop-shadow(3px -3px 0 #760000) drop-shadow(-3px 3px 0 #760000) drop-shadow(3px 3px 0 #760000) drop-shadow(-3px 0 0 #760000) drop-shadow(3px 0 0 #760000) drop-shadow(0 -3px 0 #760000) drop-shadow(0 3px 0 #760000);
 }
 
@@ -61,31 +75,34 @@
   font-family: 'KBO-Dia-Gothic';
   font-weight: 500;
   letter-spacing: -2px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .event-title-line3 {
   color: var(--gold);
-  margin-top: 9px; 
+  /* margin-top: 9px; */
 }
 
 .event-title-line4 {
   color: #FFFFFF;
   font-size: 48px;
   filter: drop-shadow(-1px -1px 0 #001a29) drop-shadow(1px -1px 0 #001a29) drop-shadow(-1px 1px 0 #001a29) drop-shadow(1px 1px 0 #001a29) drop-shadow(-1px 0 0 #001a29) drop-shadow(1px 0 0 #001a29) drop-shadow(0 -1px 0 #001a29) drop-shadow(0 1px 0 #001a29);
+  padding-top: 9px;
 }
 
 .event-fx-image {
   position: absolute;
-  bottom: 140px;
-  left: 75%;
+  bottom: -13px;
+  left: 237px;
   transform: translateX(-50%);
   z-index: 500;
 }
 
 .event-emoticon {
   position: absolute;
-  top: 0;
-  left: 50%;
+  top: 44px;
+  left: 98px;
   transform: translateX(-50%);
   width: 240px;
   height: 240px;

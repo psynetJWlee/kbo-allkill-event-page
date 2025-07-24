@@ -64,9 +64,9 @@ function initEventTitleSection() {
   $('#event-title-section').html(sectionHtml);
 
   // 타이틀 섹션에 애니메이션 적용
-  window.animationUtils.startAnimation(
-    document.getElementById('event-title-section')
-  );
+  // window.animationUtils.startAnimation(
+  //   document.getElementById('event-title-section')
+  // );
 }
 
 // 초기화 함수 내보내기

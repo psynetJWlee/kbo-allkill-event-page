@@ -11,7 +11,6 @@
 .title-wrapper {
   position: relative;
   text-align: center;
-  margin-bottom: 40px;
 }
 /*
 .title-wrapper .title-decor-left,
@@ -45,7 +44,7 @@
 }*/
 
 .team-selection-title .title-sub {
-  font-size: 35px;
+  font-size: 24px;
   font-weight: 400;   
 }
 /*
@@ -121,9 +120,7 @@
   pointer-events: none;
 }
 
-.game-item.faded {
-  
-}
+
 
 .game-item.alternate-bg,
 .match-result.alternate-bg {
@@ -218,12 +215,10 @@
 }
 
 .title-main {
-  font-size: 37px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  margin-bottom: 10px;
+  line-height: 1;  
 }
 
 .title-main img[alt="check"] {
@@ -238,24 +233,31 @@
 span.success {
   color: #CA0B0B;
   font-size: 74px;
-  margin-left: 22px;
   margin-bottom: 10px;
   font-weight: 600;
 }
 span.fail {
   color: #0066B3;
   font-size: 74px;
-  margin-left: 22px;
   margin-bottom: 10px;
   font-weight: 600;
 }
 
 span.cancelled{
   color: #878787;
-  font-size: 48px;
-  margin-left: 22px;
-  margin-bottom: 4px;
+  font-size: 74px;
+  margin-bottom: 10px;
   font-weight: 600;
+}
+
+.cancelled-subtitle {
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.team-selection-title .title-sub.cancelled-subtitle {
+  font-size: 30px;
+  font-weight: 400;
 }
 
 .team-score {
@@ -348,6 +350,7 @@ span.cancelled{
   background: #FFD700;
 }
 
+/*
 .title-wrapper.status-progress-selected .title-main {
   font-size: 39px;
   font-weight: bold;
@@ -373,7 +376,7 @@ span.cancelled{
 }
 .title-wrapper.status-cancelled .title-sub{
   font-size: 28px;
-}
+} */
 
 .league-status-wrap {
   display: flex  ;
@@ -409,4 +412,136 @@ span.cancelled{
 .toast-warning .toast-main-text {
   font-size: 30px;
   letter-spacing: -0.8px;
+}
+
+.nav-arrow.prev,
+.nav-arrow.next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  background: none;
+  position: relative;
+}
+
+.nav-arrow.prev::before,
+.nav-arrow.next::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: url('/image/Polygon.png') no-repeat center center;
+  background-size: contain;
+}
+
+.nav-arrow.next::before {
+  transform: scaleX(-1);
+  display: block;
+}
+
+.nav-date {
+  font-size: 48px;
+  white-space: nowrap;
+  letter-spacing: -1px;
+  padding-bottom: 6px;
+}
+
+.nav-check{
+  margin: 0 0 6px 10px;
+}
+
+.nav-arrow-placeholder {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+#submit-allkill-btn {
+  width: 346px;
+  height: 116px;
+  font-size: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border: none;
+  border-radius: 70px;
+  background: #C8C8C8;
+  color: #000;
+  transition: background 0.2s;
+  cursor: not-allowed;
+  text-align: center;
+  pointer-events: none;
+}
+
+#submit-allkill-btn.active {
+  background: #FFD700;
+  color: #000;
+  cursor: pointer;
+  pointer-events: auto;
+  
+}
+
+#submit-allkill-btn .btn-text {
+  width: 100%;
+  text-align: center;
+  font-size: 42px;
+  line-height: 1.2;
+  display: block;
+ 
+}
+#submit-allkill-btn .btn-text.small-text {
+  text-align: center;
+  line-height: 1;
+}
+#submit-allkill-btn .btn-date {
+  font-size: 34px;
+  margin-bottom: 2px;
+}
+#submit-allkill-btn .btn-open {
+  font-size: 28px;
+  margin-top: 0;
+}
+
+.prize-label {
+  font-size: 27px;  
+}
+.real-prize-amount {
+  font-size: 34px;
+  }
+
+.go-to-team-selection-btn {
+  width: 346px;
+  height: 116px;  
+  align-items: center;  
+  margin: 40px auto;
+  border: none;
+  border-radius: 70px;  
+  text-align: center;
+  cursor: pointer;
+  
+}
+.go-to-team-selection-btn.yellow-btn {
+  background: #FFD700;
+  color: #000;
+}
+.go-to-team-selection-btn.grey-btn {
+  background: #C8C8C8;
+  color: #000;
+}
+.go-to-team-selection-btn .btn-date {
+  font-size: 34px;
+  
+}
+.go-to-team-selection-btn .btn-challenge {
+  font-size: 36px;
+  
+}
+.go-to-team-selection-btn .btn-open {
+  font-size: 28px;
+  
 }

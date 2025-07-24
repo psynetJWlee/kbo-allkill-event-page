@@ -73,17 +73,44 @@
   width: 100px;
 }
 
-.date-navigation {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+.date-navigation {  
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;  
-  height: 60px;
-  color: var(--white);
+  justify-content: stretch;
+  width: 100%;
+  height: 92px;
   background-color: #1c1c1c;
-  padding: 0 50px;
-  margin-bottom: 20px;
-  padding-bottom: 1px;
+  color: var(--white);
+  padding: 0 2px 0 0px;
+  box-sizing: border-box;
+  gap: 0;
+}
+
+.nav-arrow.prev,
+.nav-arrow.next,
+.nav-arrow-placeholder,
+.nav-check {
+  flex: 0 0 56px;
+  min-width: 56px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.nav-date {
+  flex: 1 1 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .date-navigation .date-nav-prev { 
@@ -147,8 +174,13 @@
   margin-bottom: var(--spacing-3xl);
   display: flex;
   justify-content: center;
+  border-radius: 16px;
 }
 
 .game-item.disabled .game-row.row2 {
   opacity: 0.2;
+}
+
+.team-selection-title{
+  margin: 20px 0 20px 0;
 }

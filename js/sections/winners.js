@@ -29,7 +29,7 @@ function initWinnersSection() {
   let winnerDate = '';
   if (winnerDateRaw) {
     const [yyyy, mm, dd] = winnerDateRaw.split('-');
-    winnerDate = `${parseInt(mm, 10)} / ${parseInt(dd, 10)}`;
+    winnerDate = `${parseInt(mm, 10)}/${parseInt(dd, 10)}`;
   }
   const sectionHtml = `
     <div class="w-full flex flex-col items-center relative">
@@ -109,41 +109,56 @@ function initWinnersSection() {
   
   $sec.find('#member-list').html(memberListHtml + paginationHtml);
 
-  // PENDING_USER_NOT_SELECTED 상태의 가장 가까운 날짜로 올킬 도전 버튼 텍스트 반환
-  function getNextPendingAllkillText() {
-    let btnText = '올킬 도전';
-    if (window.matchData) {
-      const pendingDates = Object.entries(window.matchData)
-        .filter(([date, data]) => data.eventStatus === 'PENDING_USER_NOT_SELECTED')
-        .map(([date]) => date);
-      const today = new Date();
-      const closest = pendingDates
-        .map(dateStr => ({ dateStr, dateObj: new Date(dateStr) }))
-        .filter(({ dateObj }) => dateObj >= today)
-        .sort((a, b) => a.dateObj - b.dateObj)[0];
-      if (closest) {
-        const [yyyy, mm, dd] = closest.dateStr.split('-');
-        btnText = `${parseInt(mm)}월 ${parseInt(dd)}일<br>올킬 도전`;
-      }
-    }
-    return btnText;
-  }
+  // 공통 go-to-team-selection 버튼 생성 함수
+  function createGoToTeamSelectionButton(targetSelector) {
+    const todayKey = formatLocalDate(new Date());
+    const todayStatus = window.matchData?.[todayKey]?.eventStatus;
 
-  // 페이징 하단에 올킬 도전 버튼 추가
-  if ($sec.find('.go-to-team-selection-btn').length === 0) {
-    const btnText = getNextPendingAllkillText();
-    $sec.append(`<button id="go-to-team-selection" class="go-to-team-selection-btn">${btnText}</button>`);
+    const hideStatuses = [
+      'PENDING_USER_SELECTED',
+      'IN_PROGRESS_USER_NOT_SELECTED',
+      'IN_PROGRESS_USER_SELECTED'
+    ];
+    const greyStatuses = [
+      'COMPLETED_USER_SUCCESS',
+      'COMPLETED_USER_FAIL',
+      'COMPLETED_USER_NOT_SELECTED',
+      'NO_GAMES_EVENT_DISABLED',
+      'EVENT_CANCELLED_MULTI_GAMES'
+    ];
+
+    let showGoToBtn = false;
+    let goToBtnClass = 'go-to-team-selection-btn';
+    let goToBtnText = '';
+
+    if (todayStatus === 'PENDING_USER_NOT_SELECTED') {
+      showGoToBtn = true;
+      goToBtnClass = 'go-to-team-selection-btn yellow-btn';
+      const today = new Date();
+      const todayDisplay = `${today.getMonth() + 1}월 ${today.getDate()}일`;
+      goToBtnText = `<span class="btn-date">${todayDisplay}</span><br><span class="btn-challenge">올킬 도전</span>`;
+    } else if (greyStatuses.includes(todayStatus)) {
+      showGoToBtn = true;
+      goToBtnClass = 'go-to-team-selection-btn grey-btn';
+      const today = new Date();
+      const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+      const tomorrowDisplay = `${tomorrow.getMonth() + 1}월 ${tomorrow.getDate()}일 올킬`;
+      goToBtnText = `<span class="btn-date">${tomorrowDisplay}</span><br><span class="btn-open">당일 00시 오픈</span>`;
+    } else if (hideStatuses.includes(todayStatus)) {
+      showGoToBtn = false;
+    }
+
+    if (showGoToBtn) {
+      const btnHtml = `<button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button>`;
+      $(targetSelector).append(btnHtml);
+      document.getElementById('go-to-team-selection').onclick = function() {
+        const section = document.getElementById('kbo-selection-container');
+        if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+    }
   }
-  // 버튼 클릭 시 team selection 상단으로 스크롤
-  const goToBtn = document.getElementById('go-to-team-selection');
-  if (goToBtn) {
-    goToBtn.addEventListener('click', () => {
-      const section = document.getElementById('kbo-selection-container');
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  }
+  // 페이징 하단에 올킬 도전 버튼 추가 (기존 로직 삭제)
+  createGoToTeamSelectionButton('#winners-section');
 
     // 이전 페이지
   $sec.find('#prev-page').off('click').on('click', () => {

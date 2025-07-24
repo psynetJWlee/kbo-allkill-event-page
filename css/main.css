@@ -26,9 +26,6 @@ html, body, #root, #main-container {
   width: 430px;
   min-width: 430px;
   max-width: 430px;
-  margin: 0 auto;
-  padding: 0;
-  background: #fff;
 }
 
 /* Legacy game list styles that need game-item context */
