@@ -53,6 +53,14 @@ function closeToast() {
     toast.classList.remove('show');
     setTimeout(() => {
       toast.remove();
+      // 마지막(가장 뒤쪽)에 등장하는 '상금 지급 신청' 내역만 삭제 및 UI 갱신
+      if (prizeHistory.length > 0) {
+        const idx = prizeHistory.map(x => x.history).lastIndexOf("상금 지급 신청");
+        if (idx !== -1) {
+          prizeHistory.splice(idx, 1);
+          initMyPrizeSection();
+        }
+      }
     }, 300);
   }
 }
@@ -367,12 +375,14 @@ function initMyPrizeSection() {
   }
 
   // ───── 6) 페이지 접속 시 토스트 알림 표시 ─────
-  setTimeout(() => {
-    createToast(
-      '상금 지급 재신청 필요',
-      '신청시 이메일의 지급 시 정보를\n정확하게 입력 후 다시 신청해주세요.'
-    );
-  }, 500); // 0.5초 후 토스트 표시
+  if (prizeHistory.some(item => item.history === "상금 지급 신청")) {
+    setTimeout(() => {
+      createToast(
+        '상금 지급 재신청 필요',
+        '신청시 이메일의 지급 시 정보를\n정확하게 입력 후 다시 신청해주세요.'
+      );
+    }, 500); // 0.5초 후 토스트 표시
+  }
 }
 
 // 초기화 함수 내보내기
