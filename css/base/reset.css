@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+
 body {
   color: var(--black);
   overflow-x: hidden;
@@ -13,6 +20,8 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
   font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
 }
 
 body::-webkit-scrollbar {
@@ -22,6 +31,9 @@ body::-webkit-scrollbar {
 #root {
   max-width: 1280px;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
 }
 
 #main-container {

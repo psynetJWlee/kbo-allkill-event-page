@@ -414,8 +414,8 @@
         }
       ]
     },
-    "2025-07-25": {
-      eventStatus: "PENDING_USER_NOT_SELECTED",
+    "2025-07-28": {
+      eventStatus: "PENDING_USER_SELECTED",
       totalParticipants: 20000,
       winners: 3,
       games: [
@@ -426,7 +426,7 @@
           away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "away", league: "KBO"
         },
         {
           gameId: "20250522-1",
@@ -435,7 +435,7 @@
           away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "home", league: "KBO"
         },
         {
           gameId: "20250522-2",
@@ -444,7 +444,7 @@
           away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "home", league: "KBO"
         },
         {
           gameId: "20250522-3",
@@ -453,7 +453,7 @@
           away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "home", league: "KBO"
         },
         {
           gameId: "20250522-4",
@@ -462,11 +462,11 @@
           away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "home", league: "KBO"
         }
       ]
     },
-    "2025-07-27": {
+    "2025-07-29": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 21000,
       winners: null,
@@ -518,7 +518,7 @@
         }
       ]
     },
-    "2025-07-28": {
+    "2025-07-30": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 22000,
       winners: null,
@@ -552,7 +552,7 @@
         }
       ]
     },
-    "2025-07-29": {
+    "2025-08-01": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 23000,
       winners: null,
@@ -586,7 +586,7 @@
         }
       ]
     },
-    "2025-07-30": {
+    "2025-08-02": {
       eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
       totalParticipants: 11000,
       winners: 0,
@@ -620,7 +620,7 @@
         }
       ]
     },
-    "2025-08-01": {
+    "2025-08-03": {
       eventStatus: "NO_GAMES_EVENT_DISABLED",
       totalParticipants: 9000,
       winners: 0,

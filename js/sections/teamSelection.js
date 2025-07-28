@@ -146,12 +146,14 @@
           </h2>
         </div>
         <div id="${gameListId}" class="game-list" ${hideGameList}></div>
+        ${effStatus !== 'PENDING_USER_SELECTED' ? `
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
             <span class="btn-text">${submitBtnPlaceholder}</span>
             <div class="spark"></div><div class="spark"></div><div class="spark"></div>
           </button>
         </div>
+        ` : ''}
         <a 
           href="javascript:void(0);" 
           class="download-button copy-link-button team-selection-copy-link"
@@ -162,6 +164,31 @@
     `;
     $(containerSelector).append(html);
     renderGames();
+
+    // === 추가: PENDING_USER_SELECTED 상태면 바로 edit-btn-row 렌더링 ===
+    if (effStatus === 'PENDING_USER_SELECTED') {
+      // userSelection을 appState.selectedTeams에 동기화
+      const games = (window.matchData[key]?.games) || [];
+      games.forEach(g => {
+        if (!window.appState.selectedTeams) window.appState.selectedTeams = {};
+        window.appState.selectedTeams[g.gameId] = g.userSelection;
+      });
+      // originalSelections 세팅
+      originalSelections = {};
+      games.forEach(g => { originalSelections[g.gameId] = g.userSelection; });
+      // edit-btn-row 렌더링
+      if ($('.edit-btn-row').length === 0) {
+        const btnRow = `
+          <div class="edit-btn-row">
+            <button class="edit-btn cancel-btn">취소</button>
+            <button class="edit-btn submit-edit-btn">수정</button>
+          </div>
+        `;
+        $('.team-selection-copy-link').before(btnRow);
+      }
+      // 핸들러 연결
+      setupEditButtonHandlers();
+    }
   }
 
   // ==============================
@@ -727,6 +754,61 @@
         $('.edit-btn-row').remove();
       }
     });
+  }
+
+  // === edit-btn-row 핸들러 함수 분리 ===
+  function setupEditButtonHandlers() {
+    const key = dateKeys[currentIndex];
+    const games = (window.matchData[key]?.games) || [];
+    // 최초 상태 갱신 함수
+    function updateEditBtnState() {
+      let changed = false;
+      games.forEach(g => {
+        if ((window.appState.selectedTeams[g.gameId] || 'none') !== (g.userSelection || 'none')) changed = true;
+      });
+      if (changed) {
+        $('.submit-edit-btn').addClass('active').prop('disabled', false);
+        $('.cancel-btn').addClass('active').prop('disabled', false);
+      } else {
+        $('.submit-edit-btn').removeClass('active').prop('disabled', true);
+        $('.cancel-btn').removeClass('active').prop('disabled', true);
+      }
+    }
+    // 팀 선택 변경 시 수정 버튼 색상 갱신
+    $(document).off('click.editBtn').on('click.editBtn', '.team-box', function() {
+      setTimeout(updateEditBtnState, 0);
+    });
+    // 취소 버튼 클릭 시 원래 선택값 복원
+    $(document).off('click.cancelBtn').on('click.cancelBtn', '.cancel-btn', function() {
+      games.forEach(g => {
+        window.appState.selectedTeams[g.gameId] = originalSelections[g.gameId];
+      });
+      renderGames();
+      updateEditBtnState();
+    });
+    // 수정 버튼 클릭 시 재제출 및 토스트
+    $(document).off('click.submitEditBtn').on('click.submitEditBtn', '.submit-edit-btn', function() {
+      let changed = false;
+      games.forEach(g => {
+        if ((window.appState.selectedTeams[g.gameId] || 'none') !== (originalSelections[g.gameId] || 'none')) changed = true;
+      });
+      // 미선택 경기 검사
+      const hasUnselected = games.some(g => (window.appState.selectedTeams[g.gameId] || 'none') === 'none');
+      if (hasUnselected) {
+        showToast(`${games.length} 경기 모두 체크 필요`, '', 1500, 'toast-warning');
+        return;
+      }
+      if (!changed) return;
+      games.forEach(g => { g.userSelection = window.appState.selectedTeams?.[g.gameId]; });
+      // 선택값을 다시 저장
+      originalSelections = {};
+      games.forEach(g => { originalSelections[g.gameId] = window.appState.selectedTeams[g.gameId]; });
+      showToast('수정 완료', '첫경기 시작 전까지 수정 가능');
+      updateEditBtnState();
+      scrollToTeamSelectionBottom();
+    });
+    // 최초 상태 갱신
+    updateEditBtnState();
   }
 
   // ==============================
