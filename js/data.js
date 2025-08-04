@@ -15,7 +15,7 @@ const teamLogos = {
 
 // Winner members data
 const members = [
-  { id: 1, nickname: "고량뉴스", profileImage: "/image/profile.jpg", amount: 50000, date: '2025-07-01' },
+  { id: 1, nickname: "고량뉴스", profileImage: "/image/profile.jpg", amount: 50000, date: '2025-08-02' },
   { id: 2, nickname: "컴오라파", profileImage: "/image/event-emoticon.gif", amount: 1000000, date: '2025-07-01' },
   { id: 3, nickname: "홈런왕김탁구탁구", profileImage: "/image/giphy.gif", amount: 888888, date: '2025-07-01' },
   { id: 4, nickname: "엘지트윈스", profileImage: "/image/giphy2.gif", amount: 50000, date: '2025-07-01' },
@@ -40,7 +40,7 @@ const members = [
     nickname: `유저${i + 21}`,
     profileImage: "/image/profile.png",
     amount: 50000,
-    date: '2025-07-01'
+    date: '2025-08-02'
   }))
 ];
 

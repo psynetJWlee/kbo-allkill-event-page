@@ -42,7 +42,25 @@
 
   const todayKey = formatLocalDate(new Date());
   let currentIndex = dateKeys.indexOf(todayKey);
-  if (currentIndex < 0) currentIndex = 0;
+  if (currentIndex < 0) {
+    // 오늘 날짜가 없으면 가장 최근의 과거 날짜를 찾아서 설정
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    let latestPastIndex = -1;
+    
+    for (let i = dateKeys.length - 1; i >= 0; i--) {
+      const dateKey = dateKeys[i];
+      const date = new Date(dateKey);
+      date.setHours(0,0,0,0);
+      if (date < today) {
+        latestPastIndex = i;
+        break;
+      }
+    }
+    
+    // 과거 날짜가 없으면 첫 번째 날짜 사용
+    currentIndex = latestPastIndex >= 0 ? latestPastIndex : 0;
+  }
 
   // ==============================
   // 3~5. 초기화/네비/섹션 렌더링
@@ -95,6 +113,9 @@
     const data = window.matchData[key] || {};
     const eventStatus = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
 
+    // 다음 날짜가 미래인지 확인
+    const isNextKeyFuture = nextKey ? (new Date(nextKey) > today) : false;
+
     // 좌측: 과거 이동 화살표 (이전 날짜가 있을 때만, 없으면 placeholder)
     const prevArrow = prevKey
       ? `<div class="nav-arrow prev" data-key="${prevKey}"></div>`
@@ -105,7 +126,8 @@
     let rightIcon = '';
     if (isToday && shouldShowCheckIcon(eventStatus)) {
       rightIcon = '<div class="nav-check"><img src="/image/check2.png" alt="check" /></div>';
-    } else if (!isToday && nextKey) {
+    } else if (!isToday && nextKey && !isNextKeyFuture) {
+      // 다음 날짜가 미래가 아닐 때만 화살표 표시
       rightIcon = `<div class="nav-arrow next" data-key="${nextKey}"></div>`;
     } else {
       rightIcon = '<div class="nav-arrow-placeholder"></div>';
@@ -146,14 +168,12 @@
           </h2>
         </div>
         <div id="${gameListId}" class="game-list" ${hideGameList}></div>
-        ${effStatus !== 'PENDING_USER_SELECTED' ? `
         <div class="team-selection-submit">
           <button id="submit-allkill-btn" class="mega-sparkle-btn">
             <span class="btn-text">${submitBtnPlaceholder}</span>
             <div class="spark"></div><div class="spark"></div><div class="spark"></div>
           </button>
         </div>
-        ` : ''}
         <a 
           href="javascript:void(0);" 
           class="download-button copy-link-button team-selection-copy-link"
@@ -526,7 +546,7 @@
     ];
 
     if (alwaysDisabledStatuses.includes(effStatus)) {
-      $('#submit-allkill-btn').attr('disabled', true).removeClass('active');
+      $('#submit-allkill-btn').attr('disabled', true).removeClass('active').hide();
       return;
     }
 
