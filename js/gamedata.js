@@ -414,8 +414,8 @@
         }
       ]
     },
-    "2025-07-28": {
-      eventStatus: "PENDING_USER_SELECTED",
+    "2025-08-03": {
+      eventStatus: "COMPLETED_USER_SUCCESS",
       totalParticipants: 20000,
       winners: 3,
       games: [
@@ -476,7 +476,7 @@
         }
       ]
     },
-    "2025-07-29": {
+    "2025-08-04": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 21000,
       winners: null,
@@ -528,7 +528,7 @@
         }
       ]
     },
-    "2025-07-30": {
+    "2025-08-06": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 22000,
       winners: null,
@@ -562,7 +562,7 @@
         }
       ]
     },
-    "2025-08-01": {
+    "2025-08-07": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 23000,
       winners: null,
@@ -596,7 +596,7 @@
         }
       ]
     },
-    "2025-08-02": {
+    "2025-08-08": {
       eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
       totalParticipants: 11000,
       winners: 0,
@@ -630,7 +630,7 @@
         }
       ]
     },
-    "2025-08-03": {
+    "2025-08-09": {
       eventStatus: "NO_GAMES_EVENT_DISABLED",
       totalParticipants: 9000,
       winners: 0,
