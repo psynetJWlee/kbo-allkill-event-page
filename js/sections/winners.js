@@ -34,7 +34,7 @@ function initWinnersSection() {
   const sectionHtml = `
     <div class="w-full flex flex-col items-center relative">
       <div class="winners-title">
-        <span class="title-text">${winnerDate ? winnerDate + '일 당첨자' : '오늘의 당첨자'}</span>
+        <span class="title-text">${winnerDate ? winnerDate + ' 일 당첨자' : '오늘의 당첨자'}</span>
         <div class="title-underline"></div>
       </div>
       <p class="winners-count w-full text-center">

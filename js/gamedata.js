@@ -414,8 +414,8 @@
         }
       ]
     },
-    "2025-07-28": {
-      eventStatus: "PENDING_USER_SELECTED",
+    "2025-08-03": {
+      eventStatus: "COMPLETED_USER_SUCCESS",
       totalParticipants: 20000,
       winners: 3,
       games: [
@@ -424,49 +424,59 @@
           home: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 0 },
           draw: { teamName: "무승부", votes: 2901 },
           away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 0 },
-          status: "경기전",
+          status: "경기종료",
           startTime: "18:00",
-          userSelection: "away", league: "KBO"
+          userSelection: "away", league: "KBO",
+          gameResult: "home",
+          eventResult: "success"
         },
         {
           gameId: "20250522-1",
           home: { teamName: "한화", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/pq5JUk7H0b6KX5Wi8M0xbA_48x48.png", votes: 0 },
           draw: { teamName: "무승부", votes: 1405 },
           away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 0 },
-          status: "경기전",
+          status: "경기종료",
           startTime: "18:00",
-          userSelection: "home", league: "KBO"
+          userSelection: "home", league: "KBO",
+          gameResult: "home",
+          eventResult: "success"
         },
         {
           gameId: "20250522-2",
           home: { teamName: "두산", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/AP_sE5nmR8ckhs_zEhDzEg_48x48.png", votes: 0 },
           draw: { teamName: "무승부", votes: 3200 },
           away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 0 },
-          status: "경기전",
+          status: "경기종료",
           startTime: "18:00",
-          userSelection: "home", league: "KBO"
+          userSelection: "home", league: "KBO",
+          gameResult: "home",
+          eventResult: "success"
         },
         {
           gameId: "20250522-3",
           home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 0 },
           draw: { teamName: "무승부", votes: 493 },
           away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 0 },
-          status: "경기전",
+          status: "경기종료",
           startTime: "18:00",
-          userSelection: "home", league: "KBO"
+          userSelection: "home", league: "KBO",
+          gameResult: "home",
+          eventResult: "success"
         },
         {
           gameId: "20250522-4",
           home: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 0 },
           draw: { teamName: "무승부", votes: 7199 },
           away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 0 },
-          status: "경기전",
+          status: "경기종료",
           startTime: "18:00",
-          userSelection: "home", league: "KBO"
+          userSelection: "home", league: "KBO",
+          gameResult: "home",
+          eventResult: "success"
         }
       ]
     },
-    "2025-07-29": {
+    "2025-08-04": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 21000,
       winners: null,
@@ -518,7 +528,7 @@
         }
       ]
     },
-    "2025-07-30": {
+    "2025-08-06": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 22000,
       winners: null,
@@ -552,7 +562,7 @@
         }
       ]
     },
-    "2025-08-01": {
+    "2025-08-07": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 23000,
       winners: null,
@@ -586,7 +596,7 @@
         }
       ]
     },
-    "2025-08-02": {
+    "2025-08-08": {
       eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
       totalParticipants: 11000,
       winners: 0,
@@ -620,7 +630,7 @@
         }
       ]
     },
-    "2025-08-03": {
+    "2025-08-09": {
       eventStatus: "NO_GAMES_EVENT_DISABLED",
       totalParticipants: 9000,
       winners: 0,
