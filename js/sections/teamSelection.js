@@ -37,6 +37,32 @@
     const D = String(d.getDate()).padStart(2, '0');
     return `${Y}-${M}-${D}`;
   }
+
+  // 한글 기준 엘립시스 처리 함수
+  function truncateKoreanText(text, maxLength = 4) {
+    if (!text || text.length <= maxLength) return text;
+    
+    // 한글, 영문, 숫자, 공백을 포함한 문자를 개별적으로 처리
+    let charCount = 0;
+    let truncatedText = '';
+    
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const charCode = char.charCodeAt(0);
+      
+      // 한글인지 확인 (가-힣: 44032-55203)
+      const isKorean = charCode >= 44032 && charCode <= 55203;
+      
+      if (charCount >= maxLength) {
+        break;
+      }
+      
+      truncatedText += char;
+      charCount++;
+    }
+    
+    return truncatedText + '..';
+  }
   // 개선: 실제 데이터가 있는 날짜만 사용
   const dateKeys = Object.keys(window.matchData).sort((a, b) => new Date(a) - new Date(b));
 
@@ -266,7 +292,8 @@
       // league 표시 div 생성
       let $leagueDiv = null;
       if (match.league) {
-        $leagueDiv = $('<div>').addClass('league').text(match.league);
+        const truncatedLeague = truncateKoreanText(match.league, 4);
+        $leagueDiv = $('<div>').addClass('league').text(truncatedLeague);
       }
       // score 표시
       let homeScore = null, awayScore = null, isDraw = false;

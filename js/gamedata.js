@@ -476,7 +476,7 @@
         }
       ]
     },
-    "2025-08-04": {
+    "2025-08-05": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 21000,
       winners: null,
@@ -488,7 +488,7 @@
           away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "none", league: "프리미어리그그"
         },
         {
           gameId: "20250523-1",
@@ -497,7 +497,7 @@
           away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "none", league: "WTA 몬트리올"
         },
         {
           gameId: "20250523-2",
@@ -506,7 +506,7 @@
           away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "none", league: "컨퍼런스리그그"
         },
         {
           gameId: "20250523-3",
@@ -515,7 +515,7 @@
           away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "none", league: "KBOKBOKBOKBO"
         },
         {
           gameId: "20250523-4",
@@ -524,7 +524,7 @@
           away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 0 },
           status: "경기전",
           startTime: "18:00",
-          userSelection: "none", league: "KBO"
+          userSelection: "none", league: "KBO퓨쳐스"
         }
       ]
     },
