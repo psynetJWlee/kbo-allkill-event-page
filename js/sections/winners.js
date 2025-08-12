@@ -29,12 +29,12 @@ function initWinnersSection() {
   let winnerDate = '';
   if (winnerDateRaw) {
     const [yyyy, mm, dd] = winnerDateRaw.split('-');
-    winnerDate = `${parseInt(mm, 10)}/${parseInt(dd, 10)}`;
+    winnerDate = `${parseInt(mm, 10)}월 ${parseInt(dd, 10)}일`;
   }
   const sectionHtml = `
     <div class="w-full flex flex-col items-center relative">
       <div class="winners-title">
-        <span class="title-text">${winnerDate ? winnerDate + ' 일 당첨자' : '오늘의 당첨자'}</span>
+        <span class="title-text">${winnerDate ? winnerDate + ' 당첨자' : '오늘의 당첨자'}</span>
         <div class="title-underline"></div>
       </div>
       <p class="winners-count w-full text-center">
