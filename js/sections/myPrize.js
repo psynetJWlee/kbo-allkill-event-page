@@ -367,6 +367,10 @@ function initMyPrizeSection() {
   const goToBtn = document.getElementById('go-to-team-selection');
   if (goToBtn) {
     goToBtn.addEventListener('click', () => {
+      // 회색 버튼(grey-btn)인 경우 스크롤 기능 비활성화
+      if (goToBtn.classList.contains('grey-btn')) {
+        return;
+      }
       const section = document.getElementById('kbo-selection-container');
       if (section) {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });

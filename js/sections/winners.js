@@ -152,6 +152,10 @@ function initWinnersSection() {
       const btnHtml = `<button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button>`;
       $(targetSelector).append(btnHtml);
       document.getElementById('go-to-team-selection').onclick = function() {
+        // 회색 버튼(grey-btn)인 경우 스크롤 기능 비활성화
+        if (this.classList.contains('grey-btn')) {
+          return;
+        }
         const section = document.getElementById('kbo-selection-container');
         if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       };

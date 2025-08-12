@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  margin-bottom: 15px;
+  margin-bottom: 15px;  
 }
 
 .info-icon {
@@ -18,7 +18,7 @@
 }
 
 .info-title {
-  font-size: 18px;
+  font-size: 23px;
   color: var(--white);
   font-weight: 500;
 }
@@ -30,7 +30,7 @@
 }
 
 .info-item {
-  font-size: 16px;
+  font-size: 19px;
   color: var(--white);
   margin-bottom: var(--spacing-sm);
   line-height: 1.4;  

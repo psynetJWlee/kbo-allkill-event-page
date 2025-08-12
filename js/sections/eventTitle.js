@@ -32,9 +32,8 @@ function initEventTitleSection() {
   const n = gamesArr.length;
 
   const sectionHtml = `
-    
     <div class="event-title-text">
-       <img src="/image/event-logo.png" alt="LIVE Score Logo" class="event-logo"/>
+      <img src="/image/event-logo.png" alt="LIVE Score Logo" class="event-logo" />
       <div class="event-title-line1">라스 올킬</div>
       <div class="event-title-line2">
         <span class="dynamic-count">매일 '${n}</span>경기' 맞추면

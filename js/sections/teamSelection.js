@@ -685,6 +685,11 @@
   // ==============================
   function setupSubmitHandler() {
     $('#submit-allkill-btn').off('click').on('click', function() {
+      // 비활성화된 상태에서는 클릭 이벤트 무시
+      if ($(this).attr('disabled') || $(this).is(':hidden')) {
+        return;
+      }
+      
       const key    = dateKeys[currentIndex];
       const status = (window.matchData[key]?.eventStatus);
       const games  = window.matchData[key]?.games || [];
