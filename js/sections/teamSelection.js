@@ -292,7 +292,7 @@
       // league 표시 div 생성
       let $leagueDiv = null;
       if (match.league) {
-        const truncatedLeague = truncateKoreanText(match.league, 4);
+        const truncatedLeague = truncateKoreanText(match.league, 6);
         $leagueDiv = $('<div>').addClass('league').text(truncatedLeague);
       }
       // score 표시
@@ -577,17 +577,22 @@
       return;
     }
 
-    if (effStatus === 'PENDING_USER_NOT_SELECTED') {
-      const allSel = games.length > 0 && games.every(g =>
-        (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
-      );
-      if (allSel) {
-        $('#submit-allkill-btn').removeAttr('disabled').addClass('active');
-      } else {
-        $('#submit-allkill-btn').attr('disabled', true).removeClass('active');
-      }
-      $('#submit-allkill-btn').show();
+      if (effStatus === 'PENDING_USER_NOT_SELECTED') {
+    // 경기전 상태인 경기들만 필터링
+    const availableGames = games.filter(g => g.status === '경기전');
+    
+    // 경기전 경기가 있고, 모든 경기전 경기를 선택했는지 확인
+    const allSel = availableGames.length > 0 && availableGames.every(g =>
+      (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
+    );
+    
+    if (allSel) {
+      $('#submit-allkill-btn').removeAttr('disabled').addClass('active');
     } else {
+      $('#submit-allkill-btn').attr('disabled', true).removeClass('active');
+    }
+    $('#submit-allkill-btn').show();
+  } else {
       $('#submit-allkill-btn').removeAttr('disabled').addClass('active').show();
     }
   }
@@ -713,8 +718,9 @@
         return;
       }
 
-      // 모든 팀 선택 여부 확인 (팀 선택 필요 상태에서만 체크)
-      const allSelected = games.length > 0 && games.every(g =>
+      // 모든 팀 선택 여부 확인 (경기전 경기만 체크)
+      const availableGames = games.filter(g => g.status === '경기전');
+      const allSelected = availableGames.length > 0 && availableGames.every(g =>
         (window.appState.selectedTeams?.[g.gameId] || g.userSelection) !== 'none'
       );
       if (allSelected) {
@@ -769,10 +775,11 @@
           games.forEach(g => {
             if ((window.appState.selectedTeams[g.gameId] || 'none') !== (originalSelections[g.gameId] || 'none')) changed = true;
           });
-          // 미선택 경기 검사
-          const hasUnselected = games.some(g => (window.appState.selectedTeams[g.gameId] || 'none') === 'none');
+          // 미선택 경기 검사 (경기전 경기만 체크)
+          const availableGames = games.filter(g => g.status === '경기전');
+          const hasUnselected = availableGames.some(g => (window.appState.selectedTeams[g.gameId] || 'none') === 'none');
           if (hasUnselected) {
-            showToast(`${games.length} 경기 모두 체크 필요`, '', 1500, 'toast-warning');
+            showToast(`${availableGames.length} 경기 모두 체크 필요`, '', 1500, 'toast-warning');
             return;
           }
           if (!changed) return;
@@ -839,10 +846,11 @@
       games.forEach(g => {
         if ((window.appState.selectedTeams[g.gameId] || 'none') !== (originalSelections[g.gameId] || 'none')) changed = true;
       });
-      // 미선택 경기 검사
-      const hasUnselected = games.some(g => (window.appState.selectedTeams[g.gameId] || 'none') === 'none');
+      // 미선택 경기 검사 (경기전 경기만 체크)
+      const availableGames = games.filter(g => g.status === '경기전');
+      const hasUnselected = availableGames.some(g => (window.appState.selectedTeams[g.gameId] || 'none') === 'none');
       if (hasUnselected) {
-        showToast(`${games.length} 경기 모두 체크 필요`, '', 1500, 'toast-warning');
+        showToast(`${availableGames.length} 경기 모두 체크 필요`, '', 1500, 'toast-warning');
         return;
       }
       if (!changed) return;

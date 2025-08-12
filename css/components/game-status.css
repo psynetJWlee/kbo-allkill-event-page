@@ -21,13 +21,7 @@
 
 .game-row.row1 .start-time,
 .game-row.row1 .status-text {
-  display: inline-block;
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--black);
-  padding: 3px 8px 8px 8px;
-  border-radius: var(--spacing-xs);
-  text-align: center;
+  font-size: 18px;
 }
 
 .game-row.row1 .score {

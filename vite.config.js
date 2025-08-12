@@ -6,6 +6,6 @@ export default defineConfig({
     outDir: 'dist'
   },
   server: {
-    port: 8080
+    port: 3000
   }
 })
