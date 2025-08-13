@@ -151,7 +151,7 @@
     // 우측: 체크 아이콘 또는 다음 날짜 이동 화살표 또는 placeholder
     let rightIcon = '';
     if (isToday && shouldShowCheckIcon(eventStatus)) {
-      rightIcon = '<div class="nav-check"><img src="/image/check2.png" alt="check" /></div>';
+      rightIcon = '<div class="nav-check" style="margin-right: 15px;"><img src="/image/check2.png" alt="check" /></div>';
     } else if (!isToday && nextKey && !isNextKeyFuture) {
       // 다음 날짜가 미래가 아닐 때만 화살표 표시
       rightIcon = `<div class="nav-arrow next" data-key="${nextKey}"></div>`;

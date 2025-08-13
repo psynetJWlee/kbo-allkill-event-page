@@ -12,7 +12,7 @@
 
 (function() {
   window.matchData = {
-    "2025-07-01": {
+    /*"2025-07-01": {
       eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
       totalParticipants: 12000,
       winners: 0,
@@ -475,8 +475,8 @@
           eventResult: "success"
         }
       ]
-    },
-    "2025-08-05": {
+    },*/
+    "2025-08-13": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 21000,
       winners: null,
@@ -527,7 +527,7 @@
           userSelection: "none", league: "KBO퓨쳐스"
         }
       ]
-    },
+    }/*,
     "2025-08-06": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 22000,
@@ -595,7 +595,7 @@
           userSelection: "none", league: "아시안아메키란게이트파이널"
         }
       ]
-    },
+    },*/,
     "2025-08-12": {
       eventStatus: "COMPLETED_USER_SUCCESS",
       totalParticipants: 11000,
