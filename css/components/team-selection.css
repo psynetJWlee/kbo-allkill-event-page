@@ -6,7 +6,13 @@
   padding: 0 0 var(--spacing-xl) 0;
   
 }
-
+/* PC 디바이스에서만 좌우 패딩 추가 */
+@media screen and (min-width: 768px) {
+  .team-selection-section {
+    padding: 0 16px var(--spacing-xl) 16px;
+    border: 2px solid #000000;
+  }
+}
 
 .title-wrapper {
   position: relative;
