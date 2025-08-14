@@ -50,11 +50,7 @@ function initEventTitleSection() {
       alt="Event FX"
       class="event-fx-image"
     />
-    <img 
-      src="/image/event-emoticon.gif"
-      alt="Event Emoticon"
-      class="event-emoticon"
-    />
+    <img src="/image/event-emoticon.gif" alt="Event Emoticon" class="event-emoticon"/>
   `;
 
   $('#event-title-section').html(sectionHtml);
