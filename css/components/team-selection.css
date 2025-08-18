@@ -18,61 +18,11 @@
   position: relative;
   text-align: center;
 }
-/*
-.title-wrapper .title-decor-left,
-.title-wrapper .title-decor-right {
-  position: absolute;
-  top: 0;
-  width: 20vw;        
-  max-width: 100px;  
-  height: auto;
-  pointer-events: none;
-}
-
-.title-wrapper .title-decor-left {
-  left: 0;
-}
-
-.title-wrapper .title-decor-right {
-  right: 0;
-}
-
-.team-selection-title .title-main,
-.team-selection-title .title-sub {
-  display: block;
-}
-
-.team-selection-title .title-main {
-  font-size: var(--font-size-5xl);
-  color: var(--white);
-  font-weight: bold;
-  height: auto;
-}*/
 
 .team-selection-title .title-sub {
   font-size: 24px;
   font-weight: 400;   
 }
-/*
-.team-selection-title .countdown-active {
-  display: block;
-  font-size: var(--font-size-3xl);
-  color: #FF0000;
-  margin-top: 0.25em;
-}
-
-.status-no-games {}
-.status-cancelled {}
-.status-pending-unselected {}
-.status-pending-selected {}
-.status-progress-unselected {}
-.status-progress-selected {}
-.status-completed-success {}
-.status-completed-fail {}
-.status-completed-unselected {}
-
-.allkill-text {}
-*/
 
 .kbo-selection-container {
   background-color: var(--white);
@@ -355,34 +305,6 @@ span.cancelled{
 .cancel-btn.active {
   background: #FFD700;
 }
-
-/*
-.title-wrapper.status-progress-selected .title-main {
-  font-size: 39px;
-  font-weight: bold;
-}
-
-.title-wrapper.status-progress-selected .title-sub{
-  font-size: 24px;
-}
-
-.title-wrapper.status-pending-selected .title-sub {
-  font-size: 24px;
-}
-
-.title-wrapper.COMPLETED_USER_FAIL .title-main, 
-.title-wrapper.COMPLETED_USER_SUCCESS .title-main,
-.title-wrapper.status-cancelled .title-main {
-  font-weight: 400;
-}
-
-.title-wrapper.COMPLETED_USER_FAIL .title-sub, 
-.title-wrapper.COMPLETED_USER_SUCCESS .title-sub{
-  font-size: 30px;
-}
-.title-wrapper.status-cancelled .title-sub{
-  font-size: 28px;
-} */
 
 .league-status-wrap {
   display: flex  ;

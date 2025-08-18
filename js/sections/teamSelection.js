@@ -650,8 +650,16 @@
   function setupTeamSelectionHandlers() {
     $(`#${gameListId}`)
       .off('click', '.team-box')
-      .on('click', '.team-box', function() {
-        if (!canEditSelections()) return;
+      .off('mousedown', '.team-box')
+      .off('touchstart', '.team-box')
+      .off('pointerdown', '.team-box')
+      .on('click', '.team-box', function(e) {
+        if (!canEditSelections()) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        }
         const id = $(this).data('game-id'), tm = $(this).data('team');
         // 이미 선택한 팀을 다시 클릭하면 해제 (vote-count는 그대로)
         if (window.appState.selectedTeams[id] === tm) {
@@ -677,6 +685,14 @@
         }
         // 즉시 반영
         renderGames();
+      })
+      .on('mousedown touchstart pointerdown', '.team-box', function(e) {
+        if (!canEditSelections()) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        }
       });
   }
 
