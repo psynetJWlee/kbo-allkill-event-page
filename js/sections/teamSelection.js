@@ -673,7 +673,18 @@
           $(this).find('.check-icon').remove();
           $(this).removeClass('selected');
           
+          // === vote-count 실시간 업데이트 ===
+          const $voteCount = $(this).find('.vote-count');
+          if ($voteCount.length > 0) {
+            $voteCount.text(match[tm].votes);
+          }
+          
           console.log(`팀 선택 해제됨: ${id} -> ${tm}`);
+          
+          // === 상태 동기화 함수 호출 ===
+          updateSubmitButton();
+          updateTitleAndCountdown();
+          
           return;
         } else {
           // 기존 선택이 있으면 vote-count 복원
@@ -685,6 +696,12 @@
             // === 부분 업데이트: 이전 선택된 박스에서 체크 이미지 제거 ===
             $(`[data-game-id="${id}"][data-team="${prevTeam}"]`).find('.check-icon').remove();
             $(`[data-game-id="${id}"][data-team="${prevTeam}"]`).removeClass('selected');
+            
+            // === 이전 팀 vote-count 실시간 업데이트 ===
+            const $prevVoteCount = $(`[data-game-id="${id}"][data-team="${prevTeam}"]`).find('.vote-count');
+            if ($prevVoteCount.length > 0) {
+              $prevVoteCount.text(match[prevTeam].votes);
+            }
           }
           
           // 새로 선택한 팀 vote-count +1
@@ -694,12 +711,23 @@
           // === 부분 업데이트: 현재 박스에 체크 이미지 추가 ===
           $(this).append('<img class="check-icon" src="/image/check.png" alt="check" />');
           $(this).addClass('selected');
+          
+          // === 현재 팀 vote-count 실시간 업데이트 ===
+          const $currentVoteCount = $(this).find('.vote-count');
+          if ($currentVoteCount.length > 0) {
+            $currentVoteCount.text(match[tm].votes);
+          }
         }
         
-        // === renderGames() 호출 제거로 깜박임 현상 해결 ===
-        // renderGames(); // 이 줄을 제거하여 전체 리스트 재렌더링 방지
+        // === 하이브리드 방식: 체크 이미지는 부분 업데이트, 상태는 전체 동기화 ===
+        // renderGames() 호출 제거로 깜박임 현상 해결
+        // 필요한 상태 동기화 함수들만 호출
         
         console.log(`팀 선택됨: ${id} -> ${tm}`);
+        
+        // === 상태 동기화 함수 호출 ===
+        updateSubmitButton();
+        updateTitleAndCountdown();
       })
       .on('mousedown touchstart pointerdown', '.team-box', function(e) {
         if (!canEditSelections()) {
