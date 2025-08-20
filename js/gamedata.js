@@ -646,6 +646,49 @@
       games: [
         
       ]
+    },
+    "2025-08-20": {
+      eventStatus: "PENDING_USER_NOT_SELECTED",
+      totalParticipants: 11000,
+      winners: 0,
+      games: [
+        {
+          gameId: "1111-0",
+          home: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 890 },
+          draw: { teamName: "무승부", votes: 2922 },
+          away: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 1518 },
+          status: "경기취소",
+          startTime: "18:00",
+          userSelection: "none", league: "KBO"
+        },
+        {
+          gameId: "1111-1",
+          home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 2030 },
+          draw: { teamName: "무승부", votes: 437 },
+          away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 1794 },
+          status: "경기전",
+          startTime: "18:30",
+          userSelection: "none", league: "KBO"
+        },
+        {
+          gameId: "1111-2",
+          home: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 1342 },
+          draw: { teamName: "무승부", votes: 891 },
+          away: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1832 },
+          status: "경기전",
+          startTime: "19:00",
+          userSelection: "none", league: "KBO"
+        },
+        {
+          gameId: "1111-8",
+          home: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 1342 },
+          draw: { teamName: "무승부", votes: 891 },
+          away: { teamName: "KT", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/LUZj3ojt_H6lYisolvQ2pg_48x48.png", votes: 1832 },
+          status: "경기전",
+          startTime: "19:00",
+          userSelection: "none", league: "KBO"
+        }
+      ]
     }
   };
 })();

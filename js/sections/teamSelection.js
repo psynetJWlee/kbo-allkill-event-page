@@ -668,9 +668,12 @@
           if (match[tm]) match[tm].votes = Math.max(0, (match[tm].votes || 0) - 1);
           delete window.appState.selectedTeams[id];
           match.userSelection = 'none'; // 선택 해제 시 userSelection도 none으로
-          // check-icon 강제 제거(혹시 남아있을 경우)
+          
+          // === 부분 업데이트: 해당 박스에서만 체크 이미지 제거 ===
           $(this).find('.check-icon').remove();
-          renderGames();
+          $(this).removeClass('selected');
+          
+          console.log(`팀 선택 해제됨: ${id} -> ${tm}`);
           return;
         } else {
           // 기존 선택이 있으면 vote-count 복원
@@ -678,13 +681,25 @@
           if (window.appState.selectedTeams[id]) {
             const prevTeam = window.appState.selectedTeams[id];
             if (match[prevTeam]) match[prevTeam].votes = Math.max(0, match[prevTeam].votes - 1);
+            
+            // === 부분 업데이트: 이전 선택된 박스에서 체크 이미지 제거 ===
+            $(`[data-game-id="${id}"][data-team="${prevTeam}"]`).find('.check-icon').remove();
+            $(`[data-game-id="${id}"][data-team="${prevTeam}"]`).removeClass('selected');
           }
+          
           // 새로 선택한 팀 vote-count +1
           if (match[tm]) match[tm].votes = (match[tm].votes || 0) + 1;
           window.appState.selectedTeams[id] = tm;
+          
+          // === 부분 업데이트: 현재 박스에 체크 이미지 추가 ===
+          $(this).append('<img class="check-icon" src="/image/check.png" alt="check" />');
+          $(this).addClass('selected');
         }
-        // 즉시 반영
-        renderGames();
+        
+        // === renderGames() 호출 제거로 깜박임 현상 해결 ===
+        // renderGames(); // 이 줄을 제거하여 전체 리스트 재렌더링 방지
+        
+        console.log(`팀 선택됨: ${id} -> ${tm}`);
       })
       .on('mousedown touchstart pointerdown', '.team-box', function(e) {
         if (!canEditSelections()) {
