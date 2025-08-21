@@ -654,10 +654,10 @@
       games: [
         {
           gameId: "1111-0",
-          home: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 890 },
-          draw: { teamName: "무승부", votes: 2922 },
-          away: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 1518 },
-          status: "경기취소",
+          home: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 89440 },
+          draw: { teamName: "무승부", votes: 8888888 },
+          away: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 888888 },
+          status: "경기전",
           startTime: "18:00",
           userSelection: "none", league: "KBO"
         },

@@ -388,7 +388,7 @@
             $('<div>').addClass(nameClass).text(label)
           );
         if (showVoteCount) {
-          $box.append($('<div>').addClass('vote-count').text(obj.votes));
+          $box.append($('<div>').addClass('vote-count').text(obj.votes.toLocaleString()));
         }
         if (isSelected) {
           $box.append('<img class="check-icon" src="/image/check.png" alt="check" />');
@@ -676,7 +676,7 @@
           // === vote-count 실시간 업데이트 ===
           const $voteCount = $(this).find('.vote-count');
           if ($voteCount.length > 0) {
-            $voteCount.text(match[tm].votes);
+            $voteCount.text(match[tm].votes.toLocaleString());
           }
           
           console.log(`팀 선택 해제됨: ${id} -> ${tm}`);
@@ -700,7 +700,7 @@
             // === 이전 팀 vote-count 실시간 업데이트 ===
             const $prevVoteCount = $(`[data-game-id="${id}"][data-team="${prevTeam}"]`).find('.vote-count');
             if ($prevVoteCount.length > 0) {
-              $prevVoteCount.text(match[prevTeam].votes);
+              $prevVoteCount.text(match[prevTeam].votes.toLocaleString());
             }
           }
           
@@ -715,7 +715,7 @@
           // === 현재 팀 vote-count 실시간 업데이트 ===
           const $currentVoteCount = $(this).find('.vote-count');
           if ($currentVoteCount.length > 0) {
-            $currentVoteCount.text(match[tm].votes);
+            $currentVoteCount.text(match[tm].votes.toLocaleString());
           }
         }
         
