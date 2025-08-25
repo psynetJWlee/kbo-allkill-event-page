@@ -466,7 +466,7 @@
         if (winners && winners > 0) {
           const displayPrize = Math.floor(100 / winners).toLocaleString();
           const realPrize = Math.floor(1000000 / winners); // 실제 지급액(내부용)
-          sub = `<span class="prize-label">당첨금 : 100/${winners} = </span><span class="real-prize-amount">${realPrize.toLocaleString()} 원</span>`;
+          sub = `<span class="prize-label">100 만원 / ${winners.toLocaleString()} 명 = </span><span class="real-prize-amount">${realPrize.toLocaleString()} 원</span>`;
         } else {
           sub = '당첨자 없음';
         }
@@ -480,7 +480,7 @@
         if (winners && winners > 0) {
           const displayPrize = Math.floor(100 / winners).toLocaleString();
           const realPrize = Math.floor(1000000 / winners); // 실제 지급액(내부용)
-          sub = `<span class="prize-label">당첨금 : 100/${winners} = </span><span class="real-prize-amount">${realPrize.toLocaleString()} 원</span>`;
+          sub = `<span class="prize-label">100 만원 / ${winners.toLocaleString()} 명 = </span><span class="real-prize-amount">${realPrize.toLocaleString()} 원</span>`;
         } else {
           sub = '당첨자 없음';
         }

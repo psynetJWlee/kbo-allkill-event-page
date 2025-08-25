@@ -95,10 +95,6 @@
   padding: 0;
 }
 
-.nav-arrow-placeholder{
-  min-width: 1px;
-  max-width: 10px;
-}
 
 .nav-date {
   flex: 1 1 0;

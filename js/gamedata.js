@@ -12,7 +12,7 @@
 
 (function() {
   window.matchData = {
-    /*"2025-07-01": {
+    "2025-07-01": {
       eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
       totalParticipants: 12000,
       winners: 0,
@@ -82,7 +82,7 @@
     "2025-07-19": {
       eventStatus: "COMPLETED_USER_SUCCESS",
       totalParticipants: 15000,
-      winners: 23,
+      winners: 2443,
       games: [
         {
           gameId: "20250512-0",
@@ -153,7 +153,7 @@
     "2025-07-20": {
       eventStatus: "COMPLETED_USER_SUCCESS",
       totalParticipants: 17000,
-      winners: 19,
+      winners: 14449,
       games: [
         {
           gameId: "20250513-0",
@@ -646,7 +646,7 @@
       games: [
         
       ]
-    },*/
+    },
     "2025-08-20": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 11000,
