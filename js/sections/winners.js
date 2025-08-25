@@ -2,14 +2,60 @@
 window.userData = window.userData || {};
 const PAGE_SIZE = 10;
 
+// 날짜별 당첨자 데이터 관리
+let currentWinnerDate = '2025-08-24'; // 기본 날짜
+const availableWinnerDates = ['2025-08-20', '2025-08-21', '2025-08-22', '2025-08-23', '2025-08-24'];
+
+// 날짜 포맷 변환 (mm월 dd일)
+function getDisplayDate(dateKey) {
+  const [year, month, day] = dateKey.split('-');
+  return `${parseInt(month, 10)}월 ${parseInt(day, 10)}일`;
+}
+
+// 현재 날짜의 당첨자 데이터 가져오기
+function getCurrentDateMembers() {
+  return members.filter(member => member.date === currentWinnerDate);
+}
+
+// 날짜 내비게이션 렌더링
+function renderDateNavigation() {
+  const currentIndex = availableWinnerDates.indexOf(currentWinnerDate);
+  const prevDate = currentIndex > 0 ? availableWinnerDates[currentIndex - 1] : null;
+  const nextDate = currentIndex < availableWinnerDates.length - 1 ? availableWinnerDates[currentIndex + 1] : null;
+  
+  const prevArrow = prevDate 
+    ? `<div class="nav-arrow prev" data-key="${prevDate}"></div>`
+    : '<div class="nav-arrow-placeholder"></div>';
+    
+  const nextArrow = nextDate 
+    ? `<div class="nav-arrow next" data-key="${nextDate}"></div>`
+    : '<div class="nav-arrow-placeholder"></div>';
+
+  return `
+    <div class="w-full flex flex-col items-center relative">
+        ${prevArrow}
+        <div class="win-title">
+              <div class="winners-title">
+                <span class="title-text">${getDisplayDate(currentWinnerDate)} 당첨자</span>
+                <div class="title-underline"></div>
+              </div>
+              <p class="winners-count w-full text-center">
+                총 ${getCurrentDateMembers().length.toLocaleString()}명
+              </p>
+        </div>
+        ${nextArrow}
+    </div>
+  `;
+}
+
 // Winners(당첨자) 섹션 초기화 함수
 function initWinnersSection() {
   const { formatNumber } = window.utils;
   // 이 섹션 전용으로 범위를 좁혀 사용할 변수
   const $sec = $('#winners-section');
   // ───── 페이지 상태 초기화 ─────
-  // data.js에서 불러온 전체 멤버 배열 (전역 members 변수)
-  const allMembers = members;   
+  // 현재 날짜의 멤버 배열만 필터링
+  const allMembers = getCurrentDateMembers();   
   const totalCount = allMembers.length;
 
   // 총 페이지 수 계산
@@ -23,24 +69,8 @@ function initWinnersSection() {
   const endIdx   = startIdx + PAGE_SIZE;
   const currentMembers = allMembers.slice(startIdx, endIdx);
   
-
-  // members 배열에서 날짜 추출 (가장 첫 번째 멤버의 date 사용)
-  const winnerDateRaw = (members[0]?.date || '');
-  let winnerDate = '';
-  if (winnerDateRaw) {
-    const [yyyy, mm, dd] = winnerDateRaw.split('-');
-    winnerDate = `${parseInt(mm, 10)}월 ${parseInt(dd, 10)}일`;
-  }
   const sectionHtml = `
-    <div class="w-full flex flex-col items-center relative">
-      <div class="winners-title">
-        <span class="title-text">${winnerDate ? winnerDate + ' 당첨자' : '오늘의 당첨자'}</span>
-        <div class="title-underline"></div>
-      </div>
-      <p class="winners-count w-full text-center">
-        총 ${totalCount}명
-      </p>
-    </div>
+    ${renderDateNavigation()}
     <div class="member-list" id="member-list"></div>
   `;
   
@@ -164,7 +194,26 @@ function initWinnersSection() {
   // 페이징 하단에 올킬 도전 버튼 추가 (기존 로직 삭제)
   createGoToTeamSelectionButton('#winners-section');
 
-    // 이전 페이지
+  // 날짜 내비게이션 이벤트 핸들러
+  $sec.find('.nav-arrow').off('click').on('click', function() {
+    const targetDate = $(this).data('key');
+    if (targetDate && !$(this).hasClass('disabled')) {
+      currentWinnerDate = targetDate;
+      userData.winners.currentPage = 1; // 날짜 변경 시 첫 페이지로
+      initWinnersSection();
+      setupPaginationHandlers();
+    }
+  });
+
+  // 페이징 이벤트 핸들러
+  setupPaginationHandlers();
+}
+
+// 페이징 이벤트 핸들러 설정
+function setupPaginationHandlers() {
+  const $sec = $('#winners-section');
+  
+  // 이전 페이지
   $sec.find('#prev-page').off('click').on('click', () => {
     if (userData.winners.currentPage > 1) {
       userData.winners.currentPage--;

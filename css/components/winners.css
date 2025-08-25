@@ -103,3 +103,15 @@
   color: var(--white);
   text-align: right;
 }
+
+/* 날짜 내비게이션 스타일 */
+.w-full.flex.flex-col.items-center.relative {
+  display: flex;
+  flex-direction: row;
+  height: 145px;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding-top: 17px;
+  width: 100%;
+}
