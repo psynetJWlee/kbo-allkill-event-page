@@ -132,6 +132,19 @@
     <link rel="stylesheet" href="css/animations.css">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- 카카오 JavaScript SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      // 카카오 SDK를 문서 head에서 선초기화하여 호출 시점 이슈 방지
+      try {
+        if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+          Kakao.init('ddd49363d8106d9bd8fa0c3a77f8f718');
+          console.log('Kakao SDK Initialized:', Kakao.isInitialized());
+        }
+      } catch (e) {
+        console.error('Kakao SDK init error:', e);
+      }
+    </script>
   </head>
     
 <body>  

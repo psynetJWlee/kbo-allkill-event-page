@@ -97,6 +97,7 @@
     setupDateNavHandlers();
     setupTeamSelectionHandlers();
     setupSubmitHandler();
+    setupSharePopup(); // 공유하기 팝업 초기화
     
   }
 
@@ -183,6 +184,12 @@
     const hideGameList = effStatus === 'NO_GAMES_EVENT_DISABLED' ? 'style="display:none"' : '';
     
 
+    const kakaoShareBlock = `
+                <div class="share-option" data-platform="kakaotalk">
+                  <img src="/image/Kakaotalk.png" alt="카카오톡" class="share-icon-img" />
+                  <span>카카오톡</span>
+                </div>`;
+
     const html = `
       <div id="${sectionId}" class="team-selection-section">
         <div class="title-wrapper">
@@ -202,10 +209,43 @@
         </div>
         <a 
           href="javascript:void(0);" 
-          class="download-button copy-link-button team-selection-copy-link"
+          class="download-button team-selection-copy-link"
+          id="share-popup-trigger"
         >
-          링크 복사
+          공유하기
         </a>
+        
+        <!-- 공유하기 팝업 -->
+        <div id="share-popup" class="share-popup-overlay" style="display: none;">
+          <div class="share-popup">
+            <div class="share-popup-header">
+              <h3>공유하기</h3>
+              <button class="share-popup-close" id="share-popup-close">&times;</button>
+            </div>
+            <div class="share-popup-content">
+              <div class="share-options">
+                ${kakaoShareBlock}
+                <div class="share-option" data-platform="facebook">
+                  <img src="/image/Facebook.png" alt="페이스북" class="share-icon-img" />
+                  <span>페이스북</span>
+                </div>
+                <div class="share-option" data-platform="twitter">
+                  <img src="/image/X.png" alt="X" class="share-icon-img" />
+                  <span>X</span>
+                </div>
+                
+                <div class="share-option" data-platform="line">
+                  <img src="/image/Line.png" alt="LINE" class="share-icon-img" />
+                  <span>LINE</span>
+                </div>
+              </div>
+              <div class="link-copy-section">
+                <input type="text" id="share-link-input" readonly value="" />
+                <button id="copy-link-btn">복사</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     `;
     $(containerSelector).append(html);
@@ -952,6 +992,130 @@
     }
   };
 
+  // ===== 공유하기 팝업 기능 =====
+  function setupSharePopup() {
+    const $popup = $('#share-popup');
+    const $trigger = $('#share-popup-trigger');
+    const $close = $('#share-popup-close');
+    const $overlay = $('.share-popup-overlay');
+    const $shareOptions = $('.share-option');
+    const $copyBtn = $('#copy-link-btn');
+    const $linkInput = $('#share-link-input');
+
+    // 팝업 열기
+    $trigger.on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $popup.show();
+      $('body').addClass('popup-open');
+      // 현재 페이지 URL 설정
+      $linkInput.val(window.location.href);
+    });
+
+    // 팝업 닫기
+    $close.on('click', closeSharePopup);
+    $overlay.on('click', function(e) {
+      if (e.target === this) {
+        closeSharePopup();
+      }
+    });
+
+    // ESC 키로 팝업 닫기
+    $(document).on('keydown', function(e) {
+      if (e.key === 'Escape' && $popup.is(':visible')) {
+        closeSharePopup();
+      }
+    });
+
+    // 공유 옵션 클릭
+    $shareOptions.on('click', function() {
+      const platform = $(this).data('platform');
+      shareToPlatform(platform);
+    });
+
+    // 링크 복사 (팝업 내에서만)
+    $copyBtn.on('click', function() {
+      copyLink();
+    });
+  }
+
+  function closeSharePopup() {
+    $('#share-popup').hide();
+    $('body').removeClass('popup-open');
+  }
+
+  function shareToPlatform(platform) {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent('KBO 올킬 이벤트');
+    const text = encodeURIComponent('KBO 올킬 이벤트에 참여해보세요!');
+
+    let shareUrl = '';
+
+    switch (platform) {
+      case 'kakaotalk':
+        shareToKakaoTalk();
+        return; // 기존 window.open 호출 방지
+        break;
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+        break;
+      
+      case 'line':
+        shareUrl = `https://social-plugins.line.me/lineit/share?url=${url}`;
+        break;
+    }
+
+    if (shareUrl) {
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      showToast('', `${getPlatformName(platform)}으로 공유합니다`, 1500);
+    }
+  }
+
+  function getPlatformName(platform) {
+    const names = {
+      'kakaotalk': '카카오톡',
+      'facebook': '페이스북',
+      'twitter': 'X',
+      
+      'line': 'LINE'
+    };
+    return names[platform] || platform;
+  }
+
+  function copyLink() {
+    const $linkInput = $('#share-link-input');
+    const link = $linkInput.val();
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(link).then(() => {
+        showToast('', '링크가 복사되었습니다.', 1500, 'toast-success');
+      }).catch(err => {
+        console.error('Failed to copy link: ', err);
+        showToast('', '링크 복사에 실패했습니다.', 1500, 'toast-error');
+      });
+    } else {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = link;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast('', '링크가 복사되었습니다.', 1500, 'toast-success');
+      } catch (err) {
+        console.error('Failed to copy link: ', err);
+        showToast('', '링크 복사에 실패했습니다.', 1500, 'toast-error');
+      }
+      document.body.removeChild(textArea);
+    }
+  }
+
   // ===== 토스트 팝업 함수 추가 =====
   function showToast(mainText, subText = '', duration = 1500, extraClass = '') {
     // 기존 토스트 제거
@@ -979,6 +1143,67 @@
     const section = document.getElementById('kbo-selection-container');
     if (section) {
       section.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }
+
+  // ===== 기기 감지 및 URL 생성 함수 =====
+  function getDeviceType() {
+    const userAgent = navigator.userAgent;
+    
+    if (/iPad|iPhone|iPod/.test(userAgent)) {
+      return 'iOS';
+    } else if (/Android/.test(userAgent)) {
+      return 'Android';
+    } else {
+      return 'Desktop';
+    }
+  }
+
+  function getWebUrl() {
+    return 'https://allkillevent.psy.co.kr';
+  }
+
+  function getMobileWebUrl() {
+    const deviceType = getDeviceType();
+    
+    if (deviceType === 'iOS') {
+      return 'https://allkillevent.psy.co.kr'; // iOS 전용 URL이 있다면 여기에
+    } else if (deviceType === 'Android') {
+      return 'https://allkillevent.psy.co.kr'; // Android 전용 URL이 있다면 여기에
+    } else {
+      return 'https://allkillevent.psy.co.kr';
+    }
+  }
+
+  // ===== 카카오톡 공유 함수 =====
+  function shareToKakaoTalk() {
+    try {
+      if (typeof Kakao === 'undefined') {
+        console.error('Kakao SDK가 로드되지 않았습니다.');
+        showToast('', '카카오톡 SDK를 불러올 수 없습니다', 1500, 'toast-error');
+        return;
+      }
+  
+      if (!Kakao.isInitialized()) {
+        // 보통 index.html에서 초기화하지만, 방어적으로 한 번 더 체크
+        Kakao.init('ddd49363d8106d9bd8fa0c3a77f8f718');
+      }
+  
+      // 템플릿 변수명은 [도구 > 메시지 템플릿]에서 설정한 변수 키와 동일해야 함
+      Kakao.Share.sendCustom({
+        templateId: 123762,
+        templateArgs: {
+          title: 'LIVE스코어 올킬 이벤트',                         // 예시: 템플릿 변수명(title)
+          description: '매일 ‘5경기’ 맞추면 매일 100/n 만원 !',       // 예시: 템플릿 변수명(description)
+          share_url: getWebUrl(),                                  // 예시: 템플릿 변수명(share_url)
+          image_url: window.location.origin + '/image/metaimage.png' // 예시: 템플릿 변수명(image_url)
+        }
+      });
+  
+      showToast('', '카카오톡으로 공유합니다', 1500);
+    } catch (error) {
+      console.error('카카오톡 공유 실행 중 에러:', error);
+      showToast('', '카카오톡 공유에 실패했습니다', 1500, 'toast-error');
     }
   }
 
