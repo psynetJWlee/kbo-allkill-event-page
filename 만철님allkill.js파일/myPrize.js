@@ -189,7 +189,7 @@ function showPrizeWarningToast() {
 	if (existing) existing.remove();
 	const toast = document.createElement('div');
 	toast.className = 'prize-toast-warning';
-	toast.innerHTML = '<span class="prize-toast-warning-text">5만원 초과시 지급신청 가능</span>';
+	toast.innerHTML = '<span class="prize-toast-warning-text">5천원 초과시 지급신청 가능</span>';
 	document.body.appendChild(toast);
 	setTimeout(() => {
 	 toast.remove();
@@ -215,9 +215,9 @@ const reqBtn = document.querySelector('.request-button');
   if (section) {
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  // ───── 추가: 총액이 50,000원 이하이면 신청 불가 ─────
-  if ((userData.currentAmount || 0) <= 50000) {
-    //alert('상금 신청은 50,000원 초과부터 가능합니다.');
+  // ───── 추가: 총액이 5,000원 이하이면 신청 불가 ─────
+  if ((userData.currentAmount || 0) <= 5000) {
+    //alert('상금 신청은 5,000원 초과부터 가능합니다.');
 	showPrizeWarningToast();
     return;
   }

@@ -29,6 +29,106 @@
   let originalSelections = {};
 
   // ==============================
+  // 제출자 수 애니메이션 관련 변수
+  // ==============================
+  let animationTimer = null;
+  let currentDisplayCount = 0;
+  let realCount = 0;
+  let isAnimationActive = false;
+
+  // ==============================
+  // 제출자 수 애니메이션 함수들
+  // ==============================
+  
+  // 카운트업 애니메이션 함수
+  function animateCountUp(startNumber, endNumber) {
+    let current = startNumber;
+    const animationDuration = 30; // 30ms 지속
+    const stepTime = 1;
+    const increment = Math.ceil((endNumber - startNumber) / (animationDuration / stepTime));
+
+    // 증가량이 0보다 작거나 같으면 애니메이션 없이 바로 표시
+    if (increment <= 0) {
+      updateSubmissionCountDisplay(endNumber);
+      return;
+    }
+
+    function updateCount() {
+      current += increment;
+      if (current >= endNumber) {
+        updateSubmissionCountDisplay(endNumber);
+        currentDisplayCount = endNumber;
+      } else {
+        updateSubmissionCountDisplay(Math.ceil(current));
+        requestAnimationFrame(updateCount);
+      }
+    }
+    updateCount();
+  }
+
+  // 제출자 수 표시 업데이트 함수
+  function updateSubmissionCountDisplay(count) {
+    const $titleMain = $('.title-main.submission-count');
+    console.log('DOM 찾기 시도:', $titleMain.length);
+    if ($titleMain.length > 0) {
+      $titleMain.html(`제출 : ${count.toLocaleString('ko-KR')} 명`);
+      console.log('DOM 업데이트 완료:', count);
+    } else {
+      // 클래스가 없어도 .title-main이 있으면 업데이트
+      const $titleMainAny = $('.title-main');
+      if ($titleMainAny.length > 0 && $titleMainAny.hasClass('submission-count')) {
+        $titleMainAny.html(`제출 : ${count.toLocaleString('ko-KR')} 명`);
+        console.log('대체 DOM 업데이트 완료:', count);
+      }
+    }
+  }
+
+  // 제출자 수 증가 애니메이션 시작
+  function startSubmissionAnimation(initialCount) {
+    if (isAnimationActive) return;
+    
+    isAnimationActive = true;
+    realCount = initialCount;
+    currentDisplayCount = initialCount;
+    
+    // 첫 로드시 0부터 초기값까지 애니메이션
+    animateCountUp(0, initialCount);
+    
+    // 5-10초 랜덤 간격으로 증가
+    function scheduleNextIncrease() {
+      if (!isAnimationActive) return;
+      
+      const randomDelay = Math.random() * 5000 + 5000; // 5000~10000ms
+      const randomIncrement = [1, 3, 5, 7, 13, 17, 21][Math.floor(Math.random() * 7)];
+      
+      animationTimer = setTimeout(() => {
+        if (!isAnimationActive) return;
+        
+        const previousCount = currentDisplayCount;
+        realCount += randomIncrement;
+        
+        // 이전 숫자에서 새 숫자까지 애니메이션
+        animateCountUp(previousCount, realCount);
+        
+        // 다음 증가 스케줄링
+        scheduleNextIncrease();
+      }, randomDelay);
+    }
+    
+    // 첫 번째 증가 스케줄링 (초기 애니메이션 후)
+    setTimeout(scheduleNextIncrease, 2000);
+  }
+
+  // 제출자 수 애니메이션 중지
+  function stopSubmissionAnimation() {
+    isAnimationActive = false;
+    if (animationTimer) {
+      clearTimeout(animationTimer);
+      animationTimer = null;
+    }
+  }
+
+  // ==============================
   // 2. 날짜 키 배열 생성 (정렬 보장)
   // ==============================
   function formatLocalDate(d) {
@@ -166,6 +266,10 @@
         ${centerText}
         ${rightIcon}
       </div>
+      <div class="ad-banner-top">
+        <img src="/image/ad1.jpg" alt="광고" class="ad-image-top" />
+        
+      </div>
     `;
     $(containerSelector).html(html);
   }
@@ -246,6 +350,8 @@
             </div>
           </div>
         </div>
+        
+
       </div>
     `;
     $(containerSelector).append(html);
@@ -303,7 +409,7 @@
       return;
     }
 
-    matches.forEach(match => {
+    matches.forEach((match, index) => {
       if (match.gameId === 'null') {
         $list.append(`<div class="game-item placeholder"><div class="game-row row1"></div><div class="game-row row2"></div></div>`);
         return;
@@ -438,6 +544,17 @@
       $item.append($row2);
 
       $list.append($item);
+      
+      // 3번째 아이템 다음에 광고 배너 추가 (index는 0부터 시작하므로 index === 2가 3번째)
+      if (index === 2) {
+        const adBanner = `
+          <div class="ad-banner-top">
+            <img src="/image/ad1.jpg" alt="광고" class="ad-image-top" />
+            
+          </div>
+        `;
+        $list.append(adBanner);
+      }
     });
 
     updateSubmitButton();
@@ -471,18 +588,28 @@
     const tomorrowKey = formatLocalDate(tomorrow);
     const tomorrowDisplay = getDisplayDate(tomorrowKey);
 
+    // 첫 번째 게임의 투표 합계 계산
+    const games = data.games || [];
+    let firstGameVoteTotal = 0;
+    if (games.length > 0 && games[0].gameId !== 'null') {
+      const firstGame = games[0];
+      firstGameVoteTotal = (firstGame.home?.votes || 0) + 
+                          (firstGame.away?.votes || 0) + 
+                          (firstGame.draw?.votes || 0);
+    }
+
     switch (status) {
       case 'PENDING_USER_NOT_SELECTED':
-        main = '';
+        main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '';
-        mainClass = '';
+        mainClass = 'submission-count';
         btnText = '올킬 제출';
         btnTextClass = '';
         break;
       case 'PENDING_USER_SELECTED':
-        main = '';
+        main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '첫 경기 시작전까지 수정 가능';
-        mainClass = '';
+        mainClass = 'submission-count';
         btnText = '';
         btnTextClass = '';
         break;
@@ -557,15 +684,71 @@
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
-    // 메인 타이틀 처리
-    if (parts.main) {
+    
+    // 제출자 수 애니메이션 제어
+    const key = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
+    
+    console.log('현재 날짜:', key);
+    console.log('현재 상태:', status);
+    console.log('parts.mainClass:', parts.mainClass);
+    console.log('parts.main:', parts.main);
+    
+    // PENDING 상태에서만 애니메이션 활성화
+    if (status === 'PENDING_USER_NOT_SELECTED' || status === 'PENDING_USER_SELECTED') {
+      if (parts.mainClass === 'submission-count' && parts.main) {
+        // 첫 번째 게임의 투표 합계 가져오기
+        const games = data.games || [];
+        let firstGameVoteTotal = 0;
+        if (games.length > 0 && games[0].gameId !== 'null') {
+          const firstGame = games[0];
+          firstGameVoteTotal = (firstGame.home?.votes || 0) + 
+                              (firstGame.away?.votes || 0) + 
+                              (firstGame.draw?.votes || 0);
+          console.log('첫 번째 게임 투표 데이터:', firstGame);
+          console.log('투표 합계:', firstGameVoteTotal);
+        }
+        
+        // 먼저 기본 title 요소 렌더링
+        $('.title-main')
+          .html(parts.main)
+          .removeClass('success fail cancelled')
+          .addClass(parts.mainClass || '')
+          .show();
+        
+        // 애니메이션이 활성화되지 않았으면 시작
+        if (!isAnimationActive && firstGameVoteTotal > 0) {
+          // DOM이 준비된 후 애니메이션 시작
+          setTimeout(() => {
+            startSubmissionAnimation(firstGameVoteTotal);
+          }, 100);
+        }
+        
+        // 이미 처리했으므로 아래 일반 처리 스킵
+        return;
+      }
+    } else {
+      // PENDING 상태가 아니면 애니메이션 중지
+      stopSubmissionAnimation();
+    }
+    
+    // 메인 타이틀 처리 (애니메이션이 아닌 경우에만)
+    if (parts.main && parts.mainClass !== 'submission-count') {
+      $('.title-main')
+        .html(parts.main)
+        .removeClass('success fail cancelled submission-count')
+        .addClass(parts.mainClass || '')
+        .show();
+    } else if (parts.main && parts.mainClass === 'submission-count' && !isAnimationActive) {
+      // submission-count이지만 애니메이션이 비활성화된 경우
       $('.title-main')
         .html(parts.main)
         .removeClass('success fail cancelled')
         .addClass(parts.mainClass || '')
         .show();
-    } else {
-      $('.title-main').removeClass('success fail cancelled').hide();
+    } else if (!parts.main) {
+      $('.title-main').removeClass('success fail cancelled submission-count').hide();
     }
     // 서브타이틀 처리
     if (parts.sub) {
@@ -974,6 +1157,9 @@
   // 13. 전체 갱신
   // ==============================
   function refreshAll() {
+    // 페이지 전환시 애니메이션 정리
+    stopSubmissionAnimation();
+    
     renderDateNavigation();
     $(`#${sectionId}`).remove();
     renderSection();
@@ -1049,28 +1235,19 @@
     const title = encodeURIComponent('KBO 올킬 이벤트');
     const text = encodeURIComponent('KBO 올킬 이벤트에 참여해보세요!');
 
-    let shareUrl = '';
-
     switch (platform) {
       case 'kakaotalk':
         shareToKakaoTalk();
-        return; // 기존 window.open 호출 방지
-        break;
+        return;
       case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-        break;
+        shareToFacebook(url);
+        return;
       case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
-        break;
-      
+        shareToTwitter(url, text);
+        return;
       case 'line':
-        shareUrl = `https://social-plugins.line.me/lineit/share?url=${url}`;
-        break;
-    }
-
-    if (shareUrl) {
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-      showToast('', `${getPlatformName(platform)}으로 공유합니다`, 1500);
+        shareToLine(url);
+        return;
     }
   }
 
@@ -1159,6 +1336,57 @@
     }
   }
 
+  // 웹뷰 환경 감지
+  function isWebView() {
+    const userAgent = navigator.userAgent;
+    
+    // Android WebView 감지
+    if (/Android/.test(userAgent)) {
+      // Chrome이 없거나 wv가 있으면 웹뷰
+      return /wv/.test(userAgent) || !/Chrome/.test(userAgent) || /; wv\)/.test(userAgent);
+    }
+    
+    // iOS WebView 감지  
+    if (/iPad|iPhone|iPod/.test(userAgent)) {
+      // Safari가 없으면 웹뷰 (앱 내 브라우저)
+      return !/Safari/.test(userAgent) || /GSA/.test(userAgent);
+    }
+    
+    return false;
+  }
+
+  // 카카오톡 앱 설치 여부 확인 (Android)
+  function isKakaoTalkInstalled() {
+    return new Promise((resolve) => {
+      if (getDeviceType() !== 'Android') {
+        resolve(false);
+        return;
+      }
+      
+      // Intent로 카카오톡 앱 확인 시도
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      let timeout = setTimeout(() => {
+        document.body.removeChild(iframe);
+        resolve(false);
+      }, 1000);
+      
+      iframe.src = 'intent://send/#Intent;scheme=kakaolink;package=com.kakao.talk;end';
+      
+      // 앱이 실행되면 페이지가 숨겨짐
+      document.addEventListener('visibilitychange', function onVisibilityChange() {
+        if (document.hidden) {
+          clearTimeout(timeout);
+          document.removeEventListener('visibilitychange', onVisibilityChange);
+          document.body.removeChild(iframe);
+          resolve(true);
+        }
+      });
+    });
+  }
+
   function getWebUrl() {
     return 'https://allkillevent.psy.co.kr';
   }
@@ -1185,26 +1413,235 @@
       }
   
       if (!Kakao.isInitialized()) {
-        // 보통 index.html에서 초기화하지만, 방어적으로 한 번 더 체크
         Kakao.init('ddd49363d8106d9bd8fa0c3a77f8f718');
       }
   
-      // 템플릿 변수명은 [도구 > 메시지 템플릿]에서 설정한 변수 키와 동일해야 함
       Kakao.Share.sendCustom({
         templateId: 123762,
         templateArgs: {
-          title: 'LIVE스코어 올킬 이벤트',                         // 예시: 템플릿 변수명(title)
-          description: '매일 ‘5경기’ 맞추면 매일 100/n 만원 !',       // 예시: 템플릿 변수명(description)
-          share_url: getWebUrl(),                                  // 예시: 템플릿 변수명(share_url)
-          image_url: window.location.origin + '/image/metaimage.png' // 예시: 템플릿 변수명(image_url)
+          title: 'LIVE스코어 올킬 이벤트',
+          description: '매일 5경기 맞추면 매일 100/n 만원 !',
+          share_url: getWebUrl(),
+          image_url: window.location.origin + '/image/metaimage.png'
         }
       });
   
       showToast('', '카카오톡으로 공유합니다', 1500);
     } catch (error) {
       console.error('카카오톡 공유 실행 중 에러:', error);
-      showToast('', '카카오톡 공유에 실패했습니다', 1500, 'toast-error');
+      shareToKakaoTalkFallback();
     }
+  }
+
+  // 카카오톡 공유 실패시 대체 방안
+  function shareToKakaoTalkFallback() {
+    const shareText = `LIVE스코어 올킬 이벤트\n매일 5경기 맞추면 매일 100/n 만원!\n${getWebUrl()}`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: 'LIVE스코어 올킬 이벤트',
+        text: shareText,
+        url: getWebUrl()
+      }).then(() => {
+        showToast('', '공유합니다', 1500);
+      }).catch(() => {
+        copyTextToClipboard(shareText);
+      });
+    } else {
+      copyTextToClipboard(shareText);
+    }
+  }
+
+  // ===== 페이스북 공유 함수 =====
+  function shareToFacebook(url) {
+    const webViewMode = isWebView();
+    const deviceType = getDeviceType();
+    const decodedUrl = decodeURIComponent(url);
+    
+    try {
+      // 웹뷰 환경에서 앱 우선 실행
+      if (webViewMode) {
+        if (deviceType === 'Android') {
+          // Android에서 페이스북 앱 실행 시도
+          const intentUrl = `intent://sharer/sharer.php?u=${url}#Intent;scheme=https;package=com.facebook.katana;S.browser_fallback_url=https://www.facebook.com/sharer/sharer.php?u=${url};end`;
+          
+          try {
+            window.location.href = intentUrl;
+            showToast('', '페이스북으로 공유합니다', 1500);
+            return;
+          } catch (error) {
+            console.log('페이스북 앱 실행 실패, 웹으로 대체');
+          }
+        } else if (deviceType === 'iOS') {
+          // iOS에서 페이스북 앱 실행 시도
+          const fbUrl = `fb://sharer/sharer.php?u=${url}`;
+          
+          try {
+            window.location.href = fbUrl;
+            showToast('', '페이스북으로 공유합니다', 1500);
+            return;
+          } catch (error) {
+            console.log('페이스북 앱 실행 실패, 웹으로 대체');
+          }
+        }
+      }
+      
+      // 일반 브라우저 또는 앱 실행 실패시 웹 페이지로 공유
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      showToast('', '페이스북으로 공유합니다', 1500);
+      
+    } catch (error) {
+      console.error('페이스북 공유 실패:', error);
+      shareWithFallback('페이스북', decodedUrl);
+    }
+  }
+
+  // ===== X(트위터) 공유 함수 =====
+  function shareToTwitter(url, text) {
+    const webViewMode = isWebView();
+    const deviceType = getDeviceType();
+    const decodedUrl = decodeURIComponent(url);
+    const decodedText = decodeURIComponent(text);
+    
+    try {
+      // 웹뷰 환경에서 앱 우선 실행
+      if (webViewMode) {
+        if (deviceType === 'Android') {
+          // Android에서 X 앱 실행 시도
+          const intentUrl = `intent://tweet?text=${text}&url=${url}#Intent;scheme=https;package=com.twitter.android;S.browser_fallback_url=https://twitter.com/intent/tweet?text=${text}&url=${url};end`;
+          
+          try {
+            window.location.href = intentUrl;
+            showToast('', 'X로 공유합니다', 1500);
+            return;
+          } catch (error) {
+            console.log('X 앱 실행 실패, 웹으로 대체');
+          }
+        } else if (deviceType === 'iOS') {
+          // iOS에서 X 앱 실행 시도
+          const twitterUrl = `twitter://post?message=${text}%20${url}`;
+          
+          try {
+            window.location.href = twitterUrl;
+            showToast('', 'X로 공유합니다', 1500);
+            return;
+          } catch (error) {
+            console.log('X 앱 실행 실패, 웹으로 대체');
+          }
+        }
+      }
+      
+      // 일반 브라우저 또는 앱 실행 실패시 웹 페이지로 공유
+      const shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      showToast('', 'X로 공유합니다', 1500);
+      
+    } catch (error) {
+      console.error('X 공유 실패:', error);
+      shareWithFallback('X', decodedUrl, decodedText);
+    }
+  }
+
+  // ===== 라인 공유 함수 =====
+  function shareToLine(url) {
+    const webViewMode = isWebView();
+    const deviceType = getDeviceType();
+    const decodedUrl = decodeURIComponent(url);
+    
+    try {
+      // 웹뷰 환경에서 앱 우선 실행
+      if (webViewMode) {
+        if (deviceType === 'Android') {
+          // Android에서 라인 앱 실행 시도
+          const intentUrl = `intent://msg/text/${encodeURIComponent('LIVE스코어 올킬 이벤트\n매일 5경기 맞추면 매일 100/n 만원!\n' + decodedUrl)}#Intent;scheme=line;package=jp.naver.line.android;S.browser_fallback_url=https://social-plugins.line.me/lineit/share?url=${url};end`;
+          
+          try {
+            window.location.href = intentUrl;
+            showToast('', 'LINE으로 공유합니다', 1500);
+            return;
+          } catch (error) {
+            console.log('LINE 앱 실행 실패, 웹으로 대체');
+          }
+        } else if (deviceType === 'iOS') {
+          // iOS에서 라인 앱 실행 시도
+          const lineUrl = `line://msg/text/${encodeURIComponent('LIVE스코어 올킬 이벤트\n매일 5경기 맞추면 매일 100/n 만원!\n' + decodedUrl)}`;
+          
+          try {
+            window.location.href = lineUrl;
+            showToast('', 'LINE으로 공유합니다', 1500);
+            return;
+          } catch (error) {
+            console.log('LINE 앱 실행 실패, 웹으로 대체');
+          }
+        }
+      }
+      
+      // 일반 브라우저 또는 앱 실행 실패시 웹 페이지로 공유
+      const shareUrl = `https://social-plugins.line.me/lineit/share?url=${url}`;
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      showToast('', 'LINE으로 공유합니다', 1500);
+      
+    } catch (error) {
+      console.error('LINE 공유 실패:', error);
+      shareWithFallback('LINE', decodedUrl);
+    }
+  }
+
+  // ===== 공유 실패시 대체 방안 =====
+  function shareWithFallback(platformName, url, text = '') {
+    const shareText = text ? `${text}\n${url}` : `LIVE스코어 올킬 이벤트\n매일 5경기 맞추면 매일 100/n 만원!\n${url}`;
+    
+    // Web Share API 사용 가능하면 우선 사용
+    if (navigator.share) {
+      navigator.share({
+        title: 'LIVE스코어 올킬 이벤트',
+        text: shareText,
+        url: url
+      }).then(() => {
+        showToast('', '공유합니다', 1500);
+      }).catch(() => {
+        copyTextToClipboard(shareText);
+      });
+    } else {
+      // 클립보드로 복사
+      copyTextToClipboard(shareText);
+    }
+  }
+
+  // ===== 텍스트 클립보드 복사 =====
+  function copyTextToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('', '내용이 복사되었습니다. 원하는 앱에서 붙여넣기 하세요.', 2000, 'toast-success');
+      }).catch(() => {
+        fallbackCopyTextToClipboard(text);
+      });
+    } else {
+      fallbackCopyTextToClipboard(text);
+    }
+  }
+
+  // ===== 클립보드 복사 대체 방안 =====
+  function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      document.execCommand('copy');
+      showToast('', '내용이 복사되었습니다. 원하는 앱에서 붙여넣기 하세요.', 2000, 'toast-success');
+    } catch (err) {
+      console.error('텍스트 복사 실패:', err);
+      showToast('', '복사에 실패했습니다.', 1500, 'toast-error');
+    }
+    
+    document.body.removeChild(textArea);
   }
 
   // 문서 준비 후 초기화

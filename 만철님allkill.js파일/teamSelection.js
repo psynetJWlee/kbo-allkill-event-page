@@ -25,8 +25,106 @@
   let previousSecondsOnes = null;
 
   window.appState.submissionTimes = window.appState.submissionTimes || {};
+
+  // 제출자 수 애니메이션 관련 변수들
+  let animationTimer = null;
+  let currentDisplayCount = 0;
+  let realCount = 0;
+  let isAnimationActive = false;
   let localEventStatusMap = {};
   let originalSelections = {};
+
+  // ==============================
+  // 제출자 수 애니메이션 함수들
+  // ==============================
+  
+  // 카운트업 애니메이션 함수
+  function animateCountUp(startNumber, endNumber) {
+    let current = startNumber;
+    const animationDuration = 30; // 30ms 지속
+    const stepTime = 1;
+    const increment = Math.ceil((endNumber - startNumber) / (animationDuration / stepTime));
+
+    // 증가량이 0보다 작거나 같으면 애니메이션 없이 바로 표시
+    if (increment <= 0) {
+      updateSubmissionCountDisplay(endNumber);
+      return;
+    }
+
+    function updateCount() {
+      current += increment;
+      if (current >= endNumber) {
+        updateSubmissionCountDisplay(endNumber);
+        currentDisplayCount = endNumber;
+      } else {
+        updateSubmissionCountDisplay(Math.ceil(current));
+        requestAnimationFrame(updateCount);
+      }
+    }
+    updateCount();
+  }
+
+  // 제출자 수 표시 업데이트 함수
+  function updateSubmissionCountDisplay(count) {
+    const $titleMain = $('.title-main.submission-count');
+    console.log('DOM 찾기 시도:', $titleMain.length);
+    if ($titleMain.length > 0) {
+      $titleMain.html(`제출 : ${count.toLocaleString('ko-KR')} 명`);
+      console.log('DOM 업데이트 완료:', count);
+    } else {
+      // 클래스가 없어도 .title-main이 있으면 업데이트
+      const $titleMainAny = $('.title-main');
+      if ($titleMainAny.length > 0 && $titleMainAny.hasClass('submission-count')) {
+        $titleMainAny.html(`제출 : ${count.toLocaleString('ko-KR')} 명`);
+        console.log('대체 DOM 업데이트 완료:', count);
+      }
+    }
+  }
+
+  // 제출자 수 증가 애니메이션 시작
+  function startSubmissionAnimation(initialCount) {
+    if (isAnimationActive) return;
+    
+    isAnimationActive = true;
+    realCount = initialCount;
+    currentDisplayCount = initialCount;
+    
+    // 첫 로드시 0부터 초기값까지 애니메이션
+    animateCountUp(0, initialCount);
+    
+    // 5-10초 랜덤 간격으로 증가
+    function scheduleNextIncrease() {
+      if (!isAnimationActive) return;
+      
+      const randomDelay = Math.random() * 5000 + 5000; // 5000~10000ms
+      const randomIncrement = [1, 3, 5, 7, 13, 17, 21][Math.floor(Math.random() * 7)];
+      
+      animationTimer = setTimeout(() => {
+        if (!isAnimationActive) return;
+        
+        const previousCount = currentDisplayCount;
+        realCount += randomIncrement;
+        
+        // 이전 숫자에서 새 숫자까지 애니메이션
+        animateCountUp(previousCount, realCount);
+        
+        // 다음 증가 스케줄링
+        scheduleNextIncrease();
+      }, randomDelay);
+    }
+    
+    // 첫 번째 증가 스케줄링 (초기 애니메이션 후)
+    setTimeout(scheduleNextIncrease, 2000);
+  }
+
+  // 제출자 수 애니메이션 중지
+  function stopSubmissionAnimation() {
+    isAnimationActive = false;
+    if (animationTimer) {
+      clearTimeout(animationTimer);
+      animationTimer = null;
+    }
+  }
 
   // ==============================
   // 2. 날짜 키 배열 생성 (정렬 보장)
@@ -270,7 +368,6 @@
     setupDateNavHandlers();
     setupTeamSelectionHandlers();
     setupSubmitHandler();
-    setupSharePopup(); // 공유하기 팝업 초기화
   }
 
   //오늘 이전 날짜만 추출
@@ -383,45 +480,10 @@
         ${!isEventPeriodEnded ? `
         <a 
           href="javascript:void(0);" 
-          class="download-button team-selection-copy-link"
-          id="share-popup-trigger"
+          class="download-button copy-link-button team-selection-copy-link"
         >
-          공유하기
+          링크 복사
         </a>
-        
-        <!-- 공유하기 팝업 -->
-        <div id="share-popup" class="share-popup-overlay" style="display: none;">
-          <div class="share-popup">
-            <div class="share-popup-header">
-              <h3>공유하기</h3>
-              <button class="share-popup-close" id="share-popup-close">&times;</button>
-            </div>
-            <div class="share-popup-content">
-              <div class="share-options">
-                <div class="share-option" data-platform="kakaotalk">
-                  <img src="/image/Kakaotalk.png" alt="카카오톡" class="share-icon-img" />
-                  <span>카카오톡</span>
-                </div>
-                <div class="share-option" data-platform="facebook">
-                  <img src="/image/Facebook.png" alt="페이스북" class="share-icon-img" />
-                  <span>페이스북</span>
-                </div>
-                <div class="share-option" data-platform="twitter">
-                  <img src="/image/X.png" alt="X" class="share-icon-img" />
-                  <span>X</span>
-                </div>
-                <div class="share-option" data-platform="line">
-                  <img src="/image/Line.png" alt="LINE" class="share-icon-img" />
-                  <span>LINE</span>
-                </div>
-              </div>
-              <div class="link-copy-section">
-                <input type="text" id="share-link-input" readonly value="" />
-                <button id="copy-link-btn">복사</button>
-              </div>
-            </div>
-          </div>
-        </div>
         ` : ''}
       </div>
     `;
@@ -687,18 +749,29 @@
     const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
     const tomorrowKey = formatLocalDate(tomorrow);
     const tomorrowDisplay = getDisplayDate(tomorrowKey);
+
+    // 첫 번째 게임의 투표 합계 계산
+    const games = data.games || [];
+    let firstGameVoteTotal = 0;
+    if (games.length > 0 && games[0].gameId !== 'null') {
+      const firstGame = games[0];
+      firstGameVoteTotal = (firstGame.home?.votes || 0) + 
+                          (firstGame.away?.votes || 0) + 
+                          (firstGame.draw?.votes || 0);
+    }
+
     switch (status) {
       case 'PENDING_USER_NOT_SELECTED':
-        main = '';
+        main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '';
-        mainClass = '';
+        mainClass = 'submission-count';
         btnText = '올킬 제출';
         btnTextClass = '';
         break;
       case 'PENDING_USER_SELECTED':
-        main = '';
+        main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '첫 경기 시작전까지 수정 가능';
-        mainClass = '';
+        mainClass = 'submission-count';
         btnText = '';
         btnTextClass = '';
         break;
@@ -816,15 +889,71 @@
   // ==============================
   function updateTitleAndCountdown() {
     const parts = computeTitleParts();
- // 메인 타이틀 처리
-    if (parts.main) {
+    
+    // 제출자 수 애니메이션 제어
+    const key = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
+    
+    console.log('현재 날짜:', key);
+    console.log('현재 상태:', status);
+    console.log('parts.mainClass:', parts.mainClass);
+    console.log('parts.main:', parts.main);
+    
+    // PENDING 상태에서만 애니메이션 활성화
+    if (status === 'PENDING_USER_NOT_SELECTED' || status === 'PENDING_USER_SELECTED') {
+      if (parts.mainClass === 'submission-count' && parts.main) {
+        // 첫 번째 게임의 투표 합계 가져오기
+        const games = data.games || [];
+        let firstGameVoteTotal = 0;
+        if (games.length > 0 && games[0].gameId !== 'null') {
+          const firstGame = games[0];
+          firstGameVoteTotal = (firstGame.home?.votes || 0) + 
+                              (firstGame.away?.votes || 0) + 
+                              (firstGame.draw?.votes || 0);
+          console.log('첫 번째 게임 투표 데이터:', firstGame);
+          console.log('투표 합계:', firstGameVoteTotal);
+        }
+        
+        // 먼저 기본 title 요소 렌더링
+        $('.title-main')
+          .html(parts.main)
+          .removeClass('success fail cancelled')
+          .addClass(parts.mainClass || '')
+          .show();
+        
+        // 애니메이션이 활성화되지 않았으면 시작
+        if (!isAnimationActive && firstGameVoteTotal > 0) {
+          // DOM이 준비된 후 애니메이션 시작
+          setTimeout(() => {
+            startSubmissionAnimation(firstGameVoteTotal);
+          }, 100);
+        }
+        
+        // 이미 처리했으므로 아래 일반 처리 스킵
+        return;
+      }
+    } else {
+      // PENDING 상태가 아니면 애니메이션 중지
+      stopSubmissionAnimation();
+    }
+    
+    // 메인 타이틀 처리 (애니메이션이 아닌 경우에만)
+    if (parts.main && parts.mainClass !== 'submission-count') {
+      $('.title-main')
+        .html(parts.main)
+        .removeClass('success fail cancelled submission-count')
+        .addClass(parts.mainClass || '')
+        .show();
+    } else if (parts.main && parts.mainClass === 'submission-count' && !isAnimationActive) {
+      // submission-count이지만 애니메이션이 비활성화된 경우
       $('.title-main')
         .html(parts.main)
         .removeClass('success fail cancelled')
         .addClass(parts.mainClass || '')
         .show();
-    } else {
-      $('.title-main').removeClass('success fail cancelled').hide();
+    } else if (!parts.main) {
+      $('.title-main').removeClass('success fail cancelled submission-count').hide();
     }
     // 서브타이틀 처리
     if (parts.sub) {
@@ -1451,6 +1580,7 @@
   // 13. 전체 갱신
   // ==============================
   function refreshAll() {
+    stopSubmissionAnimation();
 	  renderDateNavigation();
     $(`#${sectionId}`).remove();
     renderSection();
@@ -1499,189 +1629,74 @@
     }
   }
 
-  // ===== 공유하기 팝업 기능 =====
-  function setupSharePopup() {
-    const $popup = $('#share-popup');
-    const $trigger = $('#share-popup-trigger');
-    const $close = $('#share-popup-close');
-    const $overlay = $('.share-popup-overlay');
-    const $shareOptions = $('.share-option');
-    const $copyBtn = $('#copy-link-btn');
-    const $linkInput = $('#share-link-input');
-
-    // 팝업 열기
-    $trigger.on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      $popup.show();
-      $('body').addClass('popup-open');
-      // 현재 페이지 URL 설정
-      $linkInput.val(window.location.href);
-    });
-
-    // 팝업 닫기
-    $close.on('click', closeSharePopup);
-    $overlay.on('click', function(e) {
-      if (e.target === this) {
-        closeSharePopup();
-      }
-    });
-
-    // ESC 키로 팝업 닫기
-    $(document).on('keydown', function(e) {
-      if (e.key === 'Escape' && $popup.is(':visible')) {
-        closeSharePopup();
-      }
-    });
-
-    // 공유 옵션 클릭
-    $shareOptions.on('click', function() {
-      const platform = $(this).data('platform');
-      shareToPlatform(platform);
-    });
-
-    // 링크 복사 (팝업 내에서만)
-    $copyBtn.on('click', function() {
-      copyLink();
-    });
-  }
-
-  function closeSharePopup() {
-    $('#share-popup').hide();
-    $('body').removeClass('popup-open');
-  }
-
-  function shareToPlatform(platform) {
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent('KBO 올킬 이벤트');
-    const text = encodeURIComponent('KBO 올킬 이벤트에 참여해보세요!');
-
-    let shareUrl = '';
-
-    switch (platform) {
-      case 'kakaotalk':
-        shareToKakaoTalk();
-        return; // 기존 window.open 호출 방지
-        break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-        break;
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
-        break;
-      case 'line':
-        shareUrl = `https://social-plugins.line.me/lineit/share?url=${url}`;
-        break;
-    }
-
-    if (shareUrl) {
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-      showToast('', `${getPlatformName(platform)}으로 공유합니다`, 1500);
-    }
-  }
-
-  function getPlatformName(platform) {
-    const names = {
-      'kakaotalk': '카카오톡',
-      'facebook': '페이스북',
-      'twitter': 'X',
-      'line': 'LINE'
-    };
-    return names[platform] || platform;
-  }
-
-  function copyLink() {
-    const $linkInput = $('#share-link-input');
-    const link = $linkInput.val();
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(link).then(() => {
-        showToast('', '링크가 복사되었습니다.', 1500, 'toast-success');
-      }).catch(err => {
-        console.error('Failed to copy link: ', err);
-        showToast('', '링크 복사에 실패했습니다.', 1500, 'toast-error');
-      });
-    } else {
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = link;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        showToast('', '링크가 복사되었습니다.', 1500, 'toast-success');
-      } catch (err) {
-        console.error('Failed to copy link: ', err);
-        showToast('', '링크 복사에 실패했습니다.', 1500, 'toast-error');
-      }
-      document.body.removeChild(textArea);
-    }
-  }
-
-  // ===== 카카오톡 공유 함수 =====
-  function shareToKakaoTalk() {
-    try {
-      if (typeof Kakao === 'undefined') {
-        console.error('Kakao SDK가 로드되지 않았습니다.');
-        showToast('', '카카오톡 SDK를 불러올 수 없습니다', 1500, 'toast-error');
-        return;
-      }
+  // 문서 준비 후 초기화
+  //$(document).ready(window.teamSelectionSection.init);
   
-      if (!Kakao.isInitialized()) {
-        // 보통 index.html에서 초기화하지만, 방어적으로 한 번 더 체크
-        Kakao.init('ddd49363d8106d9bd8fa0c3a77f8f718');
-      }
-  
-      // 템플릿 변수명은 [도구 > 메시지 템플릿]에서 설정한 변수 키와 동일해야 함
-      Kakao.Share.sendCustom({
-        templateId: 123762,
-        templateArgs: {
-          title: 'LIVE스코어 올킬 이벤트',                         // 예시: 템플릿 변수명(title)
-          description: '매일 \'5경기\' 맞추면 매일 100/n 만원 !',       // 예시: 템플릿 변수명(description)
-          share_url: getWebUrl(),                                  // 예시: 템플릿 변수명(share_url)
-          image_url: window.location.origin + '/image/metaimage.png' // 예시: 템플릿 변수명(image_url)
+  //링크 복사 버튼 클릭 시 클립보드에 URL 복사
+  $(document).off('click.copylink').on('click.copylink', '.copy-link-button', function() {
+    const urlToCopy = window.location.href;
+    
+    
+    const ua = navigator.userAgent;
+    // iOS WKWebView
+    if (/iPhone|iPad|iPod/i.test(ua) && ua.includes('LIVESCORE_WEBVIEW')) {
+      webkit.messageHandlers.copylink.postMessage({
+        func: 'copylink',
+        data: {
+        	link:urlToCopy
         }
       });
-  
-      showToast('', '카카오톡으로 공유합니다', 1500);
-    } catch (error) {
-      console.error('카카오톡 공유 실행 중 에러:', error);
-      showToast('', '카카오톡 공유에 실패했습니다', 1500, 'toast-error');
-      }
-  }
+    }else{
+    	if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+	      // 최신 브라우저, HTTPS 환경
+	      navigator.clipboard.writeText(urlToCopy)
+	        .then(function() {
+//	          alert('링크가 복사되었습니다');
+	        })
+	        .catch(function(err) {
+	          alert('복사에 실패했습니다. 브라우저를 확인해주세요.');
+	        });
+	    } else {
+	    	// 구형 브라우저 또는 HTTP 환경
+	    	const textArea = document.createElement('textarea');
+	    	textArea.value = urlToCopy;
+	    	textArea.readOnly = true; // 읽기 전용
+//    	    	textArea.disabled = true; // 비활성화
+	    	textArea.style.position = 'fixed';
+	    	textArea.style.left = '-9999px';
+	    	textArea.style.top = '-9999px';
+	    	textArea.style.opacity = '0';
+	    	textArea.style.pointerEvents = 'none';
+	    	textArea.style.userSelect = 'none';
+	    	textArea.style.webkitUserSelect = 'none';
+	    	textArea.style.mozUserSelect = 'none';
+	    	textArea.style.msUserSelect = 'none';
+	    	textArea.style.transform = 'translateX(-9999px)'; // 추가 이동
+	    	textArea.style.zIndex = '-9999'; // 최하단으로
 
-  // ===== 기기 감지 및 URL 생성 함수 =====
-  function getDeviceType() {
-    const userAgent = navigator.userAgent;
-    
-    if (/iPad|iPhone|iPod/.test(userAgent)) {
-      return 'iOS';
-    } else if (/Android/.test(userAgent)) {
-      return 'Android';
-    } else {
-      return 'Desktop';
+	    	document.body.appendChild(textArea);
+
+	    	// 약간의 지연 후 실행
+	    	setTimeout(() => {
+	    	  textArea.focus();
+	    	  textArea.select();
+	    	  
+	    	  try {
+	    	    const successful = document.execCommand('copy');
+	    	    if (successful) {
+//	    	      alert('링크가 복사되었습니다!');
+	    	    } else {
+	    	      alert('복사에 실패했습니다. 브라우저를 확인해주세요.');
+	    	    }
+	    	  } catch (err) {
+	    	    alert('복사에 실패했습니다. 브라우저를 확인해주세요.');
+	    	  }
+	    	  
+	    	  document.body.removeChild(textArea);
+	    	}, 10);
+	    }
     }
-  }
 
-  function getWebUrl() {
-    return 'https://allkillevent.psy.co.kr';
-  }
-
-  function getMobileWebUrl() {
-    const deviceType = getDeviceType();
     
-    if (deviceType === 'iOS') {
-      return 'https://allkillevent.psy.co.kr'; // iOS 전용 URL이 있다면 여기에
-    } else if (deviceType === 'Android') {
-      return 'https://allkillevent.psy.co.kr'; // Android 전용 URL이 있다면 여기에
-    } else {
-      return 'https://allkillevent.psy.co.kr';
-    }
-  }
-
-  // 문서 준비 후 초기화
-  $(document).ready(window.teamSelectionSection.init);
+  });
 })(jQuery);

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 숫자 업데이트 애니메이션</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white flex items-center justify-center min-h-screen p-4">
+    
+    <div class="text-center">
+        
+        <!-- 순차적 카운트업 -->
+        <div>
+            <p class="text-4xl md:text-5xl text-black">
+                제출 : <span id="count-up">0</span> 명
+            </p>
+            <!-- mt-4를 mt-[50px]로 변경하여 여백을 50픽셀로 설정했습니다. -->
+            <p class="text-4xl text-black mt-[50px]">
+                첫 경기 시작전 까지 수정 가능
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // 현재 숫자를 저장할 변수 (초기값)
+        let currentNumber = 23251;
+        const countUpElement = document.getElementById('count-up');
+
+        // 카운트업 애니메이션 함수 (시작 숫자와 목표 숫자를 인자로 받도록 수정)
+        function animateCountUp(startNumber, endNumber) {
+            let current = startNumber;
+            // 애니메이션 속도를 0.075초(75ms)로 더 빠르게 변경했습니다.
+            const animationDuration = 75; 
+            const stepTime = 1;
+            // 증가량은 (목표숫자 - 시작숫자) 기준으로 계산됩니다.
+            const increment = Math.ceil((endNumber - startNumber) / (animationDuration / stepTime));
+
+            // 증가량이 0보다 작거나 같으면 (숫자가 줄거나 그대로면) 애니메이션 없이 바로 표시
+            if (increment <= 0) {
+                countUpElement.innerText = endNumber.toLocaleString('ko-KR');
+                return;
+            }
+
+            function updateCount() {
+                current += increment;
+                if (current >= endNumber) {
+                    countUpElement.innerText = endNumber.toLocaleString('ko-KR');
+                } else {
+                    countUpElement.innerText = Math.ceil(current).toLocaleString('ko-KR');
+                    requestAnimationFrame(updateCount);
+                }
+            }
+            updateCount();
+        }
+
+        // 페이지 로드 시: 0부터 초기 숫자까지 애니메이션 실행
+        window.onload = () => {
+            animateCountUp(0, currentNumber);
+        };
+
+        // 10초마다 서버에서 데이터를 가져왔다고 가정하고 숫자를 업데이트합니다.
+        setInterval(() => {
+            const previousNumber = currentNumber;
+            const newAdditions = 10; // 10명이 추가되었다고 가정
+            currentNumber += newAdditions;
+
+            // 이전 숫자에서 현재 숫자까지 애니메이션을 실행합니다.
+            animateCountUp(previousNumber, currentNumber);
+        }, 10000); // 10000ms = 10초
+    </script>
+</body>
+</html>

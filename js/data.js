@@ -136,7 +136,7 @@ const prizeHistory = [
 // User data (섹션별 currentPage, totalPages로 분리)
 const userData = {
   nickname: "풀스택기획자라니",
-  totalAmount: 100000,
+  totalAmount: 0,
   
   // 각 섹션별 페이지 상태 분리
   myPrize: {
