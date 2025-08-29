@@ -648,7 +648,7 @@
       ]
     },
     "2025-08-29": {
-      eventStatus: "PENDING_USER_NOT_SELECTED",
+      eventStatus: "IN_PROGRESS_USER_NOT_SELECTED",
       totalParticipants: 11000,
       winners: 0,
       games: [

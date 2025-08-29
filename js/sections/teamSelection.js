@@ -604,24 +604,25 @@
       case 'PENDING_USER_NOT_SELECTED':
         main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '';
-        mainClass = 'submission-count';
+        mainClass = 'submission-count';        
         btnText = '올킬 제출';
         btnTextClass = '';
         break;
       case 'PENDING_USER_SELECTED':
         main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '첫 경기 시작전까지 수정 가능';
-        mainClass = 'submission-count';
+        mainClass = 'submission-count';        
         statusClass = 'status-pending-selected';
         btnText = '';
         btnTextClass = '';
         break;
       case 'IN_PROGRESS_USER_NOT_SELECTED':
         main = '';
-        sub = `총 ${totalParticipants.toLocaleString()} 명 참여`;
+        sub = `제출 마감 : 총 ${totalParticipants.toLocaleString()} 명 참여`;
         mainClass = '';
         btnText = `제출 마감`;
         btnTextClass = 'small-text';
+        subClass = 'IN_PROGRESS';
         break;
       case 'IN_PROGRESS_USER_SELECTED':
         main = '';
@@ -629,6 +630,7 @@
         mainClass = '';
         btnText = `제출 마감`;
         btnTextClass = 'small-text';
+        subClass = 'IN_PROGRESS';
         break;
       case 'COMPLETED_USER_SUCCESS':
         main = '당첨';
