@@ -43,7 +43,7 @@
   // 카운트업 애니메이션 함수
   function animateCountUp(startNumber, endNumber) {
     let current = startNumber;
-    const animationDuration = 30; // 30ms 지속
+    const animationDuration = 100; // 150ms 지속
     const stepTime = 1;
     const increment = Math.ceil((endNumber - startNumber) / (animationDuration / stepTime));
 
@@ -726,8 +726,8 @@
           }, 100);
         }
         
-        // 이미 처리했으므로 아래 일반 처리 스킵
-        return;
+        // 메인 타이틀은 이미 처리했지만, 서브타이틀과 statusClass는 아래에서 처리해야 함
+        // return을 제거하여 서브타이틀 처리가 실행되도록 함
       }
     } else {
       // PENDING 상태가 아니면 애니메이션 중지
