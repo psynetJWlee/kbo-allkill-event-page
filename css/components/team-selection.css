@@ -63,7 +63,7 @@
   overflow: visible;
   justify-content: space-between;
   border-bottom: 1.5px solid #D9D9D9;
-  padding-bottom: 36px;
+  padding: 20px;
 }
 
 #game-list .game-item:last-child {
@@ -109,7 +109,13 @@
   gap: 5px;
 }
 .team-box.top-vote{
-  border: 3px solid #FF3B30;
+  border: 3px solid #545454;
+}
+
+.team-box.top-vote .vote-count,
+.team-box.selected.top-vote .vote-count {
+  color: #ff0000;
+  font-weight: bold;
 }
 
 .team-box.selected-home,

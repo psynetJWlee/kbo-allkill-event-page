@@ -846,7 +846,38 @@
   }
 
   // ==============================
-  // 11. 팀 선택 핸들러
+  // 11. top-vote 클래스 업데이트 함수
+  // ==============================
+  function updateTopVoteClasses(gameId) {
+    const match = window.matchData[dateKeys[currentIndex]].games.find(g => g.gameId === gameId);
+    if (!match) return;
+    
+    // 현재 게임의 모든 팀 박스에서 top-vote 클래스 제거
+    $(`[data-game-id="${gameId}"]`).removeClass('top-vote');
+    
+    // vote-count 배열 준비
+    const voteArr = [
+      { key: 'home', value: match.home.votes },
+      { key: 'draw', value: match.draw ? match.draw.votes : null },
+      { key: 'away', value: match.away.votes }
+    ].filter(v => v.value !== null);
+    
+    const maxVote = Math.max(...voteArr.map(v => v.value));
+    
+    // 최고 득표팀에만 top-vote 클래스 추가 (동점일 때는 제외)
+    ['home','draw','away'].forEach(k => {
+      if (k === 'draw' && !match.draw) return;
+      const obj = k === 'draw' ? match.draw : match[k];
+      const maxVoteCount = voteArr.filter(v => v.value === maxVote).length;
+      
+      if (obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
+        $(`[data-game-id="${gameId}"][data-team="${k}"]`).addClass('top-vote');
+      }
+    });
+  }
+
+  // ==============================
+  // 12. 팀 선택 핸들러
   // ==============================
   function canEditSelections() {
     const key = dateKeys[currentIndex];
@@ -902,6 +933,9 @@
             $voteCount.text(match[tm].votes.toLocaleString());
           }
           
+          // === top-vote 클래스 업데이트 ===
+          updateTopVoteClasses(id);
+          
           console.log(`팀 선택 해제됨: ${id} -> ${tm}`);
           
           // === 상태 동기화 함수 호출 ===
@@ -941,6 +975,9 @@
             $currentVoteCount.text(match[tm].votes.toLocaleString());
           }
         }
+        
+        // === top-vote 클래스 업데이트 ===
+        updateTopVoteClasses(id);
         
         // === 하이브리드 방식: 체크 이미지는 부분 업데이트, 상태는 전체 동기화 ===
         // renderGames() 호출 제거로 깜박임 현상 해결

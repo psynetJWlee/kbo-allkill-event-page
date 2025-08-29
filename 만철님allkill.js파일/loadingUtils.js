@@ -44,13 +44,13 @@ window.loadingUtils = (function() {
             mainContainer.classList.remove('loaded');
         }
         
-        console.log('로딩 초기화 완료');
+        //console.log('로딩 초기화 완료');
     }
     
     // 특정 단계 완료 처리
     function completeStep(stepName) {
         if (!isLoading) {
-            console.log(`로딩이 이미 완료됨. 단계 무시: ${stepName}`);
+            //console.log(`로딩이 이미 완료됨. 단계 무시: ${stepName}`);
             return;
         }
         
@@ -62,15 +62,15 @@ window.loadingUtils = (function() {
         
         const step = loadingSteps[stepIndex];
         if (step.completed) {
-            console.log(`이미 완료된 단계: ${stepName}`);
+            //console.log(`이미 완료된 단계: ${stepName}`);
             return;
         }
         
         step.completed = true;
         completedSteps++;
         
-        console.log(`🎯 로딩 단계 완료: ${stepName} (${completedSteps}/${loadingSteps.length})`);
-        console.log('현재 완료된 단계들:', loadingSteps.filter(s => s.completed).map(s => s.name));
+        //console.log(`🎯 로딩 단계 완료: ${stepName} (${completedSteps}/${loadingSteps.length})`);
+        //console.log('현재 완료된 단계들:', loadingSteps.filter(s => s.completed).map(s => s.name));
         
         // UI 업데이트
         updateLoadingUI();
@@ -81,7 +81,7 @@ window.loadingUtils = (function() {
             const elapsedTime = Date.now() - loadingStartTime;
             const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
             
-            console.log(`모든 단계 완료! 경과시간: ${elapsedTime}ms, 추가 대기: ${remainingTime}ms`);
+            //console.log(`모든 단계 완료! 경과시간: ${elapsedTime}ms, 추가 대기: ${remainingTime}ms`);
             
             setTimeout(() => {
                 finishLoading();
@@ -110,7 +110,7 @@ window.loadingUtils = (function() {
         if (!isLoading) return;
         
         isLoading = false;
-        console.log('모든 로딩 단계 완료');
+        //console.log('모든 로딩 단계 완료');
         
         // 최종 텍스트 표시
         if (loadingText) {
@@ -147,18 +147,18 @@ window.loadingUtils = (function() {
             }
         }, 500);
         
-        console.log('로딩 화면 숨김 완료');
+        //console.log('로딩 화면 숨김 완료');
     }
     
     // 강제 로딩 완료 (에러 발생시 등)
     function forceComplete() {
-        console.log('🚨 로딩 강제 완료 실행');
-        console.log('강제 완료 전 상태:', {
-            completedSteps,
-            totalSteps: loadingSteps.length,
-            completedStepNames: loadingSteps.filter(s => s.completed).map(s => s.name),
-            pendingStepNames: loadingSteps.filter(s => !s.completed).map(s => s.name)
-        });
+        //console.log('🚨 로딩 강제 완료 실행');
+        //console.log('강제 완료 전 상태:', {
+//            completedSteps,
+//            totalSteps: loadingSteps.length,
+//            completedStepNames: loadingSteps.filter(s => s.completed).map(s => s.name),
+//            pendingStepNames: loadingSteps.filter(s => !s.completed).map(s => s.name)
+//        });
         
         // 모든 단계를 완료로 마킹
         loadingSteps.forEach(step => {
@@ -181,7 +181,7 @@ window.loadingUtils = (function() {
     
     // 최대 로딩 시간 설정 (타임아웃)
     function setLoadingTimeout(timeout = 10000) {
-        console.log(`로딩 타임아웃 설정: ${timeout}ms`);
+        //console.log(`로딩 타임아웃 설정: ${timeout}ms`);
         setTimeout(() => {
             if (isLoading) {
                 console.warn(`⏰ 로딩 타임아웃 (${timeout}ms), 강제 완료`);
@@ -204,11 +204,11 @@ window.loadingUtils = (function() {
 
 // 페이지 로드 시 자동 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 로딩 유틸리티 DOM 준비 완료');
+    //console.log('🚀 로딩 유틸리티 DOM 준비 완료');
     window.loadingUtils.initialize();
     
     // 8초 타임아웃 설정 (디버깅 편의를 위해 조정)
     window.loadingUtils.setTimeout(8000);
     
-    console.log('로딩 유틸리티 초기화 완료');
+    //console.log('로딩 유틸리티 초기화 완료');
 });

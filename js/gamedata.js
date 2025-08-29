@@ -647,7 +647,7 @@
         
       ]
     },
-    "2025-08-28": {
+    "2025-08-29": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 11000,
       winners: 0,

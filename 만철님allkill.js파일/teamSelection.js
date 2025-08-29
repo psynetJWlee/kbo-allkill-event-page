@@ -67,16 +67,16 @@
   // 제출자 수 표시 업데이트 함수
   function updateSubmissionCountDisplay(count) {
     const $titleMain = $('.title-main.submission-count');
-    console.log('DOM 찾기 시도:', $titleMain.length);
+    //console.log('DOM 찾기 시도:', $titleMain.length);
     if ($titleMain.length > 0) {
       $titleMain.html(`제출 : ${count.toLocaleString('ko-KR')} 명`);
-      console.log('DOM 업데이트 완료:', count);
+      //console.log('DOM 업데이트 완료:', count);
     } else {
       // 클래스가 없어도 .title-main이 있으면 업데이트
       const $titleMainAny = $('.title-main');
       if ($titleMainAny.length > 0 && $titleMainAny.hasClass('submission-count')) {
         $titleMainAny.html(`제출 : ${count.toLocaleString('ko-KR')} 명`);
-        console.log('대체 DOM 업데이트 완료:', count);
+        //console.log('대체 DOM 업데이트 완료:', count);
       }
     }
   }
@@ -157,8 +157,8 @@
         	dateKeys.push(eventDates[i]);
         }
         
-        console.log('API에서 로드된 이벤트 날짜:', eventDates);
-        console.log('생성된 dateKeys:', dateKeys);
+        //console.log('API에서 로드된 이벤트 날짜:', eventDates);
+        //console.log('생성된 dateKeys:', dateKeys);
         
         return dateKeys;
       } else {
@@ -178,7 +178,7 @@
     
     dateKeys.push(formatLocalDate(today));
     
-    console.log('오늘 날짜만 생성:', dateKeys);
+    //console.log('오늘 날짜만 생성:', dateKeys);
     return dateKeys;
   }
   
@@ -193,7 +193,7 @@
       dateKeys.push(formatLocalDate(date));
     }
     
-    console.log('기본 dateKeys 생성:', dateKeys);
+    //console.log('기본 dateKeys 생성:', dateKeys);
     return dateKeys;
   }
 
@@ -235,12 +235,12 @@
           response.games.forEach(game => {
             if (game.userSelection && game.userSelection !== 'none') {
               window.appState.selectedTeams[game.gameId] = game.userSelection;
-              console.log(`선택값 복원: ${game.gameId} -> ${game.userSelection}`);
+              //console.log(`선택값 복원: ${game.gameId} -> ${game.userSelection}`);
             }
           });
         }
         
-        console.log(`경기 데이터 로드 완료: ${date}`, window.matchData[date]);
+        //console.log(`경기 데이터 로드 완료: ${date}`, window.matchData[date]);
         
         // 로딩 단계 완료 신호
         if (window.loadingUtils) {
@@ -328,7 +328,7 @@
       const eventInfoResponse = await window.apiUtils.getEventInfo();
       if (eventInfoResponse.success && eventInfoResponse.isEventEnded) {
         window.appState.isEventEnded = true;
-        console.log('전체 이벤트 기간이 종료되었습니다.');
+        //console.log('전체 이벤트 기간이 종료되었습니다.');
       } else {
         window.appState.isEventEnded = false;
       }
@@ -356,7 +356,7 @@
         const todayKey = formatLocalDate(new Date());
         dateKeys.unshift(todayKey); // 배열 맨 앞에 오늘 날짜 추가
         currentIndex = 0; // 오늘 날짜 인덱스로 설정
-        console.log('미래 날짜만 있어서 오늘 날짜 추가:', dateKeys);
+        //console.log('미래 날짜만 있어서 오늘 날짜 추가:', dateKeys);
       }
     }
     
@@ -372,7 +372,7 @@
 
   //오늘 이전 날짜만 추출
   function getPastDateKeys() {
-	  console.log("dateKeys",dateKeys);
+	  //console.log("dateKeys",dateKeys);
     const today = new Date();
     today.setHours(0,0,0,0);
     return dateKeys.filter(k => {
@@ -404,7 +404,7 @@
     d.setHours(0,0,0,0);
     const isToday = d.getTime() === today.getTime();
     const pastDateKeys = getPastDateKeys();
-    console.log("pastDateKeys",pastDateKeys);
+    //console.log("pastDateKeys",pastDateKeys);
     const prevKey = pastDateKeys.filter(k => new Date(k) < d).pop();
     const nextKey = (currentIndex < pastDateKeys.length - 1) ? pastDateKeys[currentIndex + 1] : null;
     const data = window.matchData[key] || {};
@@ -895,10 +895,10 @@
     const data = window.matchData[key] || {};
     const status = typeof localEventStatusMap[key] !== 'undefined' ? localEventStatusMap[key] : data.eventStatus;
     
-    console.log('현재 날짜:', key);
-    console.log('현재 상태:', status);
-    console.log('parts.mainClass:', parts.mainClass);
-    console.log('parts.main:', parts.main);
+    //console.log('현재 날짜:', key);
+    //console.log('현재 상태:', status);
+    //console.log('parts.mainClass:', parts.mainClass);
+    //console.log('parts.main:', parts.main);
     
     // PENDING 상태에서만 애니메이션 활성화
     if (status === 'PENDING_USER_NOT_SELECTED' || status === 'PENDING_USER_SELECTED') {
@@ -911,8 +911,8 @@
           firstGameVoteTotal = (firstGame.home?.votes || 0) + 
                               (firstGame.away?.votes || 0) + 
                               (firstGame.draw?.votes || 0);
-          console.log('첫 번째 게임 투표 데이터:', firstGame);
-          console.log('투표 합계:', firstGameVoteTotal);
+          //console.log('첫 번째 게임 투표 데이터:', firstGame);
+          //console.log('투표 합계:', firstGameVoteTotal);
         }
         
         // 먼저 기본 title 요소 렌더링
@@ -1123,7 +1123,7 @@
             	$voteCount.text(match[tm].votes.toLocaleString());
             }
             
-            console.log(`팀 선택 해제됨: ${id} -> ${tm}`);
+            //console.log(`팀 선택 해제됨: ${id} -> ${tm}`);
             
             // === 상태 동기화 함수 호출 ===
             updateSubmitButton();
@@ -1132,8 +1132,8 @@
         } else {
         	// 기존 선택이 있으면 vote-count 복원
             const match = window.matchData[dateKeys[currentIndex]].games.find(g => String(g.gameId).trim() === String(id).trim());
-            console.log("id",id);
-            console.log("window.matchData[dateKeys[currentIndex]].games",window.matchData[dateKeys[currentIndex]].games);
+            //console.log("id",id);
+            //console.log("window.matchData[dateKeys[currentIndex]].games",window.matchData[dateKeys[currentIndex]].games);
             if (window.appState.selectedTeams[id]) {
               const prevTeam = window.appState.selectedTeams[id];
               if (match[prevTeam]) match[prevTeam].votes = Math.max(0, match[prevTeam].votes - 1);
@@ -1166,7 +1166,7 @@
         // renderGames() 호출 제거로 깜박임 현상 해결
         // 필요한 상태 동기화 함수들만 호출
         
-        console.log(`팀 선택됨: ${id} -> ${tm}`);
+        //console.log(`팀 선택됨: ${id} -> ${tm}`);
         
         // === 상태 동기화 함수 호출 ===
         updateSubmitButton();
@@ -1227,11 +1227,11 @@
         if (!loginResponse.success || !loginResponse.isLoggedIn) {
           // 일반 브라우저에서 실행 중인지 확인
           const ua = navigator.userAgent;
-          console.log('User Agent:', ua);
+          //console.log('User Agent:', ua);
           
           // LIVE스코어 앱 WebView가 아닌 경우
           if (!ua.includes('LIVESCORE_WEBVIEW')) {
-            console.log('일반 브라우저에서 실행 - 앱 다운로드 안내');
+            //console.log('일반 브라우저에서 실행 - 앱 다운로드 안내');
             
             // iOS Safari/Chrome 등
             if (/iPhone|iPad|iPod/i.test(ua)) {
@@ -1262,7 +1262,7 @@
         // 일반 브라우저에서 실행 중인지 확인
         const ua = navigator.userAgent;
         if (!ua.includes('LIVESCORE_WEBVIEW')) {
-          console.log('일반 브라우저에서 실행 - 앱 다운로드 안내');
+          //console.log('일반 브라우저에서 실행 - 앱 다운로드 안내');
           
           // iOS Safari/Chrome 등
           if (/iPhone|iPad|iPod/i.test(ua)) {
@@ -1351,7 +1351,7 @@
             $('.team-selection-copy-link').before(btnRow);
           }
           
-          console.log('올킬 도전 저장 성공:', selections);
+          //console.log('올킬 도전 저장 성공:', selections);
         } catch (error) {
           console.error('올킬 도전 저장 오류:', error);
           window.apiUtils.handleError(error, '올킬 도전');
@@ -1560,19 +1560,19 @@
     const key = dateKeys[currentIndex];
     const games = (window.matchData[key]?.games) || [];
     
-    console.log('수집할 게임 수:', games.length);
+    //console.log('수집할 게임 수:', games.length);
     
     games.forEach((game, index) => {
       // 현재 선택값 우선, 없으면 userSelection 사용
       const selection = window.appState.selectedTeams?.[game.gameId] || game.userSelection;
-      console.log(`게임 ${index + 1}: ID=${game.gameId}, 선택=${selection}`);
+      //console.log(`게임 ${index + 1}: ID=${game.gameId}, 선택=${selection}`);
       
       if (selection && selection !== 'none') {
         selections[game.gameId] = selection;
       }
     });
     
-    console.log('수집된 선택 정보:', selections);
+    //console.log('수집된 선택 정보:', selections);
     return selections;
   }
 
