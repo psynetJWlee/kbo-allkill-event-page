@@ -1,5 +1,4 @@
 
-/*
 .title-wrapper.status-progress-unselected,
 .title-wrapper.status-completed-fail,
 .title-wrapper.status-completed-unselected,
@@ -362,6 +361,18 @@
   40% {
     transform: translateY(-10px) scale(1.03);
   }
+}
+
+/* PENDING_USER_SELECTED 상태 스타일 */
+.title-wrapper.status-pending-selected .title-main {
+  color: #000;
+}
+
+.title-wrapper.status-pending-selected .title-sub {
+  color: #ffd93d;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
 }
 
 .title-wrapper.status-pending-selected .title-main::before {

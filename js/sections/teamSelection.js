@@ -99,7 +99,7 @@
       if (!isAnimationActive) return;
       
       const randomDelay = Math.random() * 5000 + 5000; // 5000~10000ms
-      const randomIncrement = [1, 3, 5, 7, 13, 17, 21][Math.floor(Math.random() * 7)];
+      const randomIncrement = [1, 3, 5, 7, 13][Math.floor(Math.random() * 5)];
       
       animationTimer = setTimeout(() => {
         if (!isAnimationActive) return;
@@ -610,6 +610,7 @@
         main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '첫 경기 시작전까지 수정 가능';
         mainClass = 'submission-count';
+        statusClass = 'status-pending-selected';
         btnText = '';
         btnTextClass = '';
         break;

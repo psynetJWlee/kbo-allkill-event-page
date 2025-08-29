@@ -196,12 +196,14 @@ span.success {
   font-size: 74px;
   margin-bottom: 10px;
   font-weight: 600;
+  margin-top: 20px;
 }
 span.fail {
   color: #0066B3;
   font-size: 74px;
   margin-bottom: 10px;
   font-weight: 600;
+  margin-top: 20px;
 }
 
 span.cancelled{
@@ -209,6 +211,7 @@ span.cancelled{
   font-size: 74px;
   margin-bottom: 10px;
   font-weight: 600;
+  margin-top: 20px;
 }
 
 .cancelled-subtitle {

@@ -97,7 +97,7 @@
       if (!isAnimationActive) return;
       
       const randomDelay = Math.random() * 5000 + 5000; // 5000~10000ms
-      const randomIncrement = [1, 3, 5, 7, 13, 17, 21][Math.floor(Math.random() * 7)];
+      const randomIncrement = [1, 3, 5, 7, 13][Math.floor(Math.random() * 5)];
       
       animationTimer = setTimeout(() => {
         if (!isAnimationActive) return;
@@ -368,6 +368,55 @@
     setupDateNavHandlers();
     setupTeamSelectionHandlers();
     setupSubmitHandler();
+    
+    // === 추가: 로딩 완료 후 애니메이션 시작 ===
+    if (window.loadingUtils && !window.loadingUtils.isActive()) {
+      // 로딩이 이미 완료된 경우 바로 시작
+      console.log('로딩이 이미 완료됨 - 애니메이션 바로 시작');
+      startSubmissionAnimationIfReady();
+    } else {
+      // 로딩이 진행 중인 경우 완료 후 시작
+      console.log('로딩 진행 중 - 완료 대기 중...');
+      const checkLoadingComplete = setInterval(() => {
+        if (window.loadingUtils && !window.loadingUtils.isActive()) {
+          clearInterval(checkLoadingComplete);
+          console.log('로딩 완료 감지 - 애니메이션 시작');
+          startSubmissionAnimationIfReady();
+        } else {
+          console.log('로딩 체크 중...');
+        }
+      }, 100);
+    }
+  }
+
+  // 애니메이션 시작 조건 확인 및 실행 함수
+  function startSubmissionAnimationIfReady() {
+    const key = dateKeys[currentIndex];
+    const data = window.matchData[key] || {};
+    const status = typeof localEventStatusMap[key] !== 'undefined' 
+      ? localEventStatusMap[key] 
+      : data.eventStatus;
+    
+    // PENDING 상태에서만 애니메이션 시작
+    if (status === 'PENDING_USER_NOT_SELECTED' || status === 'PENDING_USER_SELECTED') {
+      const games = data.games || [];
+      let firstGameVoteTotal = 0;
+      if (games.length > 0 && games[0].gameId !== 'null') {
+        const firstGame = games[0];
+        firstGameVoteTotal = (firstGame.home?.votes || 0) + 
+                            (firstGame.away?.votes || 0) + 
+                            (firstGame.draw?.votes || 0);
+      }
+      
+      if (firstGameVoteTotal > 0) {
+//        startSubmissionAnimation(firstGameVoteTotal);
+//        $(".title-main submission-count").text("제출 : 0 명");
+        $('.title-main.submission-count').html("제출 : 0 명");
+        setTimeout(() => {
+        	startSubmissionAnimation(firstGameVoteTotal);
+        }, 800);
+      }
+    }
   }
 
   //오늘 이전 날짜만 추출
@@ -772,6 +821,7 @@
         main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '첫 경기 시작전까지 수정 가능';
         mainClass = 'submission-count';
+        statusClass = 'status-pending-selected';
         btnText = '';
         btnTextClass = '';
         break;
@@ -925,13 +975,13 @@
         // 애니메이션이 활성화되지 않았으면 시작
         if (!isAnimationActive && firstGameVoteTotal > 0) {
           // DOM이 준비된 후 애니메이션 시작
-          setTimeout(() => {
-            startSubmissionAnimation(firstGameVoteTotal);
-          }, 100);
+//          setTimeout(() => {
+//            startSubmissionAnimation(firstGameVoteTotal);
+//          }, 100);
         }
         
-        // 이미 처리했으므로 아래 일반 처리 스킵
-        return;
+        // 메인 타이틀은 이미 처리했지만, 서브타이틀과 statusClass는 아래에서 처리해야 함
+        // return을 제거하여 서브타이틀 처리가 실행되도록 함
       }
     } else {
       // PENDING 상태가 아니면 애니메이션 중지
