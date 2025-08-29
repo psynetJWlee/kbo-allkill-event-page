@@ -94,7 +94,8 @@
     // 첫 로드시 0부터 초기값까지 애니메이션
     animateCountUp(0, initialCount);
     
-    // 5-10초 랜덤 간격으로 증가
+    // 5-10초 랜덤 간격으로 증가 (주석 처리)
+    /*
     function scheduleNextIncrease() {
       if (!isAnimationActive) return;
       
@@ -117,6 +118,7 @@
     
     // 첫 번째 증가 스케줄링 (초기 애니메이션 후)
     setTimeout(scheduleNextIncrease, 2000);
+    */
   }
 
   // 제출자 수 애니메이션 중지
