@@ -269,7 +269,7 @@
         ${rightIcon}
       </div>
       <div class="ad-banner-top">
-        <img src="/image/ad1.jpg" alt="광고" class="ad-image-top" />
+        <img src="/image/ad1.png" alt="광고" class="ad-image-top" />
         
       </div>
     `;
@@ -548,15 +548,15 @@
       $list.append($item);
       
       // 3번째 아이템 다음에 광고 배너 추가 (index는 0부터 시작하므로 index === 2가 3번째)
-      if (index === 2) {
-        const adBanner = `
-          <div class="ad-banner-top">
-            <img src="/image/ad1.jpg" alt="광고" class="ad-image-top" />
-            
-          </div>
-        `;
-        $list.append(adBanner);
-      }
+      // if (index === 2) {
+      //   const adBanner = `
+      //     <div class="ad-banner-top">
+      //       <img src="/image/ad1.png" alt="광고" class="ad-image-top" />
+      //       
+      //     </div>
+      //   `;
+      //   $list.append(adBanner);
+      // }
     });
 
     updateSubmitButton();
