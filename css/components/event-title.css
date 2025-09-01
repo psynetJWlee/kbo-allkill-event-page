@@ -9,6 +9,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+
 }
 
 .event-title-section {
@@ -106,8 +109,16 @@
   width: 198px;
   height: 220px;
   z-index: 10;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .dynamic-count {
    padding-right: 5px;
+}
+
+img {
+  -webkit-user-drag: none; /* Safari/Chrome */
+  user-drag: none;         /* 표준 지원 */
+  pointer-events: none;    /* (필요시) 클릭 이벤트까지 막음 */
 }
