@@ -682,12 +682,10 @@ body.popup-open {
   /*background-color: #d3d3d3;*/
 }
 .ad-banner-top2 {
-  height: 266px;
+  height: 270px;
   align-items: center;
   display: flex;
-  justify-content: center;
-  background-color: var(--darker-blue);
-
+  justify-content: center;   
 }
 
 .ad-image-top {

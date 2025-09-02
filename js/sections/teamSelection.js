@@ -268,10 +268,7 @@
         ${centerText}
         ${rightIcon}
       </div>
-      <div class="ad-banner-top">
-        <img src="/image/ad1.png" alt="광고" class="ad-image-top" />
-        
-      </div>
+      
     `;
     $(containerSelector).html(html);
   }

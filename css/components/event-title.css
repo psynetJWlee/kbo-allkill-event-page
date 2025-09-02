@@ -120,5 +120,7 @@
 img {
   -webkit-user-drag: none; /* Safari/Chrome */
   user-drag: none;         /* 표준 지원 */
+  -moz-user-select: none;    /* Firefox에서 텍스트 드래그 방지 */
+  -ms-user-select: none;     /* IE/Edge 구버전 */
   pointer-events: none;    /* (필요시) 클릭 이벤트까지 막음 */
 }
