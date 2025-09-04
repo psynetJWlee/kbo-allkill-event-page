@@ -360,8 +360,11 @@
 }
 
 .title-wrapper.status-pending-selected .title-sub {
-  
   font-size: 24px;
   font-weight: 400;
   text-align: center;
+  margin: 10px 0 10px 0;
+  display: flex;  
+  justify-content: center;
+  align-items: center;
 }

@@ -41,7 +41,7 @@
   // 카운트업 애니메이션 함수
   function animateCountUp(startNumber, endNumber) {
     let current = startNumber;
-    const animationDuration = 30; // 30ms 지속
+    const animationDuration = 100; // 30ms 지속
     const stepTime = 1;
     const increment = Math.ceil((endNumber - startNumber) / (animationDuration / stepTime));
 
@@ -92,29 +92,29 @@
     // 첫 로드시 0부터 초기값까지 애니메이션
     animateCountUp(0, initialCount);
     
-    // 5-10초 랜덤 간격으로 증가
-    function scheduleNextIncrease() {
-      if (!isAnimationActive) return;
-      
-      const randomDelay = Math.random() * 5000 + 5000; // 5000~10000ms
-      const randomIncrement = [1, 3, 5, 7, 13][Math.floor(Math.random() * 5)];
-      
-      animationTimer = setTimeout(() => {
-        if (!isAnimationActive) return;
-        
-        const previousCount = currentDisplayCount;
-        realCount += randomIncrement;
-        
-        // 이전 숫자에서 새 숫자까지 애니메이션
-        animateCountUp(previousCount, realCount);
-        
-        // 다음 증가 스케줄링
-        scheduleNextIncrease();
-      }, randomDelay);
-    }
-    
-    // 첫 번째 증가 스케줄링 (초기 애니메이션 후)
-    setTimeout(scheduleNextIncrease, 2000);
+//    // 5-10초 랜덤 간격으로 증가
+//    function scheduleNextIncrease() {
+//      if (!isAnimationActive) return;
+//      
+//      const randomDelay = Math.random() * 5000 + 5000; // 5000~10000ms
+//      const randomIncrement = [1, 3, 5, 7, 13][Math.floor(Math.random() * 5)];
+//      
+//      animationTimer = setTimeout(() => {
+//        if (!isAnimationActive) return;
+//        
+//        const previousCount = currentDisplayCount;
+//        realCount += randomIncrement;
+//        
+//        // 이전 숫자에서 새 숫자까지 애니메이션
+//        animateCountUp(previousCount, realCount);
+//        
+//        // 다음 증가 스케줄링
+//        scheduleNextIncrease();
+//      }, randomDelay);
+//    }
+//    
+//    // 첫 번째 증가 스케줄링 (초기 애니메이션 후)
+//    setTimeout(scheduleNextIncrease, 2000);
   }
 
   // 제출자 수 애니메이션 중지
@@ -813,18 +813,18 @@
       case 'PENDING_USER_NOT_SELECTED':
         main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '';
-        mainClass = 'submission-count';        
-        statusClass = 'status-pending-not-selected';
+        mainClass = 'submission-count';
+        statusClass = 'status-pending-selected';
         btnText = '올킬 제출';
         btnTextClass = '';
         break;
       case 'PENDING_USER_SELECTED':
         main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '첫 경기 시작전까지 수정 가능';
-        mainClass = 'submission-count';        
-        statusClass = 'status-pending-selected';
+        mainClass = 'submission-count';
         btnText = '';
         btnTextClass = '';
+        subClass = 'SUB-PANDDING';
         break;
       case 'IN_PROGRESS_USER_NOT_SELECTED':
         main = '';

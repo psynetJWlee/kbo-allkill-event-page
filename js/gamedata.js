@@ -647,14 +647,14 @@
         
       ]
     },
-    "2025-09-01": {
+    "2025-09-03": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 11000,
       winners: 0,
       games: [
         {
           gameId: "1111-0",
-          home: { teamName: "도미니카공", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 8440 },
+          home: { teamName: "도미니카공", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 8888 },
           draw: { teamName: "무승부", votes: 8888 },
           away: { teamName: "키움", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/BXbvDpPIJZ_HpPL4qikxNg_48x48.png", votes: 8888 },
           status: "경기전",
@@ -663,9 +663,9 @@
         },
         {
           gameId: "1111-1",
-          home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 2030 },
-          draw: { teamName: "무승부", votes: 437 },
-          away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 1794 },
+          home: { teamName: "KIA", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/psd7z7tnBo7SD8f_Fxs-yg_48x48.png", votes: 88888 },
+          draw: { teamName: "무승부", votes: 9999999 },
+          away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 888888 },
           status: "경기전",
           startTime: "18:30",
           userSelection: "none", league: "KBO"

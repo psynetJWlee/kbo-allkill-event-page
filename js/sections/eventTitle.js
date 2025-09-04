@@ -42,7 +42,7 @@ function initEventTitleSection() {
         매일 100 / n 만원 !
       </div>
       <div class="event-title-line4">
-      총 3천만원
+      총 4천만원
     </div>
     </div>
     <img 
