@@ -77,7 +77,7 @@ function showPrizeWarningToast() {
   if (existing) existing.remove();
   const toast = document.createElement('div');
   toast.className = 'prize-toast-warning';
-  toast.innerHTML = '<span class="prize-toast-warning-text">5천원 이상시 지급신청 가능</span>';
+  toast.innerHTML = '<span class="prize-toast-warning-text">5천원 이상부터 지급신청 가능</span>';
   document.body.appendChild(toast);
   setTimeout(() => {
     toast.remove();

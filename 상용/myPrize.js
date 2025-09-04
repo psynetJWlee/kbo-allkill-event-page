@@ -77,9 +77,9 @@ function closeToast() {
 	 setTimeout(() => {
 	 
 	   const ua = navigator.userAgent;
-	   console.log('User Agent:', ua);
+	   //console.log('User Agent:', ua);
 	   if (ua.includes('LIVESCORE_WEBVIEW')) {
-	    console.log('LIVE스코어 앱 WebView에서 실행');
+	    //console.log('LIVE스코어 앱 WebView에서 실행');
 	    // iOS WKWebView
 	    if (/iPhone|iPad|iPod/i.test(ua)) {
 //			      webkit.messageHandlers.applycost();
@@ -100,7 +100,7 @@ function closeToast() {
 	  }
 	  // 일반 브라우저에서 실행
 	  else {
-	    console.log('일반 브라우저에서 실행');
+	    //console.log('일반 브라우저에서 실행');
 	    // iOS Safari/Chrome 등
 	    if (/iPhone|iPad|iPod/i.test(ua)) {
 	    	 alert('LIVE스코어 APP 에서 가능합니다');
@@ -133,17 +133,17 @@ function closeToast() {
 
 function handleInquiry() {
 	// 문의하기 기능 - 현재는 버튼만 표시
-	console.log('문의하기 버튼 클릭됨');
+	//console.log('문의하기 버튼 클릭됨');
 	// 여기에 실제 문의하기 기능을 추가할 수 있습니다
 	
 	//onClickInquiry()
 	
   const ua = navigator.userAgent;
-  console.log('User Agent:', ua);
+  //console.log('User Agent:', ua);
 
   // LIVE스코어 앱 WebView인지 확인 (custom userAgent)
   if (ua.includes('LIVESCORE_WEBVIEW')) {
-    console.log('LIVE스코어 앱 WebView에서 실행');
+    //console.log('LIVE스코어 앱 WebView에서 실행');
     
     // iOS WKWebView
     if (/iPhone|iPad|iPod/i.test(ua)) {
@@ -162,7 +162,7 @@ function handleInquiry() {
   }
   // 일반 브라우저에서 실행
   else {
-    console.log('일반 브라우저에서 실행');
+    //console.log('일반 브라우저에서 실행');
     
     // iOS Safari/Chrome 등
     if (/iPhone|iPad|iPod/i.test(ua)) {
@@ -189,7 +189,7 @@ function showPrizeWarningToast() {
 	if (existing) existing.remove();
 	const toast = document.createElement('div');
 	toast.className = 'prize-toast-warning';
-	toast.innerHTML = '<span class="prize-toast-warning-text">5천원 초과시 지급신청 가능</span>';
+	toast.innerHTML = '<span class="prize-toast-warning-text">5천원 이상시 지급신청 가능</span>';
 	document.body.appendChild(toast);
 	setTimeout(() => {
 	 toast.remove();
@@ -209,15 +209,15 @@ function scrollMyPrizeSectionToBottom() {
 // 전역 상금 지급 신청 함수
 window.requestPrizePayment = function() {
 const reqBtn = document.querySelector('.request-button');
-  console.log('requestPrizePayment 호출');
+  //console.log('requestPrizePayment 호출');
   // 스크롤을 my-prize-section 상단으로 이동
   const section = document.querySelector('.my-prize-section');
   if (section) {
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  // ───── 추가: 총액이 5,000원 이하이면 신청 불가 ─────
-  if ((userData.currentAmount || 0) <= 5000) {
-    //alert('상금 신청은 5,000원 초과부터 가능합니다.');
+  // ───── 추가: 총액이 5,000원 미만이면 신청 불가 ─────
+  if ((userData.currentAmount || 0) < 5000) {
+    //alert('상금 신청은 5,000원 이상부터 가능합니다.');
 	showPrizeWarningToast();
     return;
   }
@@ -228,11 +228,11 @@ const reqBtn = document.querySelector('.request-button');
   reqBtn.disabled = true;
 
   const ua = navigator.userAgent;
-  console.log('User Agent:', ua);
+  //console.log('User Agent:', ua);
 
   // LIVE스코어 앱 WebView인지 확인 (custom userAgent)
   if (ua.includes('LIVESCORE_WEBVIEW')) {
-    console.log('LIVE스코어 앱 WebView에서 실행');
+    //console.log('LIVE스코어 앱 WebView에서 실행');
     
     // iOS WKWebView
     if (/iPhone|iPad|iPod/i.test(ua)) {
@@ -252,7 +252,7 @@ const reqBtn = document.querySelector('.request-button');
   }
   // 일반 브라우저에서 실행
   else {
-    console.log('일반 브라우저에서 실행');
+    //console.log('일반 브라우저에서 실행');
     
     // iOS Safari/Chrome 등
     if (/iPhone|iPad|iPod/i.test(ua)) {
@@ -286,39 +286,39 @@ const reqBtn = document.querySelector('.request-button');
 
 // 전역 페이지 네비게이션 함수들 (onclick에서 직접 호출)
 window.myPrizeGoToPage = async function(page) {
-  console.log('myPrizeGoToPage 호출:', page);
-  console.log('현재 userData.myPrize 상태:', userData.myPrize);
+  //console.log('myPrizeGoToPage 호출:', page);
+  //console.log('현재 userData.myPrize 상태:', userData.myPrize);
   
   if (!userData.myPrize) {
     console.error('userData.myPrize가 없습니다!');
     return;
   }
   
-  console.log('조건 체크:');
-  console.log('- page !== userData.myPrize.currentPage:', page !== userData.myPrize.currentPage);
-  console.log('- page >= 1:', page >= 1);
-  console.log('- page <= userData.myPrize.totalPages:', page <= userData.myPrize.totalPages);
-  console.log('- 현재 페이지:', userData.myPrize.currentPage);
-  console.log('- 총 페이지:', userData.myPrize.totalPages);
+  //console.log('조건 체크:');
+  //console.log('- page !== userData.myPrize.currentPage:', page !== userData.myPrize.currentPage);
+  //console.log('- page >= 1:', page >= 1);
+  //console.log('- page <= userData.myPrize.totalPages:', page <= userData.myPrize.totalPages);
+  //console.log('- 현재 페이지:', userData.myPrize.currentPage);
+  //console.log('- 총 페이지:', userData.myPrize.totalPages);
   
   if (userData.myPrize && page !== userData.myPrize.currentPage && page >= 1 && page <= userData.myPrize.totalPages) {
-    console.log('조건 만족 - handlePageChange 호출');
+    //console.log('조건 만족 - handlePageChange 호출');
     await handlePageChange(page);
   } else {
-    console.log('조건 불만족 - handlePageChange 호출하지 않음');
+    //console.log('조건 불만족 - handlePageChange 호출하지 않음');
     scrollMyPrizeSectionToBottom();
   }
 };
 
 window.myPrizePrevPage = async function() {
-  console.log('myPrizePrevPage 호출, 현재 페이지:', userData.myPrize?.currentPage);
+  //console.log('myPrizePrevPage 호출, 현재 페이지:', userData.myPrize?.currentPage);
   if (userData.myPrize && userData.myPrize.currentPage > 1) {
     await handlePageChange(userData.myPrize.currentPage - 1);
   }
 };
 
 window.myPrizeNextPage = async function() {
-  console.log('myPrizeNextPage 호출, 현재 페이지:', userData.myPrize?.currentPage);
+  //console.log('myPrizeNextPage 호출, 현재 페이지:', userData.myPrize?.currentPage);
   if (userData.myPrize && userData.myPrize.currentPage < userData.myPrize.totalPages) {
     await handlePageChange(userData.myPrize.currentPage + 1);
   }
@@ -329,14 +329,14 @@ window.myPrizeNextPage = async function() {
 // ==============================
 async function handlePageChange(page) {
   try {
-    console.log('MyPrize - handlePageChange 호출:', page);
-    console.log('MyPrize - 변경 전 userData.myPrize.currentPage:', userData.myPrize.currentPage);
+    //console.log('MyPrize - handlePageChange 호출:', page);
+    //console.log('MyPrize - 변경 전 userData.myPrize.currentPage:', userData.myPrize.currentPage);
     userData.myPrize.currentPage = page;
-    console.log('MyPrize - 변경 후 userData.myPrize.currentPage:', userData.myPrize.currentPage);
-    console.log('MyPrize - initMyPrizeSection 호출 시작');
+    //console.log('MyPrize - 변경 후 userData.myPrize.currentPage:', userData.myPrize.currentPage);
+    //console.log('MyPrize - initMyPrizeSection 호출 시작');
     await initMyPrizeSection();
     scrollMyPrizeSectionToBottom();
-    console.log('MyPrize - initMyPrizeSection 완료');
+    //console.log('MyPrize - initMyPrizeSection 완료');
   } catch (error) {
     console.error('MyPrize - 페이지 변경 오류:', error);
   }
@@ -380,11 +380,11 @@ async function initMyPrizeSection() {
     // userData.myPrize 초기화 - 기존 값 보존
     if (!userData.myPrize) {
       userData.myPrize = { currentPage: 1, totalPages: 1 };
-      console.log('MyPrize - userData.myPrize 새로 생성:', userData.myPrize);
+      //console.log('MyPrize - userData.myPrize 새로 생성:', userData.myPrize);
     } else {
       // 기존 userData.myPrize가 있으면 currentPage만 기본값 설정
       userData.myPrize.currentPage = userData.myPrize.currentPage || 1;
-      console.log('MyPrize - 기존 userData.myPrize 사용:', userData.myPrize);
+      //console.log('MyPrize - 기존 userData.myPrize 사용:', userData.myPrize);
     }
 
     // 로그인 상태 및 사용자 정보 확인
@@ -407,10 +407,10 @@ async function initMyPrizeSection() {
       // userData 업데이트 - API 응답의 totalPages 사용
       userData.myPrize.currentPage = currentPage;
       userData.myPrize.totalPages = prizeResponse.totalPages || 1;
-      console.log('MyPrize - API 데이터 사용, totalPages:', prizeResponse.totalPages);
+      //console.log('MyPrize - API 데이터 사용, totalPages:', prizeResponse.totalPages);
     } else {
       // API 실패시 fallback: 기존 데이터 사용
-//      console.log('MyPrize - Fallback 데이터 사용');
+//      //console.log('MyPrize - Fallback 데이터 사용');
 //      const allHistory = window.prizeHistory || generateFallbackPrizeHistory();
 //      const calculatedTotalPages = Math.ceil(allHistory.length / MY_PRIZE_PAGE_SIZE);
 //      userData.myPrize.totalPages = calculatedTotalPages;
@@ -418,7 +418,7 @@ async function initMyPrizeSection() {
 //      const startIdx = (userData.myPrize.currentPage - 1) * MY_PRIZE_PAGE_SIZE;
 //      const endIdx = startIdx + MY_PRIZE_PAGE_SIZE;
 //      currentHistory = allHistory.slice(startIdx, endIdx);
-//      console.log('MyPrize - Fallback 데이터 사용, 계산된 totalPages:', calculatedTotalPages);
+//      //console.log('MyPrize - Fallback 데이터 사용, 계산된 totalPages:', calculatedTotalPages);
     }
 
     // ───── 3) 올킬 도전 버튼 텍스트 동적 생성 ─────
@@ -629,7 +629,7 @@ async function initMyPrizeSection() {
     $('#prize-history-items').html(historyItemsHtml);
 
     // 페이징 핸들러는 onclick 방식이므로 별도 바인딩 불필요
-    console.log('MyPrize - 페이지네이션은 onclick 방식으로 설정됨');
+    //console.log('MyPrize - 페이지네이션은 onclick 방식으로 설정됨');
     
     // ───── 6) 페이지 접속 시 토스트 알림 표시 ─────
   	if (currentHistory.some(item => item.history === "지급 정보 불일치")) {
@@ -778,7 +778,7 @@ function renderWithExistingData() {
   $('#prize-history-items').html(historyItemsHtml);
 
   // 페이징 핸들러는 onclick 방식이므로 별도 바인딩 불필요
-  console.log('MyPrize - 페이지네이션은 onclick 방식으로 설정됨');
+  //console.log('MyPrize - 페이지네이션은 onclick 방식으로 설정됨');
 }
 
 // Export the initialization function
