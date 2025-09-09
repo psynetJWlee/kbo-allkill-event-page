@@ -228,6 +228,14 @@
     ].includes(eventStatus);
   }
 
+  // 날짜 포맷 변환 (YYYYMMDD -> M/D)
+  function formatEventDate(dateStr) {
+    if (!dateStr || dateStr.length !== 8) return '';
+    const month = parseInt(dateStr.substring(4, 6), 10);
+    const day = parseInt(dateStr.substring(6, 8), 10);
+    return `${month}/${day}`;
+  }
+
   // 날짜 내비게이션 렌더링
   function renderDateNavigation() {
     const today = new Date();
@@ -249,8 +257,26 @@
     const prevArrow = prevKey
       ? `<div class="nav-arrow prev" data-key="${prevKey}"></div>`
       : `<div class="nav-arrow-placeholder"></div>`;
-    // 중앙: 날짜 + 올킬 텍스트
+    
+    // 중앙: 날짜 + 올킬 텍스트와 이벤트 기간을 묶은 컨테이너
     const centerText = `<span class="nav-date">${getDisplayDate(key)} 올킬</span>`;
+    
+    // 이벤트 기간 정보
+    let eventPeriodText = '';
+    if (window.eventInfo && window.eventInfo.eventStartDate && window.eventInfo.eventEndDate) {
+      const startDate = formatEventDate(window.eventInfo.eventStartDate);
+      const endDate = formatEventDate(window.eventInfo.eventEndDate);
+      eventPeriodText = `<span class="event-period">이벤트 기간 : ${startDate} ~ ${endDate}</span>`;
+    }
+    
+    // 중앙 컨테이너: 날짜와 이벤트 기간을 묶음
+    const centerContainer = `
+      <div class="nav-center-container">
+        ${centerText}
+        ${eventPeriodText}
+      </div>
+    `;
+    
     // 우측: 체크 아이콘 또는 다음 날짜 이동 화살표 또는 placeholder
     let rightIcon = '';
     if (isToday && shouldShowCheckIcon(eventStatus)) {
@@ -265,7 +291,7 @@
     const html = `
       <div class="date-navigation">
         ${prevArrow}
-        ${centerText}
+        ${centerContainer}
         ${rightIcon}
       </div>
       
@@ -495,6 +521,23 @@
       let sel = window.appState.selectedTeams?.[match.gameId];
       if (!sel || sel === 'none') sel = match.userSelection;
       const $row2 = $('<div>').addClass('game-row row2');
+      
+      // 경기종료 상태에서 스코어 비교하여 승리팀 결정
+      let winnerTeam = null;
+      if (match.status === '경기종료' && match.score && 
+          typeof match.score.home === 'number' && typeof match.score.away === 'number') {
+        const homeScore = match.score.home;
+        const awayScore = match.score.away;
+        
+        if (homeScore > awayScore) {
+          winnerTeam = 'home';
+        } else if (awayScore > homeScore) {
+          winnerTeam = 'away';
+        } else {
+          winnerTeam = 'draw';
+        }
+      }
+      
       // vote-count 배열 준비
       const voteArr = [
         { key: 'home', value: match.home.votes },
@@ -508,9 +551,15 @@
         const obj = k==='draw'? match.draw : match[k];
         let isSelected = sel===k;
         let cls = isSelected ? 'selected' : '';
-        // top-vote 클래스 조건: 최대값이 1개만 있을 때만 적용
+        
+        // 경기종료 상태에서 승리팀 표기
+        if (match.status === '경기종료' && winnerTeam === k) {
+          cls += ' winner-team';
+        }
+        
+        // top-vote 클래스 조건: 경기종료가 아닐 때만 최대값이 1개만 있을 때 적용
         const maxVoteCount = voteArr.filter(v => v.value === maxVote).length;
-        if (obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
+        if (match.status !== '경기종료' && obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
           cls += ' top-vote';
         }
         // 승/무/패 텍스트 및 team-name 클래스 지정
@@ -857,6 +906,22 @@
     // 현재 게임의 모든 팀 박스에서 top-vote 클래스 제거
     $(`[data-game-id="${gameId}"]`).removeClass('top-vote');
     
+    // 경기종료 상태에서 스코어 비교하여 승리팀 결정
+    let winnerTeam = null;
+    if (match.status === '경기종료' && match.score && 
+        typeof match.score.home === 'number' && typeof match.score.away === 'number') {
+      const homeScore = match.score.home;
+      const awayScore = match.score.away;
+      
+      if (homeScore > awayScore) {
+        winnerTeam = 'home';
+      } else if (awayScore > homeScore) {
+        winnerTeam = 'away';
+      } else {
+        winnerTeam = 'draw';
+      }
+    }
+    
     // vote-count 배열 준비
     const voteArr = [
       { key: 'home', value: match.home.votes },
@@ -872,8 +937,15 @@
       const obj = k === 'draw' ? match.draw : match[k];
       const maxVoteCount = voteArr.filter(v => v.value === maxVote).length;
       
-      if (obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
+      if (match.status !== '경기종료' && obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
         $(`[data-game-id="${gameId}"][data-team="${k}"]`).addClass('top-vote');
+      }
+      
+      // 경기종료 상태에서 승리팀 표기
+      if (match.status === '경기종료' && winnerTeam === k) {
+        $(`[data-game-id="${gameId}"][data-team="${k}"]`).addClass('winner-team');
+      } else {
+        $(`[data-game-id="${gameId}"][data-team="${k}"]`).removeClass('winner-team');
       }
     });
   }
@@ -1686,3 +1758,4 @@
   // 문서 준비 후 초기화
   $(document).ready(window.teamSelectionSection.init);
 })(jQuery);
+

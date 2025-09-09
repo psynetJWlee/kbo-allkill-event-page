@@ -11,6 +11,12 @@
 
 
 (function() {
+  // 이벤트 기간 정보
+  window.eventInfo = {
+    eventStartDate: "20250821",
+    eventEndDate: "20250930"
+  };
+
   window.matchData = {
     "2025-07-01": {
       eventStatus: "EVENT_CANCELLED_MULTI_GAMES",
@@ -414,7 +420,7 @@
         }
       ]
     },
-    "2025-08-03": {
+    /*"2025-08-03": {
       eventStatus: "COMPLETED_USER_SUCCESS",
       totalParticipants: 20000,
       winners: 3,
@@ -426,6 +432,7 @@
           away: { teamName: "LG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/3NqgO_dpTThWu3KBf600tg_48x48.png", votes: 0 },
           status: "경기종료",
           startTime: "18:00",
+          score: { home: 5, away: 3 },
           userSelection: "away", league: "KBO",
           gameResult: "home",
           eventResult: "success"
@@ -437,7 +444,8 @@
           away: { teamName: "NC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/dDCbStDchWQktsZf2swYyA_48x48.png", votes: 0 },
           status: "경기종료",
           startTime: "18:00",
-          userSelection: "home", league: "KBO",
+          score: { home: 4, away: 2 },
+          userSelection: "away", league: "KBO",
           gameResult: "home",
           eventResult: "success"
         },
@@ -448,6 +456,7 @@
           away: { teamName: "삼성", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/c_Jn4jW-NOwRtnGE7uQRAA_48x48.png", votes: 0 },
           status: "경기종료",
           startTime: "18:00",
+          score: { home: 7, away: 1 },
           userSelection: "home", league: "KBO",
           gameResult: "home",
           eventResult: "success"
@@ -459,6 +468,7 @@
           away: { teamName: "SSG", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/171JeGI-4meYHLIoUPjerQ_48x48.png", votes: 0 },
           status: "경기종료",
           startTime: "18:00",
+          score: { home: 6, away: 3 },
           userSelection: "home", league: "KBO",
           gameResult: "home",
           eventResult: "success"
@@ -470,6 +480,7 @@
           away: { teamName: "롯데", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/cGrvIuBYzj4D6KFLPV1MBg_48x48.png", votes: 0 },
           status: "경기종료",
           startTime: "18:00",
+          score: { home: 8, away: 2 },
           userSelection: "home", league: "KBO",
           gameResult: "home",
           eventResult: "success"
@@ -646,8 +657,8 @@
       games: [
         
       ]
-    },
-    "2025-09-03": {
+    },*/
+    "2025-09-09": {
       eventStatus: "PENDING_USER_NOT_SELECTED",
       totalParticipants: 11000,
       winners: 0,

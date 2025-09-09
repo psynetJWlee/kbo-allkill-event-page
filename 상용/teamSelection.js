@@ -1,4 +1,11 @@
 // teamSelection.js
+// 
+// 개발자 가이드:
+// 1. 승리팀 표시 기능: 경기종료 시 스코어 비교하여 실제 승리팀에 'winner-team' 클래스 적용
+// 2. top-vote 조건 수정: 경기종료 상태에서는 투표수 기반 top-vote 클래스 적용 안 함
+// 3. 이벤트 기간 표시: 네비게이션에 이벤트 기간 정보 표시 (실제 API 연동 필요)
+// 4. CSS 스타일: .winner-team 클래스에 대한 스타일링 필요 (빨간색 테두리, "승리" 라벨)
+// 5. API 연동: window.eventInfo 객체를 실제 이벤트 정보 API로 교체 필요
 
 (function($) {
   // ==============================
@@ -259,7 +266,7 @@
       return 'NO_GAMES_EVENT_DISABLED';
     }
 
-    const cancelledStatuses = ['경기지연', '경기중지', '서스펜드', '경기취소'];
+    const cancelledStatuses = ['서스펜드', '경기취소'];
     const cancelledCount = games.filter(g => 
       g.gameId !== 'null' && cancelledStatuses.includes(g.status)
     ).length;
@@ -280,7 +287,7 @@
       if (g.gameId === 'null') return true;
       
       // 취소된 경기는 올킬 판정에서 자동 성공 처리
-      const cancelledStatuses = ['경기지연', '경기중지', '서스펜드', '경기취소'];
+      const cancelledStatuses = [ '서스펜드', '경기취소'];
       if (cancelledStatuses.includes(g.status)) return true;
       
       return g.eventResult === 'success';
@@ -436,6 +443,14 @@
     const [year, month, day] = dateKey.split('-');
     return `${parseInt(month, 10)}월 ${parseInt(day, 10)}일`;
   }
+
+  // 날짜 포맷 변환 (YYYYMMDD -> M/D)
+  function formatEventDate(dateStr) {
+    if (!dateStr || dateStr.length !== 8) return '';
+    const month = parseInt(dateStr.substring(4, 6), 10);
+    const day = parseInt(dateStr.substring(6, 8), 10);
+    return `${month}/${day}`;
+  }
 //체크 아이콘 노출 조건
   function shouldShowCheckIcon(eventStatus) {
     return [
@@ -464,8 +479,32 @@
       ? `<div class="nav-arrow prev" data-key="${prevKey}"></div>`
       : `<div class="nav-arrow-placeholder"></div>`;
     
-    // 중앙: 날짜 + 올킬 텍스트
+    // 중앙: 날짜 + 올킬 텍스트와 이벤트 기간을 묶은 컨테이너
     const centerText = `<span class="nav-date">${getDisplayDate(key)} 올킬</span>`;
+    
+    // 이벤트 기간 정보 (개발자가 실제 API로 교체 필요)
+    let eventPeriodText = '';
+    // TODO: 개발자 - 실제 이벤트 정보 API 호출로 교체
+    // 예: const eventInfo = await window.apiUtils.getEventInfo();
+    const eventInfo = window.eventInfo || {
+      eventStartDate: "20250821",
+      eventEndDate: "20250930"
+    };
+    
+    if (eventInfo && eventInfo.eventStartDate && eventInfo.eventEndDate) {
+      const startDate = formatEventDate(eventInfo.eventStartDate);
+      const endDate = formatEventDate(eventInfo.eventEndDate);
+      eventPeriodText = `<span class="event-period">이벤트 기간 : ${startDate} ~ ${endDate}</span>`;
+    }
+    
+    // 중앙 컨테이너: 날짜와 이벤트 기간을 묶음
+    const centerContainer = `
+      <div class="nav-center-container">
+        ${centerText}
+        ${eventPeriodText}
+      </div>
+    `;
+    
     // 우측: 체크 아이콘 또는 다음 날짜 이동 화살표 또는 placeholder
     let rightIcon = '';
     if (isToday && shouldShowCheckIcon(eventStatus)) {
@@ -478,9 +517,9 @@
 
     const html = `
       <div class="date-navigation">
-               ${prevArrow}
-    			${centerText}
-        		${rightIcon}
+        ${prevArrow}
+        ${centerContainer}
+        ${rightIcon}
       </div>
     `;
     $(containerSelector).html(html);
@@ -709,6 +748,23 @@
       let sel = window.appState.selectedTeams?.[match.gameId];
       if (!sel || sel === 'none') sel = match.userSelection;
       const $row2 = $('<div>').addClass('game-row row2');
+      
+      // 경기종료 상태에서 스코어 비교하여 승리팀 결정
+      let winnerTeam = null;
+      if (match.status === '경기종료' && match.score && 
+          typeof match.score.home === 'number' && typeof match.score.away === 'number') {
+        const homeScore = match.score.home;
+        const awayScore = match.score.away;
+        
+        if (homeScore > awayScore) {
+          winnerTeam = 'home';
+        } else if (awayScore > homeScore) {
+          winnerTeam = 'away';
+        } else {
+          winnerTeam = 'draw';
+        }
+      }
+      
       // vote-count 배열 준비
       const voteArr = [
         { key: 'home', value: match.home.votes },
@@ -727,9 +783,15 @@
         const obj = k==='draw'? match.draw : match[k];
         let isSelected = sel===k;
         let cls = isSelected ? 'selected' : '';
-        // top-vote 클래스 조건: 최대값이 1개만 있을 때만 적용
+        
+        // 경기종료 상태에서 승리팀 표기
+        if (match.status === '경기종료' && winnerTeam === k) {
+          cls += ' winner-team';
+        }
+        
+        // top-vote 클래스 조건: 경기종료가 아닐 때만 최대값이 1개만 있을 때 적용
         const maxVoteCount = voteArr.filter(v => v.value === maxVote).length;
-        if (obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
+        if (match.status !== '경기종료' && obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
           cls += ' top-vote';
         }
         // 승/무/패 텍스트 및 team-name 클래스 지정
@@ -1115,7 +1177,66 @@
   }
 
   // ==============================
-  // 11. 팀 선택 핸들러
+  // 11. top-vote 클래스 업데이트 함수
+  // ==============================
+  function updateTopVoteClasses(gameId) {
+    const match = window.matchData[dateKeys[currentIndex]].games.find(g => g.gameId === gameId);
+    if (!match) return;
+    
+    // 현재 게임의 모든 팀 박스에서 top-vote 클래스 제거
+    $(`[data-game-id="${gameId}"]`).removeClass('top-vote');
+    
+    // 경기종료 상태에서 스코어 비교하여 승리팀 결정
+    let winnerTeam = null;
+    if (match.status === '경기종료' && match.score && 
+        typeof match.score.home === 'number' && typeof match.score.away === 'number') {
+      const homeScore = match.score.home;
+      const awayScore = match.score.away;
+      
+      if (homeScore > awayScore) {
+        winnerTeam = 'home';
+      } else if (awayScore > homeScore) {
+        winnerTeam = 'away';
+      } else {
+        winnerTeam = 'draw';
+      }
+    }
+    
+    // vote-count 배열 준비
+    const voteArr = [
+      { key: 'home', value: match.home.votes },
+      { key: 'draw', value: match.draw ? match.draw.votes : null },
+      { key: 'away', value: match.away.votes }
+    ].filter(v => v.value !== null);
+    
+    const maxVote = Math.max(...voteArr.map(v => v.value));
+    
+    // 최고 득표팀에만 top-vote 클래스 추가 (동점일 때는 제외)
+    var hdaArray = ['home','draw','away'];
+    if(match.compe == "baseball"){
+      hdaArray = ['away','draw','home'];
+    }
+    
+    hdaArray.forEach(k => {
+      if (k === 'draw' && !match.draw) return;
+      const obj = k === 'draw' ? match.draw : match[k];
+      const maxVoteCount = voteArr.filter(v => v.value === maxVote).length;
+      
+      if (match.status !== '경기종료' && obj.votes === maxVote && maxVote > 0 && maxVoteCount === 1) {
+        $(`[data-game-id="${gameId}"][data-team="${k}"]`).addClass('top-vote');
+      }
+      
+      // 경기종료 상태에서 승리팀 표기
+      if (match.status === '경기종료' && winnerTeam === k) {
+        $(`[data-game-id="${gameId}"][data-team="${k}"]`).addClass('winner-team');
+      } else {
+        $(`[data-game-id="${gameId}"][data-team="${k}"]`).removeClass('winner-team');
+      }
+    });
+  }
+
+  // ==============================
+  // 12. 팀 선택 핸들러
   // ==============================
   function canEditSelections() {
     const key = dateKeys[currentIndex];
@@ -1220,6 +1341,9 @@
         // 필요한 상태 동기화 함수들만 호출
         
         //console.log(`팀 선택됨: ${id} -> ${tm}`);
+        
+        // === top-vote 클래스 업데이트 ===
+        updateTopVoteClasses(id);
         
         // === 상태 동기화 함수 호출 ===
         updateSubmitButton();
