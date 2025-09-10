@@ -192,7 +192,7 @@ function initWinnersSection() {
     }
   }
   // 페이징 하단에 올킬 도전 버튼 추가 (기존 로직 삭제)
-  createGoToTeamSelectionButton('#winners-section');
+  // createGoToTeamSelectionButton('#winners-section');
 
   // 날짜 내비게이션 이벤트 핸들러
   $sec.find('.nav-arrow').off('click').on('click', function() {

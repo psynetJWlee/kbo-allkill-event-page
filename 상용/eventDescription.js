@@ -181,6 +181,19 @@ async function initEventDescriptionSection() {
 	}
 	 const btnText = getNextPendingAllkillText();
 	const sectionHtml = `
+	    <!-- 상금 지급 안내내 -->
+	    <div class="info-header">
+	      <img 
+	        src="/image/info-icon.png" 
+	        alt="정보 아이콘" 
+	        class="info-icon"
+	      />
+	      <h3 class="info-title">상금 지급 안내내</h3>
+	    </div>
+	    <ul class="info-list">
+	      ${convertToLiTags(eventNotice)}
+	    </ul>
+
 	    <!-- 올킬 이벤트 안내 -->
 	    <div class="info-header">
 	      <img 
@@ -191,19 +204,6 @@ async function initEventDescriptionSection() {
 	      <h3 class="info-title">올킬 이벤트 안내</h3>
 	    </div>
 	    <ul class="info-list">
-	      ${convertToLiTags(eventNotice)}
-	    </ul>
-
-	    <!-- 상금 지급 안내 -->
-	    <div class="info-header">
-	      <img 
-	        src="/image/info-icon.png" 
-	        alt="정보 아이콘" 
-	        class="info-icon"
-	      />
-	      <h3 class="info-title">상금 지급 안내</h3>
-	    </div>
-	    <ul class="info-list">
 	      ${convertToLiTags(eventPayNotice)}
 	    </ul>
 	  `;
@@ -211,7 +211,7 @@ async function initEventDescriptionSection() {
   $('#event-description-section').html(sectionHtml);
   
   //올킬 도전 버튼 추가 (템플릿 내가 아니라 여기서!)
-  createGoToTeamSelectionButton('#event-description-section');
+  // createGoToTeamSelectionButton('#event-description-section');
 //다운로드 버튼을 제일 아래에 추가
   $('#event-description-section').append(`
 		  ${downloadButtonHtml}

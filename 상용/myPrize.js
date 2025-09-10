@@ -189,7 +189,7 @@ function showPrizeWarningToast() {
 	if (existing) existing.remove();
 	const toast = document.createElement('div');
 	toast.className = 'prize-toast-warning';
-	toast.innerHTML = '<span class="prize-toast-warning-text">5천원 이상시 지급신청 가능</span>';
+	toast.innerHTML = '<span class="prize-toast-warning-text">5천원 이상부터 지급신청 가능</span>';
 	document.body.appendChild(toast);
 	setTimeout(() => {
 	 toast.remove();
@@ -584,7 +584,7 @@ async function initMyPrizeSection() {
             </div>
           </div>
         </div><!-- /.prize-history -->
-         ${showGoToBtn ? `<button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button>` : ''}
+         ${showGoToBtn ? `<!-- <button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button> -->` : ''}
       </div><!-- /.my-prize-container -->
     `;
     $('#my-prize-section').html(sectionHtml);
@@ -730,7 +730,7 @@ function renderWithExistingData() {
       </div><!-- /.prize-group -->
       <div class="prize-history">
         <div class="history-header">
-          <p class="history-title">상금 내역</p>
+          <p class="history-title">My 상금 내역</p>
           <p class="total-prize">누적 ${safeFormatNumber(userData.totalAmount || 0)}</p>
         </div>
         <div class="history-items" id="prize-history-items"></div>

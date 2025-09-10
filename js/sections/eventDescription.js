@@ -130,7 +130,7 @@ function initEventDescriptionSection() {
   $('#event-description-section').html(sectionHtml);
 
   // 올킬 도전 버튼 추가 (템플릿 내가 아니라 여기서!)
-  createGoToTeamSelectionButton('#event-description-section');
+  // createGoToTeamSelectionButton('#event-description-section');
 
   // 다운로드 버튼을 제일 아래에 추가
   $('#event-description-section').append(`

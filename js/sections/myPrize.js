@@ -259,7 +259,7 @@ function initMyPrizeSection() {
       </div><!-- /.prize-group -->
       <div class="prize-history">
         <div class="history-header">
-          <p class="history-title">상금 내역</p>
+          <p class="history-title">My 상금 내역</p>
           <p class="total-prize">누적 ${formatNumber(userData.totalAmount)}</p>
         </div>
         <div class="history-items" id="prize-history-items"></div>
@@ -275,7 +275,7 @@ function initMyPrizeSection() {
           </div>
         </div>
       </div><!-- /.prize-history -->
-      ${showGoToBtn ? `<button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button>` : ''}
+      ${showGoToBtn ? `<!-- <button id="go-to-team-selection" class="${goToBtnClass}">${goToBtnText}</button> -->` : ''}
     </div><!-- /.my-prize-container -->
   `;
   $('#my-prize-section').html(sectionHtml);

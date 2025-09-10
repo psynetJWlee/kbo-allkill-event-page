@@ -21,7 +21,7 @@ async function loadWinnerDates() {
     if (response.success && response.winnerDates) {
       winnerDateKeys = response.winnerDates.slice().sort((a, b) => new Date(b) - new Date(a)); // 최신 날짜부터
       currentWinnerDateIndex = 0; // 최신 날짜부터 시작
-      console.log('Winners - 당첨자 날짜 로드 완료:', winnerDateKeys);
+      //console.log('Winners - 당첨자 날짜 로드 완료:', winnerDateKeys);
       return winnerDateKeys;
     } else {
       console.warn('Winners - 당첨자 날짜 API 응답 실패, 오늘 날짜만 사용');
@@ -107,7 +107,7 @@ async function initWinnersSection() {
   const { formatNumber } = window.utils;
   const $sec = $('#winners-section');
   
-  console.log('Winners - initWinnersSection 시작');
+  //console.log('Winners - initWinnersSection 시작');
   
   try {
     // 당첨자 날짜 목록 로드 (최초에만)
@@ -118,46 +118,46 @@ async function initWinnersSection() {
     // userData.winners 초기화 - 기존 값 보존
     if (!userData.winners) {
       userData.winners = { currentPage: 1, totalPages: 1 };
-      console.log('Winners - userData.winners 새로 생성:', userData.winners);
+      //console.log('Winners - userData.winners 새로 생성:', userData.winners);
     } else {
       // 기존 userData.winners가 있으면 currentPage만 기본값 설정
       userData.winners.currentPage = userData.winners.currentPage || 1;
-      console.log('Winners - 기존 userData.winners 사용:', userData.winners);
+      //console.log('Winners - 기존 userData.winners 사용:', userData.winners);
     }
     
     // 현재 선택된 날짜의 당첨자 데이터 로드
     const currentPage = userData.winners?.currentPage || 1;
     const currentDate = winnerDateKeys[currentWinnerDateIndex];
-    console.log('Winners - API 호출 시도, 날짜:', currentDate, '인덱스:', currentWinnerDateIndex, '페이지:', currentPage);
-    console.log('Winners - 전체 날짜 목록:', winnerDateKeys);
+    //console.log('Winners - API 호출 시도, 날짜:', currentDate, '인덱스:', currentWinnerDateIndex, '페이지:', currentPage);
+    //console.log('Winners - 전체 날짜 목록:', winnerDateKeys);
     
     let response;
     try {
       if (currentDate) {
         // 날짜를 YYYYMMDD 형식으로 변환하여 전달
         const dateParam = currentDate.replace(/-/g, '');
-        console.log('Winners - API 호출 URL: /api/winners.do?page=' + currentPage + '&pageSize=' + PAGE_SIZE + '&winnerDate=' + dateParam);
+        //console.log('Winners - API 호출 URL: /api/winners.do?page=' + currentPage + '&pageSize=' + PAGE_SIZE + '&winnerDate=' + dateParam);
         response = await window.apiUtils.getWinnersByDate(dateParam, currentPage, PAGE_SIZE);
       } else {
-        console.log('Winners - 날짜가 없어서 기본 API 호출');
+        //console.log('Winners - 날짜가 없어서 기본 API 호출');
         response = await window.apiUtils.getWinners(currentPage, PAGE_SIZE);
       }
-      console.log('Winners - API 응답 성공:', response);
+      //console.log('Winners - API 응답 성공:', response);
     } catch (apiError) {
-      console.log('Winners - API 호출 실패, fallback 사용:', apiError);
+      //console.log('Winners - API 호출 실패, fallback 사용:', apiError);
       response = { success: false };
     }
     
     let currentMembers = [];
     let totalCount = 0;
     
-    console.log('Winners - API 응답 상세 분석:', {
-      success: response.success,
-      winners: response.winners ? response.winners.length : 'null/undefined',
-      totalItems: response.totalItems,
-      totalPages: response.totalPages,
-      hasWinners: response.hasWinners
-    });
+    //console.log('Winners - API 응답 상세 분석:', {
+//      success: response.success,
+//      winners: response.winners ? response.winners.length : 'null/undefined',
+//      totalItems: response.totalItems,
+//      totalPages: response.totalPages,
+//      hasWinners: response.hasWinners
+//    });
     
     if (response.success) {
       // API 성공 시 데이터 처리
@@ -168,10 +168,10 @@ async function initWinnersSection() {
       userData.winners.currentPage = currentPage;
       userData.winners.totalPages = response.totalPages || 1;
       userData.winners.hasWinners = response.hasWinners !== false && totalCount > 0; // hasWinners가 false가 아니고 실제 데이터가 있으면 true
-      console.log('Winners - API 데이터 사용, currentMembers:', currentMembers.length, 'totalCount:', totalCount, 'totalPages:', response.totalPages, 'hasWinners:', userData.winners.hasWinners);
+      //console.log('Winners - API 데이터 사용, currentMembers:', currentMembers.length, 'totalCount:', totalCount, 'totalPages:', response.totalPages, 'hasWinners:', userData.winners.hasWinners);
     } else {
       // API 실패시 fallback: 더 강력한 기본 데이터 사용
-      console.log('Winners - API 실패, fallback 처리');
+      //console.log('Winners - API 실패, fallback 처리');
       userData.winners.hasWinners = false;
 //      console.log('Winners - Fallback 데이터 생성');
 //      const allMembers = generateFallbackWinners(); // 임시 데이터 생성
@@ -196,7 +196,7 @@ async function initWinnersSection() {
 
     // 당첨자가 없으면 섹션 숨기기
     if (!userData.winners.hasWinners) {
-      console.log('Winners - 당첨자가 없음, 섹션 숨김');
+      //console.log('Winners - 당첨자가 없음, 섹션 숨김');
       $sec.hide();
       return;
     }
@@ -207,7 +207,7 @@ async function initWinnersSection() {
       // currentDate는 YYYY-MM-DD 형식이므로 월/일 형식으로 변환
       const [year, month, day] = currentDate.split('-');
       dateDisplay = `${parseInt(month, 10)}월 ${parseInt(day, 10)}일 당첨자`;
-      console.log('Winners - 날짜 표시:', dateDisplay, '(원본:', currentDate, ')');
+      //console.log('Winners - 날짜 표시:', dateDisplay, '(원본:', currentDate, ')');
     } else if (response.success && response.pointDate) {
       // fallback: API 응답의 pointDate 사용
       const pointDate = response.pointDate;
@@ -216,7 +216,7 @@ async function initWinnersSection() {
         const day = pointDate.substring(6, 8); // 마지막 2자리가 일자
         dateDisplay = `${parseInt(month, 10)}월 ${parseInt(day, 10)}일 당첨자`;
       }
-      console.log('Winners - fallback 날짜 표시:', dateDisplay, '(원본:', pointDate, ')');
+      //console.log('Winners - fallback 날짜 표시:', dateDisplay, '(원본:', pointDate, ')');
     }
 
     // 날짜 네비게이션 생성 (totalCount 포함)
@@ -230,14 +230,14 @@ async function initWinnersSection() {
     
     $sec.html(sectionHtml);
     $sec.show(); // 당첨자가 있으면 섹션 표시
-    console.log('Winners - HTML 컨테이너 설정 완료');
+    //console.log('Winners - HTML 컨테이너 설정 완료');
     
     // Render member list (현재 페이지 멤버만)
     const memberListHtml = currentMembers
       .map(member => {
     	// 닉네임이 한글 6글자 이상이면 6글자+..으로 표기
-        let displayName = member.nickname;
-        const hangulMatch = displayName.match(/^[\uac00-\ud7a3]{6,}$/);
+        let displayName = member.nickname || '알수없음';
+        const hangulMatch = displayName && displayName.match(/^[\uac00-\ud7a3]{6,}$/);
         if (hangulMatch) {
           displayName = displayName.slice(0, 5) + '..';
         }  
@@ -259,7 +259,7 @@ async function initWinnersSection() {
       })
       .join('');
     
-    console.log('Winners - 멤버 리스트 HTML 생성 완료');
+    //console.log('Winners - 멤버 리스트 HTML 생성 완료');
     
     // ==============================
     // 공통 페이지네이션 번호 계산 함수
@@ -286,7 +286,7 @@ async function initWinnersSection() {
       const currentP = userData.winners.currentPage;
       const totalP = userData.winners.totalPages;
       
-      console.log('Winners - 페이지네이션 생성:', { currentP, totalP });
+      //console.log('Winners - 페이지네이션 생성:', { currentP, totalP });
       
       paginationHtml = `
         <div class="pagination">
@@ -305,26 +305,26 @@ async function initWinnersSection() {
     }
     
     $sec.find('#member-list').html(memberListHtml + paginationHtml);
-    console.log('Winners - 멤버 리스트 + 페이지네이션 HTML 삽입 완료');
+    //console.log('Winners - 멤버 리스트 + 페이지네이션 HTML 삽입 완료');
 
     // 실제 생성된 페이지 버튼 확인
     setTimeout(() => {
       const pageButtons = $sec.find('.page-item[data-page]');
-      console.log('Winners - 실제 생성된 페이지 버튼 개수:', pageButtons.length);
+      //console.log('Winners - 실제 생성된 페이지 버튼 개수:', pageButtons.length);
       pageButtons.each(function(index) {
-        console.log(`Winners - 버튼 ${index + 1}: 페이지 ${$(this).data('page')}, 텍스트: "${$(this).text()}"`);
+        //console.log(`Winners - 버튼 ${index + 1}: 페이지 ${$(this).data('page')}, 텍스트: "${$(this).text()}"`);
       });
      
     }, 100);
     
     
     //페이징 하단에 올킬 도전 버튼 추가 (기존 로직 삭제)
-    await createGoToTeamSelectionButton2('#winners-section');
+    // await createGoToTeamSelectionButton2('#winners-section');
     
 
     // 페이지네이션은 onclick 방식이므로 별도 바인딩 불필요
-    console.log('Winners - onclick 기반 페이지네이션 설정 완료');
-    console.log('Winners - initWinnersSection 완료');
+    //console.log('Winners - onclick 기반 페이지네이션 설정 완료');
+    //console.log('Winners - initWinnersSection 완료');
     
   } catch (error) {
     console.error('당첨자 섹션 초기화 오류:', error);
@@ -424,19 +424,19 @@ function generateFallbackWinners() {
 
 // 최소한의 fallback UI
 function renderMinimalFallback($sec) {
-  console.log('Winners - 최소한의 fallback UI 렌더링');
+  //console.log('Winners - 최소한의 fallback UI 렌더링');
   
   // userData.winners가 없거나 잘못된 경우만 초기화
   if (!userData.winners || !userData.winners.totalPages) {
     userData.winners = { currentPage: 1, totalPages: 3, hasWinners: true };
-    console.log('Winners - fallback에서 userData.winners 초기화:', userData.winners);
+    //console.log('Winners - fallback에서 userData.winners 초기화:', userData.winners);
   } else {
-    console.log('Winners - fallback에서 기존 userData.winners 유지:', userData.winners);
+    //console.log('Winners - fallback에서 기존 userData.winners 유지:', userData.winners);
   }
   
   // 당첨자가 없으면 섹션 숨기기
   if (!userData.winners.hasWinners) {
-    console.log('Winners - fallback에서도 당첨자가 없음, 섹션 숨김');
+    //console.log('Winners - fallback에서도 당첨자가 없음, 섹션 숨김');
     $sec.hide();
     return;
   }
@@ -468,72 +468,72 @@ function renderMinimalFallback($sec) {
   
   $sec.html(sectionHtml);
   $sec.show(); // fallback에서도 섹션 표시
-  console.log('Winners - fallback UI에서도 onclick 방식 사용');
+  //console.log('Winners - fallback UI에서도 onclick 방식 사용');
 }
 
 // 날짜 네비게이션 전역 함수들
 window.winnersGoToPrevDate = async function() {
-  console.log('winnersGoToPrevDate 호출, 현재 인덱스:', currentWinnerDateIndex, '날짜:', winnerDateKeys[currentWinnerDateIndex]);
+  //console.log('winnersGoToPrevDate 호출, 현재 인덱스:', currentWinnerDateIndex, '날짜:', winnerDateKeys[currentWinnerDateIndex]);
   if (currentWinnerDateIndex < winnerDateKeys.length - 1) {
     currentWinnerDateIndex++;
-    console.log('winnersGoToPrevDate 인덱스 변경 후:', currentWinnerDateIndex, '새 날짜:', winnerDateKeys[currentWinnerDateIndex]);
+    //console.log('winnersGoToPrevDate 인덱스 변경 후:', currentWinnerDateIndex, '새 날짜:', winnerDateKeys[currentWinnerDateIndex]);
     // 새 날짜로 변경시 userData.winners를 완전히 초기화
     userData.winners = { currentPage: 1, totalPages: 1 };
     await initWinnersSection();
     // 날짜 네비게이션에서는 스크롤하지 않음
   } else {
-    console.log('winnersGoToPrevDate 더 이상 과거 날짜가 없음');
+    //console.log('winnersGoToPrevDate 더 이상 과거 날짜가 없음');
   }
 };
 
 window.winnersGoToNextDate = async function() {
-  console.log('winnersGoToNextDate 호출, 현재 인덱스:', currentWinnerDateIndex, '날짜:', winnerDateKeys[currentWinnerDateIndex]);
+  //console.log('winnersGoToNextDate 호출, 현재 인덱스:', currentWinnerDateIndex, '날짜:', winnerDateKeys[currentWinnerDateIndex]);
   if (currentWinnerDateIndex > 0) {
     currentWinnerDateIndex--;
-    console.log('winnersGoToNextDate 인덱스 변경 후:', currentWinnerDateIndex, '새 날짜:', winnerDateKeys[currentWinnerDateIndex]);
+    //console.log('winnersGoToNextDate 인덱스 변경 후:', currentWinnerDateIndex, '새 날짜:', winnerDateKeys[currentWinnerDateIndex]);
     // 새 날짜로 변경시 userData.winners를 완전히 초기화
     userData.winners = { currentPage: 1, totalPages: 1 };
     await initWinnersSection();
     // 날짜 네비게이션에서는 스크롤하지 않음
   } else {
-    console.log('winnersGoToNextDate 더 이상 최근 날짜가 없음');
+    //console.log('winnersGoToNextDate 더 이상 최근 날짜가 없음');
   }
 };
 
 // 전역 페이지 네비게이션 함수들 (onclick에서 직접 호출)
 window.winnersGoToPage = async function(page) {
-  console.log('winnersGoToPage 호출:', page);
-  console.log('현재 userData.winners 상태:', userData.winners);
+  //console.log('winnersGoToPage 호출:', page);
+  //console.log('현재 userData.winners 상태:', userData.winners);
   
   if (!userData.winners) {
     console.error('userData.winners가 없습니다!');
     return;
   }
   
-  console.log('조건 체크:');
-  console.log('- page !== userData.winners.currentPage:', page !== userData.winners.currentPage);
-  console.log('- page >= 1:', page >= 1);
-  console.log('- page <= userData.winners.totalPages:', page <= userData.winners.totalPages);
-  console.log('- 현재 페이지:', userData.winners.currentPage);
-  console.log('- 총 페이지:', userData.winners.totalPages);
+  //console.log('조건 체크:');
+  //console.log('- page !== userData.winners.currentPage:', page !== userData.winners.currentPage);
+  //console.log('- page >= 1:', page >= 1);
+  //console.log('- page <= userData.winners.totalPages:', page <= userData.winners.totalPages);
+  //console.log('- 현재 페이지:', userData.winners.currentPage);
+  //console.log('- 총 페이지:', userData.winners.totalPages);
   
   if (userData.winners && page !== userData.winners.currentPage && page >= 1 && page <= userData.winners.totalPages) {
-    console.log('조건 만족 - changePage 호출');
+    //console.log('조건 만족 - changePage 호출');
     await changePage(page);
   } else {
-    console.log('조건 불만족 - changePage 호출하지 않음');
+    //console.log('조건 불만족 - changePage 호출하지 않음');
   }
 };
 
 window.winnersPrevPage = async function() {
-  console.log('winnersPrevPage 호출, 현재 페이지:', userData.winners?.currentPage);
+  //console.log('winnersPrevPage 호출, 현재 페이지:', userData.winners?.currentPage);
   if (userData.winners && userData.winners.currentPage > 1) {
     await changePage(userData.winners.currentPage - 1);
   }
 };
 
 window.winnersNextPage = async function() {
-  console.log('winnersNextPage 호출, 현재 페이지:', userData.winners?.currentPage);
+  //console.log('winnersNextPage 호출, 현재 페이지:', userData.winners?.currentPage);
   if (userData.winners && userData.winners.currentPage < userData.winners.totalPages) {
     await changePage(userData.winners.currentPage + 1);
   }
@@ -542,14 +542,14 @@ window.winnersNextPage = async function() {
 // 페이지 변경 처리
 async function changePage(page) {
   try {
-    console.log('Winners - changePage 호출:', page);
-    console.log('Winners - 변경 전 userData.winners.currentPage:', userData.winners.currentPage);
+    //console.log('Winners - changePage 호출:', page);
+    //console.log('Winners - 변경 전 userData.winners.currentPage:', userData.winners.currentPage);
     userData.winners.currentPage = page;
-    console.log('Winners - 변경 후 userData.winners.currentPage:', userData.winners.currentPage);
-    console.log('Winners - initWinnersSection 호출 시작');
+    //console.log('Winners - 변경 후 userData.winners.currentPage:', userData.winners.currentPage);
+    //console.log('Winners - initWinnersSection 호출 시작');
     await initWinnersSection();
     scrollWinnersSectionToBottom();
-    console.log('Winners - initWinnersSection 완료');
+    //console.log('Winners - initWinnersSection 완료');
   } catch (error) {
     console.error('Winners - 페이지 변경 오류:', error);
   }
