@@ -391,12 +391,12 @@ span.cancelled{
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding-bottom: 10px;
+  padding-bottom: 6px;
 }
 
 .nav-date {
-  font-size: 35px;  
-  letter-spacing: -1px;  
+  font-size: 34px;
+  letter-spacing: -1px;
 }
 
 .event-period {
