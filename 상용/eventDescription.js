@@ -181,17 +181,17 @@ async function initEventDescriptionSection() {
 	}
 	 const btnText = getNextPendingAllkillText();
 	const sectionHtml = `
-	    <!-- 상금 지급 안내내 -->
+	    <!-- 상금 지급 안내 -->
 	    <div class="info-header">
 	      <img 
 	        src="/image/info-icon.png" 
 	        alt="정보 아이콘" 
 	        class="info-icon"
 	      />
-	      <h3 class="info-title">상금 지급 안내내</h3>
+	      <h3 class="info-title">상금 지급 안내</h3>
 	    </div>
 	    <ul class="info-list">
-	      ${convertToLiTags(eventNotice)}
+	      ${convertToLiTags(eventPayNotice)}
 	    </ul>
 
 	    <!-- 올킬 이벤트 안내 -->
@@ -204,7 +204,7 @@ async function initEventDescriptionSection() {
 	      <h3 class="info-title">올킬 이벤트 안내</h3>
 	    </div>
 	    <ul class="info-list">
-	      ${convertToLiTags(eventPayNotice)}
+	      ${convertToLiTags(eventNotice)}
 	    </ul>
 	  `;
   

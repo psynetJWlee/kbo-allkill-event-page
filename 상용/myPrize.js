@@ -568,7 +568,7 @@ async function initMyPrizeSection() {
         </div><!-- /.prize-group -->
         <div class="prize-history">
           <div class="history-header">
-            <p class="history-title">상금 내역</p>
+            <p class="history-title">My 상금 내역</p>
             <p class="total-prize">누적 ${safeFormatNumber(userData.totalAmount || 0)}</p>
           </div>
           <div class="history-items" id="prize-history-items"></div>
