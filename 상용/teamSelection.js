@@ -884,6 +884,7 @@
         main = firstGameVoteTotal > 0 ? `제출 : ${firstGameVoteTotal.toLocaleString()} 명` : '';
         sub = '첫 경기 시작전까지 수정 가능';
         mainClass = 'submission-count';
+        statusClass = 'status-pending-selected';
         btnText = '';
         btnTextClass = '';
         subClass = 'SUB-PANDDING';
