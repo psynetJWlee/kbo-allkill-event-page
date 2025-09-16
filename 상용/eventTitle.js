@@ -11,7 +11,7 @@ function formatLocalDate(d) {
 //이벤트 타이틀 섹션 초기화 함수
 async function initEventTitleSection() {
   try {
-    console.log('이벤트 타이틀 섹션 초기화 시작');
+    //console.log('이벤트 타이틀 섹션 초기화 시작');
     
     // 오늘 날짜 계산
     const today = formatLocalDate(new Date());
@@ -25,23 +25,23 @@ async function initEventTitleSection() {
         if (response.success && response.games) {
           // null 게임이 아닌 실제 경기만 카운트
           gamesCount = response.games.filter(game => game.gameId !== 'null').length;
-          console.log(`이벤트 타이틀: API에서 ${gamesCount}개 경기 로드 완료`);
+          //console.log(`이벤트 타이틀: API에서 ${gamesCount}개 경기 로드 완료`);
         }
       } catch (error) {
         console.warn('오늘 경기 데이터 로드 실패, 폴백 사용:', error);
         // API 실패시 기존 방식으로 폴백
         const gamesArr = (window.matchData[today] && window.matchData[today].games) || [];
         gamesCount = gamesArr.filter(game => game.gameId !== 'null').length;
-        console.log(`이벤트 타이틀: 폴백에서 ${gamesCount}개 경기 로드`);
+        //console.log(`이벤트 타이틀: 폴백에서 ${gamesCount}개 경기 로드`);
       }
     } else {
       // apiUtils가 없으면 기존 방식으로 폴백
       const gamesArr = (window.matchData[today] && window.matchData[today].games) || [];
       gamesCount = gamesArr.filter(game => game.gameId !== 'null').length;
-      console.log(`이벤트 타이틀: apiUtils 없음, 폴백에서 ${gamesCount}개 경기 로드`);
+      //console.log(`이벤트 타이틀: apiUtils 없음, 폴백에서 ${gamesCount}개 경기 로드`);
     }
     
-    console.log(`오늘(${today}) 경기 수:`, gamesCount);
+    //console.log(`오늘(${today}) 경기 수:`, gamesCount);
 
     const sectionHtml = `
       
@@ -59,7 +59,7 @@ async function initEventTitleSection() {
           		매일 100 / n 만원 
         </div>
          <div class="event-title-line4">
-	      		총 3천만원
+	      		총 4천만원
 	    </div>
       </div>
       <img 
@@ -81,11 +81,11 @@ async function initEventTitleSection() {
 //      document.getElementById('event-title-section')
 //    );
     
-    console.log('이벤트 타이틀 섹션 HTML 렌더링 완료');
+    //console.log('이벤트 타이틀 섹션 HTML 렌더링 완료');
     
     // 로딩 단계 완료 신호 (정상 케이스)
     if (window.loadingUtils) {
-      console.log('이벤트 정보 로딩 단계 완료 신호 전송 (정상)');
+      //console.log('이벤트 정보 로딩 단계 완료 신호 전송 (정상)');
       window.loadingUtils.completeStep('eventInfo');
     }
     
@@ -122,11 +122,11 @@ async function initEventTitleSection() {
 
     $('#event-title-section').html(sectionHtml);
     
-    console.log('이벤트 타이틀 섹션 HTML 렌더링 완료 (에러 발생으로 기본값 사용)');
+    //console.log('이벤트 타이틀 섹션 HTML 렌더링 완료 (에러 발생으로 기본값 사용)');
     
     // 로딩 단계 완료 신호 (에러 발생시에도 전송)
     if (window.loadingUtils) {
-      console.log('이벤트 정보 로딩 오류 발생, 강제 완료 신호 전송');
+      //console.log('이벤트 정보 로딩 오류 발생, 강제 완료 신호 전송');
       window.loadingUtils.completeStep('eventInfo');
     }
   }

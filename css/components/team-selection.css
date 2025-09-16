@@ -246,7 +246,7 @@ span.cancelled{
   align-items: center;
   height: auto;
   padding: 22px 20px 22px 20px;
-  background-color: #1A5F7A;
+  
   color: var(--white);
   font-size: var(--font-size-5xl);
   opacity: 0.9;
@@ -442,6 +442,7 @@ span.cancelled{
   color: #000;
   cursor: pointer;
   pointer-events: auto;
+  border: 4px solid #000;
   
 }
 

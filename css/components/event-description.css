@@ -48,8 +48,7 @@
   align-items: center;
   height: 122px;
   width: 346px;
-  background-color: #1A5F7A;
-  color: var(--white);
+  color: #0000ff;
   font-size: var(--font-size-5xl);
   opacity: 0.9;
   font-weight: 400;
@@ -59,7 +58,11 @@
   line-height: 1.2;
   margin: 00px auto 50px auto;
   font-family: var(--font-primary);
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 3px;
 }
+
 
 .download-button:hover {
   background-color: #1d6e8c;

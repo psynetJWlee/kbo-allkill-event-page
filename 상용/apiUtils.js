@@ -19,7 +19,7 @@ window.apiUtils = (function() {
     function getCachedResponse(cacheKey) {
         const entry = cache.get(cacheKey);
         if (isCacheValid(entry)) {
-            console.log('캐시에서 응답 반환:', cacheKey);
+            //console.log('캐시에서 응답 반환:', cacheKey);
             return Promise.resolve(entry.data);
         }
         return null;
@@ -30,7 +30,7 @@ window.apiUtils = (function() {
             data: response,
             timestamp: Date.now()
         });
-        console.log('응답 캐시 저장:', cacheKey);
+        //console.log('응답 캐시 저장:', cacheKey);
     }
     
     // 공통 Ajax 요청 함수
@@ -109,7 +109,7 @@ window.apiUtils = (function() {
     // 캐시 초기화 함수
     function clearCache() {
         cache.clear();
-        console.log('API 캐시가 초기화되었습니다.');
+        //console.log('API 캐시가 초기화되었습니다.');
     }
     
     // 특정 날짜의 캐시만 제거
@@ -117,7 +117,7 @@ window.apiUtils = (function() {
         const url = `/api/games.do?date=${encodeURIComponent(date)}`;
         const cacheKey = getCacheKey(url, 'GET', null);
         cache.delete(cacheKey);
-        console.log('게임 캐시 삭제:', date);
+        //console.log('게임 캐시 삭제:', date);
     }
     
     // 이벤트가 있는 날짜 목록 조회
@@ -176,9 +176,9 @@ window.apiUtils = (function() {
         }
         
         const jsonData = JSON.stringify(selections);
-        console.log('전송할 JSON 데이터:', jsonData);
-        console.log('선택 정보 개수:', Object.keys(selections).length);
-        console.log('이벤트 날짜:', eventDate);
+        //console.log('전송할 JSON 데이터:', jsonData);
+        //console.log('선택 정보 개수:', Object.keys(selections).length);
+        //console.log('이벤트 날짜:', eventDate);
         
         const postData = {
             selectionsJson: jsonData
@@ -211,7 +211,7 @@ window.apiUtils = (function() {
     
     // 성능 비교 테스트 함수 (예: getGamesOptimized vs getGames 속도 비교)
     async function performanceTest(date, iterations = 5) {
-        console.log(`성능 테스트 시작: ${date}, 반복 횟수: ${iterations}`);
+        //console.log(`성능 테스트 시작: ${date}, 반복 횟수: ${iterations}`);
         
         // 캐시 초기화
         clearCache();
@@ -250,10 +250,10 @@ window.apiUtils = (function() {
         const avgOptimized = optimizedTimes.reduce((a, b) => a + b, 0) / optimizedTimes.length;
         const improvement = ((avgLegacy - avgOptimized) / avgLegacy * 100).toFixed(1);
         
-        console.log('=== 성능 테스트 결과 ===');
-        console.log(`기존 API 평균 응답시간: ${avgLegacy.toFixed(2)}ms`);
-        console.log(`최적화 API 평균 응답시간: ${avgOptimized.toFixed(2)}ms`);
-        console.log(`성능 향상: ${improvement}%`);
+        //console.log('=== 성능 테스트 결과 ===');
+        //console.log(`기존 API 평균 응답시간: ${avgLegacy.toFixed(2)}ms`);
+        //console.log(`최적화 API 평균 응답시간: ${avgOptimized.toFixed(2)}ms`);
+        //console.log(`성능 향상: ${improvement}%`);
         
         return {
             legacy: { avg: avgLegacy, times: legacyTimes },

@@ -339,16 +339,15 @@
         <a 
           href="javascript:void(0);" 
           class="download-button team-selection-copy-link"
-          id="share-popup-trigger"
-        >
-          공유하기
+          id="share-popup-trigger"        >
+          링크 복사
         </a>
         
         <!-- 공유하기 팝업 -->
         <div id="share-popup" class="share-popup-overlay" style="display: none;">
           <div class="share-popup">
             <div class="share-popup-header">
-              <h3>공유하기</h3>
+              <h3>링크 복사</h3>
               <button class="share-popup-close" id="share-popup-close">&times;</button>
             </div>
             <div class="share-popup-content">
