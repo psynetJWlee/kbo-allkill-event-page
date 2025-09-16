@@ -63,7 +63,8 @@
   text-decoration-thickness: 3px;
 }
 
-
-.download-button:hover {
-  background-color: #1d6e8c;
+.download-button.download-app-button {
+  color: #ffffff;
+  background-color: #1A5F7A;
+  text-decoration: none;
 }
