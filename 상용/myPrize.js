@@ -101,6 +101,13 @@ function closeToast() {
 	    }
 	    toast.classList.remove('show');
 	    toast.remove();
+	    // 토스트 닫힘 후 상금 지급 신청 버튼 즉시 활성화
+	    const reqBtn = document.querySelector('.request-button');
+	    if (reqBtn) {
+	    	reqBtn.classList.remove('clicked');
+	    	reqBtn.textContent = '상금 지급 신청';
+	    	reqBtn.disabled = false;
+	    }
 	    // initMyPrizeSection 재호출 제거 - 무한 반복 방지
 	    // setTimeout(function(){initMyPrizeSection();}, 1000);
 	  }
@@ -122,6 +129,14 @@ function closeToast() {
 	    // PC 브라우저
 	    else {
 	    	alert('LIVE스코어 APP 에서  가능합니다');
+	    }
+
+	    // 토스트 닫힘 후 상금 지급 신청 버튼 즉시 활성화 (브라우저 분기)
+	    const reqBtn = document.querySelector('.request-button');
+	    if (reqBtn) {
+	    	reqBtn.classList.remove('clicked');
+	    	reqBtn.textContent = '상금 지급 신청';
+	    	reqBtn.disabled = false;
 	    }
 	  }
 	  
