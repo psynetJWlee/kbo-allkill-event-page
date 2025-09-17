@@ -138,7 +138,7 @@ function initEventDescriptionSection() {
       href="https://play.google.com/store/apps/details?id=kr.co.psynet&hl=ko" 
       target="_blank" 
       rel="noopener noreferrer"
-      class="download-button"
+      class="download-button download-app-button"
     >
       LIVE 스코어<br />다운 받기
     </a>

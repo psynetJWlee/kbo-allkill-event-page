@@ -34,6 +34,9 @@ function generateFallbackPrizeHistory() {
 
 //토스트 알림 관련 함수들
 //==============================
+// 토스트 표시 상태를 추적하는 전역 변수
+let isToastShown = false;
+
 function createToast(title, description) {
 // 기존 토스트가 있다면 제거
 const existingToast = document.querySelector('.toast-notification');
@@ -73,6 +76,8 @@ function closeToast() {
 	const toast = document.querySelector('.toast-notification');
 	
 	if (toast) {
+	 // 토스트가 닫힐 때 상태를 true로 설정
+	 isToastShown = true;
 	
 	 setTimeout(() => {
 	 
@@ -96,7 +101,8 @@ function closeToast() {
 	    }
 	    toast.classList.remove('show');
 	    toast.remove();
-	    setTimeout(function(){initMyPrizeSection();}, 1000);
+	    // initMyPrizeSection 재호출 제거 - 무한 반복 방지
+	    // setTimeout(function(){initMyPrizeSection();}, 1000);
 	  }
 	  // 일반 브라우저에서 실행
 	  else {
@@ -632,7 +638,7 @@ async function initMyPrizeSection() {
     //console.log('MyPrize - 페이지네이션은 onclick 방식으로 설정됨');
     
     // ───── 6) 페이지 접속 시 토스트 알림 표시 ─────
-  	if (currentHistory.some(item => item.history === "지급 정보 불일치")) {
+  	if (currentHistory.some(item => item.history === "지급 정보 불일치") && !isToastShown) {
 	    setTimeout(() => {
 	      $(".request-button").attr("disabled",true);
 	      createToast(
