@@ -1,8 +1,14 @@
 // js/sections/eventCompletion.js
 
 // 이벤트 완료 섹션
-function initEventCompletionSection() {
+function initEventCompletionSection(completionData) {
   const { formatNumber } = window.utils;
+
+  // 기본값 설정
+  const data = completionData || {
+    totalPrizeAmount: 0,
+    totalParticipants: 0
+  };
 
   // ────────────── 컨테이너 HTML ──────────────
   const sectionHtml = `
@@ -11,10 +17,10 @@ function initEventCompletionSection() {
       <div class="completion-stats">
         <div class="stat-item">
           <div class="stat-label">총 상금</div>
-          <div class="stat-value">${formatNumber(eventCompletionData.totalPrizeAmount)} 원</div>
+          <div class="stat-value">${formatNumber(data.totalPrizeAmount)} 원</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value2">${formatNumber(eventCompletionData.totalParticipants)} 명 참여</div>
+          <div class="stat-value2">${formatNumber(data.totalParticipants)} 명 참여</div>
         </div>
       </div>
       
